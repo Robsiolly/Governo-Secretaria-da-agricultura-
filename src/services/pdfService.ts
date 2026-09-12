@@ -231,7 +231,7 @@ export const PdfService = {
         const currentPage = data.pageNumber;
 
         doc.setFont('helvetica', 'normal');
-        doc.setFontSize(8);
+        doc.setFontSize(7.5);
         doc.setTextColor(100, 116, 139);
 
         // Thin top divider for footer
@@ -239,28 +239,18 @@ export const PdfService = {
         doc.setLineWidth(0.3);
         doc.line(14, pageHeight - 12, pageWidth - 14, pageHeight - 12);
 
-        // Left text: Title & Nota de Sigilo
+        // Left text: Title
         doc.text(
-          'Controle de Registros Secretaria da Agricultura e Secretaria do Turismo  •  Senhas e credenciais sigilosas não inclusas',
+          'Controle de Registros Secretaria da Agricultura e Secretaria do Turismo',
           14,
           pageHeight - 6.5
         );
 
-        // Center text: Mandated developer attribution!
+        // Right text: Desenvolvido por Siolly Technology + Page Number (aligned right to prevent font overlap)
         doc.setFont('helvetica', 'bold');
-        doc.setTextColor(15, 23, 42);
+        doc.setTextColor(30, 41, 59);
         doc.text(
-          '2026 Desenvolvido por Roberto',
-          pageWidth / 2,
-          pageHeight - 6.5,
-          { align: 'center' }
-        );
-
-        // Right text: Page
-        doc.setFont('helvetica', 'normal');
-        doc.setTextColor(100, 116, 139);
-        doc.text(
-          `Página ${currentPage}`,
+          `Desenvolvido por Siolly Technology   •   Página ${currentPage}`,
           pageWidth - 14,
           pageHeight - 6.5,
           { align: 'right' }
@@ -473,13 +463,14 @@ export const PdfService = {
     doc.setDrawColor(226, 232, 240);
     doc.line(14, pageHeight - 16, pageWidth - 14, pageHeight - 16);
 
+    doc.setFont('helvetica', 'normal');
     doc.setFontSize(8);
     doc.setTextColor(100, 116, 139);
     doc.text('Controle de Registros Secretaria da Agricultura e Secretaria do Turismo', 14, pageHeight - 10);
 
     doc.setFont('helvetica', 'bold');
-    doc.setTextColor(15, 23, 42);
-    doc.text('2026 Desenvolvido por Roberto', pageWidth / 2, pageHeight - 10, { align: 'center' });
+    doc.setTextColor(30, 41, 59);
+    doc.text('Desenvolvido por Siolly Technology', pageWidth - 14, pageHeight - 10, { align: 'right' });
 
     doc.save(`Registro-${registro.fct}.pdf`);
   }

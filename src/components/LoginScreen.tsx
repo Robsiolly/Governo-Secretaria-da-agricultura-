@@ -406,14 +406,14 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
         </div>
       </div>
 
-      {/* Rodapé Oficial Mandatório */}
-      <footer className="w-full max-w-4xl mx-auto py-5 border-t border-slate-800 text-center space-y-1.5">
-        <div className="inline-block px-4 py-1.5 rounded-2xl bg-slate-900 border border-slate-700 text-sm font-bold text-emerald-300 shadow-md">
-          2026 Desenvolvido por Roberto
-        </div>
+      {/* Rodapé Oficial */}
+      <footer className="w-full max-w-4xl mx-auto py-5 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
         <p className="text-xs text-slate-400">
           Controle de Registros Secretaria da Agricultura e Secretaria do Turismo • Todos os direitos reservados
         </p>
+        <div className="inline-block px-4 py-1.5 rounded-2xl bg-slate-900 border border-slate-700 text-xs sm:text-sm font-bold text-emerald-300 shadow-md shrink-0">
+          Desenvolvido por Siolly Technology
+        </div>
       </footer>
     </div>
   );

@@ -17,9 +17,9 @@ export const Footer: React.FC = () => {
           </div>
 
           <div className="flex flex-col sm:items-end items-center space-y-1.5">
-            {/* Frase oficial do rodapé solicitada */}
+            {/* Frase oficial do rodapé */}
             <div className="px-4 py-2 rounded-2xl bg-slate-900 border border-slate-700 text-sm sm:text-base font-bold text-emerald-300 shadow-md">
-              2026 Desenvolvido por Roberto
+              Desenvolvido por Siolly Technology
             </div>
             <div className="flex items-center gap-1.5 text-xs text-slate-400">
               <Shield className="w-4 h-4 text-emerald-400" />
