@@ -256,7 +256,7 @@ export default function App() {
               }`}
             >
               <Calendar className="w-4 h-4 text-emerald-400" />
-              <span>Painel Diário (Sub-pasta)</span>
+              <span>Painel Diário</span>
             </button>
           </div>
 

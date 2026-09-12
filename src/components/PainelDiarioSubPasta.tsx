@@ -93,7 +93,7 @@ export const PainelDiarioSubPasta: React.FC<PainelDiarioSubPastaProps> = ({
           <div>
             <div className="flex items-center gap-2 mb-1">
               <span className="bg-emerald-950 border border-emerald-500/40 text-emerald-300 text-xs px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wider">
-                Sub-Pasta • Painel Diário
+                Painel Diário
               </span>
               <span className="text-xs text-slate-400 font-mono">
                 {new Date(dataSelecionada + 'T00:00:00').toLocaleDateString('pt-BR', { dateStyle: 'full' })}
