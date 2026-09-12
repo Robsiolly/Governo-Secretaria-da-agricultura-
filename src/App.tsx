@@ -465,21 +465,7 @@ export default function App() {
       {/* Rodapé com crédito para Roberto */}
       <Footer />
 
-      {/* Botão Flutuante Rápido de Acesso ao Painel Diário */}
-      <button
-        type="button"
-        onClick={() => {
-          setPainelFiltroSecretaria('TODAS');
-          setPainelFiltroStatus('TODOS');
-          setModoVisualizacao('CARTOES');
-          setIsModalPainelDiarioOpen(true);
-        }}
-        className="fixed bottom-5 right-5 z-40 flex items-center gap-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white px-4 py-3 rounded-2xl font-black text-xs sm:text-sm shadow-2xl shadow-emerald-950/90 border-2 border-emerald-300/50 transition-all cursor-pointer hover:scale-105 active:scale-95"
-        title="Clique aqui para abrir o Painel Diário de Controle"
-      >
-        <Calendar className="w-5 h-5 text-white animate-bounce" />
-        <span className="hidden xs:inline">Painel Diário</span>
-      </button>
+
     </div>
   );
 }
