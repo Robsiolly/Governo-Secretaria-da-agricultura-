@@ -201,10 +201,14 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col selection:bg-emerald-600 selection:text-white">
+    <div className="min-h-screen bg-black text-neutral-100 flex flex-col selection:bg-white selection:text-black relative overflow-hidden">
+      {/* Ambient Apple/Nike Stage Glow Background Lights */}
+      <div className="absolute top-0 left-1/4 w-[600px] h-[300px] bg-emerald-950/20 rounded-full blur-[120px] pointer-events-none -translate-y-1/2" />
+      <div className="absolute top-1/3 right-1/4 w-[500px] h-[250px] bg-sky-950/15 rounded-full blur-[140px] pointer-events-none" />
+
       {/* Toast Notification */}
       {toastMensagem && (
-        <div className="fixed bottom-5 right-5 z-50 flex items-center gap-2.5 bg-slate-900 border border-emerald-500/50 text-emerald-300 px-4 py-3 rounded-xl shadow-2xl shadow-emerald-950/60 text-xs font-medium animate-in fade-in slide-in-from-bottom-3 duration-200">
+        <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3 bg-neutral-900 border border-neutral-700 text-white px-5 py-3.5 rounded-2xl shadow-2xl text-xs font-semibold animate-in fade-in slide-in-from-bottom-4 duration-300 backdrop-blur-xl">
           <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
           <span>{toastMensagem}</span>
         </div>
@@ -226,20 +230,20 @@ export default function App() {
       />
 
       {/* Main Content Area */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6 space-y-4 sm:space-y-6">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 relative z-10">
         {/* Banner de Instalação PWA no Celular */}
         <PwaInstallPrompt />
 
         {/* Abas de Navegação Principal / Sub-Pastas do App */}
-        <div className="bg-slate-900 border-2 border-slate-750 p-2 rounded-2xl flex items-center justify-between gap-2 shadow-lg">
+        <div className="bg-neutral-900/90 border border-neutral-800 p-2 rounded-3xl flex items-center justify-between gap-2 shadow-2xl backdrop-blur-xl">
           <div className="flex items-center gap-2 w-full sm:w-auto">
             <button
               type="button"
               onClick={() => setSubPastaAtiva('GESTAO')}
-              className={`flex-1 sm:flex-initial flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${
+              className={`flex-1 sm:flex-initial flex items-center justify-center gap-2 px-5 py-3 rounded-2xl text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
                 subPastaAtiva === 'GESTAO'
-                  ? 'bg-emerald-600 text-white shadow-md'
-                  : 'text-slate-300 hover:text-white bg-slate-950'
+                  ? 'bg-white text-black shadow-xl font-bold'
+                  : 'text-neutral-400 hover:text-white bg-black/50 border border-neutral-800/80'
               }`}
             >
               <LayoutGrid className="w-4 h-4" />
@@ -249,10 +253,10 @@ export default function App() {
             <button
               type="button"
               onClick={() => setSubPastaAtiva('PAINEL_DIARIO')}
-              className={`flex-1 sm:flex-initial flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${
+              className={`flex-1 sm:flex-initial flex items-center justify-center gap-2 px-5 py-3 rounded-2xl text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
                 subPastaAtiva === 'PAINEL_DIARIO'
-                  ? 'bg-emerald-600 text-white shadow-md'
-                  : 'text-slate-300 hover:text-white bg-slate-950'
+                  ? 'bg-white text-black shadow-xl font-bold'
+                  : 'text-neutral-400 hover:text-white bg-black/50 border border-neutral-800/80'
               }`}
             >
               <Calendar className="w-4 h-4 text-emerald-400" />
@@ -266,7 +270,7 @@ export default function App() {
               setRegistroEmEdicao(null);
               setIsModalCadastroOpen(true);
             }}
-            className="hidden md:inline-flex items-center gap-2 bg-emerald-950 hover:bg-emerald-900 text-emerald-300 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold border border-emerald-500/40 cursor-pointer shadow-sm"
+            className="hidden md:inline-flex items-center gap-2 bg-neutral-800 hover:bg-neutral-700 text-white px-5 py-3 rounded-2xl text-xs sm:text-sm font-semibold border border-neutral-700 cursor-pointer shadow-lg transition-all"
           >
             <Plus className="w-4 h-4" />
             <span>Cadastrar Veículo</span>

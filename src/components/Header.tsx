@@ -24,40 +24,41 @@ export const Header: React.FC<HeaderProps> = ({
   totalRegistros,
 }) => {
   return (
-    <header className="bg-slate-900 border-b-2 border-slate-800 sticky top-0 z-30 shadow-xl w-full">
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-3.5 sm:py-5">
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 sm:gap-4">
+    <header className="bg-black/85 backdrop-blur-2xl border-b border-neutral-800 sticky top-0 z-40 w-full shadow-2xl">
+      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-neutral-700 via-white/40 to-neutral-700" />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-5">
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
           {/* Brand & App Title */}
-          <div className="flex items-start sm:items-center gap-3 sm:gap-4">
+          <div className="flex items-start sm:items-center gap-4">
             <div className="flex -space-x-2 shrink-0">
               <div 
-                className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-br from-emerald-600 to-emerald-800 border-2 border-emerald-400/50 flex items-center justify-center text-emerald-100 shadow-lg"
+                className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-neutral-900 border border-neutral-700 flex items-center justify-center text-white shadow-lg"
                 title="Secretaria da Agricultura"
               >
-                <Wheat className="w-5 h-5 sm:w-6 sm:h-6" />
+                <Wheat className="w-5 h-5 text-emerald-400" />
               </div>
               <div 
-                className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-slate-750 border-2 border-slate-600 flex items-center justify-center text-slate-100 shadow-lg"
+                className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-neutral-900 border border-neutral-700 flex items-center justify-center text-white shadow-lg"
                 title="Secretaria do Turismo"
               >
-                <Compass className="w-5 h-5 sm:w-6 sm:h-6 text-slate-200" />
+                <Compass className="w-5 h-5 text-sky-400" />
               </div>
             </div>
 
             <div className="min-w-0 flex-1">
-              <div className="flex items-center gap-2 flex-wrap">
-                <h1 className="text-base sm:text-xl md:text-2xl font-black text-white tracking-tight leading-snug break-words">
-                  Controle de Registros Secretaria da Agricultura e Secretaria do Turismo
+              <div className="flex items-center gap-2.5 flex-wrap">
+                <h1 className="text-base sm:text-lg md:text-xl font-bold text-white tracking-tight leading-snug break-words">
+                  Controle de Registros • Agricultura & Turismo
                 </h1>
-                <span className="inline-flex items-center gap-1 bg-emerald-950 text-emerald-300 border border-emerald-500/50 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-[11px] sm:text-sm font-bold shrink-0">
-                  <ShieldCheck className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                  Sistema Oficial
+                <span className="inline-flex items-center gap-1.5 bg-neutral-900 text-neutral-300 border border-neutral-800 px-2.5 py-0.5 rounded-full text-[11px] font-semibold uppercase tracking-wider shrink-0">
+                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+                  Oficial
                 </span>
               </div>
-              <p className="text-xs sm:text-base text-slate-300 mt-1 flex items-center gap-2 flex-wrap font-medium">
-                <span className="truncate max-w-full">Gestão Integrada de Frotas e Tráfego Governamental</span>
-                <span className="text-slate-500 hidden sm:inline">•</span>
-                <span className="text-emerald-400 font-bold block sm:inline">{totalRegistros} veículo(s) cadastrado(s)</span>
+              <p className="text-xs text-neutral-400 mt-0.5 flex items-center gap-2 flex-wrap font-medium">
+                <span className="truncate max-w-full">Gestão Integrada de Frotas e Tráfego</span>
+                <span className="text-neutral-700 hidden sm:inline">•</span>
+                <span className="text-emerald-400 font-semibold block sm:inline">{totalRegistros} veículos cadastrados</span>
               </p>
             </div>
           </div>
@@ -65,17 +66,17 @@ export const Header: React.FC<HeaderProps> = ({
           {/* User profile & Actions */}
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between sm:justify-end gap-2.5 sm:gap-3 flex-wrap w-full lg:w-auto">
             {/* User Badge */}
-            <div className="flex items-center gap-3 bg-slate-800/90 border-2 border-slate-700 px-3.5 py-2 rounded-2xl text-left min-h-[46px] w-full sm:w-auto justify-between sm:justify-start">
+            <div className="flex items-center gap-3 bg-neutral-900 border border-neutral-800 px-3.5 py-2 rounded-2xl text-left min-h-[46px] w-full sm:w-auto justify-between sm:justify-start">
               <div className="flex items-center gap-2.5 truncate">
-                <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-slate-700 flex items-center justify-center text-emerald-400 shrink-0">
-                  <User className="w-4 h-4 sm:w-5 sm:h-5" />
+                <div className="w-8 h-8 rounded-xl bg-neutral-800 flex items-center justify-center text-emerald-400 shrink-0 border border-neutral-700">
+                  <User className="w-4 h-4" />
                 </div>
                 <div className="leading-tight truncate">
-                  <span className="font-bold text-xs sm:text-base text-white block truncate max-w-[150px] sm:max-w-[200px]">
+                  <span className="font-semibold text-xs sm:text-sm text-white block truncate max-w-[150px] sm:max-w-[200px]">
                     {usuario.nome}
                   </span>
-                  <span className="text-[11px] sm:text-xs text-slate-300 block font-medium">
-                    Mat: <strong className="text-emerald-300">{usuario.matricula}</strong> ({usuario.nivelAcesso})
+                  <span className="text-[11px] text-neutral-400 block font-mono">
+                    Mat: {usuario.matricula} ({usuario.nivelAcesso})
                   </span>
                 </div>
               </div>
@@ -87,10 +88,10 @@ export const Header: React.FC<HeaderProps> = ({
                 <button
                   type="button"
                   onClick={onNovoOperador}
-                  className="flex items-center justify-center gap-2 bg-slate-800 hover:bg-slate-750 text-slate-100 hover:text-emerald-300 px-3 py-2.5 rounded-2xl text-xs sm:text-base font-bold border-2 border-slate-700 hover:border-emerald-500/50 transition-colors shadow-sm cursor-pointer min-h-[44px]"
-                  title="Painel Administrador e CRUD de Operadores"
+                  className="flex items-center justify-center gap-2 bg-neutral-900 hover:bg-neutral-800 text-neutral-200 hover:text-white px-3.5 py-2.5 rounded-2xl text-xs sm:text-sm font-semibold border border-neutral-800 transition-all cursor-pointer min-h-[44px]"
+                  title="Operadores"
                 >
-                  <UserPlus className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400 shrink-0" />
+                  <UserPlus className="w-4 h-4 text-emerald-400 shrink-0" />
                   <span className="truncate">Operadores</span>
                 </button>
               )}
@@ -99,11 +100,11 @@ export const Header: React.FC<HeaderProps> = ({
                 <button
                   type="button"
                   onClick={onAlterarSenha}
-                  className="flex items-center justify-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-100 hover:text-slate-200 px-3 py-2.5 rounded-2xl text-xs sm:text-sm font-bold border-2 border-slate-700 hover:border-slate-500 transition-colors shadow-sm cursor-pointer min-h-[44px]"
-                  title="Alterar sua senha de acesso"
+                  className="flex items-center justify-center gap-2 bg-neutral-900 hover:bg-neutral-800 text-neutral-200 hover:text-white px-3.5 py-2.5 rounded-2xl text-xs sm:text-sm font-semibold border border-neutral-800 transition-all cursor-pointer min-h-[44px]"
+                  title="Alterar senha"
                 >
-                  <KeyRound className="w-4 h-4 sm:w-5 sm:h-5 text-slate-300 shrink-0" />
-                  <span className="truncate">Mudar Senha</span>
+                  <KeyRound className="w-4 h-4 text-neutral-400 shrink-0" />
+                  <span className="truncate">Senha</span>
                 </button>
               )}
 
@@ -111,41 +112,41 @@ export const Header: React.FC<HeaderProps> = ({
                 <button
                   type="button"
                   onClick={onAbrirEnviarRelatorio}
-                  className="flex items-center justify-center gap-2 bg-slate-750 hover:bg-slate-700 text-white px-3.5 py-2.5 rounded-2xl text-xs sm:text-base font-bold border-2 border-slate-600 hover:border-slate-500 shadow-md transition-all cursor-pointer min-h-[44px] col-span-2 xs:col-span-1"
-                  title="Emitir e Enviar Relatório de qualquer dia selecionado (WhatsApp, E-mail, PDF)"
+                  className="flex items-center justify-center gap-2 bg-neutral-900 hover:bg-neutral-800 text-neutral-200 hover:text-white px-3.5 py-2.5 rounded-2xl text-xs sm:text-sm font-semibold border border-neutral-800 transition-all cursor-pointer min-h-[44px] col-span-2 xs:col-span-1"
+                  title="Enviar Relatório"
                 >
-                  <Share2 className="w-4 h-4 sm:w-5 sm:h-5 text-slate-200 shrink-0" />
-                  <span>Enviar Relatório</span>
+                  <Share2 className="w-4 h-4 text-neutral-300 shrink-0" />
+                  <span>Relatório</span>
                 </button>
               )}
 
               <button
                 type="button"
                 onClick={onExportarPdf}
-                className="flex items-center justify-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-100 hover:text-white px-3 py-2.5 rounded-2xl text-xs sm:text-base font-bold border-2 border-slate-700 transition-colors shadow-sm cursor-pointer min-h-[44px]"
-                title="Exportar relatório diário administrativo em PDF"
+                className="flex items-center justify-center gap-2 bg-neutral-900 hover:bg-neutral-800 text-neutral-200 hover:text-white px-3.5 py-2.5 rounded-2xl text-xs sm:text-sm font-semibold border border-neutral-800 transition-all cursor-pointer min-h-[44px]"
+                title="Exportar PDF"
               >
-                <FileDown className="w-4 h-4 sm:w-5 sm:h-5 text-slate-300 shrink-0" />
+                <FileDown className="w-4 h-4 text-neutral-300 shrink-0" />
                 <span>PDF</span>
               </button>
 
               <button
                 type="button"
                 onClick={onNovoRegistro}
-                className="flex items-center justify-center gap-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white px-4 py-2.5 rounded-2xl text-xs sm:text-base font-bold shadow-lg shadow-emerald-950/60 transition-all cursor-pointer min-h-[44px]"
+                className="flex items-center justify-center gap-2 bg-white hover:bg-neutral-200 text-black px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold shadow-xl transition-all cursor-pointer min-h-[44px]"
               >
-                <Plus className="w-4 h-4 sm:w-5 sm:h-5 shrink-0" />
-                <span>+ Novo</span>
+                <Plus className="w-4 h-4 shrink-0" />
+                <span>Novo Veículo</span>
               </button>
 
               <button
                 type="button"
                 onClick={onLogout}
-                className="p-2.5 text-slate-300 hover:text-rose-300 hover:bg-rose-950/50 rounded-2xl transition-colors border-2 border-slate-800 hover:border-rose-900/60 cursor-pointer min-h-[44px] min-w-[44px] flex items-center justify-center shrink-0"
-                title="Encerrar Sessão Segura"
+                className="p-2.5 text-neutral-400 hover:text-rose-400 hover:bg-rose-950/30 rounded-2xl transition-all border border-neutral-800 hover:border-rose-900/50 cursor-pointer min-h-[44px] min-w-[44px] flex items-center justify-center shrink-0"
+                title="Sair"
                 aria-label="Sair"
               >
-                <LogOut className="w-4 h-4 sm:w-5 sm:h-5" />
+                <LogOut className="w-4 h-4" />
               </button>
             </div>
           </div>
