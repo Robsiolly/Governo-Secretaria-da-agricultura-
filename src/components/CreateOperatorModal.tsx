@@ -72,8 +72,8 @@ export const CreateOperatorModal: React.FC<CreateOperatorModalProps> = ({
       setErro('Defina uma senha de acesso para o Operador.');
       return;
     }
-    if (senhaFormatada && senhaFormatada.length < 3) {
-      setErro('A senha deve ter pelo menos 3 dígitos/caracteres.');
+    if (senhaFormatada && senhaFormatada.length < 6) {
+      setErro('A senha deve ter pelo menos 6 dígitos/caracteres para maior segurança.');
       return;
     }
     if (senhaFormatada && senhaFormatada !== confirmarSenha.trim()) {

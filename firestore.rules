@@ -1,8 +1,67 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
+
+    // Funções de validação de integridade e segurança
+    function isValidStatus(status) {
+      return status in ['EM_TRANSITO', 'FINALIZADO'];
+    }
+
+    function isValidSecretaria(sec) {
+      return sec in ['Secretaria da Agricultura', 'Secretaria do Turismo'];
+    }
+
+    function isValidRegistro(data) {
+      return data.keys().hasAll(['id', 'secretaria', 'motorista', 'status'])
+        && data.id is string && data.id.size() > 0 && data.id.size() <= 100
+        && isValidSecretaria(data.secretaria)
+        && data.motorista is string && data.motorista.size() > 0 && data.motorista.size() <= 150
+        && isValidStatus(data.status)
+        && (!('placa' in data) || (data.placa is string && data.placa.size() <= 20))
+        && (!('fct' in data) || (data.fct is string && data.fct.size() <= 30))
+        && (!('modeloVeiculo' in data) || (data.modeloVeiculo is string && data.modeloVeiculo.size() <= 100))
+        && (!('destino' in data) || (data.destino is string && data.destino.size() <= 300))
+        && (!('observacoes' in data) || (data.observacoes is string && data.observacoes.size() <= 1000))
+        && (!('andar' in data) || (data.andar is string && data.andar.size() <= 20))
+        && (!('funcionarioResponsavel' in data) || (data.funcionarioResponsavel is string && data.funcionarioResponsavel.size() <= 150));
+    }
+
+    function isValidOperador(data) {
+      return data.keys().hasAll(['id', 'nome', 'matricula', 'nivelAcesso'])
+        && data.id is string && data.id.size() > 0 && data.id.size() <= 100
+        && data.nome is string && data.nome.size() > 0 && data.nome.size() <= 120
+        && data.matricula is string && data.matricula.size() > 0 && data.matricula.size() <= 50
+        && data.nivelAcesso in ['ADMINISTRADOR', 'FISCAL', 'OPERADOR']
+        && (!('senha' in data) || (data.senha is string && data.senha.size() <= 200))
+        && (!('email' in data) || (data.email is string && data.email.size() <= 150));
+    }
+
+    // Regras de validação estritas para registros de veículos
+    match /registros/{registroId} {
+      allow read: if true;
+      allow create: if isValidRegistro(request.resource.data) && request.resource.data.id == registroId;
+      allow update: if isValidRegistro(request.resource.data) && request.resource.data.id == registroId;
+      allow delete: if true;
+    }
+
+    // Regras para contas de operadores
+    match /operadores/{operadorId} {
+      allow read: if true;
+      allow create: if isValidOperador(request.resource.data) && request.resource.data.id == operadorId;
+      allow update: if isValidOperador(request.resource.data) && request.resource.data.id == operadorId;
+      // Blindagem: Protege contra exclusão acidental ou maliciosa da conta principal de administrador
+      allow delete: if operadorId != 'op-roberto-adm';
+    }
+
+    // Endpoint de teste de conectividade
+    match /test/{docId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // Bloqueio por padrão de qualquer outra coleção não declarada (Deny by default)
     match /{document=**} {
-      allow read, write: if true;
+      allow read, write: if false;
     }
   }
 }

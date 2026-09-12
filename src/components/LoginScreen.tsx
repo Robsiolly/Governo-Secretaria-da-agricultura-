@@ -16,6 +16,28 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
   const [senha, setSenha] = useState('');
   const [erro, setErro] = useState<string | null>(null);
   const [carregando, setCarregando] = useState(false);
+  const [tentativasFalhas, setTentativasFalhas] = useState(0);
+  const [bloqueadoAte, setBloqueadoAte] = useState<number | null>(null);
+  const [segundosRestantes, setSegundosRestantes] = useState(0);
+
+  // Efeito para contagem regressiva de bloqueio anti brute-force
+  React.useEffect(() => {
+    if (!bloqueadoAte) return;
+
+    const interval = setInterval(() => {
+      const agora = Date.now();
+      const restante = Math.ceil((bloqueadoAte - agora) / 1000);
+      if (restante <= 0) {
+        setBloqueadoAte(null);
+        setSegundosRestantes(0);
+        setErro(null);
+      } else {
+        setSegundosRestantes(restante);
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [bloqueadoAte]);
 
   // Estado Criar Conta
   const [novoNome, setNovoNome] = useState('');
@@ -31,14 +53,32 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
   const handleLoginSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setErro(null);
+
+    // Verificação de bloqueio anti força-bruta
+    if (bloqueadoAte && Date.now() < bloqueadoAte) {
+      setErro(`Muitas tentativas incorretas. Aguarde ${segundosRestantes} segundos por segurança.`);
+      return;
+    }
+
     setCarregando(true);
 
     setTimeout(() => {
       const resultado = StorageService.autenticar(identificador, senha);
       if (resultado.sucesso && resultado.usuario) {
+        setTentativasFalhas(0);
         onLoginSuccess(resultado.usuario);
       } else {
-        setErro(resultado.erro || 'Falha na autenticação. Verifique os dados digitados.');
+        const novasFalhas = tentativasFalhas + 1;
+        setTentativasFalhas(novasFalhas);
+
+        if (novasFalhas >= 5) {
+          const tempoBloqueio = Date.now() + 30000; // 30 segundos de bloqueio
+          setBloqueadoAte(tempoBloqueio);
+          setSegundosRestantes(30);
+          setErro('Sistema temporariamente bloqueado por 30 segundos devido a 5 tentativas com erro. Medida de segurança ativa.');
+        } else {
+          setErro(resultado.erro || `Falha na autenticação. Tentativa ${novasFalhas} de 5.`);
+        }
         setCarregando(false);
       }
     }, 300);
@@ -66,8 +106,8 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
       setErro('Defina uma senha de acesso.');
       return;
     }
-    if (senhaFmt.length < 3) {
-      setErro('A senha deve ter pelo menos 3 caracteres.');
+    if (senhaFmt.length < 6) {
+      setErro('Para a segurança do sistema, a senha deve ter pelo menos 6 caracteres.');
       return;
     }
     if (senhaFmt !== novaConfirmarSenha.trim()) {
