@@ -1,0 +1,57 @@
+{
+  "entities": {
+    "RegistroVeiculo": {
+      "title": "RegistroVeiculo",
+      "description": "Registro de tráfego e circulação de veículo oficial",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "secretaria": { "type": "string", "enum": ["Secretaria da Agricultura", "Secretaria do Turismo"] },
+        "data": { "type": "string" },
+        "motorista": { "type": "string" },
+        "fct": { "type": "string" },
+        "horarioSaida": { "type": "string" },
+        "horarioChegada": { "type": "string" },
+        "andar": { "type": "string" },
+        "funcionarioResponsavel": { "type": "string" },
+        "matriculaFuncionario": { "type": "string" },
+        "assinaturaUrl": { "type": "string" },
+        "placa": { "type": "string" },
+        "modeloVeiculo": { "type": "string" },
+        "destino": { "type": "string" },
+        "observacoes": { "type": "string" },
+        "status": { "type": "string", "enum": ["EM_TRANSITO", "FINALIZADO"] },
+        "criadoEm": { "type": "string" },
+        "atualizadoEm": { "type": "string" }
+      },
+      "required": ["id", "secretaria", "data", "motorista", "horarioSaida", "andar", "funcionarioResponsavel", "status", "criadoEm"]
+    },
+    "ContaOperador": {
+      "title": "ContaOperador",
+      "description": "Conta de operador ou administrador do sistema de tráfego",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "nome": { "type": "string" },
+        "email": { "type": "string" },
+        "matricula": { "type": "string" },
+        "cargo": { "type": "string" },
+        "secretariaPadrao": { "type": "string" },
+        "nivelAcesso": { "type": "string", "enum": ["ADMINISTRADOR", "FISCAL", "OPERADOR"] },
+        "senha": { "type": "string" },
+        "criadoEm": { "type": "string" }
+      },
+      "required": ["id", "nome", "email", "matricula", "cargo", "nivelAcesso"]
+    }
+  },
+  "firestore": {
+    "/registros/{registroId}": {
+      "schema": { "$ref": "#/entities/RegistroVeiculo" },
+      "description": "Coleção de registros de tráfego de veículos"
+    },
+    "/operadores/{operadorId}": {
+      "schema": { "$ref": "#/entities/ContaOperador" },
+      "description": "Coleção de contas de operadores e administradores"
+    }
+  }
+}
