@@ -142,14 +142,14 @@ export const SignaturePad: React.FC<SignaturePadProps> = ({
     <div id="signature-pad-container" className="space-y-2.5">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-sm text-slate-300">
         <span className="flex items-center gap-2 font-bold text-white">
-          <PenTool className="w-4 h-4 text-emerald-400" />
+          <PenTool className="w-4 h-4 text-amber-400" />
           Assine na área em branco abaixo com o mouse ou dedo (Touch):
         </span>
         <div className="flex items-center gap-3">
           <button
             type="button"
             onClick={gerarAssinaturaDigitalPadrao}
-            className="flex items-center gap-1.5 text-emerald-400 hover:text-emerald-300 bg-emerald-950/60 border border-emerald-500/40 px-3 py-1.5 rounded-xl transition-colors cursor-pointer text-xs sm:text-sm font-semibold"
+            className="flex items-center gap-1.5 text-amber-400 hover:text-amber-400 bg-amber-950/60 border border-amber-9500/40 px-3 py-1.5 rounded-xl transition-colors cursor-pointer text-xs sm:text-sm font-semibold"
             title="Gerar rubrica digital com base no nome do responsável"
           >
             <Sparkles className="w-4 h-4" />
@@ -166,7 +166,7 @@ export const SignaturePad: React.FC<SignaturePadProps> = ({
         </div>
       </div>
 
-      <div className="relative border-2 border-dashed border-slate-600 hover:border-emerald-500 rounded-2xl overflow-hidden bg-white shadow-lg transition-colors">
+      <div className="relative border-2 border-dashed border-slate-600 hover:border-amber-9500 rounded-2xl overflow-hidden bg-white shadow-lg transition-colors">
         <canvas
           ref={canvasRef}
           onMouseDown={startDrawing}
@@ -187,8 +187,8 @@ export const SignaturePad: React.FC<SignaturePadProps> = ({
         )}
 
         {hasSignature && (
-          <div className="absolute top-2.5 right-2.5 pointer-events-none flex items-center gap-1.5 bg-emerald-100 text-emerald-800 px-3 py-1 rounded-full text-xs font-bold border border-emerald-300 shadow-sm">
-            <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+          <div className="absolute top-2.5 right-2.5 pointer-events-none flex items-center gap-1.5 bg-amber-950 text-amber-950 px-3 py-1 rounded-full text-xs font-bold border border-amber-400 shadow-sm">
+            <CheckCircle2 className="w-4 h-4 text-amber-600" />
             Assinatura Pronta
           </div>
         )}

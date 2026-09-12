@@ -40,7 +40,7 @@ export default function App() {
 
   const [filtros, setFiltros] = useState<FiltrosRegistros>({
     secretaria: 'TODAS',
-    data: '',
+    data: new Date().toISOString().split('T')[0],
     busca: '',
     status: 'TODOS',
   });
@@ -201,15 +201,15 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-black text-neutral-100 flex flex-col selection:bg-white selection:text-black relative overflow-hidden">
-      {/* Ambient Apple/Nike Stage Glow Background Lights */}
-      <div className="absolute top-0 left-1/4 w-[600px] h-[300px] bg-emerald-950/20 rounded-full blur-[120px] pointer-events-none -translate-y-1/2" />
-      <div className="absolute top-1/3 right-1/4 w-[500px] h-[250px] bg-sky-950/15 rounded-full blur-[140px] pointer-events-none" />
+    <div className="min-h-screen bg-black text-[#F3F3F1] flex flex-col selection:bg-white selection:text-black relative overflow-hidden">
+      {/* Ambient BMW/Apple Stage Glow with enhanced glass lighting */}
+      <div className="absolute top-0 left-1/4 w-[700px] h-[350px] bg-[#5A3A2E]/25 rounded-full blur-[150px] pointer-events-none -translate-y-1/2" />
+      <div className="absolute top-1/3 right-1/4 w-[600px] h-[300px] bg-[#D97924]/15 rounded-full blur-[170px] pointer-events-none" />
 
       {/* Toast Notification */}
       {toastMensagem && (
-        <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3 bg-neutral-900 border border-neutral-700 text-white px-5 py-3.5 rounded-2xl shadow-2xl text-xs font-semibold animate-in fade-in slide-in-from-bottom-4 duration-300 backdrop-blur-xl">
-          <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+        <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3 bg-[#252525]/90 border border-[#6B6B6B]/40 text-white px-5 py-3.5 rounded-2xl shadow-2xl text-xs font-semibold animate-in fade-in slide-in-from-bottom-4 duration-300 backdrop-blur-2xl">
+          <CheckCircle2 className="w-4 h-4 text-[#D97924] shrink-0" />
           <span>{toastMensagem}</span>
         </div>
       )}
@@ -234,16 +234,17 @@ export default function App() {
         {/* Banner de Instalação PWA no Celular */}
         <PwaInstallPrompt />
 
-        {/* Abas de Navegação Principal / Sub-Pastas do App */}
-        <div className="bg-neutral-900/90 border border-neutral-800 p-2 rounded-3xl flex items-center justify-between gap-2 shadow-2xl backdrop-blur-xl">
+        {/* Abas de Navegação Principal / Sub-Pastas do App com Efeito Vidro Avançado (Glassmorphism) */}
+        <div className="bg-[#252525]/70 border border-[#6B6B6B]/30 p-2.5 rounded-3xl flex items-center justify-between gap-2 shadow-2xl backdrop-blur-2xl relative">
+          <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent" />
           <div className="flex items-center gap-2 w-full sm:w-auto">
             <button
               type="button"
               onClick={() => setSubPastaAtiva('GESTAO')}
               className={`flex-1 sm:flex-initial flex items-center justify-center gap-2 px-5 py-3 rounded-2xl text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
                 subPastaAtiva === 'GESTAO'
-                  ? 'bg-white text-black shadow-xl font-bold'
-                  : 'text-neutral-400 hover:text-white bg-black/50 border border-neutral-800/80'
+                  ? 'bg-white text-black shadow-2xl font-bold'
+                  : 'text-[#6B6B6B] hover:text-white bg-black/40 border border-[#6B6B6B]/30 backdrop-blur-md'
               }`}
             >
               <LayoutGrid className="w-4 h-4" />
@@ -255,11 +256,11 @@ export default function App() {
               onClick={() => setSubPastaAtiva('PAINEL_DIARIO')}
               className={`flex-1 sm:flex-initial flex items-center justify-center gap-2 px-5 py-3 rounded-2xl text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
                 subPastaAtiva === 'PAINEL_DIARIO'
-                  ? 'bg-white text-black shadow-xl font-bold'
-                  : 'text-neutral-400 hover:text-white bg-black/50 border border-neutral-800/80'
+                  ? 'bg-white text-black shadow-2xl font-bold'
+                  : 'text-[#6B6B6B] hover:text-white bg-black/40 border border-[#6B6B6B]/30 backdrop-blur-md'
               }`}
             >
-              <Calendar className="w-4 h-4 text-emerald-400" />
+              <Calendar className="w-4 h-4 text-[#D97924]" />
               <span>Painel Diário</span>
             </button>
           </div>
@@ -270,7 +271,7 @@ export default function App() {
               setRegistroEmEdicao(null);
               setIsModalCadastroOpen(true);
             }}
-            className="hidden md:inline-flex items-center gap-2 bg-neutral-800 hover:bg-neutral-700 text-white px-5 py-3 rounded-2xl text-xs sm:text-sm font-semibold border border-neutral-700 cursor-pointer shadow-lg transition-all"
+            className="hidden md:inline-flex items-center gap-2 bg-[#D97924] hover:bg-[#c2681e] text-white px-5 py-3 rounded-2xl text-xs sm:text-sm font-bold shadow-xl shadow-[#D97924]/20 transition-all cursor-pointer"
           >
             <Plus className="w-4 h-4" />
             <span>Cadastrar Veículo</span>
@@ -305,13 +306,13 @@ export default function App() {
             <div className="space-y-4">
               <div className="bg-slate-900 border border-slate-750 rounded-2xl p-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-md">
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-slate-950 border border-slate-700 flex items-center justify-center text-emerald-400 shrink-0">
+                  <div className="w-9 h-9 rounded-xl bg-slate-950 border border-slate-700 flex items-center justify-center text-amber-400 shrink-0">
                     <FileText className="w-4 h-4" />
                   </div>
                   <div>
                     <h3 className="text-xs sm:text-sm font-bold text-white flex items-center gap-2">
                       <span>Listagem de Veículos Cadastrados</span>
-                      <span className="bg-emerald-500 text-slate-950 text-[10px] px-2 py-0.5 rounded-full font-extrabold uppercase">
+                      <span className="bg-amber-9500 text-slate-950 text-[10px] px-2 py-0.5 rounded-full font-extrabold uppercase">
                         {modoVisualizacao === 'CARTOES' ? 'Cartões' : 'Tabela'}
                       </span>
                     </h3>
@@ -325,7 +326,7 @@ export default function App() {
                       onClick={() => setModoVisualizacao('CARTOES')}
                       className={`flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                         modoVisualizacao === 'CARTOES'
-                          ? 'bg-emerald-600 text-white shadow-sm'
+                          ? 'bg-amber-600 text-white shadow-sm'
                           : 'text-slate-400 hover:text-white'
                       }`}
                     >
@@ -338,7 +339,7 @@ export default function App() {
                       onClick={() => setModoVisualizacao('TABELA')}
                       className={`flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                         modoVisualizacao === 'TABELA'
-                          ? 'bg-emerald-600 text-white shadow-sm'
+                          ? 'bg-amber-600 text-white shadow-sm'
                           : 'text-slate-400 hover:text-white'
                       }`}
                     >

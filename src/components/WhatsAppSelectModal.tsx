@@ -5,7 +5,7 @@ import {
   User,
   Building2,
   Wheat,
-  Compass,
+  Plane,
   Phone,
   Plus,
   Trash2,
@@ -188,12 +188,12 @@ export const WhatsAppSelectModal: React.FC<WhatsAppSelectModalProps> = ({
     >
       <div
         id="modal-whatsapp-select-container"
-        className="bg-slate-900 border-2 border-emerald-500/40 rounded-3xl w-full max-w-2xl max-h-[92vh] flex flex-col shadow-2xl overflow-hidden my-auto animate-in fade-in zoom-in-95 duration-150"
+        className="bg-slate-900 border-2 border-amber-9500/40 rounded-3xl w-full max-w-2xl max-h-[92vh] flex flex-col shadow-2xl overflow-hidden my-auto animate-in fade-in zoom-in-95 duration-150"
       >
         {/* Cabeçalho */}
         <div className="bg-slate-950 px-6 py-5 border-b-2 border-slate-800 flex items-center justify-between shrink-0">
           <div className="flex items-center gap-3.5">
-            <div className="w-12 h-12 rounded-2xl bg-emerald-600/20 border-2 border-emerald-400/50 flex items-center justify-center text-emerald-400 shadow-md">
+            <div className="w-12 h-12 rounded-2xl bg-amber-600/20 border-2 border-amber-400/50 flex items-center justify-center text-amber-400 shadow-md">
               <MessageCircle className="w-6 h-6" />
             </div>
             <div>
@@ -226,12 +226,12 @@ export const WhatsAppSelectModal: React.FC<WhatsAppSelectModalProps> = ({
               onClick={() => setOpcaoSelecionadaId('setor-geral')}
               className={`p-4 rounded-2xl border-2 transition-all cursor-pointer flex items-center justify-between gap-3 ${
                 opcaoSelecionadaId === 'setor-geral'
-                  ? 'bg-emerald-950/60 border-emerald-400 shadow-md shadow-emerald-950/50'
+                  ? 'bg-amber-950/60 border-amber-400 shadow-md shadow-amber-950/50'
                   : 'bg-slate-950 border-slate-800 hover:border-slate-700'
               }`}
             >
               <div className="flex items-center gap-3.5">
-                <div className="w-10 h-10 rounded-xl bg-emerald-600/30 border border-emerald-400/40 flex items-center justify-center text-emerald-300 shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-amber-600/30 border border-amber-400/40 flex items-center justify-center text-amber-400 shrink-0">
                   <Users className="w-5 h-5" />
                 </div>
                 <div>
@@ -245,7 +245,7 @@ export const WhatsAppSelectModal: React.FC<WhatsAppSelectModalProps> = ({
               <div
                 className={`w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 ${
                   opcaoSelecionadaId === 'setor-geral'
-                    ? 'border-emerald-400 bg-emerald-500 text-slate-950'
+                    ? 'border-amber-400 bg-amber-9500 text-slate-950'
                     : 'border-slate-600'
                 }`}
               >
@@ -268,16 +268,16 @@ export const WhatsAppSelectModal: React.FC<WhatsAppSelectModalProps> = ({
                     onClick={() => setOpcaoSelecionadaId(setor.id)}
                     className={`p-3.5 rounded-2xl border-2 transition-all cursor-pointer flex items-center justify-between gap-3 ${
                       isSelected
-                        ? 'bg-emerald-950/60 border-emerald-400 shadow-md'
+                        ? 'bg-amber-950/60 border-amber-400 shadow-md'
                         : 'bg-slate-950 border-slate-800 hover:border-slate-700'
                     }`}
                   >
                     <div className="flex items-center gap-3">
                       <div className="w-9 h-9 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-300 shrink-0">
                         {setor.nome.includes('Agricultura') ? (
-                          <Wheat className="w-4 h-4 text-emerald-400" />
+                          <Wheat className="w-4 h-4 text-[#D97924]" />
                         ) : setor.nome.includes('Turismo') ? (
-                          <Compass className="w-4 h-4 text-slate-300" />
+                          <Plane    className="text-emerald-400 w-4 h-4 text-emerald-400" />
                         ) : (
                           <Building2 className="w-4 h-4 text-sky-400" />
                         )}
@@ -291,7 +291,7 @@ export const WhatsAppSelectModal: React.FC<WhatsAppSelectModalProps> = ({
                     <div
                       className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${
                         isSelected
-                          ? 'border-emerald-400 bg-emerald-500 text-slate-950'
+                          ? 'border-amber-400 bg-amber-9500 text-slate-950'
                           : 'border-slate-600'
                       }`}
                     >
@@ -312,19 +312,19 @@ export const WhatsAppSelectModal: React.FC<WhatsAppSelectModalProps> = ({
               onClick={() => setOpcaoSelecionadaId('custom-input')}
               className={`p-4 rounded-2xl border-2 transition-all cursor-pointer space-y-3 ${
                 opcaoSelecionadaId === 'custom-input'
-                  ? 'bg-emerald-950/60 border-emerald-400 shadow-md'
+                  ? 'bg-amber-950/60 border-amber-400 shadow-md'
                   : 'bg-slate-950 border-slate-800 hover:border-slate-700'
               }`}
             >
               <div className="flex items-center justify-between gap-2">
                 <div className="flex items-center gap-2.5">
-                  <Phone className="w-4 h-4 text-emerald-400" />
+                  <Phone className="w-4 h-4 text-amber-400" />
                   <span className="text-sm font-bold text-white">Digitar Número do WhatsApp</span>
                 </div>
                 <div
                   className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${
                     opcaoSelecionadaId === 'custom-input'
-                      ? 'border-emerald-400 bg-emerald-500 text-slate-950'
+                      ? 'border-amber-400 bg-amber-9500 text-slate-950'
                       : 'border-slate-600'
                   }`}
                 >
@@ -343,7 +343,7 @@ export const WhatsAppSelectModal: React.FC<WhatsAppSelectModalProps> = ({
                     value={numeroCustom}
                     onFocus={() => setOpcaoSelecionadaId('custom-input')}
                     onChange={(e) => setNumeroCustom(e.target.value)}
-                    className="w-full bg-slate-900 border-2 border-slate-700 focus:border-emerald-400 text-white rounded-xl px-3.5 py-2 text-sm focus:outline-none transition-colors"
+                    className="w-full bg-slate-900 border-2 border-slate-700 focus:border-amber-400 text-white rounded-xl px-3.5 py-2 text-sm focus:outline-none transition-colors"
                   />
                 </div>
 
@@ -357,7 +357,7 @@ export const WhatsAppSelectModal: React.FC<WhatsAppSelectModalProps> = ({
                     value={nomeCustom}
                     onFocus={() => setOpcaoSelecionadaId('custom-input')}
                     onChange={(e) => setNomeCustom(e.target.value)}
-                    className="w-full bg-slate-900 border-2 border-slate-700 focus:border-emerald-400 text-white rounded-xl px-3.5 py-2 text-sm focus:outline-none transition-colors"
+                    className="w-full bg-slate-900 border-2 border-slate-700 focus:border-amber-400 text-white rounded-xl px-3.5 py-2 text-sm focus:outline-none transition-colors"
                   />
                 </div>
               </div>
@@ -368,7 +368,7 @@ export const WhatsAppSelectModal: React.FC<WhatsAppSelectModalProps> = ({
                   id="chk-salvar-contato"
                   checked={salvarContatoCustom}
                   onChange={(e) => setSalvarContatoCustom(e.target.checked)}
-                  className="w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500 bg-slate-900 border-slate-700 cursor-pointer"
+                  className="w-4 h-4 rounded text-amber-600 focus:ring-amber-9500 bg-slate-900 border-slate-700 cursor-pointer"
                 />
                 <label htmlFor="chk-salvar-contato" className="text-xs text-slate-300 cursor-pointer font-medium">
                   Salvar este número na minha lista de contatos frequentes
@@ -393,12 +393,12 @@ export const WhatsAppSelectModal: React.FC<WhatsAppSelectModalProps> = ({
                       onClick={() => setOpcaoSelecionadaId(c.id)}
                       className={`p-3 rounded-2xl border-2 transition-all cursor-pointer flex items-center justify-between gap-2 ${
                         isSelected
-                          ? 'bg-emerald-950/60 border-emerald-400 shadow-md'
+                          ? 'bg-amber-950/60 border-amber-400 shadow-md'
                           : 'bg-slate-950 border-slate-800 hover:border-slate-700'
                       }`}
                     >
                       <div className="flex items-center gap-2.5 overflow-hidden">
-                        <User className="w-4 h-4 text-emerald-400 shrink-0" />
+                        <User className="w-4 h-4 text-amber-400 shrink-0" />
                         <div className="truncate">
                           <span className="text-xs font-bold text-white block truncate">{c.nome}</span>
                           <span className="text-[11px] font-mono text-slate-400">{c.numero}</span>
@@ -417,7 +417,7 @@ export const WhatsAppSelectModal: React.FC<WhatsAppSelectModalProps> = ({
                         <div
                           className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
                             isSelected
-                              ? 'border-emerald-400 bg-emerald-500 text-slate-950'
+                              ? 'border-amber-400 bg-amber-9500 text-slate-950'
                               : 'border-slate-600'
                           }`}
                         >
@@ -439,10 +439,10 @@ export const WhatsAppSelectModal: React.FC<WhatsAppSelectModalProps> = ({
               className="w-full flex items-center justify-between text-xs font-bold text-slate-300 hover:text-white cursor-pointer"
             >
               <div className="flex items-center gap-2">
-                <FileText className="w-4 h-4 text-emerald-400" />
+                <FileText className="w-4 h-4 text-amber-400" />
                 <span>Ver prévia da mensagem que será enviada</span>
               </div>
-              <span className="text-[11px] text-emerald-400 hover:underline">
+              <span className="text-[11px] text-amber-400 hover:underline">
                 {mostrarPreviewText ? 'Ocultar' : 'Expandir prévia'}
               </span>
             </button>
@@ -468,7 +468,7 @@ export const WhatsAppSelectModal: React.FC<WhatsAppSelectModalProps> = ({
           <button
             type="button"
             onClick={handleEnviar}
-            className="flex items-center gap-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-sm px-6 py-3 rounded-2xl shadow-xl shadow-emerald-950/60 cursor-pointer transition-all min-h-[46px]"
+            className="flex items-center gap-2 bg-gradient-to-r from-amber-600 to-amber-600 hover:from-amber-9500 hover:to-amber-9500 text-white font-bold text-sm px-6 py-3 rounded-2xl shadow-xl shadow-amber-950/60 cursor-pointer transition-all min-h-[46px]"
           >
             <Send className="w-4 h-4" />
             <span>

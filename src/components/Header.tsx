@@ -1,5 +1,5 @@
 import React from 'react';
-import { Wheat, Compass, Plus, FileDown, LogOut, ShieldCheck, User, UserPlus, Share2, KeyRound } from 'lucide-react';
+import { Wheat, Plane, Plus, FileDown, LogOut, ShieldCheck, User, UserPlus, Share2, KeyRound } from 'lucide-react';
 import { UsuarioAutenticado } from '../types';
 
 interface HeaderProps {
@@ -24,24 +24,24 @@ export const Header: React.FC<HeaderProps> = ({
   totalRegistros,
 }) => {
   return (
-    <header className="bg-black/85 backdrop-blur-2xl border-b border-neutral-800 sticky top-0 z-40 w-full shadow-2xl">
-      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-neutral-700 via-white/40 to-neutral-700" />
+    <header className="bg-black/90 backdrop-blur-2xl border-b border-[#252525] sticky top-0 z-40 w-full shadow-2xl">
+      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-[#5A3A2E] via-[#D97924] to-[#3A241D]" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-5">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
           {/* Brand & App Title */}
           <div className="flex items-start sm:items-center gap-4">
             <div className="flex -space-x-2 shrink-0">
               <div 
-                className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-neutral-900 border border-neutral-700 flex items-center justify-center text-white shadow-lg"
+                className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-[#3A241D] border border-[#5A3A2E] flex items-center justify-center text-[#D97924] shadow-lg"
                 title="Secretaria da Agricultura"
               >
-                <Wheat className="w-5 h-5 text-emerald-400" />
+                <Wheat className="w-5 h-5 text-[#D97924]" />
               </div>
               <div 
-                className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-neutral-900 border border-neutral-700 flex items-center justify-center text-white shadow-lg"
+                className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-[#252525] border border-[#6B6B6B]/40 flex items-center justify-center text-[#F3F3F1] shadow-lg"
                 title="Secretaria do Turismo"
               >
-                <Compass className="w-5 h-5 text-sky-400" />
+                <Plane    className="text-emerald-400 w-5 h-5 text-[#F3F3F1]" />
               </div>
             </div>
 
@@ -50,15 +50,15 @@ export const Header: React.FC<HeaderProps> = ({
                 <h1 className="text-base sm:text-lg md:text-xl font-bold text-white tracking-tight leading-snug break-words">
                   Controle de Registros • Agricultura & Turismo
                 </h1>
-                <span className="inline-flex items-center gap-1.5 bg-neutral-900 text-neutral-300 border border-neutral-800 px-2.5 py-0.5 rounded-full text-[11px] font-semibold uppercase tracking-wider shrink-0">
-                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+                <span className="inline-flex items-center gap-1.5 bg-[#3A241D] text-[#D97924] border border-[#5A3A2E] px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wider shrink-0 shadow-inner">
+                  <ShieldCheck className="w-3.5 h-3.5 text-[#D97924]" />
                   Oficial
                 </span>
               </div>
-              <p className="text-xs text-neutral-400 mt-0.5 flex items-center gap-2 flex-wrap font-medium">
-                <span className="truncate max-w-full">Gestão Integrada de Frotas e Tráfego</span>
-                <span className="text-neutral-700 hidden sm:inline">•</span>
-                <span className="text-emerald-400 font-semibold block sm:inline">{totalRegistros} veículos cadastrados</span>
+              <p className="text-xs text-[#6B6B6B] mt-0.5 flex items-center gap-2 flex-wrap font-medium">
+                <span className="truncate max-w-full">Secretaria da Agricultura e Abastecimento</span>
+                <span className="text-[#6B6B6B] hidden sm:inline">•</span>
+                <span className="text-[#D97924] font-semibold block sm:inline">{totalRegistros} veículos cadastrados</span>
               </p>
             </div>
           </div>
@@ -66,16 +66,16 @@ export const Header: React.FC<HeaderProps> = ({
           {/* User profile & Actions */}
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between sm:justify-end gap-2.5 sm:gap-3 flex-wrap w-full lg:w-auto">
             {/* User Badge */}
-            <div className="flex items-center gap-3 bg-neutral-900 border border-neutral-800 px-3.5 py-2 rounded-2xl text-left min-h-[46px] w-full sm:w-auto justify-between sm:justify-start">
+            <div className="flex items-center gap-3 bg-[#252525] border border-[#6B6B6B]/30 px-3.5 py-2 rounded-2xl text-left min-h-[46px] w-full sm:w-auto justify-between sm:justify-start shadow-inner">
               <div className="flex items-center gap-2.5 truncate">
-                <div className="w-8 h-8 rounded-xl bg-neutral-800 flex items-center justify-center text-emerald-400 shrink-0 border border-neutral-700">
+                <div className="w-8 h-8 rounded-xl bg-black flex items-center justify-center text-[#D97924] shrink-0 border border-[#6B6B6B]/40">
                   <User className="w-4 h-4" />
                 </div>
                 <div className="leading-tight truncate">
                   <span className="font-semibold text-xs sm:text-sm text-white block truncate max-w-[150px] sm:max-w-[200px]">
                     {usuario.nome}
                   </span>
-                  <span className="text-[11px] text-neutral-400 block font-mono">
+                  <span className="text-[11px] text-[#6B6B6B] block font-mono">
                     Mat: {usuario.matricula} ({usuario.nivelAcesso})
                   </span>
                 </div>
@@ -88,10 +88,10 @@ export const Header: React.FC<HeaderProps> = ({
                 <button
                   type="button"
                   onClick={onNovoOperador}
-                  className="flex items-center justify-center gap-2 bg-neutral-900 hover:bg-neutral-800 text-neutral-200 hover:text-white px-3.5 py-2.5 rounded-2xl text-xs sm:text-sm font-semibold border border-neutral-800 transition-all cursor-pointer min-h-[44px]"
+                  className="flex items-center justify-center gap-2 bg-[#252525] hover:bg-[#333333] text-neutral-200 hover:text-white px-3.5 py-2.5 rounded-2xl text-xs sm:text-sm font-semibold border border-[#6B6B6B]/30 transition-all cursor-pointer min-h-[44px]"
                   title="Operadores"
                 >
-                  <UserPlus className="w-4 h-4 text-emerald-400 shrink-0" />
+                  <UserPlus className="w-4 h-4 text-[#D97924] shrink-0" />
                   <span className="truncate">Operadores</span>
                 </button>
               )}
@@ -100,10 +100,10 @@ export const Header: React.FC<HeaderProps> = ({
                 <button
                   type="button"
                   onClick={onAlterarSenha}
-                  className="flex items-center justify-center gap-2 bg-neutral-900 hover:bg-neutral-800 text-neutral-200 hover:text-white px-3.5 py-2.5 rounded-2xl text-xs sm:text-sm font-semibold border border-neutral-800 transition-all cursor-pointer min-h-[44px]"
+                  className="flex items-center justify-center gap-2 bg-[#252525] hover:bg-[#333333] text-neutral-200 hover:text-white px-3.5 py-2.5 rounded-2xl text-xs sm:text-sm font-semibold border border-[#6B6B6B]/30 transition-all cursor-pointer min-h-[44px]"
                   title="Alterar senha"
                 >
-                  <KeyRound className="w-4 h-4 text-neutral-400 shrink-0" />
+                  <KeyRound className="w-4 h-4 text-[#6B6B6B] shrink-0" />
                   <span className="truncate">Senha</span>
                 </button>
               )}
@@ -112,10 +112,10 @@ export const Header: React.FC<HeaderProps> = ({
                 <button
                   type="button"
                   onClick={onAbrirEnviarRelatorio}
-                  className="flex items-center justify-center gap-2 bg-neutral-900 hover:bg-neutral-800 text-neutral-200 hover:text-white px-3.5 py-2.5 rounded-2xl text-xs sm:text-sm font-semibold border border-neutral-800 transition-all cursor-pointer min-h-[44px] col-span-2 xs:col-span-1"
+                  className="flex items-center justify-center gap-2 bg-[#252525] hover:bg-[#333333] text-neutral-200 hover:text-white px-3.5 py-2.5 rounded-2xl text-xs sm:text-sm font-semibold border border-[#6B6B6B]/30 transition-all cursor-pointer min-h-[44px] col-span-2 xs:col-span-1"
                   title="Enviar Relatório"
                 >
-                  <Share2 className="w-4 h-4 text-neutral-300 shrink-0" />
+                  <Share2 className="w-4 h-4 text-[#6B6B6B] shrink-0" />
                   <span>Relatório</span>
                 </button>
               )}
@@ -123,17 +123,17 @@ export const Header: React.FC<HeaderProps> = ({
               <button
                 type="button"
                 onClick={onExportarPdf}
-                className="flex items-center justify-center gap-2 bg-neutral-900 hover:bg-neutral-800 text-neutral-200 hover:text-white px-3.5 py-2.5 rounded-2xl text-xs sm:text-sm font-semibold border border-neutral-800 transition-all cursor-pointer min-h-[44px]"
+                className="flex items-center justify-center gap-2 bg-[#252525] hover:bg-[#333333] text-neutral-200 hover:text-white px-3.5 py-2.5 rounded-2xl text-xs sm:text-sm font-semibold border border-[#6B6B6B]/30 transition-all cursor-pointer min-h-[44px]"
                 title="Exportar PDF"
               >
-                <FileDown className="w-4 h-4 text-neutral-300 shrink-0" />
+                <FileDown className="w-4 h-4 text-[#6B6B6B] shrink-0" />
                 <span>PDF</span>
               </button>
 
               <button
                 type="button"
                 onClick={onNovoRegistro}
-                className="flex items-center justify-center gap-2 bg-white hover:bg-neutral-200 text-black px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold shadow-xl transition-all cursor-pointer min-h-[44px]"
+                className="flex items-center justify-center gap-2 bg-[#D97924] hover:bg-[#c2681e] text-white px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold shadow-xl shadow-[#D97924]/20 transition-all cursor-pointer min-h-[44px]"
               >
                 <Plus className="w-4 h-4 shrink-0" />
                 <span>Novo Veículo</span>
@@ -142,7 +142,7 @@ export const Header: React.FC<HeaderProps> = ({
               <button
                 type="button"
                 onClick={onLogout}
-                className="p-2.5 text-neutral-400 hover:text-rose-400 hover:bg-rose-950/30 rounded-2xl transition-all border border-neutral-800 hover:border-rose-900/50 cursor-pointer min-h-[44px] min-w-[44px] flex items-center justify-center shrink-0"
+                className="p-2.5 text-[#6B6B6B] hover:text-rose-400 hover:bg-rose-950/30 rounded-2xl transition-all border border-[#6B6B6B]/30 hover:border-rose-900/50 cursor-pointer min-h-[44px] min-w-[44px] flex items-center justify-center shrink-0"
                 title="Sair"
                 aria-label="Sair"
               >

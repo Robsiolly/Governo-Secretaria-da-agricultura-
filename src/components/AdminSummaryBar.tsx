@@ -1,5 +1,5 @@
 import React from 'react';
-import { Wheat, Compass, Clock, CheckCircle2, Car, TrendingUp } from 'lucide-react';
+import { Wheat, Plane, Clock, CheckCircle2, Car, TrendingUp } from 'lucide-react';
 import { RegistroVeiculo } from '../types';
 
 interface AdminSummaryBarProps {
@@ -27,7 +27,7 @@ export const AdminSummaryBar: React.FC<AdminSummaryBarProps> = ({
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       {/* Card Agricultura */}
-      <div className="bg-slate-900 border-2 border-slate-700 hover:border-emerald-400 p-5 rounded-3xl text-left transition-all shadow-lg flex flex-col justify-between">
+      <div className="bg-slate-900 border-2 border-slate-700 hover:border-amber-400 p-5 rounded-3xl text-left transition-all shadow-lg flex flex-col justify-between">
         <button
           type="button"
           onClick={() => onFiltrarSecretaria('Secretaria da Agricultura')}
@@ -35,12 +35,12 @@ export const AdminSummaryBar: React.FC<AdminSummaryBarProps> = ({
         >
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-2xl bg-emerald-950 border border-emerald-500/40 flex items-center justify-center text-emerald-400 group-hover:scale-105 transition-transform shrink-0">
+              <div className="w-12 h-12 rounded-2xl bg-amber-950 border border-amber-9500/40 flex items-center justify-center text-amber-400 group-hover:scale-105 transition-transform shrink-0">
                 <Wheat className="w-6 h-6" />
               </div>
               <span className="text-sm sm:text-base font-bold text-slate-100">Sec. Agricultura</span>
             </div>
-            <span className="text-2xl sm:text-3xl font-black font-mono text-emerald-400 bg-emerald-950/80 px-3 py-1 rounded-xl border border-emerald-600/40">
+            <span className="text-2xl sm:text-3xl font-black font-mono text-amber-400 bg-amber-950/80 px-3 py-1 rounded-xl border border-amber-600/40">
               {agriRegistros.length}
             </span>
           </div>
@@ -62,7 +62,7 @@ export const AdminSummaryBar: React.FC<AdminSummaryBarProps> = ({
             <Clock className="w-3.5 h-3.5 animate-pulse" />
             <span>{agriEmTransito} Fora (Em trânsito)</span>
           </button>
-          <span className="text-emerald-300 font-semibold px-1.5 py-1">
+          <span className="text-amber-400 font-semibold px-1.5 py-1">
             {agriRegistros.length - agriEmTransito} no pátio
           </span>
         </div>
@@ -78,7 +78,7 @@ export const AdminSummaryBar: React.FC<AdminSummaryBarProps> = ({
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 rounded-2xl bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-200 group-hover:scale-105 transition-transform shrink-0">
-                <Compass className="w-6 h-6" />
+                <Plane    className="text-emerald-400 w-6 h-6" />
               </div>
               <span className="text-sm sm:text-base font-bold text-slate-100">Sec. Turismo</span>
             </div>
@@ -104,7 +104,7 @@ export const AdminSummaryBar: React.FC<AdminSummaryBarProps> = ({
             <Clock className="w-3.5 h-3.5 animate-pulse" />
             <span>{turEmTransito} Fora (Em trânsito)</span>
           </button>
-          <span className="text-emerald-300 font-semibold px-1.5 py-1">
+          <span className="text-amber-400 font-semibold px-1.5 py-1">
             {turRegistros.length - turEmTransito} no pátio
           </span>
         </div>
@@ -141,22 +141,22 @@ export const AdminSummaryBar: React.FC<AdminSummaryBarProps> = ({
       <button
         type="button"
         onClick={() => onFiltrarStatus('FINALIZADO')}
-        className="bg-slate-900 hover:bg-slate-850 border-2 border-slate-700 hover:border-emerald-400 p-5 rounded-3xl text-left transition-all group cursor-pointer shadow-lg"
+        className="bg-slate-900 hover:bg-slate-850 border-2 border-slate-700 hover:border-amber-400 p-5 rounded-3xl text-left transition-all group cursor-pointer shadow-lg"
       >
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-2xl bg-slate-800 flex items-center justify-center text-emerald-400 shrink-0 group-hover:scale-105 transition-transform">
+            <div className="w-12 h-12 rounded-2xl bg-slate-800 flex items-center justify-center text-amber-400 shrink-0 group-hover:scale-105 transition-transform">
               <CheckCircle2 className="w-6 h-6" />
             </div>
             <span className="text-sm sm:text-base font-bold text-slate-100">Retornos Concluídos</span>
           </div>
-          <span className="text-2xl sm:text-3xl font-black font-mono text-emerald-400 bg-emerald-950/80 px-3 py-1 rounded-xl border border-emerald-600/40">
+          <span className="text-2xl sm:text-3xl font-black font-mono text-amber-400 bg-amber-950/80 px-3 py-1 rounded-xl border border-amber-600/40">
             {totalConcluidos}
           </span>
         </div>
         <div className="text-xs sm:text-sm text-slate-300 font-medium flex items-center justify-between">
           <span>Veículos no pátio e conferidos</span>
-          <span className="text-emerald-400 font-bold group-hover:translate-x-1 transition-transform">Ver →</span>
+          <span className="text-amber-400 font-bold group-hover:translate-x-1 transition-transform">Ver →</span>
         </div>
       </button>
     </div>

@@ -3,7 +3,7 @@ import {
   X,
   Calendar,
   Wheat,
-  Compass,
+  Plane,
   Clock,
   CheckCircle2,
   Car,
@@ -204,14 +204,14 @@ export const DailyControlModal: React.FC<DailyControlModalProps> = ({
       onClick={onClose}
     >
       <div
-        className="bg-slate-900 border-2 border-emerald-500/50 rounded-3xl w-full max-w-6xl max-h-[92vh] flex flex-col shadow-2xl overflow-hidden my-auto"
+        className="bg-slate-900 border-2 border-amber-9500/50 rounded-3xl w-full max-w-6xl max-h-[92vh] flex flex-col shadow-2xl overflow-hidden my-auto"
         onClick={(e) => e.stopPropagation()}
       >
         
         {/* Header do Modal */}
         <div className="bg-slate-950 border-b border-slate-800 p-4 sm:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 shrink-0">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-600 to-slate-700 border-2 border-emerald-400/50 flex items-center justify-center text-white shadow-lg shrink-0">
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-600 to-slate-700 border-2 border-amber-400/50 flex items-center justify-center text-white shadow-lg shrink-0">
               <Calendar className="w-6 h-6" />
             </div>
             <div>
@@ -219,7 +219,7 @@ export const DailyControlModal: React.FC<DailyControlModalProps> = ({
                 <h2 className="text-lg sm:text-xl font-black text-white tracking-tight">
                   Painel de Controle de Cadastros Diários
                 </h2>
-                <span className="bg-emerald-950 text-emerald-300 border border-emerald-500/50 px-3 py-0.5 rounded-full text-xs font-bold">
+                <span className="bg-amber-950 text-amber-400 border border-amber-9500/50 px-3 py-0.5 rounded-full text-xs font-bold">
                   {dataFormatadaAmigavel}
                 </span>
               </div>
@@ -235,7 +235,7 @@ export const DailyControlModal: React.FC<DailyControlModalProps> = ({
               <button
                 type="button"
                 onClick={onAbrirCadastro}
-                className="flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-500 text-white px-3.5 py-2 rounded-2xl text-xs sm:text-sm font-bold shadow-lg transition-all cursor-pointer min-h-[40px]"
+                className="flex items-center gap-1.5 bg-amber-600 hover:bg-amber-9500 text-white px-3.5 py-2 rounded-2xl text-xs sm:text-sm font-bold shadow-lg transition-all cursor-pointer min-h-[40px]"
                 title="Cadastrar novo veículo"
               >
                 <Car className="w-4 h-4" />
@@ -317,7 +317,7 @@ export const DailyControlModal: React.FC<DailyControlModalProps> = ({
                 onClick={aplicarHoje}
                 className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer border ${
                   dataSelecionada === dataHojeStr
-                    ? 'bg-emerald-950 text-emerald-300 border-emerald-500/50'
+                    ? 'bg-amber-950 text-amber-400 border-amber-9500/50'
                     : 'bg-slate-800 text-slate-300 border-slate-700 hover:bg-slate-750'
                 }`}
               >
@@ -337,7 +337,7 @@ export const DailyControlModal: React.FC<DailyControlModalProps> = ({
                 onClick={aplicarTodasDatas}
                 className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer border ${
                   dataSelecionada === ''
-                    ? 'bg-emerald-950 text-emerald-300 border-emerald-500/50'
+                    ? 'bg-amber-950 text-amber-400 border-amber-9500/50'
                     : 'bg-slate-800 text-slate-300 border-slate-700 hover:bg-slate-750'
                 }`}
                 title="Mostrar cadastros de todas as datas"
@@ -354,7 +354,7 @@ export const DailyControlModal: React.FC<DailyControlModalProps> = ({
                 value={busca}
                 onChange={(e) => setBusca(e.target.value)}
                 placeholder="Buscar FCT, placa, motorista..."
-                className="w-full bg-slate-950 border border-slate-700 rounded-2xl pl-9 pr-3 py-2 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400 font-medium"
+                className="w-full bg-slate-950 border border-slate-700 rounded-2xl pl-9 pr-3 py-2 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-amber-400 font-medium"
               />
             </div>
           </div>
@@ -380,11 +380,11 @@ export const DailyControlModal: React.FC<DailyControlModalProps> = ({
                 onClick={() => setSecretariaFiltro('Secretaria da Agricultura')}
                 className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer whitespace-nowrap min-h-[36px] ${
                   secretariaFiltro === 'Secretaria da Agricultura'
-                    ? 'bg-emerald-800 text-white border border-emerald-400 shadow-sm'
-                    : 'bg-slate-950 text-slate-300 hover:text-emerald-300 border border-slate-800'
+                    ? 'bg-amber-950 text-white border border-amber-400 shadow-sm'
+                    : 'bg-slate-950 text-slate-300 hover:text-amber-400 border border-slate-800'
                 }`}
               >
-                <Wheat className="w-3.5 h-3.5 text-emerald-400" />
+                <Wheat className="w-3.5 h-3.5 text-[#D97924]" />
                 <span>Sec. Agricultura</span>
               </button>
 
@@ -397,7 +397,7 @@ export const DailyControlModal: React.FC<DailyControlModalProps> = ({
                     : 'bg-slate-950 text-slate-300 hover:text-white border border-slate-800'
                 }`}
               >
-                <Compass className="w-3.5 h-3.5 text-slate-300" />
+                <Plane    className="text-emerald-400 w-3.5 h-3.5 text-emerald-400" />
                 <span>Sec. Turismo</span>
               </button>
             </div>
@@ -438,14 +438,14 @@ export const DailyControlModal: React.FC<DailyControlModalProps> = ({
                 onClick={() => setStatusAba(statusAba === 'FINALIZADO' ? 'TODOS' : 'FINALIZADO')}
                 className={`px-3 py-1.5 rounded-xl text-xs font-medium border flex items-center gap-2 transition-all cursor-pointer ${
                   statusAba === 'FINALIZADO'
-                    ? 'bg-emerald-950 border-emerald-500 text-white shadow-md font-bold'
-                    : 'bg-slate-950 border-slate-800 text-emerald-300 hover:bg-slate-850'
+                    ? 'bg-amber-950 border-amber-9500 text-white shadow-md font-bold'
+                    : 'bg-slate-950 border-slate-800 text-amber-400 hover:bg-slate-850'
                 }`}
                 title="Clique para filtrar apenas os retornos concluídos"
               >
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                <CheckCircle2 className="w-3.5 h-3.5 text-amber-400" />
                 <span>Chegaram (Pátio):</span>
-                <strong className="font-mono text-sm font-bold text-emerald-400">{registrosChegaram.length}</strong>
+                <strong className="font-mono text-sm font-bold text-amber-400">{registrosChegaram.length}</strong>
               </button>
             </div>
           </div>
@@ -483,11 +483,11 @@ export const DailyControlModal: React.FC<DailyControlModalProps> = ({
             onClick={() => setStatusAba('FINALIZADO')}
             className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
               statusAba === 'FINALIZADO'
-                ? 'bg-emerald-950 text-emerald-300 border border-emerald-500/50 shadow-md'
-                : 'text-slate-400 hover:text-emerald-300'
+                ? 'bg-amber-950 text-amber-400 border border-amber-9500/50 shadow-md'
+                : 'text-slate-400 hover:text-amber-400'
             }`}
           >
-            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+            <CheckCircle2 className="w-3.5 h-3.5 text-amber-400" />
             <span>Chegaram / Retorno Concluído ({registrosChegaram.length})</span>
           </button>
         </div>
@@ -495,7 +495,7 @@ export const DailyControlModal: React.FC<DailyControlModalProps> = ({
         {/* Lista de Registros / Grade Responsiva */}
         <div className="flex-1 overflow-y-auto p-3.5 sm:p-5 space-y-4">
           {exibindoFallback && (
-            <div className="bg-emerald-950/70 border border-emerald-500/50 rounded-2xl p-3.5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-emerald-200 text-xs sm:text-sm shadow-md">
+            <div className="bg-amber-950/70 border border-amber-9500/50 rounded-2xl p-3.5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-amber-950 text-xs sm:text-sm shadow-md">
               <div>
                 <strong className="text-white block">Sem registros específicos para {dataFormatadaAmigavel}.</strong>
                 <span>Exibindo todos os <strong>{registros.length}</strong> cadastros do sistema para garantir o seu acesso:</span>
@@ -503,7 +503,7 @@ export const DailyControlModal: React.FC<DailyControlModalProps> = ({
               <button
                 type="button"
                 onClick={aplicarTodasDatas}
-                className="px-3.5 py-1.5 bg-emerald-700 hover:bg-emerald-600 text-white font-bold rounded-xl shrink-0 cursor-pointer shadow-sm text-xs"
+                className="px-3.5 py-1.5 bg-amber-600 hover:bg-amber-600 text-white font-bold rounded-xl shrink-0 cursor-pointer shadow-sm text-xs"
               >
                 Limpar Filtro de Data
               </button>
@@ -524,7 +524,7 @@ export const DailyControlModal: React.FC<DailyControlModalProps> = ({
                   <button
                     type="button"
                     onClick={onAbrirCadastro}
-                    className="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-emerald-600 hover:bg-emerald-500 text-white cursor-pointer shadow-md transition-all"
+                    className="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-amber-600 hover:bg-amber-9500 text-white cursor-pointer shadow-md transition-all"
                   >
                     + Fazer Primeiro Cadastro
                   </button>
@@ -550,7 +550,7 @@ export const DailyControlModal: React.FC<DailyControlModalProps> = ({
                     className={`bg-slate-950 border rounded-xl p-2.5 sm:py-2.5 sm:px-3.5 shadow-sm transition-all flex flex-col md:flex-row md:items-center justify-between gap-2.5 sm:gap-3 border-l-4 ${
                       isEmTransito
                         ? 'border-l-amber-400 border-t-slate-800 border-r-slate-800 border-b-slate-800 bg-amber-950/10'
-                        : 'border-l-emerald-500 border-t-slate-800 border-r-slate-800 border-b-slate-800'
+                        : 'border-l-amber-9500 border-t-slate-800 border-r-slate-800 border-b-slate-800'
                     }`}
                   >
                     {/* Lado Esquerdo: Placa com Super Destaque + Secretaria/FCT + Motorista */}
@@ -558,17 +558,17 @@ export const DailyControlModal: React.FC<DailyControlModalProps> = ({
                       {/* Ícone da Secretaria */}
                       <div
                         className={`w-8 h-8 rounded-xl flex items-center justify-center text-white shrink-0 shadow-sm ${
-                          isAgri ? 'bg-emerald-800 border border-emerald-500/40' : 'bg-slate-750 border border-slate-600'
+                          isAgri ? 'bg-amber-950 border border-amber-9500/40' : 'bg-slate-750 border border-slate-600'
                         }`}
                         title={reg.secretaria}
                       >
-                        {isAgri ? <Wheat className="w-4 h-4 text-emerald-200" /> : <Compass className="w-4 h-4 text-slate-200" />}
+                        {isAgri ? <Wheat className="w-4 h-4 text-[#D97924]" /> : <Plane    className="text-emerald-400 w-4 h-4 text-[#D97924]" />}
                       </div>
 
                       {/* Placa em Destaque Alto Contraste */}
                       <div className="shrink-0 flex flex-col items-start">
                         <div className="flex items-center gap-1.5">
-                          <span className="font-mono font-black text-sm sm:text-base text-emerald-300 bg-slate-900 border-2 border-emerald-500/50 px-2.5 py-0.5 rounded-lg tracking-wider shadow-inner">
+                          <span className="font-mono font-black text-sm sm:text-base text-amber-400 bg-slate-900 border-2 border-amber-9500/50 px-2.5 py-0.5 rounded-lg tracking-wider shadow-inner">
                             {placaVeic}
                           </span>
                           {isAgri && reg.fct && reg.fct !== 'N/A' && reg.fct !== '-' ? (
@@ -617,7 +617,7 @@ export const DailyControlModal: React.FC<DailyControlModalProps> = ({
                         <ArrowRight className="w-3 h-3 text-slate-500 shrink-0" />
                         <span className="text-slate-400 text-[10px] font-sans uppercase font-bold">Ret:</span>
                         {hChegada ? (
-                          <strong className="text-emerald-400">{hChegada}</strong>
+                          <strong className="text-amber-400">{hChegada}</strong>
                         ) : (
                           <span className="text-amber-400 font-bold font-sans animate-pulse text-[11px]">Fora</span>
                         )}
@@ -639,10 +639,10 @@ export const DailyControlModal: React.FC<DailyControlModalProps> = ({
                           <button
                             type="button"
                             onClick={() => setStatusAba('FINALIZADO')}
-                            className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-950/90 text-emerald-300 border border-emerald-500/50 hover:bg-emerald-900 transition-colors cursor-pointer shadow-sm"
+                            className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-950/90 text-amber-400 border border-amber-9500/50 hover:bg-amber-950 transition-colors cursor-pointer shadow-sm"
                             title="Filtrar veículos com retorno concluído"
                           >
-                            <CheckCircle2 className="w-3 h-3 text-emerald-400 shrink-0" />
+                            <CheckCircle2 className="w-3 h-3 text-amber-400 shrink-0" />
                             <span>No Pátio</span>
                           </button>
                         )}
@@ -654,7 +654,7 @@ export const DailyControlModal: React.FC<DailyControlModalProps> = ({
                           <button
                             type="button"
                             onClick={() => onAjustarHorarios(reg)}
-                            className="inline-flex items-center gap-1 px-2.5 py-1.5 text-xs text-white bg-emerald-600 hover:bg-emerald-500 rounded-lg font-bold shadow-sm transition-all cursor-pointer hover:scale-105 active:scale-95"
+                            className="inline-flex items-center gap-1 px-2.5 py-1.5 text-xs text-white bg-amber-600 hover:bg-amber-9500 rounded-lg font-bold shadow-sm transition-all cursor-pointer hover:scale-105 active:scale-95"
                             title="Registrar Retorno do Veículo"
                           >
                             <Check className="w-3.5 h-3.5" />
@@ -668,7 +668,7 @@ export const DailyControlModal: React.FC<DailyControlModalProps> = ({
                           className="inline-flex items-center gap-1 px-2.5 py-1.5 text-xs text-slate-200 hover:text-white bg-slate-900 hover:bg-slate-800 border border-slate-700 rounded-lg font-bold transition-colors cursor-pointer"
                           title="Ver Ficha Completa e Assinatura"
                         >
-                          <Eye className="w-3.5 h-3.5 text-emerald-400" />
+                          <Eye className="w-3.5 h-3.5 text-amber-400" />
                           <span className="hidden xs:inline">Ficha</span>
                         </button>
                       </div>

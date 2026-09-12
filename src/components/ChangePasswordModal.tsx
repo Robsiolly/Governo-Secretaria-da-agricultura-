@@ -84,20 +84,20 @@ export const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({
     <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
       <div className="bg-slate-900 border-2 border-slate-700 w-full max-w-md rounded-3xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
         {/* Header */}
-        <div className="bg-gradient-to-r from-emerald-900 to-teal-900 px-6 py-5 border-b border-emerald-800 flex items-center justify-between">
+        <div className="bg-gradient-to-r from-amber-950 to-amber-950 px-6 py-5 border-b border-amber-950 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-emerald-800/80 border border-emerald-500/40 flex items-center justify-center text-emerald-200 shadow-inner">
+            <div className="w-10 h-10 rounded-2xl bg-amber-950/80 border border-amber-9500/40 flex items-center justify-center text-amber-950 shadow-inner">
               <KeyRound className="w-5 h-5" />
             </div>
             <div>
               <h2 className="text-lg font-black text-white tracking-tight">Alterar Senha de Acesso</h2>
-              <p className="text-xs text-emerald-200 font-medium">{usuario.nome} • Matrícula: {usuario.matricula}</p>
+              <p className="text-xs text-amber-950 font-medium">{usuario.nome} • Matrícula: {usuario.matricula}</p>
             </div>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="text-emerald-300 hover:text-white p-2 rounded-xl hover:bg-emerald-800/50 transition-colors cursor-pointer"
+            className="text-amber-400 hover:text-white p-2 rounded-xl hover:bg-amber-950/50 transition-colors cursor-pointer"
             aria-label="Fechar"
           >
             <X className="w-5 h-5" />
@@ -108,7 +108,7 @@ export const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           {sucesso ? (
             <div className="py-8 text-center space-y-3">
-              <div className="w-16 h-16 bg-emerald-500/20 border border-emerald-500/40 rounded-full flex items-center justify-center text-emerald-400 mx-auto">
+              <div className="w-16 h-16 bg-amber-9500/20 border border-amber-9500/40 rounded-full flex items-center justify-center text-amber-400 mx-auto">
                 <CheckCircle2 className="w-8 h-8" />
               </div>
               <h3 className="text-lg font-bold text-white">Senha Alterada!</h3>
@@ -137,7 +137,7 @@ export const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({
                     value={senhaAtual}
                     onChange={(e) => setSenhaAtual(e.target.value)}
                     placeholder="Digite sua senha atual"
-                    className="w-full bg-slate-950 border-2 border-slate-800 rounded-2xl pl-11 pr-4 py-3 text-white text-sm focus:border-emerald-500 focus:outline-none transition-colors font-medium placeholder:text-slate-600"
+                    className="w-full bg-slate-950 border-2 border-slate-800 rounded-2xl pl-11 pr-4 py-3 text-white text-sm focus:border-amber-9500 focus:outline-none transition-colors font-medium placeholder:text-slate-600"
                   />
                 </div>
               </div>
@@ -156,7 +156,7 @@ export const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({
                     value={novaSenha}
                     onChange={(e) => setNovaSenha(e.target.value)}
                     placeholder="Digite sua nova senha"
-                    className="w-full bg-slate-950 border-2 border-slate-800 rounded-2xl pl-11 pr-4 py-3 text-white text-sm focus:border-emerald-500 focus:outline-none transition-colors font-medium placeholder:text-slate-600"
+                    className="w-full bg-slate-950 border-2 border-slate-800 rounded-2xl pl-11 pr-4 py-3 text-white text-sm focus:border-amber-9500 focus:outline-none transition-colors font-medium placeholder:text-slate-600"
                   />
                 </div>
               </div>
@@ -175,7 +175,7 @@ export const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({
                     value={confirmarSenha}
                     onChange={(e) => setConfirmarSenha(e.target.value)}
                     placeholder="Repita a nova senha"
-                    className="w-full bg-slate-950 border-2 border-slate-800 rounded-2xl pl-11 pr-4 py-3 text-white text-sm focus:border-emerald-500 focus:outline-none transition-colors font-medium placeholder:text-slate-600"
+                    className="w-full bg-slate-950 border-2 border-slate-800 rounded-2xl pl-11 pr-4 py-3 text-white text-sm focus:border-amber-9500 focus:outline-none transition-colors font-medium placeholder:text-slate-600"
                   />
                 </div>
               </div>
@@ -190,7 +190,7 @@ export const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({
                 </button>
                 <button
                   type="submit"
-                  className="px-6 py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm shadow-lg shadow-emerald-950/60 transition-all cursor-pointer flex items-center gap-2"
+                  className="px-6 py-3 rounded-2xl bg-amber-600 hover:bg-amber-9500 text-white font-bold text-sm shadow-lg shadow-amber-950/60 transition-all cursor-pointer flex items-center gap-2"
                 >
                   <KeyRound className="w-4 h-4" />
                   <span>Salvar Nova Senha</span>

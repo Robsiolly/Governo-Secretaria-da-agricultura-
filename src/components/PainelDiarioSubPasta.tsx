@@ -5,7 +5,7 @@ import {
   CheckCircle2, 
   Car, 
   Wheat, 
-  Compass, 
+  Plane, 
   FileText, 
   Plus, 
   Search, 
@@ -143,9 +143,9 @@ export const PainelDiarioSubPasta: React.FC<PainelDiarioSubPastaProps> = ({
           <div className="bg-black border border-neutral-800 rounded-2xl p-4 flex items-center justify-between shadow-inner">
             <div>
               <span className="text-[11px] text-neutral-400 block font-semibold uppercase tracking-wider">Retornos Concluídos</span>
-              <span className="text-xl sm:text-2xl font-bold text-emerald-400 font-mono mt-1 block">{finalizadosCount}</span>
+              <span className="text-xl sm:text-2xl font-bold text-amber-400 font-mono mt-1 block">{finalizadosCount}</span>
             </div>
-            <div className="p-2.5 rounded-xl bg-emerald-950/40 border border-emerald-500/30 text-emerald-400">
+            <div className="p-2.5 rounded-xl bg-amber-950/40 border border-amber-9500/30 text-amber-400">
               <CheckCircle2 className="w-5 h-5" />
             </div>
           </div>
@@ -155,7 +155,7 @@ export const PainelDiarioSubPasta: React.FC<PainelDiarioSubPastaProps> = ({
               <span className="text-[11px] text-neutral-400 block font-semibold uppercase tracking-wider">Sec. Agricultura</span>
               <span className="text-xl sm:text-2xl font-bold text-white font-mono mt-1 block">{agriculturaCount}</span>
             </div>
-            <div className="p-2.5 rounded-xl bg-neutral-900 border border-neutral-700 text-emerald-400">
+            <div className="p-2.5 rounded-xl bg-neutral-900 border border-neutral-700 text-amber-400">
               <Wheat className="w-5 h-5" />
             </div>
           </div>
@@ -166,7 +166,7 @@ export const PainelDiarioSubPasta: React.FC<PainelDiarioSubPastaProps> = ({
               <span className="text-xl sm:text-2xl font-bold text-white font-mono mt-1 block">{turismoCount}</span>
             </div>
             <div className="p-2.5 rounded-xl bg-neutral-900 border border-neutral-700 text-sky-400">
-              <Compass className="w-5 h-5" />
+              <Plane    className="text-emerald-400 w-5 h-5" />
             </div>
           </div>
         </div>
@@ -210,7 +210,7 @@ export const PainelDiarioSubPasta: React.FC<PainelDiarioSubPastaProps> = ({
               type="button"
               onClick={() => setStatusFiltro('FINALIZADO')}
               className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
-                statusFiltro === 'FINALIZADO' ? 'bg-emerald-600 text-white font-bold' : 'text-neutral-400 hover:text-white'
+                statusFiltro === 'FINALIZADO' ? 'bg-amber-600 text-white font-bold' : 'text-neutral-400 hover:text-white'
               }`}
             >
               Concluídos ({finalizadosCount})
@@ -260,7 +260,7 @@ export const PainelDiarioSubPasta: React.FC<PainelDiarioSubPastaProps> = ({
                       <span className="text-[11px] font-mono font-bold text-neutral-300 bg-black px-3 py-1 rounded-full border border-neutral-800">
                         {reg.fct}
                       </span>
-                      <h4 className="text-base font-bold text-white mt-2 group-hover:text-emerald-400 transition-colors">
+                      <h4 className="text-base font-bold text-white mt-2 group-hover:text-amber-400 transition-colors">
                         {reg.motorista}
                       </h4>
                     </div>
@@ -268,7 +268,7 @@ export const PainelDiarioSubPasta: React.FC<PainelDiarioSubPastaProps> = ({
                     <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
                       isEmTransito 
                         ? 'bg-amber-950/60 text-amber-400 border border-amber-600/40' 
-                        : 'bg-emerald-950/60 text-emerald-400 border border-emerald-500/40'
+                        : 'bg-amber-950/60 text-amber-400 border border-amber-9500/40'
                     }`}>
                       {isEmTransito ? 'Em Trânsito' : 'Concluído'}
                     </span>
@@ -278,7 +278,7 @@ export const PainelDiarioSubPasta: React.FC<PainelDiarioSubPastaProps> = ({
                     <div className="flex items-center gap-2">
                       <span className="text-neutral-500 font-medium">Secretaria:</span>
                       <span className="text-white font-semibold flex items-center gap-1.5">
-                        {isAgricultura ? <Wheat className="w-3.5 h-3.5 text-emerald-400" /> : <Compass className="w-3.5 h-3.5 text-sky-400" />}
+                        {isAgricultura ? <Wheat className="w-3.5 h-3.5 text-[#D97924]" /> : <Plane    className="text-emerald-400 w-3.5 h-3.5 text-[#D97924]" />}
                         {reg.secretaria}
                       </span>
                     </div>

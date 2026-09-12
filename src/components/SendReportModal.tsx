@@ -11,7 +11,7 @@ import {
   MessageCircle,
   ShieldCheck,
   Wheat,
-  Compass,
+  Plane,
   ChevronLeft,
   ChevronRight,
   Car,
@@ -328,10 +328,10 @@ export const SendReportModal: React.FC<SendReportModalProps> = ({
         {/* Corpo com Rolagem */}
         <div className="p-5 sm:p-7 overflow-y-auto space-y-6">
           {/* AVISO DE SIGILO DAS SENHAS */}
-          <div className="bg-emerald-950/40 border-2 border-emerald-600/40 rounded-2xl p-4 flex items-start gap-3">
-            <ShieldCheck className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
-            <div className="text-xs sm:text-sm text-emerald-200">
-              <strong className="text-emerald-300 font-bold block mb-0.5">
+          <div className="bg-amber-950/40 border-2 border-amber-600/40 rounded-2xl p-4 flex items-start gap-3">
+            <ShieldCheck className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
+            <div className="text-xs sm:text-sm text-amber-950">
+              <strong className="text-amber-400 font-bold block mb-0.5">
                 Segurança e Sigilo de Credenciais Ativos
               </strong>
               As senhas criadas pelos operadores são estritamente sigilosas e criptografadas.
@@ -440,8 +440,8 @@ export const SendReportModal: React.FC<SendReportModalProps> = ({
                     onClick={() => setSecretariaFiltro('Secretaria da Agricultura')}
                     className={`py-1.5 text-xs font-bold rounded-lg transition-all cursor-pointer flex items-center justify-center gap-1 ${
                       secretariaFiltro === 'Secretaria da Agricultura'
-                        ? 'bg-emerald-700 text-white shadow-sm'
-                        : 'text-slate-400 hover:text-emerald-300'
+                        ? 'bg-amber-600 text-white shadow-sm'
+                        : 'text-slate-400 hover:text-amber-400'
                     }`}
                   >
                     <Wheat className="w-3 h-3" />
@@ -456,7 +456,7 @@ export const SendReportModal: React.FC<SendReportModalProps> = ({
                         : 'text-slate-400 hover:text-amber-300'
                     }`}
                   >
-                    <Compass className="w-3 h-3" />
+                    <Plane    className="text-emerald-400 w-3 h-3" />
                     <span>Turismo</span>
                   </button>
                 </div>
@@ -494,8 +494,8 @@ export const SendReportModal: React.FC<SendReportModalProps> = ({
                     onClick={() => setStatusFiltro('FINALIZADO')}
                     className={`py-1.5 text-xs font-bold rounded-lg transition-all cursor-pointer ${
                       statusFiltro === 'FINALIZADO'
-                        ? 'bg-emerald-600 text-white shadow-sm'
-                        : 'text-slate-400 hover:text-emerald-300'
+                        ? 'bg-amber-600 text-white shadow-sm'
+                        : 'text-slate-400 hover:text-amber-400'
                     }`}
                   >
                     Finalizados
@@ -526,11 +526,11 @@ export const SendReportModal: React.FC<SendReportModalProps> = ({
             </div>
 
             <div className="bg-slate-950 border border-slate-800 rounded-2xl p-3.5">
-              <div className="text-xs font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-1.5 mb-1">
+              <div className="text-xs font-bold text-amber-400 uppercase tracking-wider flex items-center gap-1.5 mb-1">
                 <CheckCircle2 className="w-3.5 h-3.5" />
                 Finalizados
               </div>
-              <div className="text-2xl font-black text-emerald-300">{totalFinalizadosNoDia}</div>
+              <div className="text-2xl font-black text-amber-400">{totalFinalizadosNoDia}</div>
               <div className="text-[11px] text-slate-400 mt-0.5">viagens concluídas</div>
             </div>
 
@@ -586,7 +586,7 @@ export const SendReportModal: React.FC<SendReportModalProps> = ({
                             <span
                               className={`text-[10px] font-bold px-2 py-0.5 rounded-md border ${
                                 r.secretaria === 'Secretaria da Agricultura'
-                                  ? 'bg-emerald-950 text-emerald-300 border-emerald-800'
+                                  ? 'bg-amber-950 text-amber-400 border-amber-950'
                                   : 'bg-amber-950 text-amber-300 border-amber-800'
                               }`}
                             >
@@ -595,7 +595,7 @@ export const SendReportModal: React.FC<SendReportModalProps> = ({
                             <span
                               className={`text-[10px] font-bold px-2 py-0.5 rounded-md ${
                                 isFinalizado
-                                  ? 'bg-emerald-900/60 text-emerald-200'
+                                  ? 'bg-amber-950/60 text-amber-950'
                                   : 'bg-amber-900/60 text-amber-200'
                               }`}
                             >
@@ -642,7 +642,7 @@ export const SendReportModal: React.FC<SendReportModalProps> = ({
                 type="button"
                 onClick={handleCompartilharPdf}
                 disabled={compartilhando}
-                className="flex items-center justify-center gap-2.5 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-500 hover:to-emerald-600 text-white px-4 py-3 rounded-2xl text-sm font-bold shadow-md cursor-pointer transition-all min-h-[48px]"
+                className="flex items-center justify-center gap-2.5 bg-gradient-to-r from-amber-600 to-amber-600 hover:from-amber-9500 hover:to-amber-600 text-white px-4 py-3 rounded-2xl text-sm font-bold shadow-md cursor-pointer transition-all min-h-[48px]"
               >
                 <Share2 className="w-4 h-4" />
                 <span>{compartilhando ? 'Processando...' : 'Compartilhar PDF'}</span>
@@ -652,7 +652,7 @@ export const SendReportModal: React.FC<SendReportModalProps> = ({
               <button
                 type="button"
                 onClick={handleEnviarWhatsApp}
-                className="flex items-center justify-center gap-2.5 bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-3 rounded-2xl text-sm font-bold shadow-md cursor-pointer transition-all min-h-[48px]"
+                className="flex items-center justify-center gap-2.5 bg-amber-600 hover:bg-amber-9500 text-white px-4 py-3 rounded-2xl text-sm font-bold shadow-md cursor-pointer transition-all min-h-[48px]"
               >
                 <MessageCircle className="w-4 h-4" />
                 <span>Enviar p/ WhatsApp</span>
@@ -688,8 +688,8 @@ export const SendReportModal: React.FC<SendReportModalProps> = ({
               >
                 {copiado ? (
                   <>
-                    <Check className="w-4 h-4 text-emerald-400" />
-                    <span className="text-emerald-300">Copiado para a área de transferência!</span>
+                    <Check className="w-4 h-4 text-amber-400" />
+                    <span className="text-amber-400">Copiado para a área de transferência!</span>
                   </>
                 ) : (
                   <>

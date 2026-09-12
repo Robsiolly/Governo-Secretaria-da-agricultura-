@@ -49,9 +49,9 @@ export const PwaInstallPrompt: React.FC = () => {
   if (isInstalled || isDismissed || !deferredPrompt) return null;
 
   return (
-    <div className="bg-gradient-to-r from-emerald-950 via-slate-900 to-[#362619] border-y sm:border-2 border-emerald-500/50 p-3.5 sm:p-4 rounded-2xl shadow-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 animate-in fade-in slide-in-from-top-4 duration-300 w-full">
+    <div className="bg-gradient-to-r from-amber-950 via-slate-900 to-[#362619] border-y sm:border-2 border-amber-9500/50 p-3.5 sm:p-4 rounded-2xl shadow-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 animate-in fade-in slide-in-from-top-4 duration-300 w-full">
       <div className="flex items-center gap-3">
-        <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-emerald-500/20 border border-emerald-400/50 flex items-center justify-center text-emerald-300 shrink-0">
+        <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-amber-9500/20 border border-amber-400/50 flex items-center justify-center text-amber-400 shrink-0">
           <Smartphone className="w-5 h-5" />
         </div>
         <div className="min-w-0">
@@ -63,7 +63,7 @@ export const PwaInstallPrompt: React.FC = () => {
         <button
           type="button"
           onClick={handleInstallClick}
-          className="flex-1 sm:flex-initial flex items-center justify-center gap-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white px-3.5 py-2 rounded-xl text-xs font-bold shadow-md transition-all cursor-pointer min-h-[38px]"
+          className="flex-1 sm:flex-initial flex items-center justify-center gap-2 bg-gradient-to-r from-amber-600 to-amber-600 hover:from-amber-9500 hover:to-amber-9500 text-white px-3.5 py-2 rounded-xl text-xs font-bold shadow-md transition-all cursor-pointer min-h-[38px]"
         >
           <Download className="w-4 h-4" />
           <span>Instalar App</span>

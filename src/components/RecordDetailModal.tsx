@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Wheat, Compass, FileDown, Edit3, Trash2, CheckCircle2, Clock, Calendar, User, Building, Car, MapPin, PenTool, AlertTriangle } from 'lucide-react';
+import { X, Wheat, Plane, FileDown, Edit3, Trash2, CheckCircle2, Clock, Calendar, User, Building, Car, MapPin, PenTool, AlertTriangle } from 'lucide-react';
 import { RegistroVeiculo, UsuarioAutenticado } from '../types';
 import { PdfService } from '../services/pdfService';
 
@@ -50,11 +50,11 @@ export const RecordDetailModal: React.FC<RecordDetailModalProps> = ({
             <div
               className={`w-12 h-12 rounded-2xl flex items-center justify-center text-white shadow-lg ${
                 isAgri
-                  ? 'bg-gradient-to-br from-emerald-600 to-emerald-800 border-2 border-emerald-400/50'
+                  ? 'bg-gradient-to-br from-[#3A241D] to-[#5A3A2E] border-2 border-[#D97924]/40'
                   : 'bg-gradient-to-br from-[#8c6d46] to-[#6e5230] border-2 border-[#b08d57]/50'
               }`}
             >
-              {isAgri ? <Wheat className="w-6 h-6" /> : <Compass className="w-6 h-6" />}
+              {isAgri ? <Wheat className="w-6 h-6 text-[#D97924]" /> : <Plane    className="text-emerald-400 w-6 h-6 text-[#D97924]" />}
             </div>
             <div>
               <div className="flex items-center gap-3 flex-wrap">
@@ -69,7 +69,7 @@ export const RecordDetailModal: React.FC<RecordDetailModalProps> = ({
                   className={`text-xs sm:text-sm font-bold px-3 py-1 rounded-full ${
                     registro.status === 'EM_TRANSITO'
                       ? 'bg-[#362619] text-[#d4b896] border border-[#a8855d]/50'
-                      : 'bg-emerald-950 text-emerald-300 border border-emerald-500/50'
+                      : 'bg-[#3A241D] text-[#D97924] border border-[#5A3A2E]'
                   }`}
                 >
                   {registro.status === 'EM_TRANSITO' ? 'Em Trânsito' : 'Concluído'}
@@ -137,7 +137,7 @@ export const RecordDetailModal: React.FC<RecordDetailModalProps> = ({
                   <button
                     type="button"
                     onClick={handleSalvarRetorno}
-                    className="bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-bold px-3 py-2 rounded-xl transition-colors cursor-pointer"
+                    className="bg-amber-600 hover:bg-amber-9500 text-white text-sm font-bold px-3 py-2 rounded-xl transition-colors cursor-pointer"
                   >
                     Confirmar
                   </button>
@@ -183,7 +183,7 @@ export const RecordDetailModal: React.FC<RecordDetailModalProps> = ({
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
             <div className="bg-slate-950 border-2 border-slate-800 p-4 rounded-2xl">
               <span className="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5 mb-1.5">
-                <Calendar className="w-4 h-4 text-emerald-400" />
+                <Calendar className="w-4 h-4 text-amber-400" />
                 Data
               </span>
               <span className="text-base sm:text-lg font-bold text-white block">{dataFormatada}</span>
@@ -191,10 +191,10 @@ export const RecordDetailModal: React.FC<RecordDetailModalProps> = ({
 
             <div className="bg-slate-950 border-2 border-slate-800 p-4 rounded-2xl">
               <span className="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5 mb-1.5">
-                <Clock className="w-4 h-4 text-emerald-400" />
+                <Clock className="w-4 h-4 text-amber-400" />
                 Horário de Saída
               </span>
-              <span className="text-base sm:text-lg font-bold font-mono text-emerald-400 block">{registro.horarioSaida}</span>
+              <span className="text-base sm:text-lg font-bold font-mono text-amber-400 block">{registro.horarioSaida}</span>
             </div>
 
             <div className="bg-slate-950 border-2 border-slate-800 p-4 rounded-2xl">
@@ -237,7 +237,7 @@ export const RecordDetailModal: React.FC<RecordDetailModalProps> = ({
               </div>
               {registro.destino && (
                 <div className="flex items-start gap-2.5 text-sm sm:text-base text-slate-200">
-                  <MapPin className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
+                  <MapPin className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
                   <span>
                     Destino / Rota: <strong className="text-white font-bold">{registro.destino}</strong>
                   </span>
@@ -250,10 +250,10 @@ export const RecordDetailModal: React.FC<RecordDetailModalProps> = ({
           <div className="bg-slate-950 border-2 border-slate-800 rounded-2xl p-5 space-y-3">
             <div className="flex items-center justify-between">
               <span className="text-sm font-bold text-slate-200 flex items-center gap-2">
-                <PenTool className="w-4 h-4 text-emerald-400" />
+                <PenTool className="w-4 h-4 text-amber-400" />
                 Assinatura do Operador Responsável pelo Cadastro
               </span>
-              <span className="inline-flex items-center gap-1.5 text-xs text-emerald-300 font-bold bg-emerald-950 px-2.5 py-1 rounded-full border border-emerald-500/40">
+              <span className="inline-flex items-center gap-1.5 text-xs text-amber-400 font-bold bg-amber-950 px-2.5 py-1 rounded-full border border-amber-9500/40">
                 <CheckCircle2 className="w-3.5 h-3.5" />
                 Autenticado
               </span>
@@ -277,7 +277,7 @@ export const RecordDetailModal: React.FC<RecordDetailModalProps> = ({
               </span>
               {registro.matriculaFuncionario && (
                 <span>
-                  Matrícula: <strong className="text-emerald-300 font-mono font-bold">{registro.matriculaFuncionario}</strong>
+                  Matrícula: <strong className="text-amber-400 font-mono font-bold">{registro.matriculaFuncionario}</strong>
                 </span>
               )}
             </div>

@@ -71,7 +71,7 @@ export const QuickTimeModal: React.FC<QuickTimeModalProps> = ({
         {/* Header com fontes grandes para visualização fácil */}
         <div className="flex items-center justify-between px-6 py-5 border-b border-slate-800 bg-slate-900/95">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-2xl bg-emerald-950 border border-emerald-500/40 flex items-center justify-center text-emerald-400 shrink-0">
+            <div className="w-12 h-12 rounded-2xl bg-amber-950 border border-amber-9500/40 flex items-center justify-center text-amber-400 shrink-0">
               <Clock className="w-7 h-7" />
             </div>
             <div>
@@ -79,7 +79,7 @@ export const QuickTimeModal: React.FC<QuickTimeModalProps> = ({
                 Acessar e Alterar Horários
               </h2>
               <p className="text-sm text-slate-300">
-                Ajuste os horários de <strong className="text-emerald-400">Saída</strong> e <strong className="text-amber-400">Chegada</strong> do veículo
+                Ajuste os horários de <strong className="text-amber-400">Saída</strong> e <strong className="text-amber-400">Chegada</strong> do veículo
               </p>
             </div>
           </div>
@@ -106,7 +106,7 @@ export const QuickTimeModal: React.FC<QuickTimeModalProps> = ({
               </span>
             )}
             <span className={`font-semibold px-3 py-1 rounded-xl text-sm ${
-              isAgri ? 'bg-emerald-950/80 text-emerald-300 border border-emerald-600/40' : 'bg-amber-950/80 text-amber-300 border border-amber-600/40'
+              isAgri ? 'bg-amber-950/80 text-amber-400 border border-amber-600/40' : 'bg-amber-950/80 text-amber-300 border border-amber-600/40'
             }`}>
               {isAgri ? 'Sec. Agricultura' : 'Sec. Turismo'}
             </span>
@@ -127,16 +127,16 @@ export const QuickTimeModal: React.FC<QuickTimeModalProps> = ({
           )}
 
           {/* Bloco 1: Horário de Saída */}
-          <div className="bg-slate-950/80 border-2 border-emerald-500/30 rounded-2xl p-5 space-y-3">
+          <div className="bg-slate-950/80 border-2 border-amber-9500/30 rounded-2xl p-5 space-y-3">
             <div className="flex items-center justify-between flex-wrap gap-2">
               <label htmlFor="input-horario-saida" className="text-base font-bold text-white flex items-center gap-2">
-                <span className="w-3 h-3 rounded-full bg-emerald-400"></span>
+                <span className="w-3 h-3 rounded-full bg-amber-400"></span>
                 Horário de Saída do Veículo
               </label>
               <button
                 type="button"
                 onClick={handleDefinirSaidaAgora}
-                className="px-4 py-2 bg-emerald-900/60 hover:bg-emerald-800 text-emerald-200 font-semibold text-sm rounded-xl border border-emerald-500/40 transition-colors cursor-pointer"
+                className="px-4 py-2 bg-amber-950/60 hover:bg-amber-950 text-amber-950 font-semibold text-sm rounded-xl border border-amber-9500/40 transition-colors cursor-pointer"
               >
                 Colocar Hora Atual
               </button>
@@ -149,7 +149,7 @@ export const QuickTimeModal: React.FC<QuickTimeModalProps> = ({
                 required
                 value={saida}
                 onChange={(e) => setSaida(e.target.value)}
-                className="w-full bg-slate-900 border-2 border-slate-700 focus:border-emerald-400 rounded-2xl px-5 py-3.5 text-2xl font-bold font-mono text-emerald-300 focus:outline-none transition-colors"
+                className="w-full bg-slate-900 border-2 border-slate-700 focus:border-amber-400 rounded-2xl px-5 py-3.5 text-2xl font-bold font-mono text-amber-400 focus:outline-none transition-colors"
               />
             </div>
             <p className="text-xs text-slate-400">
@@ -206,7 +206,7 @@ export const QuickTimeModal: React.FC<QuickTimeModalProps> = ({
           <div className="bg-slate-800/60 border border-slate-700/80 rounded-2xl p-4 flex items-center justify-between">
             <span className="text-sm font-semibold text-slate-300">Status resultante da viagem:</span>
             {statusPrevisto === 'FINALIZADO' ? (
-              <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-sm font-bold bg-emerald-950 text-emerald-300 border border-emerald-500/40">
+              <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-sm font-bold bg-amber-950 text-amber-400 border border-amber-9500/40">
                 <CheckCircle2 className="w-4 h-4" />
                 Viagem Concluída
               </span>
@@ -229,7 +229,7 @@ export const QuickTimeModal: React.FC<QuickTimeModalProps> = ({
             </button>
             <button
               type="submit"
-              className="w-full sm:w-2/3 py-3.5 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-base shadow-xl shadow-emerald-950/50 transition-all cursor-pointer flex items-center justify-center gap-2"
+              className="w-full sm:w-2/3 py-3.5 rounded-2xl bg-gradient-to-r from-amber-600 to-amber-600 hover:from-amber-9500 hover:to-amber-9500 text-white font-bold text-base shadow-xl shadow-amber-950/50 transition-all cursor-pointer flex items-center justify-center gap-2"
             >
               <Check className="w-6 h-6" />
               <span>Salvar Horários Atualizados</span>
