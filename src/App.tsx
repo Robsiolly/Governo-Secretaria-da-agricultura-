@@ -218,7 +218,7 @@ export default function App() {
       />
 
       {/* Main Content Area */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6 space-y-4 sm:space-y-6">
         {/* Banner de Instalação PWA no Celular */}
         <PwaInstallPrompt />
 
@@ -241,9 +241,9 @@ export default function App() {
 
         {/* Listagem de Registros */}
         <div className="space-y-3">
-          <div className="flex items-center justify-between">
-            <h2 className="text-sm font-bold uppercase tracking-wider text-slate-300 flex items-center gap-2">
-              <FileText className="w-4 h-4 text-emerald-400" />
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <h2 className="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-300 flex items-center gap-2">
+              <FileText className="w-4 h-4 text-emerald-400 shrink-0" />
               <span>Registros de Tráfego e Circulação</span>
             </h2>
 
@@ -253,9 +253,9 @@ export default function App() {
                 setRegistroEmEdicao(null);
                 setIsModalCadastroOpen(true);
               }}
-              className="inline-flex items-center gap-2 text-sm sm:text-base text-emerald-300 hover:text-emerald-200 bg-emerald-950/80 hover:bg-emerald-900/90 border border-emerald-500/50 px-4 py-2.5 rounded-2xl font-bold transition-all shadow-md cursor-pointer"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 text-xs sm:text-base text-emerald-300 hover:text-emerald-200 bg-emerald-950/80 hover:bg-emerald-900/90 border border-emerald-500/50 px-4 py-2.5 rounded-2xl font-bold transition-all shadow-md cursor-pointer min-h-[44px]"
             >
-              <Plus className="w-5 h-5 text-emerald-400" />
+              <Plus className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400 shrink-0" />
               <span>Cadastrar Novo Veículo</span>
             </button>
           </div>

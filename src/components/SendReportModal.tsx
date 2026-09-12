@@ -21,6 +21,7 @@ import {
 } from 'lucide-react';
 import { RegistroVeiculo, Secretaria, UsuarioAutenticado } from '../types';
 import { PdfService } from '../services/pdfService';
+import { WhatsAppSelectModal } from './WhatsAppSelectModal';
 
 interface SendReportModalProps {
   isOpen: boolean;
@@ -48,6 +49,7 @@ export const SendReportModal: React.FC<SendReportModalProps> = ({
   const [statusFiltro, setStatusFiltro] = useState<'TODOS' | 'EM_TRANSITO' | 'FINALIZADO'>('TODOS');
   const [copiado, setCopiado] = useState(false);
   const [compartilhando, setCompartilhando] = useState(false);
+  const [isWhatsAppModalOpen, setIsWhatsAppModalOpen] = useState(false);
 
   // Se o modal foi aberto com nova data inicial, atualiza se necessário
   React.useEffect(() => {
@@ -189,17 +191,58 @@ export const SendReportModal: React.FC<SendReportModalProps> = ({
     }
   };
 
-  // 3. Enviar por WhatsApp
+  // 3. Enviar PDF por WhatsApp (Gera e Baixa o Arquivo PDF Oficial + Compartilha no WhatsApp)
   const handleEnviarWhatsApp = () => {
-    const texto = PdfService.gerarTextoRelatorio({
+    setIsWhatsAppModalOpen(true);
+  };
+
+  const handleConfirmarEnvioWhatsApp = async (numeroWhatsApp: string, nomeDestinatario?: string) => {
+    const options = {
       registros: registrosFiltrados,
       secretariaFiltro,
       dataFiltro: dataSelecionada,
       usuario,
-    });
-    const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(texto)}`;
+    };
+
+    // 1. Sempre gerar o documento PDF em formato Blob e acionar o download do arquivo .pdf
+    const { blob, fileName } = PdfService.obterRelatorioPdfBlob(options);
+    PdfService.gerarRelatorioDiario(options);
+
+    // 2. Tentar usar a Web Share API nativa para enviar o ARQUIVO PDF diretamente no WhatsApp (dispositivos móveis e navegadores suportados)
+    const pdfFile = new File([blob], fileName, { type: 'application/pdf' });
+    if (navigator.canShare && navigator.canShare({ files: [pdfFile] })) {
+      try {
+        await navigator.share({
+          title: 'Relatório Oficial de Frotas (PDF)',
+          text: `Relatório de Registros de Veículos em PDF - ${dataSelecionada || 'Todos'}`,
+          files: [pdfFile],
+        });
+        setIsWhatsAppModalOpen(false);
+        onToast(`Arquivo PDF enviado com sucesso para ${nomeDestinatario || 'WhatsApp'}!`);
+        return;
+      } catch (err) {
+        console.log('Compartilhamento nativo de arquivo PDF cancelado ou não suportado, usando fallback:', err);
+      }
+    }
+
+    // 3. Fallback: Se a Web Share API não estiver disponível (ex: navegadores Desktop), abre a conversa informando que o arquivo PDF foi baixado
+    let url = '';
+    const numLimpo = numeroWhatsApp ? numeroWhatsApp.replace(/\D/g, '') : '';
+    const mensagemPdf = encodeURIComponent(
+      `📄 *RELATÓRIO OFICIAL EM PDF GERADO*\n\n` +
+      `O arquivo *${fileName}* foi gerado e baixado no meu dispositivo.\n` +
+      `Estou anexando o documento PDF nesta conversa para análise.`
+    );
+
+    if (numLimpo) {
+      url = `https://api.whatsapp.com/send?phone=${numLimpo}&text=${mensagemPdf}`;
+    } else {
+      url = `https://api.whatsapp.com/send?text=${mensagemPdf}`;
+    }
+
     window.open(url, '_blank');
-    onToast('Abrindo WhatsApp com o relatório do dia selecionado...');
+    setIsWhatsAppModalOpen(false);
+    onToast(`PDF baixado! Anexe o arquivo ${fileName} na conversa aberta do WhatsApp.`);
   };
 
   // 4. Enviar por E-mail
@@ -676,6 +719,21 @@ export const SendReportModal: React.FC<SendReportModalProps> = ({
           </button>
         </div>
       </div>
+
+      {/* Modal para Escolha do Destinatário do WhatsApp */}
+      <WhatsAppSelectModal
+        isOpen={isWhatsAppModalOpen}
+        onClose={() => setIsWhatsAppModalOpen(false)}
+        onConfirmSend={handleConfirmarEnvioWhatsApp}
+        textoRelatorio={PdfService.gerarTextoRelatorio({
+          registros: registrosFiltrados,
+          secretariaFiltro,
+          dataFiltro: dataSelecionada,
+          usuario,
+        })}
+        dataRelatorio={dataSelecionada}
+        usuarioAtual={usuario}
+      />
     </div>
   );
 };

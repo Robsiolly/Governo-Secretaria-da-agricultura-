@@ -51,7 +51,7 @@ export const RecordDetailModal: React.FC<RecordDetailModalProps> = ({
               className={`w-12 h-12 rounded-2xl flex items-center justify-center text-white shadow-lg ${
                 isAgri
                   ? 'bg-gradient-to-br from-emerald-600 to-emerald-800 border-2 border-emerald-400/50'
-                  : 'bg-gradient-to-br from-amber-500 to-amber-700 border-2 border-amber-300/50'
+                  : 'bg-gradient-to-br from-[#8c6d46] to-[#6e5230] border-2 border-[#b08d57]/50'
               }`}
             >
               {isAgri ? <Wheat className="w-6 h-6" /> : <Compass className="w-6 h-6" />}
@@ -61,14 +61,14 @@ export const RecordDetailModal: React.FC<RecordDetailModalProps> = ({
                 {isAgri && registro.fct && registro.fct !== 'N/A' && registro.fct !== '-' ? (
                   <h3 className="text-xl sm:text-2xl font-black text-white font-mono">FCT: {registro.fct}</h3>
                 ) : (
-                  <span className="text-base sm:text-lg font-bold text-amber-300 bg-amber-950/70 border border-amber-800/60 px-3 py-1 rounded-xl">
+                  <span className="text-base sm:text-lg font-bold text-[#d4b896] bg-[#362619] border border-[#a8855d]/60 px-3 py-1 rounded-xl">
                     Sem FCT (Turismo)
                   </span>
                 )}
                 <span
                   className={`text-xs sm:text-sm font-bold px-3 py-1 rounded-full ${
                     registro.status === 'EM_TRANSITO'
-                      ? 'bg-amber-950 text-amber-300 border border-amber-500/50'
+                      ? 'bg-[#362619] text-[#d4b896] border border-[#a8855d]/50'
                       : 'bg-emerald-950 text-emerald-300 border border-emerald-500/50'
                   }`}
                 >
@@ -83,7 +83,7 @@ export const RecordDetailModal: React.FC<RecordDetailModalProps> = ({
             <button
               type="button"
               onClick={handleExportarFicha}
-              className="p-3 text-slate-300 hover:text-amber-300 hover:bg-slate-800 rounded-2xl transition-colors cursor-pointer border border-transparent hover:border-slate-700"
+              className="p-3 text-slate-300 hover:text-[#d4b896] hover:bg-slate-800 rounded-2xl transition-colors cursor-pointer border border-transparent hover:border-slate-700"
               title="Exportar Comprovante do Registro em PDF"
             >
               <FileDown className="w-6 h-6" />

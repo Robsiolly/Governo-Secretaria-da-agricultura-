@@ -42,7 +42,7 @@ export const AdminSummaryBar: React.FC<AdminSummaryBarProps> = ({
           </span>
         </div>
         <div className="flex items-center justify-between text-xs sm:text-sm text-slate-300 font-medium">
-          <span className="text-amber-300 font-semibold">{agriEmTransito} em trânsito</span>
+          <span className="text-[#d4b896] font-semibold">{agriEmTransito} em trânsito</span>
           <span className="text-emerald-300 font-semibold">{agriRegistros.length - agriEmTransito} no pátio</span>
         </div>
       </button>
@@ -51,21 +51,21 @@ export const AdminSummaryBar: React.FC<AdminSummaryBarProps> = ({
       <button
         type="button"
         onClick={() => onFiltrarSecretaria('Secretaria do Turismo')}
-        className="bg-slate-900 hover:bg-slate-850 border-2 border-slate-700 hover:border-amber-400 p-5 rounded-3xl text-left transition-all group cursor-pointer shadow-lg"
+        className="bg-slate-900 hover:bg-slate-850 border-2 border-slate-700 hover:border-[#a8855d] p-5 rounded-3xl text-left transition-all group cursor-pointer shadow-lg"
       >
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-2xl bg-amber-950 border border-amber-500/40 flex items-center justify-center text-amber-400 group-hover:scale-105 transition-transform shrink-0">
+            <div className="w-12 h-12 rounded-2xl bg-[#362619] border border-[#a8855d]/40 flex items-center justify-center text-[#d4b896] group-hover:scale-105 transition-transform shrink-0">
               <Compass className="w-6 h-6" />
             </div>
             <span className="text-sm sm:text-base font-bold text-slate-100">Sec. Turismo</span>
           </div>
-          <span className="text-2xl sm:text-3xl font-black font-mono text-amber-400 bg-amber-950/80 px-3 py-1 rounded-xl border border-amber-600/40">
+          <span className="text-2xl sm:text-3xl font-black font-mono text-[#d4b896] bg-[#362619]/80 px-3 py-1 rounded-xl border border-[#a8855d]/40">
             {turRegistros.length}
           </span>
         </div>
         <div className="flex items-center justify-between text-xs sm:text-sm text-slate-300 font-medium">
-          <span className="text-amber-300 font-semibold">{turEmTransito} em trânsito</span>
+          <span className="text-[#d4b896] font-semibold">{turEmTransito} em trânsito</span>
           <span className="text-emerald-300 font-semibold">{turRegistros.length - turEmTransito} no pátio</span>
         </div>
       </button>
@@ -74,16 +74,16 @@ export const AdminSummaryBar: React.FC<AdminSummaryBarProps> = ({
       <button
         type="button"
         onClick={() => onFiltrarStatus('EM_TRANSITO')}
-        className="bg-slate-900 hover:bg-slate-850 border-2 border-slate-700 hover:border-amber-400 p-5 rounded-3xl text-left transition-all group cursor-pointer shadow-lg"
+        className="bg-slate-900 hover:bg-slate-850 border-2 border-slate-700 hover:border-[#a8855d] p-5 rounded-3xl text-left transition-all group cursor-pointer shadow-lg"
       >
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-2xl bg-slate-800 flex items-center justify-center text-amber-400 shrink-0">
+            <div className="w-12 h-12 rounded-2xl bg-slate-800 flex items-center justify-center text-[#d4b896] shrink-0">
               <Clock className="w-6 h-6 animate-pulse" />
             </div>
             <span className="text-sm sm:text-base font-bold text-slate-100">Em Trânsito</span>
           </div>
-          <span className="text-2xl sm:text-3xl font-black font-mono text-amber-400 bg-amber-950/80 px-3 py-1 rounded-xl border border-amber-600/40">
+          <span className="text-2xl sm:text-3xl font-black font-mono text-[#d4b896] bg-[#362619]/80 px-3 py-1 rounded-xl border border-[#a8855d]/40">
             {totalEmTransito}
           </span>
         </div>

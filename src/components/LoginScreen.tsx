@@ -113,7 +113,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
             <div className="w-9 h-9 rounded-lg bg-emerald-700/80 border border-emerald-400/40 flex items-center justify-center text-emerald-200 shadow-md">
               <Wheat className="w-5 h-5" />
             </div>
-            <div className="w-9 h-9 rounded-lg bg-amber-600/80 border border-amber-400/40 flex items-center justify-center text-amber-100 shadow-md">
+            <div className="w-9 h-9 rounded-lg bg-[#8c6d46]/90 border border-[#b08d57]/40 flex items-center justify-center text-[#f5ebe0] shadow-md">
               <Compass className="w-5 h-5" />
             </div>
           </div>
@@ -137,7 +137,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
       {/* Card Principal */}
       <div className="w-full max-w-lg mx-auto my-auto py-6">
         <div className="bg-slate-900 border-2 border-slate-700 shadow-2xl rounded-3xl p-6 sm:p-10 backdrop-blur-sm relative overflow-hidden">
-          <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-emerald-500 via-teal-400 to-amber-500" />
+          <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-emerald-500 via-teal-400 to-[#9a7852]" />
 
           {/* Cabeçalho do Card */}
           <div className="text-center mb-6">

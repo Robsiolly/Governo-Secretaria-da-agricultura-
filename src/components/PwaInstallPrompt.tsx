@@ -49,21 +49,21 @@ export const PwaInstallPrompt: React.FC = () => {
   if (isInstalled || isDismissed || !deferredPrompt) return null;
 
   return (
-    <div className="bg-gradient-to-r from-emerald-950 via-slate-900 to-amber-950 border-y sm:border-2 border-emerald-500/50 p-4 sm:rounded-2xl shadow-2xl flex items-center justify-between gap-4 animate-in fade-in slide-in-from-top-4 duration-300">
+    <div className="bg-gradient-to-r from-emerald-950 via-slate-900 to-[#362619] border-y sm:border-2 border-emerald-500/50 p-3.5 sm:p-4 rounded-2xl shadow-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 animate-in fade-in slide-in-from-top-4 duration-300 w-full">
       <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-xl bg-emerald-500/20 border border-emerald-400/50 flex items-center justify-center text-emerald-300 shrink-0">
+        <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-emerald-500/20 border border-emerald-400/50 flex items-center justify-center text-emerald-300 shrink-0">
           <Smartphone className="w-5 h-5" />
         </div>
-        <div>
-          <h4 className="font-bold text-sm text-white leading-tight">Instalar Aplicativo no Celular</h4>
-          <p className="text-xs text-slate-300">Instale na tela inicial do seu celular para acesso direto e sem barras de endereço</p>
+        <div className="min-w-0">
+          <h4 className="font-bold text-xs sm:text-sm text-white leading-tight">Instalar Aplicativo no Celular</h4>
+          <p className="text-[11px] sm:text-xs text-slate-300 leading-snug">Instale na tela inicial para acesso rápido direto no seu smartphone</p>
         </div>
       </div>
-      <div className="flex items-center gap-2 shrink-0">
+      <div className="flex items-center gap-2 shrink-0 w-full sm:w-auto justify-end">
         <button
           type="button"
           onClick={handleInstallClick}
-          className="flex items-center gap-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white px-3.5 py-2 rounded-xl text-xs font-bold shadow-md transition-all cursor-pointer"
+          className="flex-1 sm:flex-initial flex items-center justify-center gap-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white px-3.5 py-2 rounded-xl text-xs font-bold shadow-md transition-all cursor-pointer min-h-[38px]"
         >
           <Download className="w-4 h-4" />
           <span>Instalar App</span>
@@ -71,7 +71,7 @@ export const PwaInstallPrompt: React.FC = () => {
         <button
           type="button"
           onClick={() => setIsDismissed(true)}
-          className="p-2 text-slate-400 hover:text-white rounded-lg transition-colors cursor-pointer"
+          className="p-2 text-slate-400 hover:text-white rounded-lg transition-colors cursor-pointer min-h-[38px] min-w-[38px] flex items-center justify-center"
           title="Fechar"
         >
           <X className="w-4 h-4" />

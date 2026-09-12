@@ -28,16 +28,16 @@ export const PdfService = {
     // 1. Cores Institucionais
     const primaryColor: [number, number, number] = [15, 23, 42]; // Slate 900
     const emeraldColor: [number, number, number] = [5, 150, 105]; // Emerald 600
-    const goldColor: [number, number, number] = [217, 119, 6]; // Amber 600
+    const matteBrownColor: [number, number, number] = [154, 115, 68]; // Marrom Claro Fosco (#9a7344)
 
     // Top Header Banner
     doc.setFillColor(...primaryColor);
     doc.rect(0, 0, pageWidth, 28, 'F');
 
-    // Accent line (Emerald & Amber dual stripe for Agriculture & Tourism)
+    // Accent line (Emerald & Matte Brown dual stripe for Agriculture & Tourism)
     doc.setFillColor(...emeraldColor);
     doc.rect(0, 28, pageWidth / 2, 2.5, 'F');
-    doc.setFillColor(...goldColor);
+    doc.setFillColor(...matteBrownColor);
     doc.rect(pageWidth / 2, 28, pageWidth / 2, 2.5, 'F');
 
     // Title & Institutional Header
