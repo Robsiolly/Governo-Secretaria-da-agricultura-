@@ -532,7 +532,7 @@ export const DailyControlModal: React.FC<DailyControlModalProps> = ({
               )}
             </div>
           ) : (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3.5">
+            <div className="space-y-2">
               {listaParaExibir.map((reg) => {
                 const isAgri = reg.secretaria === 'Secretaria da Agricultura';
                 const isEmTransito = reg.status === 'EM_TRANSITO';
@@ -542,119 +542,135 @@ export const DailyControlModal: React.FC<DailyControlModalProps> = ({
                 const hSaida = reg.horarioSaida || (reg as any).horaSaida || '--:--';
                 const hChegada = reg.horarioChegada || (reg as any).horaChegada || '';
                 const andarLocal = reg.andar || (reg as any).andarAtendimento || 'Térreo';
+                const dataReg = reg.data ? new Date(reg.data + 'T00:00:00').toLocaleDateString('pt-BR') : '';
 
                 return (
                   <div
                     key={reg.id}
-                    className={`bg-slate-950 border rounded-2xl p-3 sm:p-3.5 shadow-md space-y-2.5 transition-all hover:border-slate-600 ${
-                      isEmTransito ? 'border-amber-500/50' : 'border-emerald-500/40'
+                    className={`bg-slate-950 border rounded-xl p-2.5 sm:py-2.5 sm:px-3.5 shadow-sm transition-all flex flex-col md:flex-row md:items-center justify-between gap-2.5 sm:gap-3 border-l-4 ${
+                      isEmTransito
+                        ? 'border-l-amber-400 border-t-slate-800 border-r-slate-800 border-b-slate-800 bg-amber-950/10'
+                        : 'border-l-emerald-500 border-t-slate-800 border-r-slate-800 border-b-slate-800'
                     }`}
                   >
-                    {/* Cabeçalho do Card (Linha Única) */}
-                    <div className="flex items-center justify-between gap-2">
-                      <div className="flex items-center gap-2 min-w-0">
-                        <div
-                          className={`w-7 h-7 rounded-lg flex items-center justify-center text-white shrink-0 ${
-                            isAgri ? 'bg-emerald-800' : 'bg-slate-700'
-                          }`}
-                        >
-                          {isAgri ? <Wheat className="w-4 h-4" /> : <Compass className="w-4 h-4 text-slate-200" />}
-                        </div>
-                        <div className="min-w-0 flex items-center gap-1.5 flex-wrap">
-                          {isAgri && reg.fct && reg.fct !== 'N/A' ? (
-                            <span className="font-mono font-bold text-white text-xs sm:text-sm bg-slate-900 px-2 py-0.5 rounded border border-slate-700">
+                    {/* Lado Esquerdo: Placa com Super Destaque + Secretaria/FCT + Motorista */}
+                    <div className="flex items-center gap-3 min-w-0 flex-1">
+                      {/* Ícone da Secretaria */}
+                      <div
+                        className={`w-8 h-8 rounded-xl flex items-center justify-center text-white shrink-0 shadow-sm ${
+                          isAgri ? 'bg-emerald-800 border border-emerald-500/40' : 'bg-slate-750 border border-slate-600'
+                        }`}
+                        title={reg.secretaria}
+                      >
+                        {isAgri ? <Wheat className="w-4 h-4 text-emerald-200" /> : <Compass className="w-4 h-4 text-slate-200" />}
+                      </div>
+
+                      {/* Placa em Destaque Alto Contraste */}
+                      <div className="shrink-0 flex flex-col items-start">
+                        <div className="flex items-center gap-1.5">
+                          <span className="font-mono font-black text-sm sm:text-base text-emerald-300 bg-slate-900 border-2 border-emerald-500/50 px-2.5 py-0.5 rounded-lg tracking-wider shadow-inner">
+                            {placaVeic}
+                          </span>
+                          {isAgri && reg.fct && reg.fct !== 'N/A' && reg.fct !== '-' ? (
+                            <span className="font-mono text-xs font-bold text-slate-300 bg-slate-800 px-1.5 py-0.5 rounded border border-slate-700">
                               {reg.fct}
                             </span>
                           ) : (
-                            <span className="text-[11px] font-bold text-slate-300 bg-slate-900 border border-slate-700 px-1.5 py-0.5 rounded">
-                              Turismo (Sem FCT)
+                            <span className="text-[10px] font-bold text-slate-400 bg-slate-800 px-1.5 py-0.5 rounded border border-slate-700 hidden sm:inline">
+                              Turismo
                             </span>
                           )}
-                          <span className="text-[11px] text-slate-400 font-medium truncate hidden sm:inline">
-                            • {reg.secretaria}
-                          </span>
                         </div>
+                        <span className="text-[11px] text-slate-400 font-medium truncate max-w-[140px] sm:max-w-[170px]">
+                          {modeloVeic}
+                        </span>
                       </div>
 
-                      {/* Status Badge compacto */}
-                      <div className="shrink-0">
-                        {isEmTransito ? (
-                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-bold bg-slate-900 text-amber-300 border border-amber-500/40">
-                            <Clock className="w-3 h-3 animate-pulse text-amber-400" />
-                            Em Trânsito
+                      <div className="h-7 w-px bg-slate-800 hidden sm:block shrink-0" />
+
+                      {/* Nome do Motorista em Destaque + Destino */}
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <span className="font-black text-sm sm:text-base text-white truncate max-w-[220px] sm:max-w-[300px]">
+                            {motoristaNome}
                           </span>
+                          <span className="text-slate-500 hidden sm:inline">•</span>
+                          <span className="text-xs text-slate-300 font-medium truncate max-w-[180px] sm:max-w-[260px]">
+                            {reg.destino || 'Serviço'} {andarLocal && andarLocal !== 'Térreo' && `(${andarLocal})`}
+                          </span>
+                        </div>
+
+                        <div className="flex items-center gap-2 text-[11px] text-slate-400 font-medium flex-wrap">
+                          <span className="text-slate-400 truncate max-w-[160px]">{reg.secretaria}</span>
+                          {dataReg && <span>• Data: <strong className="text-slate-300">{dataReg}</strong></span>}
+                          <span className="hidden sm:inline">• Resp: <strong className="text-slate-300">{reg.funcionarioResponsavel}</strong></span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Lado Direito: Horários + Status + Ações Compactas */}
+                    <div className="flex items-center justify-between md:justify-end gap-2 sm:gap-3 shrink-0 pt-1.5 md:pt-0 border-t md:border-t-0 border-slate-800/60">
+                      {/* Horários */}
+                      <div className="flex items-center gap-1.5 bg-slate-900 px-2.5 py-1 rounded-lg border border-slate-800 font-mono text-xs shrink-0">
+                        <span className="text-slate-400 text-[10px] font-sans uppercase font-bold">Saída:</span>
+                        <strong className="text-white">{hSaida}</strong>
+                        <ArrowRight className="w-3 h-3 text-slate-500 shrink-0" />
+                        <span className="text-slate-400 text-[10px] font-sans uppercase font-bold">Ret:</span>
+                        {hChegada ? (
+                          <strong className="text-emerald-400">{hChegada}</strong>
                         ) : (
-                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-bold bg-emerald-950 text-emerald-300 border border-emerald-500/40">
-                            <CheckCircle2 className="w-3 h-3 text-emerald-400" />
-                            Chegou (Pátio)
-                          </span>
+                          <span className="text-amber-400 font-bold font-sans animate-pulse text-[11px]">Fora</span>
                         )}
                       </div>
-                    </div>
 
-                    {/* Conteúdo Principal em Grid Compacta */}
-                    <div className="bg-slate-900/90 rounded-xl p-2.5 border border-slate-800 space-y-1.5 text-xs">
-                      <div className="grid grid-cols-2 gap-2">
-                        <div>
-                          <span className="text-[10px] uppercase font-bold text-slate-400 block">Motorista:</span>
-                          <strong className="text-white font-bold block truncate">{motoristaNome}</strong>
-                        </div>
-                        <div>
-                          <span className="text-[10px] uppercase font-bold text-slate-400 block">Veículo / Placa:</span>
-                          <span className="text-slate-200 font-semibold block truncate">
-                            {modeloVeic} <strong className="font-mono font-bold text-emerald-300">{placaVeic}</strong>
-                          </span>
-                        </div>
+                      {/* Badge de Status */}
+                      <div className="shrink-0">
+                        {isEmTransito ? (
+                          <button
+                            type="button"
+                            onClick={() => setStatusAba('EM_TRANSITO')}
+                            className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-black bg-amber-950/90 text-amber-300 border border-amber-500/60 hover:bg-amber-900 transition-colors cursor-pointer shadow-sm"
+                            title="Filtrar veículos em trânsito"
+                          >
+                            <Clock className="w-3 h-3 animate-pulse text-amber-400 shrink-0" />
+                            <span>Na Rua</span>
+                          </button>
+                        ) : (
+                          <button
+                            type="button"
+                            onClick={() => setStatusAba('FINALIZADO')}
+                            className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-950/90 text-emerald-300 border border-emerald-500/50 hover:bg-emerald-900 transition-colors cursor-pointer shadow-sm"
+                            title="Filtrar veículos com retorno concluído"
+                          >
+                            <CheckCircle2 className="w-3 h-3 text-emerald-400 shrink-0" />
+                            <span>No Pátio</span>
+                          </button>
+                        )}
                       </div>
 
-                      <div className="grid grid-cols-2 gap-2 pt-1.5 border-t border-slate-800/80">
-                        <div>
-                          <span className="text-[10px] uppercase font-bold text-slate-400 block">Horários (Saída → Retorno):</span>
-                          <div className="flex items-center gap-1 text-white font-mono font-bold text-xs">
-                            <span>{hSaida}</span>
-                            <ArrowRight className="w-3 h-3 text-slate-500 shrink-0" />
-                            {hChegada ? (
-                              <span className="text-emerald-400">{hChegada}</span>
-                            ) : (
-                              <span className="text-amber-300 font-sans text-[11px] italic">Em curso...</span>
-                            )}
-                          </div>
-                        </div>
-                        <div>
-                          <span className="text-[10px] uppercase font-bold text-slate-400 block">Destino / Andar:</span>
-                          <span className="text-slate-300 font-medium block truncate">
-                            {reg.destino || 'Serviço Externo'} • <strong className="text-slate-200">{andarLocal}</strong>
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Rodapé Compacto com Informações de Responsável e Ações */}
-                    <div className="flex items-center justify-between gap-2 pt-0.5">
-                      <span className="text-[11px] text-slate-400 truncate">
-                        Resp: <strong className="text-slate-200">{reg.funcionarioResponsavel}</strong>
-                      </span>
-
-                      <div className="flex items-center gap-1.5 shrink-0">
-                        <button
-                          type="button"
-                          onClick={() => onSelecionarRegistro(reg)}
-                          className="inline-flex items-center gap-1 px-2.5 py-1 text-xs text-slate-200 hover:text-white bg-slate-900 hover:bg-slate-800 border border-slate-700 rounded-lg font-bold transition-colors cursor-pointer"
-                        >
-                          <Eye className="w-3 h-3 text-emerald-400" />
-                          <span>Ficha</span>
-                        </button>
-
+                      {/* Ações Compactas */}
+                      <div className="flex items-center gap-1 shrink-0">
                         {isEmTransito && (
                           <button
                             type="button"
                             onClick={() => onAjustarHorarios(reg)}
-                            className="inline-flex items-center gap-1 px-2.5 py-1 text-xs text-white bg-emerald-600 hover:bg-emerald-500 rounded-lg font-bold shadow transition-all cursor-pointer"
+                            className="inline-flex items-center gap-1 px-2.5 py-1.5 text-xs text-white bg-emerald-600 hover:bg-emerald-500 rounded-lg font-bold shadow-sm transition-all cursor-pointer hover:scale-105 active:scale-95"
+                            title="Registrar Retorno do Veículo"
                           >
-                            <Check className="w-3 h-3" />
-                            <span>Retorno</span>
+                            <Check className="w-3.5 h-3.5" />
+                            <span className="hidden sm:inline">Retorno</span>
                           </button>
                         )}
+
+                        <button
+                          type="button"
+                          onClick={() => onSelecionarRegistro(reg)}
+                          className="inline-flex items-center gap-1 px-2.5 py-1.5 text-xs text-slate-200 hover:text-white bg-slate-900 hover:bg-slate-800 border border-slate-700 rounded-lg font-bold transition-colors cursor-pointer"
+                          title="Ver Ficha Completa e Assinatura"
+                        >
+                          <Eye className="w-3.5 h-3.5 text-emerald-400" />
+                          <span className="hidden xs:inline">Ficha</span>
+                        </button>
                       </div>
                     </div>
                   </div>

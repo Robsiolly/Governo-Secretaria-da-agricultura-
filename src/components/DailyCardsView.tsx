@@ -360,29 +360,29 @@ export const DailyCardsView: React.FC<DailyCardsViewProps> = ({
         </div>
       )}
 
-      {/* Grade de Cartões Pequenos de Cada Registro */}
+      {/* Lista Compacta de Registros Diários (Cartões em Lista com Destaque para Placa e Motorista) */}
       {listaParaExibir.length === 0 ? (
-        <div className="bg-slate-900 border-2 border-dashed border-slate-800 rounded-3xl p-10 text-center space-y-4">
-          <div className="w-12 h-12 rounded-2xl bg-slate-800 flex items-center justify-center text-slate-400 mx-auto">
-            <Car className="w-6 h-6" />
+        <div className="bg-slate-900 border-2 border-dashed border-slate-800 rounded-3xl p-8 text-center space-y-3">
+          <div className="w-10 h-10 rounded-2xl bg-slate-800 flex items-center justify-center text-slate-400 mx-auto">
+            <Car className="w-5 h-5" />
           </div>
-          <h3 className="text-base sm:text-lg font-bold text-white">Nenhum registro encontrado no aplicativo</h3>
-          <p className="text-xs sm:text-sm text-slate-400 max-w-md mx-auto">
-            Ainda não há registros cadastrados para exibição no painel diário.
+          <h3 className="text-sm sm:text-base font-bold text-white">Nenhum registro encontrado</h3>
+          <p className="text-xs text-slate-400 max-w-md mx-auto">
+            Não há registros correspondentes aos filtros selecionados.
           </p>
           {onNovoRegistro && (
             <button
               type="button"
               onClick={onNovoRegistro}
-              className="px-5 py-3 rounded-2xl text-xs sm:text-sm font-bold bg-emerald-600 hover:bg-emerald-500 text-white cursor-pointer shadow-lg transition-all inline-flex items-center gap-2"
+              className="px-4 py-2 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white cursor-pointer shadow-lg transition-all inline-flex items-center gap-1.5"
             >
               <Car className="w-4 h-4" />
-              <span>Cadastrar Primeiro Veículo</span>
+              <span>Cadastrar Novo Veículo</span>
             </button>
           )}
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
+        <div className="space-y-2">
           {listaParaExibir.map((reg) => {
             const isAgri = reg.secretaria === 'Secretaria da Agricultura';
             const isEmTransito = reg.status === 'EM_TRANSITO';
@@ -397,32 +397,80 @@ export const DailyCardsView: React.FC<DailyCardsViewProps> = ({
             return (
               <div
                 key={reg.id}
-                className={`bg-slate-900 border-2 rounded-2xl p-3.5 shadow-lg space-y-2.5 transition-all hover:border-slate-600 ${
-                  isEmTransito ? 'border-amber-500/50' : 'border-emerald-500/40'
+                className={`bg-slate-900/95 hover:bg-slate-850 border rounded-xl p-2.5 sm:py-2.5 sm:px-3.5 shadow-sm transition-all flex flex-col md:flex-row md:items-center justify-between gap-2.5 sm:gap-3 border-l-4 ${
+                  isEmTransito
+                    ? 'border-l-amber-400 border-t-slate-800 border-r-slate-800 border-b-slate-800 bg-amber-950/10'
+                    : 'border-l-emerald-500 border-t-slate-800 border-r-slate-800 border-b-slate-800'
                 }`}
               >
-                {/* Topo do Card */}
-                <div className="flex items-center justify-between gap-2">
-                  <div className="flex items-center gap-2 min-w-0">
-                    <div
-                      className={`w-7 h-7 rounded-lg flex items-center justify-center text-white shrink-0 ${
-                        isAgri ? 'bg-emerald-800' : 'bg-slate-700'
-                      }`}
-                    >
-                      {isAgri ? <Wheat className="w-4 h-4" /> : <Compass className="w-4 h-4 text-slate-200" />}
-                    </div>
+                {/* Lado Esquerdo: Placa com Super Destaque + Secretaria/FCT + Motorista */}
+                <div className="flex items-center gap-3 min-w-0 flex-1">
+                  {/* Ícone da Secretaria */}
+                  <div
+                    className={`w-8 h-8 rounded-xl flex items-center justify-center text-white shrink-0 shadow-sm ${
+                      isAgri ? 'bg-emerald-800 border border-emerald-500/40' : 'bg-slate-750 border border-slate-600'
+                    }`}
+                    title={reg.secretaria}
+                  >
+                    {isAgri ? <Wheat className="w-4 h-4 text-emerald-200" /> : <Compass className="w-4 h-4 text-slate-200" />}
+                  </div>
 
-                    <div className="min-w-0 flex items-center gap-1.5 flex-wrap">
+                  {/* Placa em Destaque Alto Contraste */}
+                  <div className="shrink-0 flex flex-col items-start">
+                    <div className="flex items-center gap-1.5">
+                      <span className="font-mono font-black text-sm sm:text-base text-emerald-300 bg-slate-950 border-2 border-emerald-500/50 px-2.5 py-0.5 rounded-lg tracking-wider shadow-inner">
+                        {placaVeic}
+                      </span>
                       {isAgri && reg.fct && reg.fct !== 'N/A' && reg.fct !== '-' ? (
-                        <span className="font-mono font-black text-white text-xs sm:text-sm bg-slate-950 px-2 py-0.5 rounded border border-slate-750">
+                        <span className="font-mono text-xs font-bold text-slate-300 bg-slate-800 px-1.5 py-0.5 rounded border border-slate-700">
                           {reg.fct}
                         </span>
                       ) : (
-                        <span className="text-[11px] font-bold text-slate-300 bg-slate-950 border border-slate-750 px-1.5 py-0.5 rounded">
-                          Turismo (Sem FCT)
+                        <span className="text-[10px] font-bold text-slate-400 bg-slate-800 px-1.5 py-0.5 rounded border border-slate-700 hidden sm:inline">
+                          Turismo
                         </span>
                       )}
                     </div>
+                    <span className="text-[11px] text-slate-400 font-medium truncate max-w-[140px] sm:max-w-[170px]">
+                      {modeloVeic}
+                    </span>
+                  </div>
+
+                  <div className="h-7 w-px bg-slate-800 hidden sm:block shrink-0" />
+
+                  {/* Nome do Motorista em Destaque + Destino */}
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="font-black text-sm sm:text-base text-white truncate max-w-[220px] sm:max-w-[300px]">
+                        {motoristaNome}
+                      </span>
+                      <span className="text-slate-500 hidden sm:inline">•</span>
+                      <span className="text-xs text-slate-300 font-medium truncate max-w-[180px] sm:max-w-[260px]">
+                        {reg.destino || 'Serviço'} {andarLocal && andarLocal !== 'Térreo' && `(${andarLocal})`}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-2 text-[11px] text-slate-400 font-medium flex-wrap">
+                      <span className="text-slate-400 truncate max-w-[160px]">{reg.secretaria}</span>
+                      {dataReg && <span>• Data: <strong className="text-slate-300">{dataReg}</strong></span>}
+                      <span className="hidden sm:inline">• Resp: <strong className="text-slate-300">{reg.funcionarioResponsavel}</strong></span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Lado Direito: Horários + Status + Ações Compactas */}
+                <div className="flex items-center justify-between md:justify-end gap-2 sm:gap-3 shrink-0 pt-1.5 md:pt-0 border-t md:border-t-0 border-slate-800/60">
+                  {/* Horários */}
+                  <div className="flex items-center gap-1.5 bg-slate-950/90 px-2.5 py-1 rounded-lg border border-slate-800 font-mono text-xs shrink-0">
+                    <span className="text-slate-400 text-[10px] font-sans uppercase font-bold">Saída:</span>
+                    <strong className="text-white">{hSaida}</strong>
+                    <ArrowRight className="w-3 h-3 text-slate-500 shrink-0" />
+                    <span className="text-slate-400 text-[10px] font-sans uppercase font-bold">Ret:</span>
+                    {hChegada ? (
+                      <strong className="text-emerald-400">{hChegada}</strong>
+                    ) : (
+                      <span className="text-amber-400 font-bold font-sans animate-pulse text-[11px]">Fora</span>
+                    )}
                   </div>
 
                   {/* Badge de Status */}
@@ -430,108 +478,59 @@ export const DailyCardsView: React.FC<DailyCardsViewProps> = ({
                     {isEmTransito ? (
                       <button
                         type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setStatusAba('EM_TRANSITO');
-                        }}
-                        className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-950/80 text-amber-300 border border-amber-500/50 hover:bg-amber-900/90 transition-colors cursor-pointer"
-                        title="Filtrar apenas veículos que estão fora"
+                        onClick={() => setStatusAba('EM_TRANSITO')}
+                        className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-black bg-amber-950/90 text-amber-300 border border-amber-500/60 hover:bg-amber-900 transition-colors cursor-pointer shadow-sm"
+                        title="Filtrar veículos em trânsito"
                       >
-                        <Clock className="w-3 h-3 animate-pulse text-amber-400" />
-                        Fora (Em Trânsito)
+                        <Clock className="w-3 h-3 animate-pulse text-amber-400 shrink-0" />
+                        <span>Na Rua</span>
                       </button>
                     ) : (
                       <button
                         type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setStatusAba('FINALIZADO');
-                        }}
-                        className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-950/80 text-emerald-300 border border-emerald-500/50 hover:bg-emerald-900/90 transition-colors cursor-pointer"
-                        title="Filtrar veículos com retornos concluídos"
+                        onClick={() => setStatusAba('FINALIZADO')}
+                        className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-950/90 text-emerald-300 border border-emerald-500/50 hover:bg-emerald-900 transition-colors cursor-pointer shadow-sm"
+                        title="Filtrar veículos com retorno concluído"
                       >
-                        <CheckCircle2 className="w-3 h-3 text-emerald-400" />
-                        Chegou
+                        <CheckCircle2 className="w-3 h-3 text-emerald-400 shrink-0" />
+                        <span>No Pátio</span>
                       </button>
                     )}
                   </div>
-                </div>
 
-                {/* Bloco de Informações Principais */}
-                <div className="bg-slate-950/90 rounded-xl p-2.5 border border-slate-800 space-y-1.5 text-xs">
-                  <div className="grid grid-cols-2 gap-2">
-                    <div>
-                      <span className="text-[10px] uppercase font-bold text-slate-400 block">Motorista:</span>
-                      <strong className="text-white font-bold block truncate">{motoristaNome}</strong>
-                    </div>
-                    <div>
-                      <span className="text-[10px] uppercase font-bold text-slate-400 block">Veículo / Placa:</span>
-                      <span className="text-slate-200 font-semibold block truncate">
-                        {modeloVeic} <strong className="font-mono font-bold text-emerald-300">{placaVeic}</strong>
-                      </span>
-                    </div>
-                  </div>
+                  {/* Ações Compactas */}
+                  <div className="flex items-center gap-1 shrink-0">
+                    {isEmTransito && (
+                      <button
+                        type="button"
+                        onClick={() => onAjustarHorarios(reg)}
+                        className="inline-flex items-center gap-1 px-2.5 py-1.5 text-xs text-white bg-emerald-600 hover:bg-emerald-500 rounded-lg font-bold shadow-sm transition-all cursor-pointer hover:scale-105 active:scale-95"
+                        title="Registrar Retorno do Veículo"
+                      >
+                        <Check className="w-3.5 h-3.5" />
+                        <span className="hidden sm:inline">Retorno</span>
+                      </button>
+                    )}
 
-                  <div className="grid grid-cols-2 gap-2 pt-1.5 border-t border-slate-800/80">
-                    <div>
-                      <span className="text-[10px] uppercase font-bold text-slate-400 block">Horários:</span>
-                      <div className="flex items-center gap-1 text-white font-mono font-bold text-xs">
-                        <span>{hSaida}</span>
-                        <ArrowRight className="w-3 h-3 text-slate-500 shrink-0" />
-                        {hChegada ? (
-                          <span className="text-emerald-400">{hChegada}</span>
-                        ) : (
-                          <span className="text-amber-300 font-sans text-[11px] italic">Na rua...</span>
-                        )}
-                      </div>
-                    </div>
-                    <div>
-                      <span className="text-[10px] uppercase font-bold text-slate-400 block">Destino / Andar:</span>
-                      <span className="text-slate-300 font-medium block truncate">
-                        {reg.destino || 'Serviço'} • <strong className="text-slate-200">{andarLocal}</strong>
-                      </span>
-                    </div>
-                  </div>
-
-                  {dataReg && (
-                    <div className="pt-1 text-[10px] text-slate-400 flex items-center justify-between">
-                      <span>Data: <strong className="text-slate-300">{dataReg}</strong></span>
-                      <span>Resp: <strong className="text-slate-300">{reg.funcionarioResponsavel}</strong></span>
-                    </div>
-                  )}
-                </div>
-
-                {/* Rodapé com Botões de Ação */}
-                <div className="flex items-center justify-end gap-1.5 pt-0.5">
-                  <button
-                    type="button"
-                    onClick={() => onVerDetalhes(reg)}
-                    className="inline-flex items-center gap-1 px-2.5 py-1 text-xs text-slate-200 hover:text-white bg-slate-800 hover:bg-slate-750 border border-slate-700 rounded-lg font-bold transition-colors cursor-pointer"
-                  >
-                    <Eye className="w-3 h-3 text-emerald-400" />
-                    <span>Ficha</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => PdfService.gerarFichaIndividual(reg, usuarioAtual)}
-                    className="inline-flex items-center gap-1 px-2 py-1 text-xs text-amber-300 hover:text-amber-200 bg-amber-950/40 hover:bg-amber-900/60 border border-amber-800/50 rounded-lg font-bold transition-colors cursor-pointer"
-                    title="Baixar PDF Individual"
-                  >
-                    <FileDown className="w-3 h-3" />
-                    <span>PDF</span>
-                  </button>
-
-                  {isEmTransito && (
                     <button
                       type="button"
-                      onClick={() => onAjustarHorarios(reg)}
-                      className="inline-flex items-center gap-1 px-2.5 py-1 text-xs text-white bg-emerald-600 hover:bg-emerald-500 rounded-lg font-bold shadow transition-all cursor-pointer"
+                      onClick={() => onVerDetalhes(reg)}
+                      className="inline-flex items-center gap-1 px-2.5 py-1.5 text-xs text-slate-200 hover:text-white bg-slate-800 hover:bg-slate-750 border border-slate-700 rounded-lg font-bold transition-colors cursor-pointer"
+                      title="Ver Ficha Completa e Assinatura"
                     >
-                      <Check className="w-3 h-3" />
-                      <span>Retorno</span>
+                      <Eye className="w-3.5 h-3.5 text-emerald-400" />
+                      <span className="hidden xs:inline">Ficha</span>
                     </button>
-                  )}
+
+                    <button
+                      type="button"
+                      onClick={() => PdfService.gerarFichaIndividual(reg, usuarioAtual)}
+                      className="p-1.5 text-slate-400 hover:text-amber-300 hover:bg-slate-800 border border-slate-800 hover:border-amber-500/40 rounded-lg transition-colors cursor-pointer"
+                      title="Baixar Ficha Individual em PDF"
+                    >
+                      <FileDown className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
                 </div>
               </div>
             );

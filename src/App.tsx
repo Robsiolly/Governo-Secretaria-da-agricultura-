@@ -281,11 +281,11 @@ export default function App() {
                 <h3 className="text-xs sm:text-sm font-black text-white flex items-center gap-2">
                   <span>Visualização dos Registros</span>
                   <span className="bg-emerald-500 text-slate-950 text-[10px] px-2 py-0.5 rounded-full font-extrabold uppercase">
-                    {modoVisualizacao === 'CARTOES' ? 'Painel Diário (Cartões)' : 'Tabela Completa'}
+                    {modoVisualizacao === 'CARTOES' ? 'Painel Diário (Lista Resumida)' : 'Tabela Completa'}
                   </span>
                 </h3>
                 <p className="text-xs text-slate-300 font-medium mt-0.5">
-                  Exibição instantânea dos registros diários em cartões compactos ou tabela
+                  Exibição instantânea dos registros diários em lista compacta ou tabela detalhada
                 </p>
               </div>
             </div>
@@ -303,7 +303,7 @@ export default function App() {
                   }`}
                 >
                   <LayoutGrid className="w-3.5 h-3.5" />
-                  <span>Painel em Cartões</span>
+                  <span>Painel em Lista</span>
                 </button>
 
                 <button
