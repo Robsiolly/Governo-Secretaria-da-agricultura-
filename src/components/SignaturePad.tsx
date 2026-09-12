@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Eraser, CheckCircle2, PenTool, Sparkles } from 'lucide-react';
+import { Eraser, CheckCircle2, PenTool, Sparkles, BookmarkCheck, Bookmark } from 'lucide-react';
 
 interface SignaturePadProps {
   initialSignature?: string;
@@ -15,6 +15,15 @@ export const SignaturePad: React.FC<SignaturePadProps> = ({
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [hasSignature, setHasSignature] = useState(false);
+  const [hasSavedSig, setHasSavedSig] = useState(false);
+  const [saveSuccessMsg, setSaveSuccessMsg] = useState(false);
+
+  useEffect(() => {
+    const saved = localStorage.getItem('saved_operator_signature');
+    if (saved) {
+      setHasSavedSig(true);
+    }
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -138,6 +147,36 @@ export const SignaturePad: React.FC<SignaturePadProps> = ({
     onSave(canvas.toDataURL('image/png'));
   };
 
+  const salvarComoAssinaturaPadrao = () => {
+    const canvas = canvasRef.current;
+    if (!canvas || !hasSignature) return;
+    const dataUrl = canvas.toDataURL('image/png');
+    localStorage.setItem('saved_operator_signature', dataUrl);
+    setHasSavedSig(true);
+    setSaveSuccessMsg(true);
+    setTimeout(() => setSaveSuccessMsg(false), 3000);
+  };
+
+  const carregarAssinaturaSalva = () => {
+    const saved = localStorage.getItem('saved_operator_signature');
+    if (!saved) return;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    const rect = canvas.getBoundingClientRect();
+
+    const img = new Image();
+    img.onload = () => {
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, rect.width, rect.height);
+      ctx.drawImage(img, 0, 0, rect.width, rect.height);
+      setHasSignature(true);
+      onSave(saved);
+    };
+    img.src = saved;
+  };
+
   return (
     <div id="signature-pad-container" className="space-y-2.5">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-sm text-slate-300">
@@ -145,16 +184,41 @@ export const SignaturePad: React.FC<SignaturePadProps> = ({
           <PenTool className="w-4 h-4 text-amber-400" />
           Assine na área em branco abaixo com o mouse ou dedo (Touch):
         </span>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 flex-wrap">
+          {hasSavedSig && (
+            <button
+              type="button"
+              onClick={carregarAssinaturaSalva}
+              className="flex items-center gap-1.5 text-amber-400 hover:text-amber-300 bg-amber-950/80 border border-amber-600/50 px-3 py-1.5 rounded-xl transition-colors cursor-pointer text-xs font-semibold shadow-sm"
+              title="Inserir sua assinatura salva anteriormente com 1 clique"
+            >
+              <BookmarkCheck className="w-4 h-4" />
+              <span>Usar Assinatura Salva</span>
+            </button>
+          )}
+
           <button
             type="button"
             onClick={gerarAssinaturaDigitalPadrao}
-            className="flex items-center gap-1.5 text-amber-400 hover:text-amber-400 bg-amber-950/60 border border-amber-9500/40 px-3 py-1.5 rounded-xl transition-colors cursor-pointer text-xs sm:text-sm font-semibold"
+            className="flex items-center gap-1.5 text-amber-400 hover:text-amber-300 bg-amber-950/60 border border-amber-800/40 px-3 py-1.5 rounded-xl transition-colors cursor-pointer text-xs sm:text-sm font-semibold"
             title="Gerar rubrica digital com base no nome do responsável"
           >
             <Sparkles className="w-4 h-4" />
             <span>Rubrica Automática</span>
           </button>
+
+          {hasSignature && (
+            <button
+              type="button"
+              onClick={salvarComoAssinaturaPadrao}
+              className="flex items-center gap-1.5 text-amber-300 hover:text-amber-200 bg-amber-950/80 border border-amber-600/50 px-3 py-1.5 rounded-xl transition-colors cursor-pointer text-xs font-semibold shadow-sm"
+              title="Salvar esta assinatura para usar rapidamente em futuros registros"
+            >
+              <Bookmark className="w-4 h-4" />
+              <span>Salvar como Padrão</span>
+            </button>
+          )}
+
           <button
             type="button"
             onClick={limparAssinatura}
@@ -165,6 +229,13 @@ export const SignaturePad: React.FC<SignaturePadProps> = ({
           </button>
         </div>
       </div>
+
+      {saveSuccessMsg && (
+        <div className="bg-amber-950/90 border border-amber-500 text-amber-200 px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-2 animate-in fade-in">
+          <CheckCircle2 className="w-4 h-4 text-amber-400" />
+          Assinatura salva como padrão com sucesso! Agora você pode inseri-la com 1 clique em novos cadastros.
+        </div>
+      )}
 
       <div className="relative border-2 border-dashed border-slate-600 hover:border-amber-9500 rounded-2xl overflow-hidden bg-white shadow-lg transition-colors">
         <canvas

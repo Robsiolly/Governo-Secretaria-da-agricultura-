@@ -239,18 +239,27 @@ export const DailyCardsView: React.FC<DailyCardsViewProps> = ({
 
                   <div className="h-7 w-px bg-slate-800 hidden sm:block shrink-0" />
 
-                  {/* Nome do Motorista em Destaque + Destino */}
-                  <div className="min-w-0 flex-1">
+                      {/* Nome do Motorista em Destaque + Destino */}
+                    <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2 flex-wrap">
                       <span className="font-black text-sm sm:text-base text-white truncate max-w-[220px] sm:max-w-[300px]">
                         {motoristaNome}
                       </span>
                       <span className="text-slate-500 hidden sm:inline">•</span>
                       <span className="text-xs text-slate-300 font-medium truncate max-w-[180px] sm:max-w-[260px]">
-                        {reg.destino || 'Serviço'} {andarLocal && andarLocal !== 'Térreo' && `(${andarLocal})`}
+                        {reg.destino || 'Serviço'}
                       </span>
+                      {andarLocal && andarLocal !== 'Térreo' && (
+                        <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg text-xs font-black border tracking-wide shadow-sm ${
+                          andarLocal === 'SAA'
+                            ? 'bg-amber-500/30 text-amber-300 border-amber-400 animate-pulse'
+                            : 'bg-slate-800 text-amber-400 border-slate-700'
+                        }`}>
+                          <span>Andar {andarLocal}</span>
+                        </span>
+                      )}
                     </div>
-
+                    
                     <div className="flex items-center gap-2 text-[11px] text-slate-400 font-medium flex-wrap">
                       <span className="text-slate-400 truncate max-w-[160px]">{reg.secretaria}</span>
                       {dataReg && <span>• Data: <strong className="text-slate-300">{dataReg}</strong></span>}

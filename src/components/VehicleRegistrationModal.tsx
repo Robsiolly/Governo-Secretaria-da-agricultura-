@@ -296,42 +296,44 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
             <div>
               <label className="block text-sm font-bold text-slate-200 mb-2 flex items-center justify-between">
                 <span className="flex items-center gap-1.5">
-                  <Building className="w-4 h-4 text-sky-400" />
-                  Andar (Selecione 1 a 7) *
+                  <Building className="w-4 h-4 text-amber-400" />
+                  Andar / Setor (1 a 7 ou SAA) *
                 </span>
-                <span className="text-xs text-amber-400 font-bold bg-amber-950/80 border border-amber-9500/40 px-2 py-0.5 rounded-md">
+                <span className="text-xs text-amber-400 font-bold bg-amber-950/80 border border-amber-800/40 px-2 py-0.5 rounded-md">
                   Andar Atual: {andar}
                 </span>
               </label>
 
-              {/* Botões rápidos de 1 a 7 para acessibilidade */}
-              <div className="grid grid-cols-7 gap-1.5 mb-2">
+              {/* Botões rápidos de 1 a 7 e SAA */}
+              <div className="grid grid-cols-4 sm:grid-cols-8 gap-1.5 mb-2">
                 {ANDARES_DISPONIVEIS.map((num) => (
                   <button
                     key={num}
                     type="button"
                     onClick={() => setAndar(num)}
-                    className={`py-2 px-1 text-center font-bold text-base sm:text-lg rounded-xl border-2 transition-all cursor-pointer ${
+                    className={`py-2 px-1 text-center font-bold text-sm sm:text-base rounded-xl border-2 transition-all cursor-pointer ${
                       andar === num
                         ? 'bg-amber-600 border-amber-400 text-white shadow-md scale-105'
+                        : num === 'SAA'
+                        ? 'bg-amber-950/90 border-amber-500 text-amber-300 hover:border-amber-400 hover:text-white'
                         : 'bg-slate-950 border-slate-700 text-slate-300 hover:border-slate-500 hover:text-white'
                     }`}
                   >
-                    {num}
+                    {num === 'SAA' ? 'SAA' : num}
                   </button>
                 ))}
               </div>
 
-              {/* Select para confirmação e leitores de tela */}
+              {/* Select para confirmação */}
               <select
                 required
                 value={andar}
                 onChange={(e) => setAndar(e.target.value)}
-                className="w-full bg-slate-950 border-2 border-slate-700 rounded-2xl px-4 py-2.5 text-sm sm:text-base text-white focus:outline-none focus:border-amber-9500 min-h-[46px]"
+                className="w-full bg-slate-950 border-2 border-slate-700 rounded-2xl px-4 py-2.5 text-sm sm:text-base text-white focus:outline-none focus:border-amber-500 min-h-[46px]"
               >
                 {ANDARES_DISPONIVEIS.map((num) => (
                   <option key={num} value={num} className="bg-slate-900 text-white">
-                    Andar {num}
+                    {num === 'SAA' ? 'Andar SAA (Prioritário)' : `Andar ${num}`}
                   </option>
                 ))}
               </select>

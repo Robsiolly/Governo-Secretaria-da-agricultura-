@@ -35,7 +35,7 @@ export const RESPONSAVEIS_CADASTRO = [
 
 export type ResponsavelNome = typeof RESPONSAVEIS_CADASTRO[number];
 
-export const ANDARES_DISPONIVEIS = ['1', '2', '3', '4', '5', '6', '7'] as const;
+export const ANDARES_DISPONIVEIS = ['1', '2', '3', '4', '5', '6', '7', 'SAA'] as const;
 export type AndarDisponivel = typeof ANDARES_DISPONIVEIS[number];
 
 // Todos os responsáveis pelo cadastro são OPERADORES
