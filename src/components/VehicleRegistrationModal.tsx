@@ -220,7 +220,7 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
               <label
                 className={`flex items-center gap-3.5 p-4 rounded-2xl border-2 cursor-pointer transition-all ${
                   secretaria === 'Secretaria do Turismo'
-                    ? 'bg-[#362619] border-[#a8855d] text-white shadow-lg'
+                    ? 'bg-slate-800 border-slate-500 text-white shadow-lg'
                     : 'bg-slate-950/80 border-slate-800 text-slate-300 hover:bg-slate-800/60'
                 }`}
               >
@@ -232,7 +232,7 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
                   onChange={() => setSecretaria('Secretaria do Turismo')}
                   className="sr-only"
                 />
-                <div className="w-11 h-11 rounded-xl bg-[#8c6d46]/30 text-[#d4b896] flex items-center justify-center shrink-0 border border-[#a8855d]/50">
+                <div className="w-11 h-11 rounded-xl bg-slate-700 text-slate-200 flex items-center justify-center shrink-0 border border-slate-600">
                   <Compass className="w-6 h-6" />
                 </div>
                 <div>

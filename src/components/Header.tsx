@@ -1,7 +1,6 @@
 import React from 'react';
 import { Wheat, Compass, Plus, FileDown, LogOut, ShieldCheck, User, UserPlus, Share2, KeyRound } from 'lucide-react';
 import { UsuarioAutenticado } from '../types';
-import { GovSpLogo } from './GovSpLogo';
 
 interface HeaderProps {
   usuario: UsuarioAutenticado;
@@ -38,10 +37,10 @@ export const Header: React.FC<HeaderProps> = ({
                 <Wheat className="w-5 h-5 sm:w-6 sm:h-6" />
               </div>
               <div 
-                className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-br from-[#8c6d46] to-[#6e5230] border-2 border-[#b08d57]/50 flex items-center justify-center text-[#f5ebe0] shadow-lg"
+                className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-slate-750 border-2 border-slate-600 flex items-center justify-center text-slate-100 shadow-lg"
                 title="Secretaria do Turismo"
               >
-                <Compass className="w-5 h-5 sm:w-6 sm:h-6" />
+                <Compass className="w-5 h-5 sm:w-6 sm:h-6 text-slate-200" />
               </div>
             </div>
 
@@ -100,10 +99,10 @@ export const Header: React.FC<HeaderProps> = ({
                 <button
                   type="button"
                   onClick={onAlterarSenha}
-                  className="flex items-center justify-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-100 hover:text-[#d4b896] px-3 py-2.5 rounded-2xl text-xs sm:text-sm font-bold border-2 border-slate-700 hover:border-[#a8855d]/50 transition-colors shadow-sm cursor-pointer min-h-[44px]"
+                  className="flex items-center justify-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-100 hover:text-slate-200 px-3 py-2.5 rounded-2xl text-xs sm:text-sm font-bold border-2 border-slate-700 hover:border-slate-500 transition-colors shadow-sm cursor-pointer min-h-[44px]"
                   title="Alterar sua senha de acesso"
                 >
-                  <KeyRound className="w-4 h-4 sm:w-5 sm:h-5 text-[#d4b896] shrink-0" />
+                  <KeyRound className="w-4 h-4 sm:w-5 sm:h-5 text-slate-300 shrink-0" />
                   <span className="truncate">Mudar Senha</span>
                 </button>
               )}
@@ -112,10 +111,10 @@ export const Header: React.FC<HeaderProps> = ({
                 <button
                   type="button"
                   onClick={onAbrirEnviarRelatorio}
-                  className="flex items-center justify-center gap-2 bg-gradient-to-r from-[#8c6d46] to-[#785b37] hover:from-[#9a7852] hover:to-[#8c6d46] text-white px-3.5 py-2.5 rounded-2xl text-xs sm:text-base font-bold shadow-md transition-all cursor-pointer min-h-[44px] col-span-2 xs:col-span-1"
+                  className="flex items-center justify-center gap-2 bg-slate-750 hover:bg-slate-700 text-white px-3.5 py-2.5 rounded-2xl text-xs sm:text-base font-bold border-2 border-slate-600 hover:border-slate-500 shadow-md transition-all cursor-pointer min-h-[44px] col-span-2 xs:col-span-1"
                   title="Emitir e Enviar Relatório de qualquer dia selecionado (WhatsApp, E-mail, PDF)"
                 >
-                  <Share2 className="w-4 h-4 sm:w-5 sm:h-5 text-[#e8d5b7] shrink-0" />
+                  <Share2 className="w-4 h-4 sm:w-5 sm:h-5 text-slate-200 shrink-0" />
                   <span>Enviar Relatório</span>
                 </button>
               )}
@@ -126,7 +125,7 @@ export const Header: React.FC<HeaderProps> = ({
                 className="flex items-center justify-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-100 hover:text-white px-3 py-2.5 rounded-2xl text-xs sm:text-base font-bold border-2 border-slate-700 transition-colors shadow-sm cursor-pointer min-h-[44px]"
                 title="Exportar relatório diário administrativo em PDF"
               >
-                <FileDown className="w-4 h-4 sm:w-5 sm:h-5 text-[#d4b896] shrink-0" />
+                <FileDown className="w-4 h-4 sm:w-5 sm:h-5 text-slate-300 shrink-0" />
                 <span>PDF</span>
               </button>
 

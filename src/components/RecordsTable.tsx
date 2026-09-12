@@ -105,7 +105,7 @@ export const RecordsTable: React.FC<RecordsTableProps> = ({
                       <div className="flex items-center gap-2">
                         <span
                           className={`w-3 h-3 rounded-full shrink-0 ${
-                            isAgri ? 'bg-emerald-400 shadow-sm shadow-emerald-500' : 'bg-[#d4b896] shadow-sm shadow-[#8c6d46]'
+                            isAgri ? 'bg-emerald-400 shadow-sm shadow-emerald-500' : 'bg-slate-400 shadow-sm shadow-slate-500'
                           }`}
                         />
                         <span className="font-bold text-white truncate max-w-[170px]">
@@ -140,7 +140,7 @@ export const RecordsTable: React.FC<RecordsTableProps> = ({
                           {reg.horarioChegada ? (
                             <span className="text-slate-100 font-mono">{reg.horarioChegada}</span>
                           ) : (
-                            <span className="text-[#d4b896] text-xs sm:text-sm font-semibold bg-[#362619] px-2.5 py-0.5 rounded-lg border border-[#a8855d]/40 animate-pulse">
+                            <span className="text-amber-300 text-xs sm:text-sm font-semibold bg-slate-800 px-2.5 py-0.5 rounded-lg border border-slate-700 animate-pulse">
                               Em trânsito
                             </span>
                           )}
@@ -149,10 +149,10 @@ export const RecordsTable: React.FC<RecordsTableProps> = ({
                           <button
                             type="button"
                             onClick={() => onEditarHorarios(reg)}
-                            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-[#d4b896] hover:text-[#e8d5b7] border border-[#a8855d]/40 text-xs font-bold transition-all cursor-pointer shadow-sm"
+                            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white border border-slate-700 text-xs font-bold transition-all cursor-pointer shadow-sm"
                             title="Acessar e ajustar horário de saída ou de chegada"
                           >
-                            <Clock className="w-3.5 h-3.5" />
+                            <Clock className="w-3.5 h-3.5 text-amber-400" />
                             <span>Ajustar Horário</span>
                           </button>
                         )}
@@ -280,17 +280,17 @@ export const RecordsTable: React.FC<RecordsTableProps> = ({
                 <div className="flex items-center gap-2.5 min-w-0">
                   <div
                     className={`w-10 h-10 rounded-2xl flex items-center justify-center text-white shrink-0 ${
-                      isAgri ? 'bg-emerald-700' : 'bg-[#8c6d46]'
+                      isAgri ? 'bg-emerald-700' : 'bg-slate-700 border border-slate-600'
                     }`}
                   >
-                    {isAgri ? <Wheat className="w-5 h-5" /> : <Compass className="w-5 h-5" />}
+                    {isAgri ? <Wheat className="w-5 h-5" /> : <Compass className="w-5 h-5 text-slate-200" />}
                   </div>
                   <div className="min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
                       {isAgri && reg.fct && reg.fct !== 'N/A' && reg.fct !== '-' ? (
                         <span className="font-mono font-black text-white text-base sm:text-lg">{reg.fct}</span>
                       ) : (
-                        <span className="text-xs font-sans font-bold text-[#d4b896] bg-[#362619] border border-[#a8855d]/60 px-2 py-0.5 rounded-lg">
+                        <span className="text-xs font-sans font-bold text-slate-300 bg-slate-800 border border-slate-700 px-2 py-0.5 rounded-lg">
                           Sem FCT (Turismo)
                         </span>
                       )}
@@ -303,8 +303,8 @@ export const RecordsTable: React.FC<RecordsTableProps> = ({
 
                 <div className="shrink-0">
                   {reg.status === 'EM_TRANSITO' ? (
-                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] sm:text-xs font-bold bg-[#362619] text-[#d4b896] border border-[#a8855d]/50">
-                      <Clock className="w-3 h-3 animate-pulse" />
+                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] sm:text-xs font-bold bg-slate-800 text-slate-200 border border-slate-600">
+                      <Clock className="w-3 h-3 animate-pulse text-amber-400" />
                       Em Trânsito
                     </span>
                   ) : (

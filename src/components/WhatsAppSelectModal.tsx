@@ -273,11 +273,11 @@ export const WhatsAppSelectModal: React.FC<WhatsAppSelectModalProps> = ({
                     }`}
                   >
                     <div className="flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-[#d4b896] shrink-0">
+                      <div className="w-9 h-9 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-300 shrink-0">
                         {setor.nome.includes('Agricultura') ? (
                           <Wheat className="w-4 h-4 text-emerald-400" />
                         ) : setor.nome.includes('Turismo') ? (
-                          <Compass className="w-4 h-4 text-[#d4b896]" />
+                          <Compass className="w-4 h-4 text-slate-300" />
                         ) : (
                           <Building2 className="w-4 h-4 text-sky-400" />
                         )}
@@ -381,7 +381,7 @@ export const WhatsAppSelectModal: React.FC<WhatsAppSelectModalProps> = ({
           {contatosSalvos.length > 0 && (
             <div className="space-y-2">
               <label className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
-                <Star className="w-3.5 h-3.5 text-[#d4b896]" />
+                <Star className="w-3.5 h-3.5 text-amber-400" />
                 Meus Contatos Frequentes Salvos:
               </label>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">

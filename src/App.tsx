@@ -14,21 +14,28 @@ import { QuickTimeModal } from './components/QuickTimeModal';
 import { CreateOperatorModal } from './components/CreateOperatorModal';
 import { SendReportModal } from './components/SendReportModal';
 import { ChangePasswordModal } from './components/ChangePasswordModal';
+import { DailyControlModal } from './components/DailyControlModal';
+import { DailyCardsView } from './components/DailyCardsView';
 import { PwaInstallPrompt } from './components/PwaInstallPrompt';
 import { Footer } from './components/Footer';
-import { CheckCircle2, FileText, Plus, RefreshCw } from 'lucide-react';
+import { CheckCircle2, FileText, Plus, Calendar, LayoutGrid, List } from 'lucide-react';
 
 export default function App() {
   const [usuario, setUsuario] = useState<UsuarioAutenticado | null>(null);
   const [registros, setRegistros] = useState<RegistroVeiculo[]>([]);
+  const [modoVisualizacao, setModoVisualizacao] = useState<'CARTOES' | 'TABELA'>('CARTOES');
   const [isModalCadastroOpen, setIsModalCadastroOpen] = useState(false);
   const [isModalNovoOperadorOpen, setIsModalNovoOperadorOpen] = useState(false);
   const [isModalEnviarRelatorioOpen, setIsModalEnviarRelatorioOpen] = useState(false);
   const [isModalAlterarSenhaOpen, setIsModalAlterarSenhaOpen] = useState(false);
+  const [isModalPainelDiarioOpen, setIsModalPainelDiarioOpen] = useState(false);
   const [registroEmEdicao, setRegistroEmEdicao] = useState<RegistroVeiculo | null>(null);
   const [registroSelecionadoDetalhes, setRegistroSelecionadoDetalhes] = useState<RegistroVeiculo | null>(null);
   const [registroAjusteHorarios, setRegistroAjusteHorarios] = useState<RegistroVeiculo | null>(null);
   const [toastMensagem, setToastMensagem] = useState<string | null>(null);
+
+  const [painelFiltroSecretaria, setPainelFiltroSecretaria] = useState<'TODAS' | Secretaria>('TODAS');
+  const [painelFiltroStatus, setPainelFiltroStatus] = useState<'TODOS' | 'EM_TRANSITO' | 'FINALIZADO'>('TODOS');
 
   const [filtros, setFiltros] = useState<FiltrosRegistros>({
     secretaria: 'TODAS',
@@ -168,17 +175,17 @@ export default function App() {
         return false;
       }
 
-      // Filtro por Busca livre
+      // Busca Textual
       if (filtros.busca.trim()) {
         const termo = filtros.busca.toLowerCase();
         const coincide =
           reg.motorista.toLowerCase().includes(termo) ||
           reg.fct.toLowerCase().includes(termo) ||
           (reg.placa && reg.placa.toLowerCase().includes(termo)) ||
-          (reg.andar && reg.andar.toLowerCase().includes(termo)) ||
-          (reg.funcionarioResponsavel && reg.funcionarioResponsavel.toLowerCase().includes(termo)) ||
           (reg.modeloVeiculo && reg.modeloVeiculo.toLowerCase().includes(termo)) ||
-          (reg.destino && reg.destino.toLowerCase().includes(termo));
+          (reg.destino && reg.destino.toLowerCase().includes(termo)) ||
+          (reg.matriculaFuncionario && reg.matriculaFuncionario.toLowerCase().includes(termo)) ||
+          reg.funcionarioResponsavel.toLowerCase().includes(termo);
 
         if (!coincide) return false;
       }
@@ -187,7 +194,7 @@ export default function App() {
     });
   }, [registros, filtros]);
 
-  // Se não estiver logado, exibe a tela de login institucional segura
+  // Se não estiver logado, exibe tela de login governamental
   if (!usuario) {
     return <LoginScreen onLoginSuccess={handleLoginSuccess} />;
   }
@@ -225,8 +232,27 @@ export default function App() {
         {/* Painel Resumo Rápido de Frota e Tráfego */}
         <AdminSummaryBar
           registros={registros}
-          onFiltrarSecretaria={(sec) => setFiltros(prev => ({ ...prev, secretaria: sec }))}
-          onFiltrarStatus={(st) => setFiltros(prev => ({ ...prev, status: st }))}
+          onFiltrarSecretaria={(sec) => {
+            setFiltros(prev => ({ ...prev, secretaria: sec, status: 'TODOS' }));
+            setPainelFiltroSecretaria(sec);
+            setPainelFiltroStatus('TODOS');
+            setModoVisualizacao('CARTOES');
+            setIsModalPainelDiarioOpen(true);
+          }}
+          onFiltrarStatus={(st) => {
+            setFiltros(prev => ({ ...prev, status: st, secretaria: 'TODAS' }));
+            setPainelFiltroSecretaria('TODAS');
+            setPainelFiltroStatus(st);
+            setModoVisualizacao('CARTOES');
+            setIsModalPainelDiarioOpen(true);
+          }}
+          onFiltrarSecretariaEStatus={(sec, st) => {
+            setFiltros(prev => ({ ...prev, secretaria: sec, status: st }));
+            setPainelFiltroSecretaria(sec);
+            setPainelFiltroStatus(st);
+            setModoVisualizacao('CARTOES');
+            setIsModalPainelDiarioOpen(true);
+          }}
         />
 
         {/* Barra de Filtros com secretaria e data específica */}
@@ -237,14 +263,86 @@ export default function App() {
           totalGeral={registros.length}
           onExportarPdfFiltrado={handleExportarPdf}
           onAbrirEnviarRelatorio={() => setIsModalEnviarRelatorioOpen(true)}
+          onAbrirPainelDiario={() => {
+            setModoVisualizacao('CARTOES');
+            setIsModalPainelDiarioOpen(true);
+          }}
         />
 
-        {/* Listagem de Registros */}
-        <div className="space-y-3">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        {/* Listagem de Registros com Alternância: Painel Diário (Cartões) ou Tabela Completa */}
+        <div className="space-y-4">
+          {/* Banner com Seletor Direto de Modo de Exibição */}
+          <div className="bg-slate-900 border-2 border-emerald-500/50 rounded-2xl p-3.5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-xl">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-emerald-950 border border-emerald-400 flex items-center justify-center text-emerald-400 shrink-0 shadow-md">
+                <Calendar className="w-5 h-5 animate-pulse" />
+              </div>
+              <div>
+                <h3 className="text-xs sm:text-sm font-black text-white flex items-center gap-2">
+                  <span>Visualização dos Registros</span>
+                  <span className="bg-emerald-500 text-slate-950 text-[10px] px-2 py-0.5 rounded-full font-extrabold uppercase">
+                    {modoVisualizacao === 'CARTOES' ? 'Painel Diário (Cartões)' : 'Tabela Completa'}
+                  </span>
+                </h3>
+                <p className="text-xs text-slate-300 font-medium mt-0.5">
+                  Exibição instantânea dos registros diários em cartões compactos ou tabela
+                </p>
+              </div>
+            </div>
+
+            {/* Alternador de visualização direto */}
+            <div className="flex items-center gap-2 w-full sm:w-auto">
+              <div className="flex items-center bg-slate-950 p-1 rounded-xl border border-slate-750 w-full sm:w-auto">
+                <button
+                  type="button"
+                  onClick={() => setModoVisualizacao('CARTOES')}
+                  className={`flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-black transition-all cursor-pointer ${
+                    modoVisualizacao === 'CARTOES'
+                      ? 'bg-emerald-600 text-white shadow-md'
+                      : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  <LayoutGrid className="w-3.5 h-3.5" />
+                  <span>Painel em Cartões</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setModoVisualizacao('TABELA')}
+                  className={`flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-black transition-all cursor-pointer ${
+                    modoVisualizacao === 'TABELA'
+                      ? 'bg-emerald-600 text-white shadow-md'
+                      : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  <List className="w-3.5 h-3.5" />
+                  <span>Tabela Detalhada</span>
+                </button>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setPainelFiltroSecretaria('TODAS');
+                  setPainelFiltroStatus('TODOS');
+                  setModoVisualizacao('CARTOES');
+                  setIsModalPainelDiarioOpen(true);
+                }}
+                className="hidden md:flex items-center gap-1.5 px-3 py-2 bg-slate-800 hover:bg-slate-750 text-slate-200 hover:text-white rounded-xl text-xs font-bold border border-slate-700 transition-colors cursor-pointer shrink-0"
+                title="Abrir em Janela Flutuante"
+              >
+                <Calendar className="w-3.5 h-3.5 text-emerald-400" />
+                <span>Janela Modal</span>
+              </button>
+            </div>
+          </div>
+
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-1">
             <h2 className="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-300 flex items-center gap-2">
               <FileText className="w-4 h-4 text-emerald-400 shrink-0" />
-              <span>Registros de Tráfego e Circulação</span>
+              <span>
+                {modoVisualizacao === 'CARTOES' ? 'Painel Diário de Circulação (Cartões)' : 'Registros de Tráfego em Tabela'}
+              </span>
             </h2>
 
             <button
@@ -260,21 +358,42 @@ export default function App() {
             </button>
           </div>
 
-          <RecordsTable
-            registros={registrosFiltrados}
-            onVerDetalhes={(reg) => setRegistroSelecionadoDetalhes(reg)}
-            onEditar={(reg) => {
-              setRegistroEmEdicao(reg);
-              setIsModalCadastroOpen(true);
-            }}
-            onEditarHorarios={(reg) => setRegistroAjusteHorarios(reg)}
-            onExcluir={handleExcluirRegistro}
-            onNovoRegistro={() => {
-              setRegistroEmEdicao(null);
-              setIsModalCadastroOpen(true);
-            }}
-            usuarioAtual={usuario}
-          />
+          {/* Renderização do Painel Diário em Cartões ou Tabela Completa */}
+          {modoVisualizacao === 'CARTOES' ? (
+            <DailyCardsView
+              registros={registros}
+              onVerDetalhes={(reg) => setRegistroSelecionadoDetalhes(reg)}
+              onAjustarHorarios={(reg) => setRegistroAjusteHorarios(reg)}
+              onNovoRegistro={() => {
+                setRegistroEmEdicao(null);
+                setIsModalCadastroOpen(true);
+              }}
+              onAbrirModalCompleto={() => {
+                setPainelFiltroSecretaria('TODAS');
+                setPainelFiltroStatus('TODOS');
+                setIsModalPainelDiarioOpen(true);
+              }}
+              usuarioAtual={usuario}
+              filtroSecretariaInicial={painelFiltroSecretaria}
+              filtroStatusInicial={painelFiltroStatus}
+            />
+          ) : (
+            <RecordsTable
+              registros={registrosFiltrados}
+              onVerDetalhes={(reg) => setRegistroSelecionadoDetalhes(reg)}
+              onEditar={(reg) => {
+                setRegistroEmEdicao(reg);
+                setIsModalCadastroOpen(true);
+              }}
+              onEditarHorarios={(reg) => setRegistroAjusteHorarios(reg)}
+              onExcluir={handleExcluirRegistro}
+              onNovoRegistro={() => {
+                setRegistroEmEdicao(null);
+                setIsModalCadastroOpen(true);
+              }}
+              usuarioAtual={usuario}
+            />
+          )}
         </div>
       </main>
 
@@ -342,8 +461,41 @@ export default function App() {
         onSuccess={exibirToast}
       />
 
+      {/* Modal do Painel de Controle de Cadastros Diários */}
+      <DailyControlModal
+        isOpen={isModalPainelDiarioOpen}
+        onClose={() => setIsModalPainelDiarioOpen(false)}
+        registros={registros}
+        filtroSecretariaInicial={painelFiltroSecretaria}
+        filtroStatusInicial={painelFiltroStatus}
+        onSelecionarRegistro={(reg) => {
+          setRegistroSelecionadoDetalhes(reg);
+        }}
+        onAjustarHorarios={(reg) => {
+          setRegistroAjusteHorarios(reg);
+        }}
+        onAbrirEnviarRelatorio={() => setIsModalEnviarRelatorioOpen(true)}
+        onAbrirCadastro={() => setIsModalCadastroOpen(true)}
+      />
+
       {/* Rodapé com crédito para Roberto */}
       <Footer />
+
+      {/* Botão Flutuante Rápido de Acesso ao Painel Diário */}
+      <button
+        type="button"
+        onClick={() => {
+          setPainelFiltroSecretaria('TODAS');
+          setPainelFiltroStatus('TODOS');
+          setModoVisualizacao('CARTOES');
+          setIsModalPainelDiarioOpen(true);
+        }}
+        className="fixed bottom-5 right-5 z-40 flex items-center gap-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white px-4 py-3 rounded-2xl font-black text-xs sm:text-sm shadow-2xl shadow-emerald-950/90 border-2 border-emerald-300/50 transition-all cursor-pointer hover:scale-105 active:scale-95"
+        title="Clique aqui para abrir o Painel Diário de Controle"
+      >
+        <Calendar className="w-5 h-5 text-white animate-bounce" />
+        <span className="hidden xs:inline">Painel Diário</span>
+      </button>
     </div>
   );
 }
