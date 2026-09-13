@@ -14,6 +14,7 @@ import {
   User
 } from 'lucide-react';
 import { RegistroVeiculo, Secretaria, UsuarioAutenticado } from '../types';
+import { getLocalDateString } from '../utils/dateUtils';
 import { PdfService } from '../services/pdfService';
 
 interface PainelDiarioSubPastaProps {
@@ -33,7 +34,7 @@ export const PainelDiarioSubPasta: React.FC<PainelDiarioSubPastaProps> = ({
   onExportarPdf,
   usuarioAtual,
 }) => {
-  const [dataSelecionada, setDataSelecionada] = useState<string>(new Date().toISOString().split('T')[0]);
+  const [dataSelecionada, setDataSelecionada] = useState<string>(getLocalDateString());
   const [secretariaFiltro, setSecretariaFiltro] = useState<'TODAS' | Secretaria>('TODAS');
   const [statusFiltro, setStatusFiltro] = useState<'TODOS' | 'EM_TRANSITO' | 'FINALIZADO'>('TODOS');
   const [buscaTermo, setBuscaTermo] = useState<string>('');

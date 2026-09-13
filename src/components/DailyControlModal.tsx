@@ -20,6 +20,7 @@ import {
   Check,
 } from 'lucide-react';
 import { RegistroVeiculo, Secretaria } from '../types';
+import { getDateStringFromDate } from '../utils/dateUtils';
 import { PdfService } from '../services/pdfService';
 
 interface DailyControlModalProps {
@@ -108,14 +109,14 @@ export const DailyControlModal: React.FC<DailyControlModalProps> = ({
   const alterarDia = (dias: number) => {
     const baseDate = dataSelecionada ? new Date(dataSelecionada + 'T12:00:00') : new Date();
     baseDate.setDate(baseDate.getDate() + dias);
-    setDataSelecionada(baseDate.toISOString().split('T')[0]);
+    setDataSelecionada(getDateStringFromDate(baseDate));
   };
 
   const aplicarHoje = () => setDataSelecionada(dataHojeStr);
   const aplicarOntem = () => {
     const d = new Date();
     d.setDate(d.getDate() - 1);
-    setDataSelecionada(d.toISOString().split('T')[0]);
+    setDataSelecionada(getDateStringFromDate(d));
   };
   const aplicarTodasDatas = () => setDataSelecionada('');
 

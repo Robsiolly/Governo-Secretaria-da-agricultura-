@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { RegistroVeiculo, UsuarioAutenticado, FiltrosRegistros, Secretaria } from './types';
+import { getLocalDateString } from './utils/dateUtils';
 import { StorageService } from './services/storageService';
 import { FirebaseSyncService } from './services/firebaseSyncService';
 import { PdfService } from './services/pdfService';
@@ -15,6 +16,7 @@ import { CreateOperatorModal } from './components/CreateOperatorModal';
 import { SendReportModal } from './components/SendReportModal';
 import { ChangePasswordModal } from './components/ChangePasswordModal';
 import { DailyControlModal } from './components/DailyControlModal';
+import { ShiftSummaryModal } from './components/ShiftSummaryModal';
 import { DailyCardsView } from './components/DailyCardsView';
 import { PwaInstallPrompt } from './components/PwaInstallPrompt';
 import { Footer } from './components/Footer';
@@ -30,6 +32,7 @@ export default function App() {
   const [isModalEnviarRelatorioOpen, setIsModalEnviarRelatorioOpen] = useState(false);
   const [isModalAlterarSenhaOpen, setIsModalAlterarSenhaOpen] = useState(false);
   const [isModalPainelDiarioOpen, setIsModalPainelDiarioOpen] = useState(false);
+  const [isModalResumoTurnoOpen, setIsModalResumoTurnoOpen] = useState(false);
   const [registroEmEdicao, setRegistroEmEdicao] = useState<RegistroVeiculo | null>(null);
   const [registroSelecionadoDetalhes, setRegistroSelecionadoDetalhes] = useState<RegistroVeiculo | null>(null);
   const [registroAjusteHorarios, setRegistroAjusteHorarios] = useState<RegistroVeiculo | null>(null);
@@ -40,7 +43,7 @@ export default function App() {
 
   const [filtros, setFiltros] = useState<FiltrosRegistros>({
     secretaria: 'TODAS',
-    data: new Date().toISOString().split('T')[0],
+    data: getLocalDateString(),
     busca: '',
     status: 'TODOS',
   });
@@ -223,6 +226,7 @@ export default function App() {
         }}
         onNovoOperador={() => setIsModalNovoOperadorOpen(true)}
         onAbrirEnviarRelatorio={() => setIsModalEnviarRelatorioOpen(true)}
+        onResumoTurno={() => setIsModalResumoTurnoOpen(true)}
         onExportarPdf={handleExportarPdf}
         onAlterarSenha={() => setIsModalAlterarSenhaOpen(true)}
         onLogout={handleLogout}
@@ -264,18 +268,6 @@ export default function App() {
               <span>Painel Diário</span>
             </button>
           </div>
-
-          <button
-            type="button"
-            onClick={() => {
-              setRegistroEmEdicao(null);
-              setIsModalCadastroOpen(true);
-            }}
-            className="hidden md:inline-flex items-center gap-2 bg-[#D97924] hover:bg-[#c2681e] text-white px-5 py-3 rounded-2xl text-xs sm:text-sm font-bold shadow-xl shadow-[#D97924]/20 transition-all cursor-pointer"
-          >
-            <Plus className="w-4 h-4" />
-            <span>Cadastrar Veículo</span>
-          </button>
         </div>
 
         {subPastaAtiva === 'PAINEL_DIARIO' ? (
@@ -427,7 +419,11 @@ export default function App() {
         onClose={() => setIsModalNovoOperadorOpen(false)}
         usuarioAtual={usuario}
         onOperadorCriado={(novoOp) => {
-          exibirToast(`Conta de Operador criada: ${novoOp.nome} (${novoOp.matricula})`);
+          if (usuario && usuario.id === novoOp.id) {
+            setUsuario(novoOp);
+            StorageService.setUsuarioAutenticado(novoOp);
+          }
+          exibirToast(`Conta de Operador salva: ${novoOp.nome} (${novoOp.matricula})`);
         }}
       />
 
@@ -465,6 +461,12 @@ export default function App() {
         }}
         onAbrirEnviarRelatorio={() => setIsModalEnviarRelatorioOpen(true)}
         onAbrirCadastro={() => setIsModalCadastroOpen(true)}
+      />
+
+      <ShiftSummaryModal
+        isOpen={isModalResumoTurnoOpen}
+        onClose={() => setIsModalResumoTurnoOpen(false)}
+        registros={registros}
       />
 
       {/* Rodapé com crédito para Roberto */}

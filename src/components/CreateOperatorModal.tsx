@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { X, UserPlus, ShieldCheck, KeyRound, User, Mail, Building, Check, AlertCircle, Users, Lock, Trash2, Edit2 } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { X, UserPlus, ShieldCheck, KeyRound, User, Mail, Building, Check, AlertCircle, Users, Lock, Trash2, Edit2, Camera, Upload } from 'lucide-react';
 import { ContaOperador, Secretaria, UsuarioAutenticado } from '../types';
 import { StorageService } from '../services/storageService';
 
@@ -24,8 +24,12 @@ export const CreateOperatorModal: React.FC<CreateOperatorModalProps> = ({
   const [cargo, setCargo] = useState('Operador de Cadastro');
   const [senha, setSenha] = useState('');
   const [confirmarSenha, setConfirmarSenha] = useState('');
+  const [fotoPerfil, setFotoPerfil] = useState<string>('');
   const [operadorEmEdicaoId, setOperadorEmEdicaoId] = useState<string | null>(null);
   const [confirmarExclusaoId, setConfirmarExclusaoId] = useState<string | null>(null);
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const cameraInputRef = useRef<HTMLInputElement>(null);
 
   const [erro, setErro] = useState<string | null>(null);
   const [sucesso, setSucesso] = useState<string | null>(null);
@@ -95,6 +99,10 @@ export const CreateOperatorModal: React.FC<CreateOperatorModalProps> = ({
       if (senhaFormatada) {
         dadosSalvar.senha = senhaFormatada;
       }
+      
+      if (fotoPerfil) {
+        dadosSalvar.fotoPerfil = fotoPerfil;
+      }
 
       const novoOperador = StorageService.salvarOperador(dadosSalvar);
       setOperadoresExistentes(StorageService.getOperadores());
@@ -123,9 +131,73 @@ export const CreateOperatorModal: React.FC<CreateOperatorModalProps> = ({
     setCargo('Operador de Cadastro');
     setSenha('');
     setConfirmarSenha('');
+    setFotoPerfil('');
     setOperadorEmEdicaoId(null);
     setErro(null);
     setSucesso(null);
+  };
+
+  const handleFotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.size > 15 * 1024 * 1024) {
+        setErro('A imagem é muito grande. Escolha uma foto menor (máximo 15MB).');
+        e.target.value = '';
+        return;
+      }
+      
+      setErro(null);
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const img = new Image();
+        img.onload = () => {
+          try {
+            const canvas = document.createElement('canvas');
+            const MAX_WIDTH = 256;
+            const MAX_HEIGHT = 256;
+            let width = img.width;
+            let height = img.height;
+
+            if (width > height) {
+              if (width > MAX_WIDTH) {
+                height *= MAX_WIDTH / width;
+                width = MAX_WIDTH;
+              }
+            } else {
+              if (height > MAX_HEIGHT) {
+                width *= MAX_HEIGHT / height;
+                height = MAX_HEIGHT;
+              }
+            }
+
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            if (ctx) {
+              ctx.drawImage(img, 0, 0, width, height);
+              const dataUrl = canvas.toDataURL('image/jpeg', 0.8);
+              setFotoPerfil(dataUrl);
+              setErro(null);
+            }
+          } catch (err) {
+            console.error('Erro ao processar imagem:', err);
+            setErro('Erro ao processar a imagem. Tente outra foto.');
+          }
+        };
+        img.onerror = () => {
+          setErro('Formato de imagem não suportado. Tente JPG ou PNG.');
+        };
+        if (event.target?.result) {
+          img.src = event.target.result as string;
+        }
+      };
+      reader.onerror = () => {
+        setErro('Erro ao ler o arquivo de imagem.');
+      };
+      reader.readAsDataURL(file);
+    }
+    // Limpar o input para permitir selecionar a mesma foto novamente
+    e.target.value = '';
   };
 
   const iniciarEdicao = (op: ContaOperador) => {
@@ -135,6 +207,7 @@ export const CreateOperatorModal: React.FC<CreateOperatorModalProps> = ({
     setEmail(op.email || '');
     setSecretaria(op.secretariaPadrao || 'Ambas');
     setCargo(op.cargo || 'Operador de Cadastro');
+    setFotoPerfil(op.fotoPerfil || '');
     setSenha('');
     setConfirmarSenha('');
     setAbaAtiva('cadastrar');
@@ -270,6 +343,72 @@ export const CreateOperatorModal: React.FC<CreateOperatorModalProps> = ({
                     ? 'Atualize os dados e a senha do operador. O Administrador Roberto gerencia as credenciais do sistema.'
                     : 'Cadastre um novo operador definindo sua matrícula funcional e senha inicial de acesso.'}
                 </p>
+              </div>
+
+              <div className="bg-slate-950/60 border border-slate-800 p-4 rounded-2xl flex flex-col sm:flex-row items-center gap-4">
+                <div className="shrink-0 relative group">
+                  <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full border-2 border-slate-700 bg-slate-900 flex items-center justify-center overflow-hidden relative shadow-inner">
+                    {fotoPerfil ? (
+                      <img src={fotoPerfil} alt="Perfil" className="w-full h-full object-cover" />
+                    ) : (
+                      <User className="w-10 h-10 text-slate-600" />
+                    )}
+                    
+                    <div className="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                      {fotoPerfil && (
+                        <button
+                          type="button"
+                          onClick={() => setFotoPerfil('')}
+                          className="p-2 text-rose-400 hover:text-white bg-rose-950/80 hover:bg-rose-600 rounded-full transition-all"
+                          title="Remover foto"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex-1 text-center sm:text-left space-y-3">
+                  <div>
+                    <h3 className="text-sm font-bold text-white mb-0.5">Foto do Operador (Opcional)</h3>
+                    <p className="text-xs text-slate-400">Envie ou tire uma foto para facilitar a identificação.</p>
+                  </div>
+                  <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">
+                    <button
+                      type="button"
+                      onClick={() => fileInputRef.current?.click()}
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-xs font-bold rounded-xl transition-colors cursor-pointer shadow-sm"
+                    >
+                      <Upload className="w-4 h-4" />
+                      <span>Carregar</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => cameraInputRef.current?.click()}
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-xs font-bold rounded-xl transition-colors cursor-pointer shadow-sm"
+                    >
+                      <Camera className="w-4 h-4" />
+                      <span>Fotografar</span>
+                    </button>
+
+                    <input
+                      type="file"
+                      ref={fileInputRef}
+                      onChange={handleFotoChange}
+                      accept="image/*"
+                      className="hidden"
+                    />
+                    <input
+                      type="file"
+                      ref={cameraInputRef}
+                      onChange={handleFotoChange}
+                      accept="image/*"
+                      capture="user"
+                      className="hidden"
+                    />
+                  </div>
+                </div>
               </div>
 
               {/* Nome e Matrícula */}
@@ -446,8 +585,12 @@ export const CreateOperatorModal: React.FC<CreateOperatorModalProps> = ({
                     className="bg-slate-950 border-2 border-slate-800 hover:border-amber-9500/40 p-4 rounded-2xl flex items-center justify-between gap-3 transition-colors"
                   >
                     <div className="flex items-center gap-3.5">
-                      <div className="w-10 h-10 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-amber-400 font-bold">
-                        {op.nome.charAt(0).toUpperCase()}
+                      <div className="w-10 h-10 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-amber-400 font-bold overflow-hidden shrink-0">
+                        {op.fotoPerfil ? (
+                          <img src={op.fotoPerfil} alt={op.nome} className="w-full h-full object-cover" />
+                        ) : (
+                          op.nome.charAt(0).toUpperCase()
+                        )}
                       </div>
                       <div>
                         <div className="flex items-center gap-2">

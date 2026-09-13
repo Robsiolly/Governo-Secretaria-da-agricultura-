@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { X, Wheat, Plane, Save, AlertCircle, Clock, Calendar, Building, User, FileText, Car, Check } from 'lucide-react';
 import { RegistroVeiculo, Secretaria, UsuarioAutenticado } from '../types';
+import { getLocalDateString } from '../utils/dateUtils';
 import { SignaturePad } from './SignaturePad';
 import { ANDARES_DISPONIVEIS, StorageService } from '../services/storageService';
 
@@ -62,7 +63,7 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
       setDestino(registroEdicao.destino || '');
     } else {
       // Valores padrão para novo cadastro real
-      const hoje = new Date().toISOString().split('T')[0];
+      const hoje = getLocalDateString();
       const agora = new Date();
       const horaMinuto = agora.toTimeString().slice(0, 5);
 

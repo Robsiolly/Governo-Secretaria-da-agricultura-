@@ -248,14 +248,14 @@ export const RecordDetailModal: React.FC<RecordDetailModalProps> = ({
 
           {/* Assinatura do Operador Responsável */}
           <div className="bg-slate-950 border-2 border-slate-800 rounded-2xl p-5 space-y-3">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <span className="text-sm font-bold text-slate-200 flex items-center gap-2">
-                <PenTool className="w-4 h-4 text-amber-400" />
-                Assinatura do Operador Responsável pelo Cadastro
+                <PenTool className="w-4 h-4 text-amber-400 shrink-0" />
+                <span className="leading-tight">Assinatura do Operador Responsável pelo Cadastro</span>
               </span>
-              <span className="inline-flex items-center gap-1.5 text-xs text-amber-400 font-bold bg-amber-950 px-2.5 py-1 rounded-full border border-amber-9500/40">
-                <CheckCircle2 className="w-3.5 h-3.5" />
-                Autenticado
+              <span className="inline-flex items-center justify-center gap-1.5 text-[11px] uppercase tracking-wider text-amber-400 font-black bg-amber-950/80 px-3 py-1.5 rounded-full border border-amber-9500/50 leading-none shadow-inner shrink-0 whitespace-nowrap self-start sm:self-auto">
+                <CheckCircle2 className="w-4 h-4 shrink-0" />
+                <span className="pt-[1px]">Autenticado</span>
               </span>
             </div>
 

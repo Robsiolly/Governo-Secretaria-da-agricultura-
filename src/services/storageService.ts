@@ -226,9 +226,13 @@ export const StorageService = {
   salvarOperador(novoOperador: Omit<ContaOperador, 'id'> & { id?: string }): ContaOperador {
     const operadores = this.getOperadores();
     
-    // Normalizar nível de acesso estritamente como OPERADOR
-    const nivelAcesso = 'OPERADOR';
-    const cargo = novoOperador.cargo || 'Operador de Cadastro';
+    // Normalizar nível de acesso (Roberto permanece ADMINISTRADOR)
+    const termoMat = novoOperador.matricula.trim().toLowerCase();
+    const termoNome = novoOperador.nome.trim().toLowerCase();
+    const isRoberto = novoOperador.id === 'op-roberto-adm' || termoMat === 'adm-01' || termoNome.includes('roberto');
+    
+    const nivelAcesso = isRoberto ? 'ADMINISTRADOR' : 'OPERADOR';
+    const cargo = isRoberto ? 'Administrador do Sistema' : (novoOperador.cargo || 'Operador de Cadastro');
 
     if (novoOperador.id) {
       const idx = operadores.findIndex(o => o.id === novoOperador.id);
@@ -248,7 +252,6 @@ export const StorageService = {
     }
 
     // Verificar se já existe por matrícula ou e-mail
-    const termoMat = novoOperador.matricula.trim().toLowerCase();
     const termoEmail = novoOperador.email.trim().toLowerCase();
     const indexExistente = operadores.findIndex(
       o => o.matricula.trim().toLowerCase() === termoMat || o.email.trim().toLowerCase() === termoEmail

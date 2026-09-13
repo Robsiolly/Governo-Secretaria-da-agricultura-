@@ -29,6 +29,7 @@ export interface UsuarioAutenticado {
   cargo: string;
   secretariaPadrao: Secretaria | 'Ambas';
   nivelAcesso: 'ADMINISTRADOR' | 'FISCAL' | 'OPERADOR';
+  fotoPerfil?: string; // Base64 dataURL da foto do operador
 }
 
 export interface ContaOperador extends UsuarioAutenticado {

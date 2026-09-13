@@ -198,126 +198,88 @@ export const DailyCardsView: React.FC<DailyCardsViewProps> = ({
             return (
               <div
                 key={reg.id}
-                className={`bg-slate-900/95 hover:bg-slate-850 border rounded-xl p-2.5 sm:py-2.5 sm:px-3.5 shadow-sm transition-all flex flex-col md:flex-row md:items-center justify-between gap-2.5 sm:gap-3 border-l-4 ${
+                className={`bg-slate-900/95 hover:bg-slate-850 border rounded-lg p-2 sm:px-3 shadow-sm transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-l-4 ${
                   isEmTransito
                     ? 'border-l-amber-400 border-t-slate-800 border-r-slate-800 border-b-slate-800 bg-amber-950/10'
                     : 'border-l-amber-9500 border-t-slate-800 border-r-slate-800 border-b-slate-800'
                 }`}
               >
-                {/* Lado Esquerdo: Placa com Super Destaque + Secretaria/FCT + Motorista */}
-                <div className="flex items-center gap-3 min-w-0 flex-1">
+                {/* Lado Esquerdo: Placa + Secretaria/FCT + Motorista */}
+                <div className="flex items-center gap-2 min-w-0 flex-1">
                   {/* Ícone da Secretaria */}
                   <div
-                    className={`w-8 h-8 rounded-xl flex items-center justify-center text-white shrink-0 shadow-sm ${
+                    className={`w-6 h-6 rounded-md flex items-center justify-center text-white shrink-0 shadow-sm ${
                       isAgri ? 'bg-[#3A241D] border border-[#D97924]/40' : 'bg-emerald-950 border border-emerald-500/40'
                     }`}
                     title={reg.secretaria}
                   >
-                    {isAgri ? <Wheat className="w-4 h-4 text-[#D97924]" /> : <Plane    className="text-emerald-400 w-4 h-4 text-[#D97924]" />}
+                    {isAgri ? <Wheat className="w-3 h-3 text-[#D97924]" /> : <Plane className="text-emerald-400 w-3 h-3 text-[#D97924]" />}
                   </div>
 
-                  {/* Placa em Destaque Alto Contraste */}
-                  <div className="shrink-0 flex flex-col items-start">
-                    <div className="flex items-center gap-1.5">
-                      <span className="font-mono font-black text-sm sm:text-base text-amber-400 bg-slate-950 border-2 border-amber-9500/50 px-2.5 py-0.5 rounded-lg tracking-wider shadow-inner">
-                        {placaVeic}
-                      </span>
-                      {isAgri && reg.fct && reg.fct !== 'N/A' && reg.fct !== '-' ? (
-                        <span className="font-mono text-xs font-bold text-slate-300 bg-slate-800 px-1.5 py-0.5 rounded border border-slate-700">
-                          {reg.fct}
-                        </span>
-                      ) : (
-                        <span className="text-[10px] font-bold text-slate-400 bg-slate-800 px-1.5 py-0.5 rounded border border-slate-700 hidden sm:inline">
-                          Turismo
-                        </span>
-                      )}
-                    </div>
-                    <span className="text-[11px] text-slate-400 font-medium truncate max-w-[140px] sm:max-w-[170px]">
-                      {modeloVeic}
+                  {/* Placa em Destaque */}
+                  <div className="shrink-0 flex items-center gap-1.5">
+                    <span className="font-mono font-bold text-xs sm:text-sm text-amber-400 bg-slate-950 border border-amber-9500/50 px-1.5 py-0.5 rounded tracking-wider shadow-inner">
+                      {placaVeic}
                     </span>
+                    {isAgri && reg.fct && reg.fct !== 'N/A' && reg.fct !== '-' ? (
+                      <span className="font-mono text-[10px] font-bold text-slate-300 bg-slate-800 px-1 py-0.5 rounded border border-slate-700 hidden sm:inline">
+                        {reg.fct}
+                      </span>
+                    ) : (
+                      <span className="text-[10px] font-bold text-slate-400 bg-slate-800 px-1 py-0.5 rounded border border-slate-700 hidden sm:inline">
+                        Turismo
+                      </span>
+                    )}
                   </div>
 
-                  <div className="h-7 w-px bg-slate-800 hidden sm:block shrink-0" />
+                  <div className="h-5 w-px bg-slate-800 hidden sm:block shrink-0 mx-1" />
 
-                      {/* Nome do Motorista em Destaque + Destino */}
-                    <div className="min-w-0 flex-1">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <span className="font-black text-sm sm:text-base text-white truncate max-w-[220px] sm:max-w-[300px]">
-                        {motoristaNome}
-                      </span>
-                      <span className="text-slate-500 hidden sm:inline">•</span>
-                      <span className="text-xs text-slate-300 font-medium truncate max-w-[180px] sm:max-w-[260px]">
-                        {reg.destino || 'Serviço'}
-                      </span>
+                  {/* Nome do Motorista + Destino */}
+                  <div className="min-w-0 flex-1 flex flex-col sm:flex-row sm:items-center gap-0.5 sm:gap-2">
+                    <span className="font-bold text-xs sm:text-sm text-white truncate max-w-[150px] sm:max-w-[200px]">
+                      {motoristaNome}
+                    </span>
+                    <div className="flex items-center gap-1.5 text-[10px] text-slate-400 truncate">
+                      <span className="hidden sm:inline">•</span>
+                      <span className="truncate max-w-[120px]">{reg.destino || 'Serviço'}</span>
                       {andarLocal && andarLocal !== 'Térreo' && (
-                        <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg text-xs font-black border tracking-wide shadow-sm ${
+                        <span className={`px-1.5 py-0.5 rounded text-[9px] font-bold border tracking-wide ${
                           andarLocal === 'SAA'
                             ? 'bg-amber-500/30 text-amber-300 border-amber-400 animate-pulse'
                             : 'bg-slate-800 text-amber-400 border-slate-700'
                         }`}>
-                          <span>Andar {andarLocal}</span>
+                          Andar {andarLocal}
                         </span>
                       )}
-                    </div>
-                    
-                    <div className="flex items-center gap-2 text-[11px] text-slate-400 font-medium flex-wrap">
-                      <span className="text-slate-400 truncate max-w-[160px]">{reg.secretaria}</span>
-                      {dataReg && <span>• Data: <strong className="text-slate-300">{dataReg}</strong></span>}
-                      <span className="hidden sm:inline">• Resp: <strong className="text-slate-300">{reg.funcionarioResponsavel}</strong></span>
                     </div>
                   </div>
                 </div>
 
                 {/* Lado Direito: Horários + Status + Ações Compactas */}
-                <div className="flex items-center justify-between md:justify-end gap-2 sm:gap-3 shrink-0 pt-1.5 md:pt-0 border-t md:border-t-0 border-slate-800/60">
+                <div className="flex items-center justify-between sm:justify-end gap-2 shrink-0 border-t sm:border-t-0 border-slate-800/60 pt-1.5 sm:pt-0">
                   {/* Horários */}
-                  <div className="flex items-center gap-1.5 bg-slate-950/90 px-2.5 py-1 rounded-lg border border-slate-800 font-mono text-xs shrink-0">
-                    <span className="text-slate-400 text-[10px] font-sans uppercase font-bold">Saída:</span>
+                  <div className="flex items-center gap-1 bg-slate-950/90 px-2 py-0.5 rounded border border-slate-800 font-mono text-[10px] sm:text-xs shrink-0">
+                    <span className="text-slate-500 font-sans uppercase font-bold text-[9px]">S:</span>
                     <strong className="text-white">{hSaida}</strong>
-                    <ArrowRight className="w-3 h-3 text-slate-500 shrink-0" />
-                    <span className="text-slate-400 text-[10px] font-sans uppercase font-bold">Ret:</span>
+                    <ArrowRight className="w-2.5 h-2.5 text-slate-600 mx-0.5" />
+                    <span className="text-slate-500 font-sans uppercase font-bold text-[9px]">C:</span>
                     {hChegada ? (
                       <strong className="text-amber-400">{hChegada}</strong>
                     ) : (
-                      <span className="text-amber-400 font-bold font-sans animate-pulse text-[11px]">Fora</span>
-                    )}
-                  </div>
-
-                  {/* Badge de Status */}
-                  <div className="shrink-0">
-                    {isEmTransito ? (
-                      <button
-                        type="button"
-                        onClick={() => setStatusAba('EM_TRANSITO')}
-                        className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-black bg-amber-950/90 text-amber-300 border border-amber-500/60 hover:bg-amber-900 transition-colors cursor-pointer shadow-sm"
-                        title="Filtrar veículos em trânsito"
-                      >
-                        <Clock className="w-3 h-3 animate-pulse text-amber-400 shrink-0" />
-                        <span>Na Rua</span>
-                      </button>
-                    ) : (
-                      <button
-                        type="button"
-                        onClick={() => setStatusAba('FINALIZADO')}
-                        className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-950/90 text-amber-400 border border-amber-9500/50 hover:bg-amber-950 transition-colors cursor-pointer shadow-sm"
-                        title="Filtrar veículos com retorno concluído"
-                      >
-                        <CheckCircle2 className="w-3 h-3 text-amber-400 shrink-0" />
-                        <span>No Pátio</span>
-                      </button>
+                      <span className="text-amber-400 font-bold font-sans animate-pulse text-[9px]">Fora</span>
                     )}
                   </div>
 
                   {/* Ações Compactas */}
-                  <div className="flex items-center gap-1 shrink-0">
+                  <div className="flex items-center gap-1 shrink-0 ml-1">
                     {isEmTransito && (
                       <button
                         type="button"
                         onClick={() => onAjustarHorarios(reg)}
-                        className="inline-flex items-center gap-1 px-2.5 py-1.5 text-xs text-white bg-amber-600 hover:bg-amber-9500 rounded-lg font-bold shadow-sm transition-all cursor-pointer hover:scale-105 active:scale-95"
+                        className="inline-flex items-center gap-1 px-2 py-1 text-[10px] sm:text-xs text-white bg-amber-600 hover:bg-amber-9500 rounded font-bold transition-all cursor-pointer"
                         title="Registrar Retorno do Veículo"
                       >
-                        <Check className="w-3.5 h-3.5" />
+                        <Check className="w-3 h-3" />
                         <span className="hidden sm:inline">Retorno</span>
                       </button>
                     )}
@@ -325,20 +287,10 @@ export const DailyCardsView: React.FC<DailyCardsViewProps> = ({
                     <button
                       type="button"
                       onClick={() => onVerDetalhes(reg)}
-                      className="inline-flex items-center gap-1 px-2.5 py-1.5 text-xs text-slate-200 hover:text-white bg-slate-800 hover:bg-slate-750 border border-slate-700 rounded-lg font-bold transition-colors cursor-pointer"
+                      className="inline-flex items-center px-1.5 py-1 text-[10px] sm:text-xs text-slate-300 hover:text-white bg-slate-800 hover:bg-slate-750 border border-slate-700 rounded transition-colors cursor-pointer"
                       title="Ver Ficha Completa e Assinatura"
                     >
-                      <Eye className="w-3.5 h-3.5 text-amber-400" />
-                      <span className="hidden xs:inline">Ficha</span>
-                    </button>
-
-                    <button
-                      type="button"
-                      onClick={() => PdfService.gerarFichaIndividual(reg, usuarioAtual)}
-                      className="p-1.5 text-slate-400 hover:text-amber-300 hover:bg-slate-800 border border-slate-800 hover:border-amber-500/40 rounded-lg transition-colors cursor-pointer"
-                      title="Baixar Ficha Individual em PDF"
-                    >
-                      <FileDown className="w-3.5 h-3.5" />
+                      <Eye className="w-3.5 h-3.5" />
                     </button>
                   </div>
                 </div>

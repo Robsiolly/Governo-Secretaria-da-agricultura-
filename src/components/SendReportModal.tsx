@@ -20,6 +20,7 @@ import {
   UserCheck
 } from 'lucide-react';
 import { RegistroVeiculo, Secretaria, UsuarioAutenticado } from '../types';
+import { getLocalDateString, getDateStringFromDate } from '../utils/dateUtils';
 import { PdfService } from '../services/pdfService';
 import { WhatsAppSelectModal } from './WhatsAppSelectModal';
 
@@ -43,7 +44,7 @@ export const SendReportModal: React.FC<SendReportModalProps> = ({
   onToast,
 }) => {
   // Data padrão: dataInicial, ou hoje
-  const hojeStr = new Date().toISOString().split('T')[0];
+  const hojeStr = getLocalDateString();
   const [dataSelecionada, setDataSelecionada] = useState<string>(dataInicial || hojeStr);
   const [secretariaFiltro, setSecretariaFiltro] = useState<'TODAS' | Secretaria>(secretariaInicial);
   const [statusFiltro, setStatusFiltro] = useState<'TODOS' | 'EM_TRANSITO' | 'FINALIZADO'>('TODOS');
@@ -103,7 +104,7 @@ export const SendReportModal: React.FC<SendReportModalProps> = ({
     }
     const d = new Date(dataSelecionada + 'T00:00:00');
     d.setDate(d.getDate() + dias);
-    setDataSelecionada(d.toISOString().split('T')[0]);
+    setDataSelecionada(getDateStringFromDate(d));
   };
 
   const definirHoje = () => {
@@ -113,7 +114,7 @@ export const SendReportModal: React.FC<SendReportModalProps> = ({
   const definirOntem = () => {
     const ontem = new Date();
     ontem.setDate(ontem.getDate() - 1);
-    setDataSelecionada(ontem.toISOString().split('T')[0]);
+    setDataSelecionada(getDateStringFromDate(ontem));
   };
 
   const definirTodosDias = () => {
