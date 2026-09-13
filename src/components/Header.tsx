@@ -44,11 +44,11 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <header className="sticky top-0 z-40 w-full bg-black/80 backdrop-blur-2xl border-b border-white/[0.08] transition-all pt-safe">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 sm:py-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3.5 sm:gap-4">
-          {/* Brand & App Title */}
-          <div className="flex items-start sm:items-center gap-3 sm:gap-3.5 min-w-0">
-            <div className="flex -space-x-1.5 shrink-0 mt-0.5 sm:mt-0">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-3">
+        <div className="flex items-center justify-between gap-3 sm:gap-4 relative">
+          {/* Brand, App Title, Oficial Badge & Novo Veículo - Far Left */}
+          <div className="flex items-center gap-2.5 sm:gap-4 min-w-0 flex-wrap sm:flex-nowrap">
+            <div className="flex -space-x-1.5 shrink-0">
               <div 
                 className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-amber-500/10 border border-amber-400/30 flex items-center justify-center text-amber-400 shadow-sm backdrop-blur-md"
                 title="Secretaria da Agricultura"
@@ -62,39 +62,42 @@ export const Header: React.FC<HeaderProps> = ({
                 <Plane className="w-5 h-5 text-emerald-400" />
               </div>
             </div>
-            <div className="min-w-0 flex-1 flex flex-col gap-1.5">
+            <div className="min-w-0 flex flex-col justify-center">
               <h1 className="text-sm sm:text-base md:text-lg font-semibold text-white tracking-tight leading-none whitespace-nowrap">
                 SAA - Controle de Registro
               </h1>
-              <p className="text-[10px] sm:text-xs text-white/70 font-normal leading-normal whitespace-nowrap">
+              <p className="text-[10px] sm:text-xs text-white/70 font-normal leading-normal whitespace-nowrap mt-1">
                 Secretaria da Agricultura e Secretaria do Turismo
               </p>
             </div>
+
+            {/* Oficial Badge & Novo Veículo Button placed directly in the left corner block */}
+            <div className="flex items-center gap-2 sm:gap-2.5 shrink-0 sm:ml-2">
+              <span className="inline-flex items-center gap-1 bg-white/[0.08] text-white/90 border border-white/[0.12] px-2.5 py-1.5 rounded-full text-[10px] sm:text-xs font-semibold tracking-wider uppercase shrink-0">
+                <ShieldCheck className="w-3.5 h-3.5 text-amber-400" />
+                <span>Oficial</span>
+              </span>
+
+              <button
+                type="button"
+                onClick={onNovoRegistro}
+                className="inline-flex items-center justify-center gap-1.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold px-4 h-[42px] rounded-full text-xs sm:text-sm shadow-md shadow-amber-500/20 active:scale-[0.96] transition-all duration-200 cursor-pointer whitespace-nowrap"
+              >
+                <Plus className="w-4 h-4 stroke-[2.5] shrink-0" />
+                <span>Novo Veículo</span>
+              </button>
+            </div>
           </div>
 
-          {/* Main Actions & Apple-Style Hamburger Menu */}
-          <div className="flex items-center gap-2 sm:gap-2.5 shrink-0 self-end sm:self-center relative" ref={menuRef}>
-            <span className="inline-flex items-center gap-1 bg-white/[0.08] text-white/90 border border-white/[0.12] px-2.5 py-1.5 rounded-full text-[10px] sm:text-xs font-semibold tracking-wider uppercase shrink-0">
-              <ShieldCheck className="w-3.5 h-3.5 text-amber-400" />
-              <span>Oficial</span>
-            </span>
-
-            <button
-              type="button"
-              onClick={onNovoRegistro}
-              className="inline-flex items-center justify-center gap-1.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold px-4 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm shadow-md shadow-amber-500/20 active:scale-[0.96] transition-all duration-200 cursor-pointer min-h-[40px]"
-            >
-              <Plus className="w-4 h-4 stroke-[2.5] shrink-0" />
-              <span>Novo Veículo</span>
-            </button>
-
+          {/* Right corner: Hamburger Menu - Adjusted position (6.5mm offset) */}
+          <div className="flex items-center shrink-0 ml-auto translate-y-[6.5mm]" ref={menuRef}>
             <button
               type="button"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2.5 text-white/80 hover:text-white bg-white/[0.06] hover:bg-white/[0.1] active:scale-[0.95] rounded-full transition-all duration-200 border border-white/[0.08] cursor-pointer min-h-[40px] min-w-[40px] flex items-center justify-center shadow-sm"
+              className="h-[42px] w-[42px] text-white/90 hover:text-white bg-white/[0.08] hover:bg-white/[0.14] active:scale-[0.95] rounded-full transition-all duration-200 border border-white/[0.12] cursor-pointer flex items-center justify-center shadow-md shadow-black/20 shrink-0"
               aria-label="Menu"
             >
-              <Menu className="w-4 h-4 sm:w-5 sm:h-5" />
+              <Menu className="w-5 h-5" />
             </button>
 
             {/* iOS Style Floating Dropdown Menu */}
