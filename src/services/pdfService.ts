@@ -1,6 +1,7 @@
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { RegistroVeiculo, Secretaria, UsuarioAutenticado } from '../types';
+import { getLocalDateString } from '../utils/dateUtils';
 
 interface ExportarPdfOptions {
   registros: RegistroVeiculo[];
@@ -322,13 +323,16 @@ export const PdfService = {
         texto += `   • Veículo: ${veiculo}\n`;
         texto += `   • Saída: ${r.horarioSaida || '-'} | Chegada: ${chegada} (${status})\n`;
         texto += `   • Andar: ${r.andar || '-'}\n`;
+        if (r.ocorrencia) {
+          texto += `   • ⚠️ *Ocorrência:* ${r.ocorrencia}\n`;
+        }
         texto += `   • Operador Responsável: ${r.funcionarioResponsavel} (Matrícula: ${r.matriculaFuncionario || '-'})\n\n`;
       });
     }
 
     texto += `----------------------------------------\n`;
     texto += `Relatório Oficial de Tráfego e Controle de Frotas\n`;
-    texto += `2026 Desenvolvido por Roberto\n`;
+    texto += `Desenvolvido por Siolly Technology\n`;
     texto += `*(Credenciais e senhas de operadores são estritamente confidenciais e protegidas)*`;
 
     return texto;
@@ -407,8 +411,21 @@ export const PdfService = {
     renderCampo('Data da Operação', dataFormatada, 110, 110);
     renderCampo('Situação Atual', registro.status === 'EM_TRANSITO' ? 'Em trânsito' : 'Concluído', 110, 126);
 
+    // Campo de Ocorrência
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(8);
+    doc.setTextColor(registro.ocorrencia ? 180 : 100, registro.ocorrencia ? 83 : 116, registro.ocorrencia ? 9 : 139);
+    doc.text('OCORRÊNCIA / ANOTAÇÕES DO OPERADOR', 20, 142);
+
+    doc.setFont('helvetica', registro.ocorrencia ? 'bold' : 'normal');
+    doc.setFontSize(9);
+    doc.setTextColor(registro.ocorrencia ? 15 : 71, registro.ocorrencia ? 23 : 85, registro.ocorrencia ? 42 : 105);
+    const ocorrenciaTxt = registro.ocorrencia ? registro.ocorrencia : 'Nenhuma ocorrência ou avaria registrada para este veículo.';
+    const linhasOcorrencia = doc.splitTextToSize(ocorrenciaTxt, pageWidth - 48);
+    doc.text(linhasOcorrencia, 20, 147.5);
+
     // Container 2: Termo de Responsabilidade & Assinatura
-    const termY = 172;
+    const termY = 170;
     doc.setFillColor(248, 250, 252);
     doc.setDrawColor(226, 232, 240);
     doc.roundedRect(14, termY, pageWidth - 28, 92, 3, 3, 'FD');
@@ -473,5 +490,396 @@ export const PdfService = {
     doc.text('Desenvolvido por Siolly Technology', pageWidth - 14, pageHeight - 10, { align: 'right' });
 
     doc.save(`Registro-${registro.fct}.pdf`);
+  },
+
+  // ==========================================
+  // RELATÓRIO PDF DE ESTATÍSTICAS & MÉTRICAS
+  // ==========================================
+  construirDocumentoEstatisticas({
+    registros,
+    secretariaFiltro = 'TODAS',
+    periodoRotulo = 'Mês Atual',
+    usuario,
+    stats,
+  }: {
+    registros: RegistroVeiculo[];
+    secretariaFiltro?: 'TODAS' | Secretaria;
+    periodoRotulo?: string;
+    usuario?: UsuarioAutenticado | null;
+    stats: {
+      totalViagens: number;
+      emTransito: number;
+      finalizados: number;
+      totalAgri: number;
+      totalTurismo: number;
+      pctAgri: number;
+      pctTurismo: number;
+      topMotoristas: { nome: string; count: number }[];
+      topVeiculos: { placa: string; modelo: string; count: number }[];
+      topDestinos: { destino: string; count: number }[];
+      turnos: { manha: number; tarde: number; noite: number; madrugada: number };
+    };
+  }): { doc: jsPDF; fileName: string } {
+    const doc = new jsPDF({
+      orientation: 'portrait',
+      unit: 'mm',
+      format: 'a4',
+    });
+
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
+
+    // 1. Header Banner Superior Institucional
+    const primaryColor: [number, number, number] = [15, 23, 42]; // Slate 900
+    const emeraldColor: [number, number, number] = [5, 150, 105]; // Emerald 600
+    const matteBrownColor: [number, number, number] = [154, 115, 68]; // Marrom Claro Fosco (#9a7344)
+
+    doc.setFillColor(...primaryColor);
+    doc.rect(0, 0, pageWidth, 30, 'F');
+
+    // Faixa colorida dupla
+    doc.setFillColor(...emeraldColor);
+    doc.rect(0, 30, pageWidth / 2, 2.5, 'F');
+    doc.setFillColor(...matteBrownColor);
+    doc.rect(pageWidth / 2, 30, pageWidth / 2, 2.5, 'F');
+
+    // Título e Subtítulo
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(13);
+    doc.setTextColor(255, 255, 255);
+    doc.text('RELATÓRIO DE ESTATÍSTICAS & MÉTRICAS DE FROTA', 14, 12);
+
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(9);
+    doc.setTextColor(203, 213, 225);
+    doc.text('Secretaria da Agricultura  •  Secretaria do Turismo', 14, 18);
+
+    doc.setFontSize(8);
+    doc.setTextColor(217, 121, 36);
+    doc.text(`Período de Análise: ${periodoRotulo} | Escopo: ${secretariaFiltro === 'TODAS' ? 'Agricultura & Turismo' : secretariaFiltro}`, 14, 25);
+
+    // Emissão à Direita
+    const agora = new Date();
+    const dataHoraEmissao = agora.toLocaleDateString('pt-BR') + ' às ' + agora.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+    doc.setFontSize(8);
+    doc.setTextColor(203, 213, 225);
+    doc.text(`Emissão: ${dataHoraEmissao}`, pageWidth - 14, 12, { align: 'right' });
+    if (usuario) {
+      doc.text(`Emissor: ${usuario.nome}`, pageWidth - 14, 18, { align: 'right' });
+    }
+
+    let currentY = 40;
+
+    // 2. Cartões de Indicadores Gerais (KPIs)
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(10.5);
+    doc.setTextColor(15, 23, 42);
+    doc.text('1. INDICADORES GERAIS DE FLUXO', 14, currentY);
+    currentY += 4;
+
+    const kpiWidth = (pageWidth - 28 - 9) / 4;
+    const kpiHeight = 22;
+
+    const renderKpiBox = (title: string, value: string, subtitle: string, x: number, colorBg: [number, number, number], colorText: [number, number, number]) => {
+      doc.setFillColor(...colorBg);
+      doc.setDrawColor(203, 213, 225);
+      doc.setLineWidth(0.3);
+      doc.roundedRect(x, currentY, kpiWidth, kpiHeight, 2, 2, 'FD');
+
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(7);
+      doc.setTextColor(100, 116, 139);
+      doc.text(title.toUpperCase(), x + 4, currentY + 6);
+
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(13);
+      doc.setTextColor(...colorText);
+      doc.text(value, x + 4, currentY + 14);
+
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(6.5);
+      doc.setTextColor(100, 116, 139);
+      doc.text(subtitle, x + 4, currentY + 19);
+    };
+
+    renderKpiBox('Total Viagens', `${stats.totalViagens}`, 'No período', 14, [248, 250, 252], [15, 23, 42]);
+    renderKpiBox('Em Trânsito', `${stats.emTransito}`, 'Veículos na rua', 14 + kpiWidth + 3, [254, 243, 199], [180, 83, 9]);
+    renderKpiBox('Concluídas', `${stats.finalizados}`, 'Retornos efetuados', 14 + (kpiWidth + 3) * 2, [209, 250, 229], [4, 120, 87]);
+    const taxa = stats.totalViagens > 0 ? Math.round((stats.finalizados / stats.totalViagens) * 100) : 100;
+    renderKpiBox('Taxa Conclusão', `${taxa}%`, 'Eficiência operacional', 14 + (kpiWidth + 3) * 3, [239, 246, 255], [29, 78, 216]);
+
+    currentY += kpiHeight + 8;
+
+    // 3. Demanda por Secretaria
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(10.5);
+    doc.setTextColor(15, 23, 42);
+    doc.text('2. DISTRIBUIÇÃO DA DEMANDA POR SECRETARIA', 14, currentY);
+    currentY += 4;
+
+    const secBoxWidth = (pageWidth - 28 - 4) / 2;
+    const secBoxHeight = 20;
+
+    // Box Agricultura
+    doc.setFillColor(254, 242, 242);
+    doc.setDrawColor(254, 202, 202);
+    doc.roundedRect(14, currentY, secBoxWidth, secBoxHeight, 2, 2, 'FD');
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(9);
+    doc.setTextColor(154, 115, 68);
+    doc.text('Secretaria da Agricultura', 18, currentY + 7);
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(7.5);
+    doc.setTextColor(100, 116, 139);
+    doc.text(`Total: ${stats.totalAgri} saídas registradas com FCT`, 18, currentY + 14);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(12);
+    doc.setTextColor(154, 115, 68);
+    doc.text(`${stats.pctAgri}%`, 14 + secBoxWidth - 6, currentY + 12, { align: 'right' });
+
+    // Box Turismo
+    doc.setFillColor(240, 253, 244);
+    doc.setDrawColor(187, 247, 208);
+    doc.roundedRect(14 + secBoxWidth + 4, currentY, secBoxWidth, secBoxHeight, 2, 2, 'FD');
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(9);
+    doc.setTextColor(5, 150, 105);
+    doc.text('Secretaria do Turismo', 18 + secBoxWidth + 4, currentY + 7);
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(7.5);
+    doc.setTextColor(100, 116, 139);
+    doc.text(`Total: ${stats.totalTurismo} saídas operacionais`, 18 + secBoxWidth + 4, currentY + 14);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(12);
+    doc.setTextColor(5, 150, 105);
+    doc.text(`${stats.pctTurismo}%`, pageWidth - 20, currentY + 12, { align: 'right' });
+
+    currentY += secBoxHeight + 8;
+
+    // 4. Tabelas de Ranking (Motoristas e Veículos) lado a lado
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(10.5);
+    doc.setTextColor(15, 23, 42);
+    doc.text('3. RANKINGS DE ATIVIDADE & DEMANDA DA FROTA', 14, currentY);
+    currentY += 2;
+
+    const motoristasBody = stats.topMotoristas.map((m, idx) => [
+      `${idx + 1}º`,
+      m.nome,
+      `${m.count} ${m.count === 1 ? 'viagem' : 'viagens'}`
+    ]);
+    if (motoristasBody.length === 0) {
+      motoristasBody.push(['-', 'Sem registros', '-']);
+    }
+
+    const veiculosBody = stats.topVeiculos.map((v, idx) => [
+      `${idx + 1}º`,
+      `${v.placa} (${v.modelo})`,
+      `${v.count} ${v.count === 1 ? 'saída' : 'saídas'}`
+    ]);
+    if (veiculosBody.length === 0) {
+      veiculosBody.push(['-', 'Sem registros', '-']);
+    }
+
+    // Tabela Motoristas (Esquerda)
+    autoTable(doc, {
+      startY: currentY,
+      head: [['Pos.', 'Motorista com Mais Saídas', 'Qtd']],
+      body: motoristasBody,
+      theme: 'grid',
+      styles: {
+        fontSize: 7.5,
+        cellPadding: 2,
+        textColor: [30, 41, 59],
+        lineColor: [226, 232, 240],
+      },
+      headStyles: {
+        fillColor: [15, 23, 42],
+        textColor: [255, 255, 255],
+        fontStyle: 'bold',
+        fontSize: 7.5,
+      },
+      columnStyles: {
+        0: { cellWidth: 10, halign: 'center' },
+        1: { cellWidth: 50 },
+        2: { cellWidth: 26, halign: 'center', fontStyle: 'bold' },
+      },
+      margin: { left: 14, right: pageWidth / 2 + 3 },
+    });
+
+    // Tabela Veículos (Direita)
+    autoTable(doc, {
+      startY: currentY,
+      head: [['Pos.', 'Veículo / Placa Mais Utilizado', 'Qtd']],
+      body: veiculosBody,
+      theme: 'grid',
+      styles: {
+        fontSize: 7.5,
+        cellPadding: 2,
+        textColor: [30, 41, 59],
+        lineColor: [226, 232, 240],
+      },
+      headStyles: {
+        fillColor: [154, 115, 68],
+        textColor: [255, 255, 255],
+        fontStyle: 'bold',
+        fontSize: 7.5,
+      },
+      columnStyles: {
+        0: { cellWidth: 10, halign: 'center' },
+        1: { cellWidth: 50 },
+        2: { cellWidth: 26, halign: 'center', fontStyle: 'bold' },
+      },
+      margin: { left: pageWidth / 2 + 3, right: 14 },
+    });
+
+    // Pega o maior Y após as tabelas
+    // @ts-ignore
+    const finalY1 = doc.lastAutoTable ? doc.lastAutoTable.finalY : currentY + 45;
+    currentY = Math.max(finalY1, currentY + 45) + 8;
+
+    // 5. Destinos e Turnos
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(10.5);
+    doc.setTextColor(15, 23, 42);
+    doc.text('4. DESTINOS FREQUENTES & TURNOS DE MAIOR MOVIMENTO', 14, currentY);
+    currentY += 4;
+
+    // Turnos Box
+    const turnoBoxWidth = (pageWidth - 28 - 9) / 4;
+    const renderTurnoBox = (label: string, count: number, x: number) => {
+      doc.setFillColor(248, 250, 252);
+      doc.setDrawColor(226, 232, 240);
+      doc.roundedRect(x, currentY, turnoBoxWidth, 16, 2, 2, 'FD');
+
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(7);
+      doc.setTextColor(100, 116, 139);
+      doc.text(label, x + 3, currentY + 5.5);
+
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(11);
+      doc.setTextColor(15, 23, 42);
+      doc.text(`${count} saídas`, x + 3, currentY + 12.5);
+    };
+
+    renderTurnoBox('Manhã (06h-12h)', stats.turnos.manha, 14);
+    renderTurnoBox('Tarde (12h-18h)', stats.turnos.tarde, 14 + turnoBoxWidth + 3);
+    renderTurnoBox('Noite (18h-24h)', stats.turnos.noite, 14 + (turnoBoxWidth + 3) * 2);
+    renderTurnoBox('Madrugada', stats.turnos.madrugada, 14 + (turnoBoxWidth + 3) * 3);
+
+    currentY += 22;
+
+    // Destinos frequentes em texto estruturado
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(8.5);
+    doc.setTextColor(15, 23, 42);
+    doc.text('Principais Destinos Atendidos:', 14, currentY);
+    currentY += 4.5;
+
+    const destinosTexto = stats.topDestinos.length > 0
+      ? stats.topDestinos.map(d => `${d.destino} (${d.count}x)`).join('  •  ')
+      : 'Nenhum destino especificado no período.';
+    
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(8);
+    doc.setTextColor(71, 85, 105);
+    const splitDestinos = doc.splitTextToSize(destinosTexto, pageWidth - 28);
+    doc.text(splitDestinos, 14, currentY);
+
+    // Rodapé em todas as páginas
+    doc.setDrawColor(226, 232, 240);
+    doc.line(14, pageHeight - 12, pageWidth - 14, pageHeight - 12);
+
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(7.5);
+    doc.setTextColor(100, 116, 139);
+    doc.text('Relatório Consolidado de Gestão de Frotas • Secretaria da Agricultura e Secretaria do Turismo', 14, pageHeight - 6.5);
+
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(30, 41, 59);
+    doc.text('Desenvolvido por Siolly Technology', pageWidth - 14, pageHeight - 6.5, { align: 'right' });
+
+    const fileName = `Estatisticas-Frotas-${getLocalDateString()}.pdf`;
+    return { doc, fileName };
+  },
+
+  gerarPdfEstatisticas(params: {
+    registros: RegistroVeiculo[];
+    secretariaFiltro?: 'TODAS' | Secretaria;
+    periodoRotulo?: string;
+    usuario?: UsuarioAutenticado | null;
+    stats: any;
+  }): void {
+    const { doc, fileName } = this.construirDocumentoEstatisticas(params);
+    doc.save(fileName);
+  },
+
+  obterEstatisticasPdfBlob(params: {
+    registros: RegistroVeiculo[];
+    secretariaFiltro?: 'TODAS' | Secretaria;
+    periodoRotulo?: string;
+    usuario?: UsuarioAutenticado | null;
+    stats: any;
+  }): { blob: Blob; fileName: string } {
+    const { doc, fileName } = this.construirDocumentoEstatisticas(params);
+    const blob = doc.output('blob');
+    return { blob, fileName };
+  },
+
+  gerarTextoEstatisticas({
+    periodoRotulo = 'Mês Atual',
+    secretariaFiltro = 'TODAS',
+    usuario,
+    stats,
+  }: {
+    periodoRotulo?: string;
+    secretariaFiltro?: 'TODAS' | Secretaria;
+    usuario?: UsuarioAutenticado | null;
+    stats: any;
+  }): string {
+    const secTexto = secretariaFiltro === 'TODAS'
+      ? 'Secretaria da Agricultura & Secretaria do Turismo'
+      : secretariaFiltro;
+
+    let texto = `📊 *PAINEL DE ESTATÍSTICAS & MÉTRICAS DE FROTA*\n`;
+    texto += `🏛️ *${secTexto}*\n`;
+    texto += `----------------------------------------\n`;
+    texto += `📅 *Período:* ${periodoRotulo}\n`;
+    texto += `🚗 *Total de Viagens:* ${stats.totalViagens}\n`;
+    texto += `⏳ *Em Trânsito (Na rua):* ${stats.emTransito}\n`;
+    texto += `✅ *Viagens Concluídas:* ${stats.finalizados}\n`;
+    texto += `📈 *Taxa de Conclusão:* ${stats.totalViagens > 0 ? Math.round((stats.finalizados / stats.totalViagens) * 100) : 100}%\n`;
+    texto += `----------------------------------------\n`;
+    texto += `🏢 *DEMANDA POR SECRETARIA:*\n`;
+    texto += `🌾 Agricultura: ${stats.totalAgri} viagens (${stats.pctAgri}%)\n`;
+    texto += `✈️ Turismo: ${stats.totalTurismo} viagens (${stats.pctTurismo}%)\n`;
+    texto += `----------------------------------------\n`;
+
+    if (stats.topMotoristas && stats.topMotoristas.length > 0) {
+      texto += `👤 *TOP MOTORISTAS:*\n`;
+      stats.topMotoristas.slice(0, 3).forEach((m: any, idx: number) => {
+        texto += `  ${idx + 1}. ${m.nome}: ${m.count} viagens\n`;
+      });
+      texto += `----------------------------------------\n`;
+    }
+
+    if (stats.topVeiculos && stats.topVeiculos.length > 0) {
+      texto += `🚙 *VEÍCULOS MAIS UTILIZADOS:*\n`;
+      stats.topVeiculos.slice(0, 3).forEach((v: any, idx: number) => {
+        texto += `  ${idx + 1}. ${v.placa} (${v.modelo}): ${v.count} saídas\n`;
+      });
+      texto += `----------------------------------------\n`;
+    }
+
+    if (usuario) {
+      texto += `👤 *Emissor do Relatório:* ${usuario.nome} (${usuario.matricula})\n`;
+    }
+    texto += `🕒 *Gerado em:* ${new Date().toLocaleDateString('pt-BR')} às ${new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}\n`;
+    texto += `📄 *PDF Anexo:* Documento detalhado gerado pelo sistema.\n`;
+    texto += `Desenvolvido por Siolly Technology`;
+
+    return texto;
   }
 };
+

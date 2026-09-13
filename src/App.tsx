@@ -17,6 +17,8 @@ import { SendReportModal } from './components/SendReportModal';
 import { ChangePasswordModal } from './components/ChangePasswordModal';
 import { DailyControlModal } from './components/DailyControlModal';
 import { ShiftSummaryModal } from './components/ShiftSummaryModal';
+import { StatsMetricsModal } from './components/StatsMetricsModal';
+import { ExportExcelModal } from './components/ExportExcelModal';
 import { DailyCardsView } from './components/DailyCardsView';
 import { PwaInstallPrompt } from './components/PwaInstallPrompt';
 import { Footer } from './components/Footer';
@@ -33,6 +35,8 @@ export default function App() {
   const [isModalAlterarSenhaOpen, setIsModalAlterarSenhaOpen] = useState(false);
   const [isModalPainelDiarioOpen, setIsModalPainelDiarioOpen] = useState(false);
   const [isModalResumoTurnoOpen, setIsModalResumoTurnoOpen] = useState(false);
+  const [isModalEstatisticasOpen, setIsModalEstatisticasOpen] = useState(false);
+  const [isModalExportarExcelOpen, setIsModalExportarExcelOpen] = useState(false);
   const [registroEmEdicao, setRegistroEmEdicao] = useState<RegistroVeiculo | null>(null);
   const [registroSelecionadoDetalhes, setRegistroSelecionadoDetalhes] = useState<RegistroVeiculo | null>(null);
   const [registroAjusteHorarios, setRegistroAjusteHorarios] = useState<RegistroVeiculo | null>(null);
@@ -131,7 +135,7 @@ export default function App() {
     exibirToast(`Chegada registrada para ${reg.fct} às ${horarioChegada}.`);
   };
 
-  const handleSalvarHorarios = (id: string, horarioSaida: string, horarioChegada: string) => {
+  const handleSalvarHorarios = (id: string, horarioSaida: string, horarioChegada: string, ocorrencia?: string) => {
     const reg = registros.find(r => r.id === id);
     if (!reg) return;
 
@@ -141,6 +145,7 @@ export default function App() {
       ...reg,
       horarioSaida,
       horarioChegada: horarioChegada.trim() || undefined,
+      ocorrencia: ocorrencia !== undefined ? ocorrencia : reg.ocorrencia,
       status: statusAtualizado,
     });
 
@@ -188,6 +193,7 @@ export default function App() {
           (reg.placa && reg.placa.toLowerCase().includes(termo)) ||
           (reg.modeloVeiculo && reg.modeloVeiculo.toLowerCase().includes(termo)) ||
           (reg.destino && reg.destino.toLowerCase().includes(termo)) ||
+          (reg.ocorrencia && reg.ocorrencia.toLowerCase().includes(termo)) ||
           (reg.matriculaFuncionario && reg.matriculaFuncionario.toLowerCase().includes(termo)) ||
           reg.funcionarioResponsavel.toLowerCase().includes(termo);
 
@@ -228,6 +234,8 @@ export default function App() {
         onAbrirEnviarRelatorio={() => setIsModalEnviarRelatorioOpen(true)}
         onResumoTurno={() => setIsModalResumoTurnoOpen(true)}
         onExportarPdf={handleExportarPdf}
+        onEstatisticas={() => setIsModalEstatisticasOpen(true)}
+        onExportarExcel={() => setIsModalExportarExcelOpen(true)}
         onAlterarSenha={() => setIsModalAlterarSenhaOpen(true)}
         onLogout={handleLogout}
         totalRegistros={registros.length}
@@ -304,7 +312,7 @@ export default function App() {
                   <div>
                     <h3 className="text-xs sm:text-sm font-bold text-white flex items-center gap-2">
                       <span>Listagem de Veículos Cadastrados</span>
-                      <span className="bg-amber-9500 text-slate-950 text-[10px] px-2 py-0.5 rounded-full font-extrabold uppercase">
+                      <span className="bg-amber-400 text-slate-950 text-[10px] px-2.5 py-0.5 rounded-full font-extrabold uppercase">
                         {modoVisualizacao === 'CARTOES' ? 'Cartões' : 'Tabela'}
                       </span>
                     </h3>
@@ -467,6 +475,23 @@ export default function App() {
         isOpen={isModalResumoTurnoOpen}
         onClose={() => setIsModalResumoTurnoOpen(false)}
         registros={registros}
+      />
+
+      {/* Modal de Estatísticas & Métricas de Viagens */}
+      <StatsMetricsModal
+        isOpen={isModalEstatisticasOpen}
+        onClose={() => setIsModalEstatisticasOpen(false)}
+        registros={registros}
+        usuario={usuario}
+        onToast={exibirToast}
+      />
+
+      {/* Modal para Exportação para Excel (.CSV / .XLS) */}
+      <ExportExcelModal
+        isOpen={isModalExportarExcelOpen}
+        onClose={() => setIsModalExportarExcelOpen(false)}
+        registros={registros}
+        onToast={exibirToast}
       />
 
       {/* Rodapé com crédito para Roberto */}

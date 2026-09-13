@@ -54,7 +54,7 @@ export const RecordDetailModal: React.FC<RecordDetailModalProps> = ({
                   : 'bg-gradient-to-br from-[#8c6d46] to-[#6e5230] border-2 border-[#b08d57]/50'
               }`}
             >
-              {isAgri ? <Wheat className="w-6 h-6 text-[#D97924]" /> : <Plane    className="text-emerald-400 w-6 h-6 text-[#D97924]" />}
+              {isAgri ? <Wheat className="w-6 h-6 text-[#D97924]" /> : <Plane className="w-6 h-6 text-emerald-400" />}
             </div>
             <div>
               <div className="flex items-center gap-3 flex-wrap">
@@ -66,13 +66,23 @@ export const RecordDetailModal: React.FC<RecordDetailModalProps> = ({
                   </span>
                 )}
                 <span
-                  className={`text-xs sm:text-sm font-bold px-3 py-1 rounded-full ${
+                  className={`text-xs sm:text-sm font-bold px-3 py-1 rounded-full inline-flex items-center gap-1.5 ${
                     registro.status === 'EM_TRANSITO'
-                      ? 'bg-[#362619] text-[#d4b896] border border-[#a8855d]/50'
-                      : 'bg-[#3A241D] text-[#D97924] border border-[#5A3A2E]'
+                      ? 'bg-amber-950 text-amber-300 border border-amber-500/50'
+                      : 'bg-emerald-950 text-emerald-300 border border-emerald-500/50'
                   }`}
                 >
-                  {registro.status === 'EM_TRANSITO' ? 'Em Trânsito' : 'Concluído'}
+                  {registro.status === 'EM_TRANSITO' ? (
+                    <>
+                      <Clock className="w-3.5 h-3.5 animate-pulse text-amber-400" />
+                      <span>Em Trânsito</span>
+                    </>
+                  ) : (
+                    <>
+                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                      <span>Concluído</span>
+                    </>
+                  )}
                 </span>
               </div>
               <span className="text-sm font-bold text-slate-300 block mt-0.5">{registro.secretaria}</span>
@@ -137,7 +147,7 @@ export const RecordDetailModal: React.FC<RecordDetailModalProps> = ({
                   <button
                     type="button"
                     onClick={handleSalvarRetorno}
-                    className="bg-amber-600 hover:bg-amber-9500 text-white text-sm font-bold px-3 py-2 rounded-xl transition-colors cursor-pointer"
+                    className="bg-amber-600 hover:bg-amber-500 text-white text-sm font-bold px-3 py-2 rounded-xl transition-colors cursor-pointer"
                   >
                     Confirmar
                   </button>
@@ -246,6 +256,38 @@ export const RecordDetailModal: React.FC<RecordDetailModalProps> = ({
             </div>
           )}
 
+          {/* Campo de Ocorrência Registrada */}
+          {registro.ocorrencia ? (
+            <div className="bg-amber-950/40 border-2 border-amber-600/60 rounded-2xl p-4 sm:p-5 space-y-2 shadow-lg shadow-amber-950/30">
+              <div className="flex items-center justify-between gap-2 flex-wrap">
+                <span className="text-sm sm:text-base font-bold text-amber-300 flex items-center gap-2">
+                  <AlertTriangle className="w-5 h-5 text-amber-400 shrink-0" />
+                  <span>Ocorrência / Anotação da Portaria</span>
+                </span>
+                <span className="text-xs bg-amber-500/20 text-amber-300 border border-amber-500/40 px-2.5 py-0.5 rounded-full font-bold">
+                  Registrada pelo Operador
+                </span>
+              </div>
+              <p className="text-sm sm:text-base text-white font-medium bg-slate-950/80 p-3.5 rounded-xl border border-amber-600/30 whitespace-pre-wrap leading-relaxed">
+                {registro.ocorrencia}
+              </p>
+            </div>
+          ) : (
+            <div className="bg-slate-950/70 border border-slate-800 rounded-2xl p-3.5 flex items-center justify-between text-xs sm:text-sm text-slate-400">
+              <span className="flex items-center gap-2">
+                <AlertTriangle className="w-4 h-4 text-slate-500" />
+                Nenhuma ocorrência ou avaria anotada para esta viagem.
+              </span>
+              <button
+                type="button"
+                onClick={() => onEdit(registro)}
+                className="text-amber-400 hover:text-amber-300 font-bold hover:underline cursor-pointer ml-2 whitespace-nowrap"
+              >
+                + Adicionar Ocorrência
+              </button>
+            </div>
+          )}
+
           {/* Assinatura do Operador Responsável */}
           <div className="bg-slate-950 border-2 border-slate-800 rounded-2xl p-5 space-y-3">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
@@ -253,7 +295,7 @@ export const RecordDetailModal: React.FC<RecordDetailModalProps> = ({
                 <PenTool className="w-4 h-4 text-amber-400 shrink-0" />
                 <span className="leading-tight">Assinatura do Operador Responsável pelo Cadastro</span>
               </span>
-              <span className="inline-flex items-center justify-center gap-1.5 text-[11px] uppercase tracking-wider text-amber-400 font-black bg-amber-950/80 px-3 py-1.5 rounded-full border border-amber-9500/50 leading-none shadow-inner shrink-0 whitespace-nowrap self-start sm:self-auto">
+              <span className="inline-flex items-center justify-center gap-1.5 text-[11px] uppercase tracking-wider text-amber-400 font-black bg-amber-950/80 px-3 py-1.5 rounded-full border border-amber-500/50 leading-none shadow-inner shrink-0 whitespace-nowrap self-start sm:self-auto">
                 <CheckCircle2 className="w-4 h-4 shrink-0" />
                 <span className="pt-[1px]">Autenticado</span>
               </span>

@@ -9,7 +9,8 @@ import {
   Check,
   ArrowRight,
   Maximize2,
-  FileDown
+  FileDown,
+  AlertTriangle
 } from 'lucide-react';
 import { RegistroVeiculo, Secretaria, UsuarioAutenticado, FiltrosRegistros } from '../types';
 import { PdfService } from '../services/pdfService';
@@ -79,13 +80,15 @@ export const DailyCardsView: React.FC<DailyCardsViewProps> = ({
           <button
             type="button"
             onClick={() => setStatusAba('TODOS')}
-            className={`px-3 py-1.5 rounded-xl text-xs font-bold border transition-all cursor-pointer ${
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold border flex items-center gap-1.5 transition-all cursor-pointer ${
               statusAtual === 'TODOS'
                 ? 'bg-slate-800 border-slate-500 text-white shadow-md'
                 : 'bg-slate-950 border-slate-800 text-slate-300 hover:bg-slate-850'
             }`}
           >
-            Total Exibido: <strong className="text-white font-mono ml-1">{listaParaExibir.length}</strong>
+            <Car className="w-3.5 h-3.5 text-slate-400" />
+            <span>Total Exibido:</span>
+            <strong className="text-white font-mono">{listaParaExibir.length}</strong>
           </button>
 
           <button
@@ -108,7 +111,7 @@ export const DailyCardsView: React.FC<DailyCardsViewProps> = ({
             onClick={() => setStatusAba(statusAtual === 'FINALIZADO' ? 'TODOS' : 'FINALIZADO')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold border flex items-center gap-1.5 transition-all cursor-pointer ${
               statusAtual === 'FINALIZADO'
-                ? 'bg-amber-950 border-amber-9500 text-white shadow-md'
+                ? 'bg-amber-950 border-amber-500 text-white shadow-md'
                 : 'bg-slate-950 border-slate-800 text-amber-400 hover:bg-slate-850'
             }`}
           >
@@ -142,7 +145,7 @@ export const DailyCardsView: React.FC<DailyCardsViewProps> = ({
                 : 'bg-black border-[#6B6B6B]/30 text-emerald-400 hover:bg-neutral-900'
             }`}
           >
-            <Plane    className="text-emerald-400 w-3.5 h-3.5 text-emerald-400" />
+            <Plane className="w-3.5 h-3.5 text-emerald-400" />
             <span>Turismo ({totalTurismo})</span>
           </button>
         </div>
@@ -156,7 +159,7 @@ export const DailyCardsView: React.FC<DailyCardsViewProps> = ({
             title="Expandir em Janela Modal Completa"
           >
             <Maximize2 className="w-3.5 h-3.5" />
-            <span className="hidden md:inline">Painel Completo</span>
+            <span>Painel Completo</span>
           </button>
         )}
       </div>
@@ -175,7 +178,7 @@ export const DailyCardsView: React.FC<DailyCardsViewProps> = ({
             <button
               type="button"
               onClick={onNovoRegistro}
-              className="px-4 py-2 rounded-xl text-xs font-bold bg-amber-600 hover:bg-amber-9500 text-white cursor-pointer shadow-lg transition-all inline-flex items-center gap-1.5"
+              className="px-4 py-2 rounded-xl text-xs font-bold bg-amber-600 hover:bg-amber-500 text-white cursor-pointer shadow-lg transition-all inline-flex items-center gap-1.5"
             >
               <Car className="w-4 h-4" />
               <span>Cadastrar Novo Veículo</span>
@@ -201,7 +204,7 @@ export const DailyCardsView: React.FC<DailyCardsViewProps> = ({
                 className={`bg-slate-900/95 hover:bg-slate-850 border rounded-lg p-2 sm:px-3 shadow-sm transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-l-4 ${
                   isEmTransito
                     ? 'border-l-amber-400 border-t-slate-800 border-r-slate-800 border-b-slate-800 bg-amber-950/10'
-                    : 'border-l-amber-9500 border-t-slate-800 border-r-slate-800 border-b-slate-800'
+                    : 'border-l-emerald-500 border-t-slate-800 border-r-slate-800 border-b-slate-800'
                 }`}
               >
                 {/* Lado Esquerdo: Placa + Secretaria/FCT + Motorista */}
@@ -213,20 +216,20 @@ export const DailyCardsView: React.FC<DailyCardsViewProps> = ({
                     }`}
                     title={reg.secretaria}
                   >
-                    {isAgri ? <Wheat className="w-3 h-3 text-[#D97924]" /> : <Plane className="text-emerald-400 w-3 h-3 text-[#D97924]" />}
+                    {isAgri ? <Wheat className="w-3 h-3 text-[#D97924]" /> : <Plane className="w-3 h-3 text-emerald-400" />}
                   </div>
 
                   {/* Placa em Destaque */}
                   <div className="shrink-0 flex items-center gap-1.5">
-                    <span className="font-mono font-bold text-xs sm:text-sm text-amber-400 bg-slate-950 border border-amber-9500/50 px-1.5 py-0.5 rounded tracking-wider shadow-inner">
+                    <span className="font-mono font-bold text-xs sm:text-sm text-amber-400 bg-slate-950 border border-amber-500/50 px-1.5 py-0.5 rounded tracking-wider shadow-inner">
                       {placaVeic}
                     </span>
                     {isAgri && reg.fct && reg.fct !== 'N/A' && reg.fct !== '-' ? (
-                      <span className="font-mono text-[10px] font-bold text-slate-300 bg-slate-800 px-1 py-0.5 rounded border border-slate-700 hidden sm:inline">
+                      <span className="font-mono text-[10px] font-bold text-slate-300 bg-slate-800 px-1.5 py-0.5 rounded border border-slate-700 hidden sm:inline">
                         {reg.fct}
                       </span>
                     ) : (
-                      <span className="text-[10px] font-bold text-slate-400 bg-slate-800 px-1 py-0.5 rounded border border-slate-700 hidden sm:inline">
+                      <span className="text-[10px] font-bold text-slate-400 bg-slate-800 px-1.5 py-0.5 rounded border border-slate-700 hidden sm:inline">
                         Turismo
                       </span>
                     )}
@@ -239,7 +242,7 @@ export const DailyCardsView: React.FC<DailyCardsViewProps> = ({
                     <span className="font-bold text-xs sm:text-sm text-white truncate max-w-[150px] sm:max-w-[200px]">
                       {motoristaNome}
                     </span>
-                    <div className="flex items-center gap-1.5 text-[10px] text-slate-400 truncate">
+                    <div className="flex items-center gap-1.5 text-[10px] text-slate-400 truncate flex-wrap">
                       <span className="hidden sm:inline">•</span>
                       <span className="truncate max-w-[120px]">{reg.destino || 'Serviço'}</span>
                       {andarLocal && andarLocal !== 'Térreo' && (
@@ -249,6 +252,15 @@ export const DailyCardsView: React.FC<DailyCardsViewProps> = ({
                             : 'bg-slate-800 text-amber-400 border-slate-700'
                         }`}>
                           Andar {andarLocal}
+                        </span>
+                      )}
+                      {reg.ocorrencia && (
+                        <span 
+                          className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[9px] font-bold bg-amber-950/90 text-amber-300 border border-amber-500/50"
+                          title={`Ocorrência: ${reg.ocorrencia}`}
+                        >
+                          <AlertTriangle className="w-2.5 h-2.5 text-amber-400 shrink-0" />
+                          <span>Ocorrência</span>
                         </span>
                       )}
                     </div>
@@ -276,21 +288,22 @@ export const DailyCardsView: React.FC<DailyCardsViewProps> = ({
                       <button
                         type="button"
                         onClick={() => onAjustarHorarios(reg)}
-                        className="inline-flex items-center gap-1 px-2 py-1 text-[10px] sm:text-xs text-white bg-amber-600 hover:bg-amber-9500 rounded font-bold transition-all cursor-pointer"
+                        className="inline-flex items-center gap-1 px-2 py-1 text-[10px] sm:text-xs text-white bg-amber-600 hover:bg-amber-500 rounded font-bold transition-all cursor-pointer shadow-sm"
                         title="Registrar Retorno do Veículo"
                       >
                         <Check className="w-3 h-3" />
-                        <span className="hidden sm:inline">Retorno</span>
+                        <span>Retorno</span>
                       </button>
                     )}
 
                     <button
                       type="button"
                       onClick={() => onVerDetalhes(reg)}
-                      className="inline-flex items-center px-1.5 py-1 text-[10px] sm:text-xs text-slate-300 hover:text-white bg-slate-800 hover:bg-slate-750 border border-slate-700 rounded transition-colors cursor-pointer"
+                      className="inline-flex items-center gap-1 px-2 py-1 text-[10px] sm:text-xs text-slate-300 hover:text-white bg-slate-800 hover:bg-slate-750 border border-slate-700 rounded transition-colors cursor-pointer"
                       title="Ver Ficha Completa e Assinatura"
                     >
                       <Eye className="w-3.5 h-3.5" />
+                      <span>Ficha</span>
                     </button>
                   </div>
                 </div>

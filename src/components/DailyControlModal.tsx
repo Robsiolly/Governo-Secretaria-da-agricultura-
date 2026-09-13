@@ -18,6 +18,7 @@ import {
   ArrowRight,
   Eye,
   Check,
+  AlertTriangle,
 } from 'lucide-react';
 import { RegistroVeiculo, Secretaria } from '../types';
 import { getDateStringFromDate } from '../utils/dateUtils';
@@ -394,11 +395,11 @@ export const DailyControlModal: React.FC<DailyControlModalProps> = ({
                 onClick={() => setSecretariaFiltro('Secretaria do Turismo')}
                 className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer whitespace-nowrap min-h-[36px] ${
                   secretariaFiltro === 'Secretaria do Turismo'
-                    ? 'bg-slate-700 text-white border border-slate-500 shadow-sm'
+                    ? 'bg-emerald-950 text-emerald-300 border border-emerald-500/50 shadow-sm'
                     : 'bg-slate-950 text-slate-300 hover:text-white border border-slate-800'
                 }`}
               >
-                <Plane    className="text-emerald-400 w-3.5 h-3.5 text-emerald-400" />
+                <Plane className="w-3.5 h-3.5 text-emerald-400" />
                 <span>Sec. Turismo</span>
               </button>
             </div>
@@ -551,7 +552,7 @@ export const DailyControlModal: React.FC<DailyControlModalProps> = ({
                     className={`bg-slate-950 border rounded-xl p-2.5 sm:py-2.5 sm:px-3.5 shadow-sm transition-all flex flex-col md:flex-row md:items-center justify-between gap-2.5 sm:gap-3 border-l-4 ${
                       isEmTransito
                         ? 'border-l-amber-400 border-t-slate-800 border-r-slate-800 border-b-slate-800 bg-amber-950/10'
-                        : 'border-l-amber-9500 border-t-slate-800 border-r-slate-800 border-b-slate-800'
+                        : 'border-l-emerald-500 border-t-slate-800 border-r-slate-800 border-b-slate-800'
                     }`}
                   >
                     {/* Lado Esquerdo: Placa com Super Destaque + Secretaria/FCT + Motorista */}
@@ -559,17 +560,17 @@ export const DailyControlModal: React.FC<DailyControlModalProps> = ({
                       {/* Ícone da Secretaria */}
                       <div
                         className={`w-8 h-8 rounded-xl flex items-center justify-center text-white shrink-0 shadow-sm ${
-                          isAgri ? 'bg-amber-950 border border-amber-9500/40' : 'bg-slate-750 border border-slate-600'
+                          isAgri ? 'bg-amber-950 border border-amber-500/40' : 'bg-emerald-950 border border-emerald-500/40'
                         }`}
                         title={reg.secretaria}
                       >
-                        {isAgri ? <Wheat className="w-4 h-4 text-[#D97924]" /> : <Plane    className="text-emerald-400 w-4 h-4 text-[#D97924]" />}
+                        {isAgri ? <Wheat className="w-4 h-4 text-[#D97924]" /> : <Plane className="w-4 h-4 text-emerald-400" />}
                       </div>
 
                       {/* Placa em Destaque Alto Contraste */}
                       <div className="shrink-0 flex flex-col items-start">
                         <div className="flex items-center gap-1.5">
-                          <span className="font-mono font-black text-sm sm:text-base text-amber-400 bg-slate-900 border-2 border-amber-9500/50 px-2.5 py-0.5 rounded-lg tracking-wider shadow-inner">
+                          <span className="font-mono font-black text-sm sm:text-base text-amber-400 bg-slate-900 border-2 border-amber-500/50 px-2.5 py-0.5 rounded-lg tracking-wider shadow-inner">
                             {placaVeic}
                           </span>
                           {isAgri && reg.fct && reg.fct !== 'N/A' && reg.fct !== '-' ? (
@@ -614,6 +615,15 @@ export const DailyControlModal: React.FC<DailyControlModalProps> = ({
                           <span className="text-slate-400 truncate max-w-[160px]">{reg.secretaria}</span>
                           {dataReg && <span>• Data: <strong className="text-slate-300">{dataReg}</strong></span>}
                           <span className="hidden sm:inline">• Resp: <strong className="text-slate-300">{reg.funcionarioResponsavel}</strong></span>
+                          {reg.ocorrencia && (
+                            <span 
+                              className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-bold bg-amber-950 text-amber-300 border border-amber-600/50 max-w-[200px] truncate"
+                              title={`Ocorrência: ${reg.ocorrencia}`}
+                            >
+                              <AlertTriangle className="w-2.5 h-2.5 text-amber-400 shrink-0" />
+                              <span className="truncate">{reg.ocorrencia}</span>
+                            </span>
+                          )}
                         </div>
                       </div>
                     </div>

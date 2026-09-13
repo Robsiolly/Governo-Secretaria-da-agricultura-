@@ -16,6 +16,7 @@ export interface RegistroVeiculo {
   modeloVeiculo?: string; // Opcional, ex: Hilux 4x4, Spin 7L, Renegade
   destino?: string; // Opcional, ex: Fazenda Experimental, Polo Turístico
   observacoes?: string;
+  ocorrencia?: string; // Campo de ocorrência/anotação de incidentes pelo operador (avarias, atrasos, vistorias, etc.)
   status: 'EM_TRANSITO' | 'FINALIZADO';
   criadoEm: string; // ISO string
   atualizadoEm?: string;

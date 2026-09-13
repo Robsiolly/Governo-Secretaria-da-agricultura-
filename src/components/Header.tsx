@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Wheat, Plane, Plus, FileDown, LogOut, ShieldCheck, User, UserPlus, Share2, KeyRound, Clock, Menu } from 'lucide-react';
+import { Wheat, Plane, Plus, FileDown, LogOut, ShieldCheck, User, UserPlus, Share2, KeyRound, Clock, Menu, BarChart3, FileSpreadsheet } from 'lucide-react';
 import { UsuarioAutenticado } from '../types';
 
 interface HeaderProps {
@@ -9,6 +9,8 @@ interface HeaderProps {
   onAbrirEnviarRelatorio?: () => void;
   onResumoTurno?: () => void;
   onExportarPdf: () => void;
+  onEstatisticas?: () => void;
+  onExportarExcel?: () => void;
   onAlterarSenha?: () => void;
   onLogout: () => void;
   totalRegistros: number;
@@ -21,6 +23,8 @@ export const Header: React.FC<HeaderProps> = ({
   onAbrirEnviarRelatorio,
   onResumoTurno,
   onExportarPdf,
+  onEstatisticas,
+  onExportarExcel,
   onAlterarSenha,
   onLogout,
   totalRegistros,
@@ -53,10 +57,10 @@ export const Header: React.FC<HeaderProps> = ({
                 <Wheat className="w-5 h-5 text-[#D97924]" />
               </div>
               <div 
-                className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-[#252525] border border-[#6B6B6B]/40 flex items-center justify-center text-[#F3F3F1] shadow-lg"
+                className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-[#252525] border border-[#6B6B6B]/40 flex items-center justify-center text-emerald-400 shadow-lg"
                 title="Secretaria do Turismo"
               >
-                <Plane    className="text-emerald-400 w-5 h-5 text-[#F3F3F1]" />
+                <Plane className="w-5 h-5 text-emerald-400" />
               </div>
             </div>
             <div className="min-w-0 flex-1">
@@ -66,7 +70,7 @@ export const Header: React.FC<HeaderProps> = ({
                 </h1>
                 <span className="inline-flex items-center gap-1.5 bg-[#3A241D] text-[#D97924] border border-[#5A3A2E] px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wider shrink-0 shadow-inner">
                   <ShieldCheck className="w-3.5 h-3.5 text-[#D97924]" />
-                  Oficial
+                  <span>Oficial</span>
                 </span>
               </div>
               <p className="text-[10px] sm:text-xs text-[#6B6B6B] mt-0.5 font-medium whitespace-nowrap overflow-visible">
@@ -80,10 +84,10 @@ export const Header: React.FC<HeaderProps> = ({
             <button
               type="button"
               onClick={onNovoRegistro}
-              className="flex items-center justify-center gap-2 bg-[#D97924] hover:bg-[#c2681e] text-white px-3 sm:px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold shadow-xl shadow-[#D97924]/20 transition-all cursor-pointer min-h-[44px]"
+              className="inline-flex items-center justify-center gap-2 bg-[#D97924] hover:bg-[#c2681e] text-white px-3.5 sm:px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold shadow-xl shadow-[#D97924]/20 transition-all cursor-pointer min-h-[44px]"
             >
               <Plus className="w-4 h-4 shrink-0" />
-              <span className="hidden sm:inline">Novo Veículo</span>
+              <span>Novo Veículo</span>
             </button>
 
             <button
@@ -160,6 +164,28 @@ export const Header: React.FC<HeaderProps> = ({
                     >
                       <Clock className="w-4 h-4 text-emerald-400" />
                       <span>Resumo do Turno</span>
+                    </button>
+                  )}
+
+                  {onEstatisticas && (
+                    <button
+                      type="button"
+                      onClick={() => { onEstatisticas(); setIsMenuOpen(false); }}
+                      className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold text-amber-300 hover:text-white bg-amber-950/20 hover:bg-amber-900/60 transition-colors text-left"
+                    >
+                      <BarChart3 className="w-4 h-4 text-amber-400" />
+                      <span>Estatísticas & Métricas</span>
+                    </button>
+                  )}
+
+                  {onExportarExcel && (
+                    <button
+                      type="button"
+                      onClick={() => { onExportarExcel(); setIsMenuOpen(false); }}
+                      className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold text-emerald-300 hover:text-white bg-emerald-950/20 hover:bg-emerald-900/60 transition-colors text-left"
+                    >
+                      <FileSpreadsheet className="w-4 h-4 text-emerald-400" />
+                      <span>Exportar Excel / CSV</span>
                     </button>
                   )}
 

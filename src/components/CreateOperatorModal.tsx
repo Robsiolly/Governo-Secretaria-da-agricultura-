@@ -299,7 +299,7 @@ export const CreateOperatorModal: React.FC<CreateOperatorModalProps> = ({
             }}
             className={`px-5 py-2.5 rounded-t-2xl font-bold text-sm transition-all cursor-pointer border-t-2 border-x-2 ${
               abaAtiva === 'cadastrar'
-                ? 'bg-slate-900 text-amber-400 border-amber-9500/60'
+                ? 'bg-slate-900 text-amber-400 border-amber-500/60'
                 : 'bg-transparent text-slate-400 border-transparent hover:text-white'
             }`}
           >
@@ -310,7 +310,7 @@ export const CreateOperatorModal: React.FC<CreateOperatorModalProps> = ({
             onClick={() => setAbaAtiva('gerenciar')}
             className={`px-5 py-2.5 rounded-t-2xl font-bold text-sm transition-all cursor-pointer border-t-2 border-x-2 flex items-center gap-2 ${
               abaAtiva === 'gerenciar'
-                ? 'bg-slate-900 text-amber-400 border-amber-9500/60'
+                ? 'bg-slate-900 text-amber-400 border-amber-500/60'
                 : 'bg-transparent text-slate-400 border-transparent hover:text-white'
             }`}
           >
@@ -329,7 +329,7 @@ export const CreateOperatorModal: React.FC<CreateOperatorModalProps> = ({
           )}
 
           {sucesso && (
-            <div className="mb-4 p-4 rounded-2xl bg-amber-950/90 border border-amber-9500 text-amber-950 text-sm font-semibold flex items-start gap-3 animate-in fade-in">
+            <div className="mb-4 p-4 rounded-2xl bg-amber-950/90 border border-amber-500 text-amber-100 text-sm font-semibold flex items-start gap-3 animate-in fade-in">
               <Check className="w-5 h-5 shrink-0 text-amber-400 mt-0.5" />
               <span>{sucesso}</span>
             </div>
@@ -424,7 +424,7 @@ export const CreateOperatorModal: React.FC<CreateOperatorModalProps> = ({
                     value={nome}
                     onChange={(e) => setNome(e.target.value)}
                     placeholder="Ex: Diego"
-                    className="w-full bg-slate-950 border-2 border-slate-700 rounded-2xl px-4 py-3 text-base text-white placeholder-slate-500 focus:outline-none focus:border-amber-9500 font-medium"
+                    className="w-full bg-slate-950 border-2 border-slate-700 rounded-2xl px-4 py-3 text-base text-white placeholder-slate-500 focus:outline-none focus:border-amber-500 font-medium"
                   />
                 </div>
 
@@ -439,7 +439,7 @@ export const CreateOperatorModal: React.FC<CreateOperatorModalProps> = ({
                     value={matricula}
                     onChange={(e) => setMatricula(e.target.value)}
                     placeholder="Ex: OP-008"
-                    className="w-full bg-slate-950 border-2 border-slate-700 rounded-2xl px-4 py-3 text-base text-white font-mono placeholder-slate-500 focus:outline-none focus:border-amber-9500 font-bold uppercase"
+                    className="w-full bg-slate-950 border-2 border-slate-700 rounded-2xl px-4 py-3 text-base text-white font-mono placeholder-slate-500 focus:outline-none focus:border-amber-500 font-bold uppercase"
                   />
                 </div>
               </div>
@@ -456,7 +456,7 @@ export const CreateOperatorModal: React.FC<CreateOperatorModalProps> = ({
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="operador@governo.gov.br"
-                    className="w-full bg-slate-950 border-2 border-slate-700 rounded-2xl px-4 py-3 text-sm sm:text-base text-white placeholder-slate-500 focus:outline-none focus:border-amber-9500 font-medium"
+                    className="w-full bg-slate-950 border-2 border-slate-700 rounded-2xl px-4 py-3 text-sm sm:text-base text-white placeholder-slate-500 focus:outline-none focus:border-amber-500 font-medium"
                   />
                 </div>
 
@@ -467,7 +467,7 @@ export const CreateOperatorModal: React.FC<CreateOperatorModalProps> = ({
                   <select
                     value={secretaria}
                     onChange={(e) => setSecretaria(e.target.value as Secretaria | 'Ambas')}
-                    className="w-full bg-slate-950 border-2 border-slate-700 rounded-2xl px-4 py-3 text-sm sm:text-base text-white font-bold focus:outline-none focus:border-amber-9500"
+                    className="w-full bg-slate-950 border-2 border-slate-700 rounded-2xl px-4 py-3 text-sm sm:text-base text-white font-bold focus:outline-none focus:border-amber-500"
                   >
                     <option value="Ambas">Ambas (Agricultura e Turismo)</option>
                     <option value="Secretaria da Agricultura">Secretaria da Agricultura</option>
@@ -486,7 +486,7 @@ export const CreateOperatorModal: React.FC<CreateOperatorModalProps> = ({
                   value={cargo}
                   onChange={(e) => setCargo(e.target.value)}
                   placeholder="Operador de Cadastro"
-                  className="w-full bg-slate-950 border-2 border-slate-700 rounded-2xl px-4 py-3 text-sm sm:text-base text-white font-medium focus:outline-none focus:border-amber-9500"
+                  className="w-full bg-slate-950 border-2 border-slate-700 rounded-2xl px-4 py-3 text-sm sm:text-base text-white font-medium focus:outline-none focus:border-amber-500"
                 />
               </div>
 
@@ -510,7 +510,7 @@ export const CreateOperatorModal: React.FC<CreateOperatorModalProps> = ({
                     value={senha}
                     onChange={(e) => setSenha(e.target.value)}
                     placeholder={operadorEmEdicaoId ? 'Deixe em branco para manter' : 'Crie uma senha de acesso'}
-                    className="w-full bg-slate-950 border-2 border-slate-700 rounded-2xl px-4 py-3 text-base text-white placeholder-slate-500 focus:outline-none focus:border-amber-9500 font-bold tracking-wider"
+                    className="w-full bg-slate-950 border-2 border-slate-700 rounded-2xl px-4 py-3 text-base text-white placeholder-slate-500 focus:outline-none focus:border-amber-500 font-bold tracking-wider"
                   />
                 </div>
 
@@ -526,7 +526,7 @@ export const CreateOperatorModal: React.FC<CreateOperatorModalProps> = ({
                     value={confirmarSenha}
                     onChange={(e) => setConfirmarSenha(e.target.value)}
                     placeholder="Repita a senha criada"
-                    className="w-full bg-slate-950 border-2 border-slate-700 rounded-2xl px-4 py-3 text-base text-white placeholder-slate-500 focus:outline-none focus:border-amber-9500 font-bold tracking-wider"
+                    className="w-full bg-slate-950 border-2 border-slate-700 rounded-2xl px-4 py-3 text-base text-white placeholder-slate-500 focus:outline-none focus:border-amber-500 font-bold tracking-wider"
                   />
                 </div>
               </div>
@@ -551,7 +551,7 @@ export const CreateOperatorModal: React.FC<CreateOperatorModalProps> = ({
                 </button>
                 <button
                   type="submit"
-                  className="px-6 py-3 rounded-2xl bg-gradient-to-r from-amber-600 to-amber-600 hover:from-amber-9500 hover:to-amber-9500 text-white font-bold text-sm sm:text-base shadow-lg shadow-amber-950/60 cursor-pointer flex items-center gap-2"
+                  className="px-6 py-3 rounded-2xl bg-gradient-to-r from-amber-600 to-amber-600 hover:from-amber-500 hover:to-amber-500 text-white font-bold text-sm sm:text-base shadow-lg shadow-amber-950/60 cursor-pointer flex items-center gap-2"
                 >
                   <UserPlus className="w-5 h-5" />
                   <span>{operadorEmEdicaoId ? 'Salvar Alterações' : 'Cadastrar Operador'}</span>
@@ -571,7 +571,7 @@ export const CreateOperatorModal: React.FC<CreateOperatorModalProps> = ({
                     limparFormulario();
                     setAbaAtiva('cadastrar');
                   }}
-                  className="px-4 py-2 bg-amber-600 hover:bg-amber-9500 text-white rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 shadow-md"
+                  className="px-4 py-2 bg-amber-600 hover:bg-amber-500 text-white rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 shadow-md"
                 >
                   <UserPlus className="w-4 h-4" />
                   <span>Novo Operador</span>
@@ -582,7 +582,7 @@ export const CreateOperatorModal: React.FC<CreateOperatorModalProps> = ({
                 {operadoresExistentes.map((op) => (
                   <div
                     key={op.id}
-                    className="bg-slate-950 border-2 border-slate-800 hover:border-amber-9500/40 p-4 rounded-2xl flex items-center justify-between gap-3 transition-colors"
+                    className="bg-slate-950 border-2 border-slate-800 hover:border-amber-500/40 p-4 rounded-2xl flex items-center justify-between gap-3 transition-colors"
                   >
                     <div className="flex items-center gap-3.5">
                       <div className="w-10 h-10 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-amber-400 font-bold overflow-hidden shrink-0">
@@ -595,7 +595,7 @@ export const CreateOperatorModal: React.FC<CreateOperatorModalProps> = ({
                       <div>
                         <div className="flex items-center gap-2">
                           <h4 className="text-sm font-black text-white">{op.nome}</h4>
-                          <span className="px-2 py-0.5 rounded-lg bg-amber-950/80 border border-amber-9500/30 text-amber-400 font-mono text-xs font-bold">
+                          <span className="px-2 py-0.5 rounded-lg bg-amber-950/80 border border-amber-500/30 text-amber-400 font-mono text-xs font-bold">
                             {op.matricula}
                           </span>
                         </div>

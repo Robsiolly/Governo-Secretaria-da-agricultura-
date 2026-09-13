@@ -35,7 +35,7 @@ export const AdminSummaryBar: React.FC<AdminSummaryBarProps> = ({
         >
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-2xl bg-amber-950 border border-amber-9500/40 flex items-center justify-center text-amber-400 group-hover:scale-105 transition-transform shrink-0">
+              <div className="w-12 h-12 rounded-2xl bg-amber-950 border border-amber-500/40 flex items-center justify-center text-amber-400 group-hover:scale-105 transition-transform shrink-0">
                 <Wheat className="w-6 h-6" />
               </div>
               <span className="text-sm sm:text-base font-bold text-slate-100">Sec. Agricultura</span>
@@ -56,7 +56,7 @@ export const AdminSummaryBar: React.FC<AdminSummaryBarProps> = ({
                 onFiltrarStatus('EM_TRANSITO');
               }
             }}
-            className="text-amber-400 hover:text-amber-300 font-semibold flex items-center gap-1 hover:underline cursor-pointer py-1 px-1.5 rounded-lg hover:bg-amber-950/40 transition-colors"
+            className="text-amber-400 hover:text-amber-300 font-semibold flex items-center gap-1.5 hover:underline cursor-pointer py-1 px-1.5 rounded-lg hover:bg-amber-950/40 transition-colors"
             title="Clique para ver veículos fora da Sec. Agricultura"
           >
             <Clock className="w-3.5 h-3.5 animate-pulse" />
@@ -77,12 +77,12 @@ export const AdminSummaryBar: React.FC<AdminSummaryBarProps> = ({
         >
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-2xl bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-200 group-hover:scale-105 transition-transform shrink-0">
-                <Plane    className="text-emerald-400 w-6 h-6" />
+              <div className="w-12 h-12 rounded-2xl bg-emerald-950/80 border border-emerald-500/40 flex items-center justify-center text-emerald-400 group-hover:scale-105 transition-transform shrink-0">
+                <Plane className="text-emerald-400 w-6 h-6" />
               </div>
               <span className="text-sm sm:text-base font-bold text-slate-100">Sec. Turismo</span>
             </div>
-            <span className="text-2xl sm:text-3xl font-black font-mono text-slate-200 bg-slate-800 px-3 py-1 rounded-xl border border-slate-700">
+            <span className="text-2xl sm:text-3xl font-black font-mono text-emerald-400 bg-emerald-950/80 px-3 py-1 rounded-xl border border-emerald-500/40">
               {turRegistros.length}
             </span>
           </div>
@@ -98,13 +98,13 @@ export const AdminSummaryBar: React.FC<AdminSummaryBarProps> = ({
                 onFiltrarStatus('EM_TRANSITO');
               }
             }}
-            className="text-amber-400 hover:text-amber-300 font-semibold flex items-center gap-1 hover:underline cursor-pointer py-1 px-1.5 rounded-lg hover:bg-amber-950/40 transition-colors"
+            className="text-emerald-400 hover:text-emerald-300 font-semibold flex items-center gap-1.5 hover:underline cursor-pointer py-1 px-1.5 rounded-lg hover:bg-emerald-950/40 transition-colors"
             title="Clique para ver veículos fora da Sec. Turismo"
           >
             <Clock className="w-3.5 h-3.5 animate-pulse" />
             <span>{turEmTransito} Fora (Em trânsito)</span>
           </button>
-          <span className="text-amber-400 font-semibold px-1.5 py-1">
+          <span className="text-emerald-400 font-semibold px-1.5 py-1">
             {turRegistros.length - turEmTransito} no pátio
           </span>
         </div>

@@ -113,11 +113,11 @@ export const FiltersBar: React.FC<FiltersBarProps> = ({
             onClick={() => handleSecretariaChange('Secretaria do Turismo')}
             className={`px-3.5 py-2 rounded-2xl text-xs font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5 ${
               filtros.secretaria === 'Secretaria do Turismo'
-                ? 'bg-[#3A241D] text-[#D97924] border border-[#5A3A2E] shadow-lg font-bold'
-                : 'bg-black text-[#6B6B6B] hover:text-white border border-[#6B6B6B]/30'
+                ? 'bg-emerald-950 text-emerald-300 border border-emerald-500/50 shadow-lg font-bold'
+                : 'bg-black text-[#6B6B6B] hover:text-emerald-400 border border-[#6B6B6B]/30'
             }`}
           >
-            <Plane    className="text-emerald-400 w-3.5 h-3.5 text-[#F3F3F1]" />
+            <Plane className="w-3.5 h-3.5 text-emerald-400" />
             <span>Turismo</span>
           </button>
         </div>
