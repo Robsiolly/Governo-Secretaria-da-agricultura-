@@ -69,8 +69,8 @@ export const Header: React.FC<HeaderProps> = ({
                   Oficial
                 </span>
               </div>
-              <p className="text-xs text-[#6B6B6B] mt-0.5 font-medium truncate max-w-full">
-                Secretaria da Agricultura e Secretaria de Turismo
+              <p className="text-[10px] sm:text-xs text-[#6B6B6B] mt-0.5 font-medium whitespace-nowrap overflow-visible">
+                Secretaria da Agricultura e Secretaria do Turismo
               </p>
             </div>
           </div>
