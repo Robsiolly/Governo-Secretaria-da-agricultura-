@@ -1,5 +1,5 @@
 import React from 'react';
-import { Wheat, Plane, Clock, CheckCircle2, Car, TrendingUp } from 'lucide-react';
+import { Wheat, Plane, Clock, CheckCircle2 } from 'lucide-react';
 import { RegistroVeiculo } from '../types';
 
 interface AdminSummaryBarProps {
@@ -25,27 +25,27 @@ export const AdminSummaryBar: React.FC<AdminSummaryBarProps> = ({
   const totalConcluidos = registros.filter(r => r.status === 'FINALIZADO').length;
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-      {/* Card Agricultura */}
-      <div className="bg-slate-900 border-2 border-slate-700 hover:border-amber-400 p-5 rounded-3xl text-left transition-all shadow-lg flex flex-col justify-between">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4">
+      {/* Widget 1: Sec. Agricultura */}
+      <div className="bg-[#161618]/70 backdrop-blur-2xl border border-white/[0.08] hover:border-amber-400/40 p-5 rounded-3xl text-left transition-all duration-200 shadow-xl flex flex-col justify-between group">
         <button
           type="button"
           onClick={() => onFiltrarSecretaria('Secretaria da Agricultura')}
-          className="w-full text-left group cursor-pointer"
+          className="w-full text-left cursor-pointer active:scale-[0.98] transition-transform"
         >
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-2xl bg-amber-950 border border-amber-500/40 flex items-center justify-center text-amber-400 group-hover:scale-105 transition-transform shrink-0">
-                <Wheat className="w-6 h-6" />
+              <div className="w-11 h-11 rounded-2xl bg-amber-500/10 border border-amber-400/30 flex items-center justify-center text-amber-400 shrink-0">
+                <Wheat className="w-5 h-5" />
               </div>
-              <span className="text-sm sm:text-base font-bold text-slate-100">Sec. Agricultura</span>
+              <span className="text-sm font-semibold text-white/90">Sec. Agricultura</span>
             </div>
-            <span className="text-2xl sm:text-3xl font-black font-mono text-amber-400 bg-amber-950/80 px-3 py-1 rounded-xl border border-amber-600/40">
+            <span className="text-2xl sm:text-3xl font-bold font-mono text-amber-400">
               {agriRegistros.length}
             </span>
           </div>
         </button>
-        <div className="flex items-center justify-between text-xs sm:text-sm pt-2 border-t border-slate-800">
+        <div className="flex items-center justify-between text-xs pt-3 border-t border-white/[0.08]">
           <button
             type="button"
             onClick={(e) => {
@@ -56,38 +56,38 @@ export const AdminSummaryBar: React.FC<AdminSummaryBarProps> = ({
                 onFiltrarStatus('EM_TRANSITO');
               }
             }}
-            className="text-amber-400 hover:text-amber-300 font-semibold flex items-center gap-1.5 hover:underline cursor-pointer py-1 px-1.5 rounded-lg hover:bg-amber-950/40 transition-colors"
-            title="Clique para ver veículos fora da Sec. Agricultura"
+            className="text-amber-400/90 hover:text-amber-300 font-medium flex items-center gap-1.5 cursor-pointer py-1 px-2 rounded-lg hover:bg-amber-500/10 active:scale-[0.96] transition-all"
+            title="Ver veículos fora da Sec. Agricultura"
           >
-            <Clock className="w-3.5 h-3.5 animate-pulse" />
-            <span>{agriEmTransito} Fora (Em trânsito)</span>
+            <Clock className="w-3.5 h-3.5" />
+            <span>{agriEmTransito} Fora</span>
           </button>
-          <span className="text-amber-400 font-semibold px-1.5 py-1">
+          <span className="text-white/40 font-medium px-2 py-1">
             {agriRegistros.length - agriEmTransito} no pátio
           </span>
         </div>
       </div>
 
-      {/* Card Turismo */}
-      <div className="bg-slate-900 border-2 border-slate-700 hover:border-slate-500 p-5 rounded-3xl text-left transition-all shadow-lg flex flex-col justify-between">
+      {/* Widget 2: Sec. Turismo */}
+      <div className="bg-[#161618]/70 backdrop-blur-2xl border border-white/[0.08] hover:border-emerald-400/40 p-5 rounded-3xl text-left transition-all duration-200 shadow-xl flex flex-col justify-between group">
         <button
           type="button"
           onClick={() => onFiltrarSecretaria('Secretaria do Turismo')}
-          className="w-full text-left group cursor-pointer"
+          className="w-full text-left cursor-pointer active:scale-[0.98] transition-transform"
         >
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-2xl bg-emerald-950/80 border border-emerald-500/40 flex items-center justify-center text-emerald-400 group-hover:scale-105 transition-transform shrink-0">
-                <Plane className="text-emerald-400 w-6 h-6" />
+              <div className="w-11 h-11 rounded-2xl bg-emerald-500/10 border border-emerald-400/30 flex items-center justify-center text-emerald-400 shrink-0">
+                <Plane className="w-5 h-5 text-emerald-400" />
               </div>
-              <span className="text-sm sm:text-base font-bold text-slate-100">Sec. Turismo</span>
+              <span className="text-sm font-semibold text-white/90">Sec. Turismo</span>
             </div>
-            <span className="text-2xl sm:text-3xl font-black font-mono text-emerald-400 bg-emerald-950/80 px-3 py-1 rounded-xl border border-emerald-500/40">
+            <span className="text-2xl sm:text-3xl font-bold font-mono text-emerald-400">
               {turRegistros.length}
             </span>
           </div>
         </button>
-        <div className="flex items-center justify-between text-xs sm:text-sm pt-2 border-t border-slate-800">
+        <div className="flex items-center justify-between text-xs pt-3 border-t border-white/[0.08]">
           <button
             type="button"
             onClick={(e) => {
@@ -98,67 +98,71 @@ export const AdminSummaryBar: React.FC<AdminSummaryBarProps> = ({
                 onFiltrarStatus('EM_TRANSITO');
               }
             }}
-            className="text-emerald-400 hover:text-emerald-300 font-semibold flex items-center gap-1.5 hover:underline cursor-pointer py-1 px-1.5 rounded-lg hover:bg-emerald-950/40 transition-colors"
-            title="Clique para ver veículos fora da Sec. Turismo"
+            className="text-emerald-400/90 hover:text-emerald-300 font-medium flex items-center gap-1.5 cursor-pointer py-1 px-2 rounded-lg hover:bg-emerald-500/10 active:scale-[0.96] transition-all"
+            title="Ver veículos fora da Sec. Turismo"
           >
-            <Clock className="w-3.5 h-3.5 animate-pulse" />
-            <span>{turEmTransito} Fora (Em trânsito)</span>
+            <Clock className="w-3.5 h-3.5" />
+            <span>{turEmTransito} Fora</span>
           </button>
-          <span className="text-emerald-400 font-semibold px-1.5 py-1">
+          <span className="text-white/40 font-medium px-2 py-1">
             {turRegistros.length - turEmTransito} no pátio
           </span>
         </div>
       </div>
 
-      {/* Card Geral: Carros Fora / Em Trânsito */}
+      {/* Widget 3: Fora (Em Trânsito) */}
       <button
         type="button"
         onClick={() => onFiltrarStatus('EM_TRANSITO')}
-        className="bg-slate-900 hover:bg-slate-850 border-2 border-amber-500/50 hover:border-amber-400 p-5 rounded-3xl text-left transition-all group cursor-pointer shadow-lg ring-1 ring-amber-500/20"
-        title="Clique para ver todos os registros que estão fora"
+        className="bg-[#161618]/70 backdrop-blur-2xl border border-amber-500/30 hover:border-amber-400 p-5 rounded-3xl text-left transition-all duration-200 group cursor-pointer shadow-xl active:scale-[0.98]"
+        title="Clique para ver todos os registros em trânsito"
       >
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-2xl bg-amber-950/70 border border-amber-500/40 flex items-center justify-center text-amber-400 shrink-0 group-hover:scale-105 transition-transform">
-              <Clock className="w-6 h-6 animate-pulse" />
+            <div className="w-11 h-11 rounded-2xl bg-amber-500/10 border border-amber-400/30 flex items-center justify-center text-amber-400 shrink-0">
+              <Clock className="w-5 h-5" />
             </div>
             <div>
-              <span className="text-sm sm:text-base font-bold text-slate-100 block">Fora (Em Trânsito)</span>
-              <span className="text-[11px] text-amber-400 font-semibold">Clique para listar</span>
+              <span className="text-sm font-semibold text-white/90 block">Em Trânsito</span>
+              <span className="text-[11px] text-amber-400/80 font-medium">Fora do pátio</span>
             </div>
           </div>
-          <span className="text-2xl sm:text-3xl font-black font-mono text-amber-400 bg-amber-950/80 px-3 py-1 rounded-xl border border-amber-500/40">
+          <span className="text-2xl sm:text-3xl font-bold font-mono text-amber-400">
             {totalEmTransito}
           </span>
         </div>
-        <div className="text-xs sm:text-sm text-slate-300 font-medium flex items-center justify-between">
-          <span>Veículos fora aguardando retorno</span>
-          <span className="text-amber-400 font-bold group-hover:translate-x-1 transition-transform">Ver →</span>
+        <div className="text-xs text-white/50 font-medium flex items-center justify-between pt-3 border-t border-white/[0.08]">
+          <span>Aguardando retorno</span>
+          <span className="text-amber-400 font-medium group-hover:translate-x-0.5 transition-transform">Ver →</span>
         </div>
       </button>
 
-      {/* Card Concluídos */}
+      {/* Widget 4: Retornos Concluídos */}
       <button
         type="button"
         onClick={() => onFiltrarStatus('FINALIZADO')}
-        className="bg-slate-900 hover:bg-slate-850 border-2 border-slate-700 hover:border-amber-400 p-5 rounded-3xl text-left transition-all group cursor-pointer shadow-lg"
+        className="bg-[#161618]/70 backdrop-blur-2xl border border-white/[0.08] hover:border-white/[0.2] p-5 rounded-3xl text-left transition-all duration-200 group cursor-pointer shadow-xl active:scale-[0.98]"
       >
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-2xl bg-slate-800 flex items-center justify-center text-amber-400 shrink-0 group-hover:scale-105 transition-transform">
-              <CheckCircle2 className="w-6 h-6" />
+            <div className="w-11 h-11 rounded-2xl bg-emerald-500/10 border border-emerald-400/30 flex items-center justify-center text-emerald-400 shrink-0">
+              <CheckCircle2 className="w-5 h-5" />
             </div>
-            <span className="text-sm sm:text-base font-bold text-slate-100">Retornos Concluídos</span>
+            <div>
+              <span className="text-sm font-semibold text-white/90 block">Concluídos</span>
+              <span className="text-[11px] text-white/40 font-medium">No pátio</span>
+            </div>
           </div>
-          <span className="text-2xl sm:text-3xl font-black font-mono text-amber-400 bg-amber-950/80 px-3 py-1 rounded-xl border border-amber-600/40">
+          <span className="text-2xl sm:text-3xl font-bold font-mono text-white">
             {totalConcluidos}
           </span>
         </div>
-        <div className="text-xs sm:text-sm text-slate-300 font-medium flex items-center justify-between">
-          <span>Veículos no pátio e conferidos</span>
-          <span className="text-amber-400 font-bold group-hover:translate-x-1 transition-transform">Ver →</span>
+        <div className="text-xs text-white/50 font-medium flex items-center justify-between pt-3 border-t border-white/[0.08]">
+          <span>Veículos conferidos</span>
+          <span className="text-white/80 font-medium group-hover:translate-x-0.5 transition-transform">Ver →</span>
         </div>
       </button>
     </div>
   );
 };
+

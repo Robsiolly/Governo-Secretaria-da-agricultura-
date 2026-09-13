@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Wheat, Plane, Eye, Edit3, Clock, CheckCircle2, FileDown, AlertCircle, Plus, Trash2, X, AlertTriangle } from 'lucide-react';
+import { Wheat, Plane, Eye, Edit3, Clock, CheckCircle2, FileDown, AlertCircle, Plus, Trash2, AlertTriangle } from 'lucide-react';
 import { RegistroVeiculo, UsuarioAutenticado } from '../types';
 import { PdfService } from '../services/pdfService';
 
@@ -33,21 +33,21 @@ export const RecordsTable: React.FC<RecordsTableProps> = ({
 
   if (registros.length === 0) {
     return (
-      <div className="bg-slate-900 border-2 border-slate-750 rounded-3xl p-10 sm:p-16 text-center space-y-5">
-        <div className="w-16 h-16 rounded-3xl bg-slate-800 border-2 border-slate-700 flex items-center justify-center text-slate-400 mx-auto shadow-inner">
-          <AlertCircle className="w-9 h-9 text-amber-400" />
+      <div className="bg-[#161618]/60 backdrop-blur-2xl border border-white/[0.08] rounded-3xl p-10 sm:p-16 text-center space-y-5 shadow-xl">
+        <div className="w-16 h-16 rounded-3xl bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-amber-400 mx-auto shadow-inner">
+          <AlertCircle className="w-8 h-8 text-amber-400" />
         </div>
         <div className="space-y-2">
-          <h3 className="text-xl sm:text-2xl font-bold text-white">Nenhum registro de veículo encontrado</h3>
-          <p className="text-sm sm:text-base text-slate-300 max-w-lg mx-auto leading-relaxed font-medium">
-            O banco de dados está pronto para registrar os dados de saída e chegada da Secretaria da Agricultura e Secretaria do Turismo.
+          <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight">Nenhum registro encontrado</h3>
+          <p className="text-sm text-white/50 max-w-lg mx-auto leading-relaxed">
+            O sistema está pronto para registrar os dados de saída e chegada da Secretaria da Agricultura e Secretaria do Turismo.
           </p>
         </div>
         {onNovoRegistro && (
           <button
             type="button"
             onClick={onNovoRegistro}
-            className="inline-flex items-center gap-2.5 bg-gradient-to-r from-amber-600 to-amber-600 hover:from-amber-500 hover:to-amber-500 text-white text-sm sm:text-base font-bold px-6 py-3.5 rounded-2xl shadow-xl shadow-amber-950/60 transition-all cursor-pointer min-h-[50px]"
+            className="inline-flex items-center gap-2.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 text-sm font-bold px-6 py-3.5 rounded-2xl shadow-xl transition-all cursor-pointer active:scale-[0.96]"
           >
             <Plus className="w-5 h-5" />
             <span>Cadastrar Primeiro Veículo</span>
@@ -59,12 +59,15 @@ export const RecordsTable: React.FC<RecordsTableProps> = ({
 
   return (
     <div className="space-y-5">
-      {/* Desktop Table */}
-      <div className="hidden md:block bg-slate-900 border-2 border-slate-750 rounded-3xl overflow-hidden shadow-2xl">
+      {/* Desktop Liquid Glass Table */}
+      <div className="hidden md:block bg-[#161618]/70 backdrop-blur-2xl border border-white/[0.08] rounded-3xl overflow-hidden shadow-2xl relative">
+        {/* Specular Top Edge Light */}
+        <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/15 to-transparent" />
+
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="border-b-2 border-slate-800 bg-slate-950 text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-300">
+              <tr className="border-b border-white/[0.08] bg-white/[0.02] text-[11px] font-semibold uppercase tracking-wider text-white/50">
                 <th className="py-4 px-5">FCT</th>
                 <th className="py-4 px-5">Secretaria</th>
                 <th className="py-4 px-5">Data</th>
@@ -76,7 +79,7 @@ export const RecordsTable: React.FC<RecordsTableProps> = ({
                 <th className="py-4 px-5 text-right">Ações</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800 text-sm sm:text-base">
+            <tbody className="divide-y divide-white/[0.06] text-sm">
               {registros.map((reg, index) => {
                 const isAgri = reg.secretaria === 'Secretaria da Agricultura';
                 const dataFormatada = reg.data ? new Date(reg.data + 'T00:00:00').toLocaleDateString('pt-BR') : '-';
@@ -85,16 +88,16 @@ export const RecordsTable: React.FC<RecordsTableProps> = ({
                   <tr
                     key={`${reg.id}-${index}`}
                     onClick={() => onVerDetalhes(reg)}
-                    className="hover:bg-slate-800/60 transition-colors cursor-pointer group"
+                    className="hover:bg-white/[0.04] transition-colors duration-150 cursor-pointer group"
                   >
                     {/* FCT */}
                     <td className="py-4 px-5">
                       {isAgri && reg.fct && reg.fct !== 'N/A' && reg.fct !== '-' ? (
-                        <span className="font-mono font-black text-amber-400 group-hover:text-amber-400 text-base sm:text-lg">
+                        <span className="font-mono font-bold text-amber-400 text-base">
                           {reg.fct}
                         </span>
                       ) : (
-                        <span className="text-xs font-sans font-semibold text-amber-300/90 bg-amber-950/70 border border-amber-800/60 px-2.5 py-1 rounded-xl inline-block whitespace-nowrap">
+                        <span className="text-xs font-semibold text-white/50 bg-white/[0.04] border border-white/[0.08] px-2.5 py-1 rounded-xl inline-block whitespace-nowrap">
                           Sem FCT (Turismo)
                         </span>
                       )}
@@ -104,32 +107,32 @@ export const RecordsTable: React.FC<RecordsTableProps> = ({
                     <td className="py-4 px-5">
                       <div className="flex items-center gap-2">
                         <span
-                          className={`w-3 h-3 rounded-full shrink-0 ${
-                            isAgri ? 'bg-amber-400 shadow-sm shadow-amber-500' : 'bg-emerald-400 shadow-sm shadow-emerald-500'
+                          className={`w-2.5 h-2.5 rounded-full shrink-0 ${
+                            isAgri ? 'bg-amber-400 shadow-sm shadow-amber-400/50' : 'bg-emerald-400 shadow-sm shadow-emerald-400/50'
                           }`}
                         />
-                        <span className="font-bold text-white truncate max-w-[170px]">
+                        <span className="font-semibold text-white/90 truncate max-w-[170px]">
                           {isAgri ? 'Agricultura' : 'Turismo'}
                         </span>
                       </div>
                     </td>
 
                     {/* Data */}
-                    <td className="py-4 px-5 text-slate-200 whitespace-nowrap font-medium">
+                    <td className="py-4 px-5 text-white/70 whitespace-nowrap font-mono text-xs">
                       {dataFormatada}
                     </td>
 
                     {/* Motorista & Veículo */}
                     <td className="py-4 px-5">
                       <div>
-                        <span className="font-bold text-white block text-base leading-snug">{reg.motorista}</span>
+                        <span className="font-semibold text-white block text-sm leading-snug">{reg.motorista}</span>
                         {reg.placa && (
-                          <span className="text-xs sm:text-sm text-slate-300 font-mono font-medium block mt-0.5">
-                            Placa: <strong className="text-amber-400">{reg.placa}</strong> {reg.modeloVeiculo ? `• ${reg.modeloVeiculo}` : ''}
+                          <span className="text-xs text-white/50 font-mono block mt-0.5">
+                            Placa: <strong className="text-white font-mono">{reg.placa}</strong> {reg.modeloVeiculo ? `• ${reg.modeloVeiculo}` : ''}
                           </span>
                         )}
                         {reg.ocorrencia && (
-                          <div className="inline-flex items-center gap-1.5 mt-1.5 px-2 py-0.5 rounded-lg bg-amber-950/80 border border-amber-600/50 text-amber-300 text-xs font-semibold max-w-[240px] truncate" title={`Ocorrência: ${reg.ocorrencia}`}>
+                          <div className="inline-flex items-center gap-1.5 mt-1.5 px-2 py-0.5 rounded-lg bg-amber-500/15 border border-amber-400/30 text-amber-300 text-xs font-semibold max-w-[240px] truncate" title={`Ocorrência: ${reg.ocorrencia}`}>
                             <AlertTriangle className="w-3 h-3 text-amber-400 shrink-0" />
                             <span className="truncate">{reg.ocorrencia}</span>
                           </div>
@@ -140,13 +143,13 @@ export const RecordsTable: React.FC<RecordsTableProps> = ({
                     {/* Horários e botão de acesso rápido */}
                     <td className="py-4 px-5 whitespace-nowrap" onClick={(e) => e.stopPropagation()}>
                       <div className="space-y-1.5">
-                        <div className="flex items-center gap-2 font-bold text-base">
-                          <span className="text-amber-400 font-mono">{reg.horarioSaida}</span>
-                          <span className="text-slate-400">→</span>
+                        <div className="flex items-center gap-2 font-mono text-xs">
+                          <span className="text-white/80">{reg.horarioSaida}</span>
+                          <span className="text-white/30">→</span>
                           {reg.horarioChegada ? (
-                            <span className="text-slate-100 font-mono">{reg.horarioChegada}</span>
+                            <span className="text-emerald-400 font-bold">{reg.horarioChegada}</span>
                           ) : (
-                            <span className="text-amber-300 text-xs sm:text-sm font-semibold bg-slate-800 px-2.5 py-0.5 rounded-lg border border-slate-700 animate-pulse">
+                            <span className="text-amber-400 text-xs font-medium bg-amber-500/15 border border-amber-400/30 px-2 py-0.5 rounded-lg">
                               Em trânsito
                             </span>
                           )}
@@ -155,8 +158,8 @@ export const RecordsTable: React.FC<RecordsTableProps> = ({
                           <button
                             type="button"
                             onClick={() => onEditarHorarios(reg)}
-                            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white border border-slate-700 text-xs font-bold transition-all cursor-pointer shadow-sm"
-                            title="Acessar e ajustar horário de saída ou de chegada"
+                            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-white/[0.05] hover:bg-white/[0.1] active:scale-[0.96] text-white/80 hover:text-white border border-white/[0.08] text-xs font-medium transition-all cursor-pointer"
+                            title="Ajustar horário de saída ou de chegada"
                           >
                             <Clock className="w-3.5 h-3.5 text-amber-400" />
                             <span>Ajustar Horário</span>
@@ -166,8 +169,8 @@ export const RecordsTable: React.FC<RecordsTableProps> = ({
                     </td>
 
                     {/* Andar */}
-                    <td className="py-4 px-5 text-slate-200 font-medium">
-                      <span className="inline-block bg-slate-800 px-3 py-1 rounded-xl text-xs sm:text-sm font-semibold text-slate-200 border border-slate-700">
+                    <td className="py-4 px-5 text-white/80 font-medium">
+                      <span className="inline-block bg-white/[0.04] px-2.5 py-1 rounded-xl text-xs font-medium text-white/80 border border-white/[0.08]">
                         {reg.andar}
                       </span>
                     </td>
@@ -179,17 +182,17 @@ export const RecordsTable: React.FC<RecordsTableProps> = ({
                           <img
                             src={reg.assinaturaUrl}
                             alt="Rubrica"
-                            className="h-8 w-16 object-contain bg-white rounded-lg border-2 border-slate-500 px-1 shrink-0"
+                            className="h-8 w-16 object-contain bg-white rounded-lg border border-white/20 px-1 shrink-0"
                           />
                         ) : (
-                          <span className="w-2.5 h-2.5 rounded-full bg-slate-500 shrink-0" />
+                          <span className="w-2.5 h-2.5 rounded-full bg-white/20 shrink-0" />
                         )}
                         <div className="truncate max-w-[150px]">
-                          <span className="text-white font-bold block truncate text-sm">
+                          <span className="text-white font-medium block truncate text-xs sm:text-sm">
                             {reg.funcionarioResponsavel}
                           </span>
                           {reg.matriculaFuncionario && (
-                            <span className="text-xs text-slate-300 block font-mono font-medium">
+                            <span className="text-[11px] text-white/40 block font-mono">
                               Mat: {reg.matriculaFuncionario}
                             </span>
                           )}
@@ -200,13 +203,13 @@ export const RecordsTable: React.FC<RecordsTableProps> = ({
                     {/* Status */}
                     <td className="py-4 px-5 text-center whitespace-nowrap">
                       {reg.status === 'EM_TRANSITO' ? (
-                        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs sm:text-sm font-bold bg-amber-950 text-amber-300 border border-amber-500/50">
-                          <Clock className="w-3.5 h-3.5 animate-pulse" />
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-amber-500/15 text-amber-300 border border-amber-400/30">
+                          <Clock className="w-3.5 h-3.5 text-amber-400" />
                           <span>Em Trânsito</span>
                         </span>
                       ) : (
-                        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs sm:text-sm font-bold bg-emerald-950 text-emerald-300 border border-emerald-500/50">
-                          <CheckCircle2 className="w-3.5 h-3.5" />
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/15 text-emerald-300 border border-emerald-400/30">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
                           <span>Concluído</span>
                         </span>
                       )}
@@ -219,44 +222,44 @@ export const RecordsTable: React.FC<RecordsTableProps> = ({
                           <button
                             type="button"
                             onClick={() => onEditarHorarios(reg)}
-                            className="p-2.5 text-slate-300 hover:text-amber-300 hover:bg-slate-800 rounded-xl transition-colors cursor-pointer border border-transparent hover:border-slate-700"
+                            className="p-2 text-white/60 hover:text-amber-400 hover:bg-white/[0.08] active:scale-[0.94] rounded-xl transition-all cursor-pointer border border-transparent hover:border-white/[0.08]"
                             title="Ajustar Horário de Saída / Chegada"
                           >
-                            <Clock className="w-5 h-5 text-amber-400" />
+                            <Clock className="w-4 h-4 text-amber-400" />
                           </button>
                         )}
                         <button
                           type="button"
                           onClick={() => PdfService.gerarFichaIndividual(reg, usuarioAtual)}
-                          className="p-2.5 text-slate-300 hover:text-amber-300 hover:bg-slate-800 rounded-xl transition-colors cursor-pointer border border-transparent hover:border-slate-700"
+                          className="p-2 text-white/60 hover:text-white hover:bg-white/[0.08] active:scale-[0.94] rounded-xl transition-all cursor-pointer border border-transparent hover:border-white/[0.08]"
                           title="Baixar Ficha PDF"
                         >
-                          <FileDown className="w-5 h-5 text-amber-400" />
+                          <FileDown className="w-4 h-4" />
                         </button>
                         <button
                           type="button"
                           onClick={() => onEditar(reg)}
-                          className="p-2.5 text-slate-300 hover:text-amber-400 hover:bg-slate-800 rounded-xl transition-colors cursor-pointer border border-transparent hover:border-slate-700"
+                          className="p-2 text-white/60 hover:text-white hover:bg-white/[0.08] active:scale-[0.94] rounded-xl transition-all cursor-pointer border border-transparent hover:border-white/[0.08]"
                           title="Editar Cadastro Completo"
                         >
-                          <Edit3 className="w-5 h-5 text-amber-400" />
+                          <Edit3 className="w-4 h-4" />
                         </button>
                         <button
                           type="button"
                           onClick={() => onVerDetalhes(reg)}
-                          className="p-2.5 text-slate-300 hover:text-white hover:bg-slate-800 rounded-xl transition-colors cursor-pointer border border-transparent hover:border-slate-700"
+                          className="p-2 text-white/60 hover:text-white hover:bg-white/[0.08] active:scale-[0.94] rounded-xl transition-all cursor-pointer border border-transparent hover:border-white/[0.08]"
                           title="Ver Ficha Detalhada"
                         >
-                          <Eye className="w-5 h-5" />
+                          <Eye className="w-4 h-4" />
                         </button>
                         {onExcluir && (
                           <button
                             type="button"
                             onClick={() => setRegistroParaExcluir(reg)}
-                            className="p-2.5 text-slate-400 hover:text-rose-400 hover:bg-rose-950/40 rounded-xl transition-colors cursor-pointer border border-transparent hover:border-rose-800/40"
+                            className="p-2 text-white/40 hover:text-rose-400 hover:bg-rose-500/10 active:scale-[0.94] rounded-xl transition-all cursor-pointer border border-transparent hover:border-rose-500/20"
                             title="Excluir Registro"
                           >
-                            <Trash2 className="w-5 h-5" />
+                            <Trash2 className="w-4 h-4" />
                           </button>
                         )}
                       </div>
@@ -269,8 +272,8 @@ export const RecordsTable: React.FC<RecordsTableProps> = ({
         </div>
       </div>
 
-      {/* Mobile Cards View */}
-      <div className="md:hidden space-y-4">
+      {/* Mobile Glass Cards View */}
+      <div className="md:hidden space-y-3.5">
         {registros.map((reg, index) => {
           const isAgri = reg.secretaria === 'Secretaria da Agricultura';
           const dataFormatada = reg.data ? new Date(reg.data + 'T00:00:00').toLocaleDateString('pt-BR') : '-';
@@ -279,14 +282,14 @@ export const RecordsTable: React.FC<RecordsTableProps> = ({
             <div
               key={`${reg.id}-${index}`}
               onClick={() => onVerDetalhes(reg)}
-              className="bg-slate-900 border-2 border-slate-750 hover:border-slate-600 rounded-3xl p-5 shadow-lg transition-all cursor-pointer space-y-4"
+              className="bg-[#161618]/70 backdrop-blur-2xl border border-white/[0.08] hover:border-white/[0.16] rounded-3xl p-4.5 shadow-lg transition-all cursor-pointer space-y-3.5 relative overflow-hidden"
             >
               {/* Card Header */}
-              <div className="flex items-start justify-between gap-2 flex-wrap sm:flex-nowrap">
+              <div className="flex items-start justify-between gap-2">
                 <div className="flex items-center gap-2.5 min-w-0">
                   <div
                     className={`w-10 h-10 rounded-2xl flex items-center justify-center text-white shrink-0 ${
-                      isAgri ? 'bg-[#3A241D] border border-[#D97924]/40 text-[#D97924]' : 'bg-emerald-950 border border-emerald-500/40 text-emerald-400'
+                      isAgri ? 'bg-amber-500/15 border border-amber-400/30 text-amber-400' : 'bg-emerald-500/15 border border-emerald-400/30 text-emerald-400'
                     }`}
                   >
                     {isAgri ? <Wheat className="w-5 h-5" /> : <Plane className="w-5 h-5 text-emerald-400" />}
@@ -294,14 +297,14 @@ export const RecordsTable: React.FC<RecordsTableProps> = ({
                   <div className="min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
                       {isAgri && reg.fct && reg.fct !== 'N/A' && reg.fct !== '-' ? (
-                        <span className="font-mono font-black text-white text-base sm:text-lg">{reg.fct}</span>
+                        <span className="font-mono font-bold text-white text-base">{reg.fct}</span>
                       ) : (
-                        <span className="text-xs font-sans font-bold text-slate-300 bg-slate-800 border border-slate-700 px-2 py-0.5 rounded-lg">
+                        <span className="text-xs font-semibold text-white/60 bg-white/[0.04] border border-white/[0.08] px-2 py-0.5 rounded-lg">
                           Sem FCT (Turismo)
                         </span>
                       )}
                     </div>
-                    <span className="text-xs sm:text-sm text-slate-300 font-bold block truncate">
+                    <span className="text-xs text-white/50 font-medium block truncate">
                       {isAgri ? 'Secretaria da Agricultura' : 'Secretaria do Turismo'}
                     </span>
                   </div>
@@ -309,12 +312,12 @@ export const RecordsTable: React.FC<RecordsTableProps> = ({
 
                 <div className="shrink-0">
                   {reg.status === 'EM_TRANSITO' ? (
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] sm:text-xs font-bold bg-amber-950 text-amber-300 border border-amber-500/50">
-                      <Clock className="w-3.5 h-3.5 animate-pulse text-amber-400" />
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-semibold bg-amber-500/15 text-amber-300 border border-amber-400/30">
+                      <Clock className="w-3.5 h-3.5 text-amber-400" />
                       <span>Em Trânsito</span>
                     </span>
                   ) : (
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] sm:text-xs font-bold bg-emerald-950 text-emerald-300 border border-emerald-500/50">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-semibold bg-emerald-500/15 text-emerald-300 border border-emerald-400/30">
                       <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
                       <span>Concluído</span>
                     </span>
@@ -323,43 +326,43 @@ export const RecordsTable: React.FC<RecordsTableProps> = ({
               </div>
 
               {/* Card Main Info */}
-              <div className="grid grid-cols-2 gap-3 text-sm bg-black p-4 rounded-2xl border border-[#6B6B6B]/30">
+              <div className="grid grid-cols-2 gap-2.5 text-xs bg-white/[0.03] p-3.5 rounded-2xl border border-white/[0.06]">
                 <div className="col-span-2">
-                  <span className="text-xs text-[#6B6B6B] block font-semibold uppercase">Motorista:</span>
-                  <span className="font-bold text-white text-base block">{reg.motorista}</span>
+                  <span className="text-[10px] text-white/40 block font-semibold uppercase tracking-wider">Motorista:</span>
+                  <span className="font-semibold text-white text-sm block mt-0.5">{reg.motorista}</span>
                   {reg.placa && (
-                    <span className="text-xs text-neutral-300 font-mono mt-0.5 block">
-                      Placa: <strong className="text-white font-semibold">{reg.placa}</strong> {reg.modeloVeiculo ? `(${reg.modeloVeiculo})` : ''}
+                    <span className="text-xs text-white/60 font-mono mt-0.5 block">
+                      Placa: <strong className="text-white font-mono">{reg.placa}</strong> {reg.modeloVeiculo ? `(${reg.modeloVeiculo})` : ''}
                     </span>
                   )}
                 </div>
                 {reg.ocorrencia && (
-                  <div className="col-span-2 p-3 bg-amber-950/60 border border-amber-600/50 rounded-xl space-y-1">
-                    <span className="text-[11px] font-bold text-amber-300 flex items-center gap-1.5 uppercase">
+                  <div className="col-span-2 p-2.5 bg-amber-500/10 border border-amber-400/30 rounded-xl space-y-0.5">
+                    <span className="text-[10px] font-semibold text-amber-300 flex items-center gap-1.5 uppercase">
                       <AlertTriangle className="w-3.5 h-3.5 text-amber-400 shrink-0" />
                       Ocorrência da Portaria:
                     </span>
-                    <p className="text-xs text-white font-medium whitespace-pre-wrap">
+                    <p className="text-xs text-white/90 font-medium whitespace-pre-wrap">
                       {reg.ocorrencia}
                     </p>
                   </div>
                 )}
                 <div>
-                  <span className="text-xs text-[#6B6B6B] block font-semibold uppercase">Data:</span>
-                  <span className="text-slate-100 font-bold">{dataFormatada}</span>
+                  <span className="text-[10px] text-white/40 block font-semibold uppercase tracking-wider">Data:</span>
+                  <span className="text-white font-mono font-medium">{dataFormatada}</span>
                 </div>
                 <div>
-                  <span className="text-xs text-[#6B6B6B] block font-semibold uppercase">Andar / Setor:</span>
-                  <span className="text-slate-100 font-bold truncate block">{reg.andar}</span>
+                  <span className="text-[10px] text-white/40 block font-semibold uppercase tracking-wider">Andar / Setor:</span>
+                  <span className="text-white font-medium truncate block">{reg.andar}</span>
                 </div>
-                <div className="col-span-2 pt-2 border-t border-[#6B6B6B]/30">
+                <div className="col-span-2 pt-2 border-t border-white/[0.06]">
                   <div className="flex items-center justify-between">
                     <div>
-                      <span className="text-xs text-[#6B6B6B] block font-semibold uppercase">Horários:</span>
-                      <div className="flex items-center gap-2 font-bold text-base mt-0.5">
-                        <span className="text-white font-mono">{reg.horarioSaida}</span>
-                        <span className="text-[#6B6B6B]">→</span>
-                        <span className="text-slate-100 font-mono">{reg.horarioChegada || 'Em trânsito'}</span>
+                      <span className="text-[10px] text-white/40 block font-semibold uppercase tracking-wider">Horários:</span>
+                      <div className="flex items-center gap-2 font-mono text-xs mt-0.5">
+                        <span className="text-white">{reg.horarioSaida}</span>
+                        <span className="text-white/40">→</span>
+                        <span className="text-white">{reg.horarioChegada || 'Em trânsito'}</span>
                       </div>
                     </div>
                     {onEditarHorarios && (
@@ -369,9 +372,9 @@ export const RecordsTable: React.FC<RecordsTableProps> = ({
                           e.stopPropagation();
                           onEditarHorarios(reg);
                         }}
-                        className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[#252525] hover:bg-[#333333] text-[#D97924] border border-[#6B6B6B]/30 text-xs font-bold transition-all cursor-pointer"
+                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/[0.06] hover:bg-white/[0.12] active:scale-[0.96] text-white/90 border border-white/[0.08] text-xs font-medium transition-all cursor-pointer"
                       >
-                        <Clock className="w-4 h-4" />
+                        <Clock className="w-3.5 h-3.5 text-amber-400" />
                         <span>Ajustar Horário</span>
                       </button>
                     )}
@@ -380,53 +383,53 @@ export const RecordsTable: React.FC<RecordsTableProps> = ({
               </div>
 
               {/* Responsável & Assinatura & Ações */}
-              <div className="flex items-center justify-between pt-2 border-t border-[#6B6B6B]/30" onClick={(e) => e.stopPropagation()}>
+              <div className="flex items-center justify-between pt-2 border-t border-white/[0.06]" onClick={(e) => e.stopPropagation()}>
                 <div className="flex items-center gap-2">
                   {reg.assinaturaUrl && (
                     <img
                       src={reg.assinaturaUrl}
                       alt="Assinatura"
-                      className="h-7 w-14 object-contain bg-white rounded-lg border border-slate-500 px-1"
+                      className="h-7 w-14 object-contain bg-white rounded-lg border border-white/20 px-1"
                     />
                   )}
-                  <span className="text-slate-200 text-xs sm:text-sm font-bold truncate max-w-[140px]">
+                  <span className="text-white/80 text-xs font-medium truncate max-w-[140px]">
                     {reg.funcionarioResponsavel}
                   </span>
                 </div>
 
-                <div className="flex items-center gap-1.5">
+                <div className="flex items-center gap-1">
                   <button
                     type="button"
                     onClick={() => PdfService.gerarFichaIndividual(reg, usuarioAtual)}
-                    className="p-2 text-slate-300 hover:text-white bg-[#252525] rounded-xl border border-[#6B6B6B]/30"
+                    className="p-2 text-white/70 hover:text-white bg-white/[0.05] hover:bg-white/[0.1] active:scale-[0.94] rounded-xl border border-white/[0.08]"
                     title="Baixar PDF"
                   >
-                    <FileDown className="w-5 h-5 text-[#D97924]" />
+                    <FileDown className="w-4 h-4" />
                   </button>
                   <button
                     type="button"
                     onClick={() => onEditar(reg)}
-                    className="p-2 text-slate-300 hover:text-white bg-[#252525] rounded-xl border border-[#6B6B6B]/30"
+                    className="p-2 text-white/70 hover:text-white bg-white/[0.05] hover:bg-white/[0.1] active:scale-[0.94] rounded-xl border border-white/[0.08]"
                     title="Editar"
                   >
-                    <Edit3 className="w-5 h-5 text-[#D97924]" />
+                    <Edit3 className="w-4 h-4" />
                   </button>
                   <button
                     type="button"
                     onClick={() => onVerDetalhes(reg)}
-                    className="p-2 text-slate-300 hover:text-white bg-slate-800 rounded-xl"
+                    className="p-2 text-white/70 hover:text-white bg-white/[0.05] hover:bg-white/[0.1] active:scale-[0.94] rounded-xl border border-white/[0.08]"
                     title="Ver Detalhes"
                   >
-                    <Eye className="w-5 h-5" />
+                    <Eye className="w-4 h-4" />
                   </button>
                   {onExcluir && (
                     <button
                       type="button"
                       onClick={() => setRegistroParaExcluir(reg)}
-                      className="p-2 text-slate-400 hover:text-rose-400 bg-slate-800 rounded-xl"
+                      className="p-2 text-white/40 hover:text-rose-400 bg-rose-500/10 hover:bg-rose-500/20 active:scale-[0.94] rounded-xl border border-rose-500/20"
                       title="Excluir Registro"
                     >
-                      <Trash2 className="w-5 h-5" />
+                      <Trash2 className="w-4 h-4" />
                     </button>
                   )}
                 </div>
@@ -438,38 +441,38 @@ export const RecordsTable: React.FC<RecordsTableProps> = ({
 
       {/* Modal de Confirmação de Exclusão (CRUD: Delete) */}
       {registroParaExcluir && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-in fade-in duration-150">
-          <div className="bg-slate-900 border-2 border-rose-600/50 rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl space-y-5 animate-in zoom-in-95 duration-200">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-xl animate-in fade-in duration-150">
+          <div className="bg-[#1c1c1e] border border-rose-500/30 rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl space-y-5 animate-in zoom-in-95 duration-200">
             <div className="flex items-center gap-3 text-rose-400">
-              <div className="p-3 bg-rose-950/80 border border-rose-500/40 rounded-2xl">
-                <AlertTriangle className="w-7 h-7" />
+              <div className="p-3 bg-rose-500/10 border border-rose-500/30 rounded-2xl">
+                <AlertTriangle className="w-6 h-6" />
               </div>
               <div>
-                <h3 className="text-lg sm:text-xl font-bold text-white">Excluir Registro?</h3>
-                <p className="text-xs text-rose-300">Operação permanente de remoção</p>
+                <h3 className="text-lg font-bold text-white">Excluir Registro?</h3>
+                <p className="text-xs text-rose-300/80">Operação permanente de remoção</p>
               </div>
             </div>
 
-            <p className="text-sm sm:text-base text-slate-300 leading-relaxed font-medium">
+            <p className="text-sm text-white/70 leading-relaxed font-normal">
               Tem certeza que deseja excluir o registro {registroParaExcluir.secretaria === 'Secretaria da Agricultura' && registroParaExcluir.fct && registroParaExcluir.fct !== 'N/A' ? (
                 <strong className="text-white font-mono">{registroParaExcluir.fct}</strong>
               ) : (
-                <span className="text-amber-300 font-semibold">(Sem FCT - Turismo)</span>
+                <span className="text-amber-300 font-medium">(Sem FCT - Turismo)</span>
               )} do motorista <strong className="text-white">{registroParaExcluir.motorista}</strong>?
             </p>
 
-            <div className="flex items-center justify-end gap-3 pt-2">
+            <div className="flex items-center justify-end gap-2.5 pt-2">
               <button
                 type="button"
                 onClick={() => setRegistroParaExcluir(null)}
-                className="px-5 py-3 rounded-2xl border-2 border-slate-700 text-slate-300 hover:bg-slate-800 font-bold text-sm cursor-pointer"
+                className="px-5 py-2.5 rounded-2xl border border-white/[0.1] text-white/70 hover:text-white hover:bg-white/[0.05] active:scale-[0.96] font-medium text-sm cursor-pointer transition-all"
               >
                 Cancelar
               </button>
               <button
                 type="button"
                 onClick={confirmarExclusao}
-                className="px-5 py-3 rounded-2xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-sm shadow-lg shadow-rose-950/60 cursor-pointer flex items-center gap-2"
+                className="px-5 py-2.5 rounded-2xl bg-rose-600 hover:bg-rose-500 active:scale-[0.96] text-white font-semibold text-sm shadow-lg shadow-rose-900/40 cursor-pointer flex items-center gap-2 transition-all"
               >
                 <Trash2 className="w-4 h-4" />
                 <span>Sim, Excluir</span>
@@ -481,3 +484,4 @@ export const RecordsTable: React.FC<RecordsTableProps> = ({
     </div>
   );
 };
+

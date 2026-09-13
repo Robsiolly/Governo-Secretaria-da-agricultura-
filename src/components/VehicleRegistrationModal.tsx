@@ -161,48 +161,51 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-950/85 backdrop-blur-md overflow-y-auto">
-      <div className="bg-slate-900 border-2 border-slate-700 rounded-3xl w-full max-w-2xl max-h-[92vh] flex flex-col shadow-2xl overflow-hidden my-auto animate-in fade-in zoom-in-95 duration-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/75 backdrop-blur-xl overflow-y-auto">
+      <div className="bg-[#161618]/90 border border-white/[0.1] rounded-3xl w-full max-w-2xl max-h-[92vh] flex flex-col shadow-2xl overflow-hidden my-auto animate-in fade-in zoom-in-95 duration-200 relative">
+        {/* Specular Top Edge Light */}
+        <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+
         {/* Modal Header */}
-        <div className="flex items-center justify-between px-6 py-5 border-b-2 border-slate-800 bg-slate-900">
+        <div className="flex items-center justify-between px-6 py-4.5 border-b border-white/[0.08] bg-white/[0.02]">
           <div>
-            <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight flex items-center gap-2.5">
-              <FileText className="w-6 h-6 text-amber-400" />
+            <h2 className="text-lg sm:text-xl font-bold text-white tracking-tight flex items-center gap-2.5">
+              <FileText className="w-5 h-5 text-amber-400" />
               <span>{registroEdicao ? 'Editar Registro de Veículo' : 'Novo Cadastro de Veículo'}</span>
             </h2>
-            <p className="text-xs sm:text-sm text-slate-300 mt-1 font-medium">
+            <p className="text-xs text-white/50 mt-0.5 font-medium">
               Secretaria da Agricultura & Secretaria do Turismo
             </p>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="p-2.5 text-slate-300 hover:text-white rounded-2xl hover:bg-slate-800 transition-colors cursor-pointer border border-transparent hover:border-slate-700"
+            className="p-2 text-white/50 hover:text-white rounded-2xl hover:bg-white/[0.08] active:scale-[0.94] transition-all cursor-pointer border border-transparent hover:border-white/[0.08]"
           >
-            <X className="w-6 h-6" />
+            <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Modal Form */}
-        <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto p-6 space-y-6">
+        <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto p-5 sm:p-6 space-y-5">
           {erro && (
-            <div className="p-4 rounded-2xl bg-rose-950/90 border-2 border-rose-700 text-rose-100 text-sm font-semibold flex items-center gap-3">
-              <AlertCircle className="w-5 h-5 shrink-0 text-rose-400" />
+            <div className="p-3.5 rounded-2xl bg-rose-500/15 border border-rose-500/30 text-rose-200 text-xs font-medium flex items-center gap-2.5 animate-in fade-in">
+              <AlertCircle className="w-4 h-4 shrink-0 text-rose-400" />
               <span>{erro}</span>
             </div>
           )}
 
           {/* Seleção da Secretaria */}
           <div>
-            <label className="block text-sm sm:text-base font-bold text-slate-200 mb-2 uppercase tracking-wider">
+            <label className="block text-[11px] font-semibold text-white/50 mb-2 uppercase tracking-wider">
               Secretaria Responsável *
             </label>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
               <label
-                className={`flex items-center gap-3.5 p-4 rounded-2xl border-2 cursor-pointer transition-all ${
+                className={`flex items-center gap-3 p-3.5 rounded-2xl border cursor-pointer transition-all active:scale-[0.98] ${
                   secretaria === 'Secretaria da Agricultura'
-                    ? 'bg-amber-950/70 border-amber-500 text-white shadow-lg'
-                    : 'bg-slate-950/80 border-slate-800 text-slate-300 hover:bg-slate-800/60'
+                    ? 'bg-amber-500/15 border-amber-400/40 text-white shadow-md'
+                    : 'bg-white/[0.03] border-white/[0.06] text-white/70 hover:bg-white/[0.06]'
                 }`}
               >
                 <input
@@ -213,20 +216,20 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
                   onChange={() => setSecretaria('Secretaria da Agricultura')}
                   className="sr-only"
                 />
-                <div className="w-11 h-11 rounded-xl bg-amber-600/30 text-amber-400 flex items-center justify-center shrink-0 border border-amber-500/50">
-                  <Wheat className="w-6 h-6" />
+                <div className="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0 border border-amber-400/30">
+                  <Wheat className="w-5 h-5" />
                 </div>
                 <div>
-                  <span className="text-sm sm:text-base font-bold block">Secretaria da Agricultura</span>
-                  <span className="text-xs text-slate-300">Desenvolvimento rural e abastecimento</span>
+                  <span className="text-sm font-bold block text-white">Secretaria da Agricultura</span>
+                  <span className="text-xs text-white/50">Desenvolvimento rural e abastecimento</span>
                 </div>
               </label>
 
               <label
-                className={`flex items-center gap-3.5 p-4 rounded-2xl border-2 cursor-pointer transition-all ${
+                className={`flex items-center gap-3 p-3.5 rounded-2xl border cursor-pointer transition-all active:scale-[0.98] ${
                   secretaria === 'Secretaria do Turismo'
-                    ? 'bg-emerald-950/70 border-emerald-500 text-white shadow-lg'
-                    : 'bg-slate-950/80 border-slate-800 text-slate-300 hover:bg-slate-800/60'
+                    ? 'bg-emerald-500/15 border-emerald-400/40 text-white shadow-md'
+                    : 'bg-white/[0.03] border-white/[0.06] text-white/70 hover:bg-white/[0.06]'
                 }`}
               >
                 <input
@@ -237,22 +240,22 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
                   onChange={() => setSecretaria('Secretaria do Turismo')}
                   className="sr-only"
                 />
-                <div className="w-11 h-11 rounded-xl bg-emerald-950 text-emerald-400 flex items-center justify-center shrink-0 border border-emerald-500/50">
-                  <Plane className="w-6 h-6 text-emerald-400" />
+                <div className="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 border border-emerald-400/30">
+                  <Plane className="w-5 h-5 text-emerald-400" />
                 </div>
                 <div>
-                  <span className="text-sm sm:text-base font-bold block">Secretaria do Turismo</span>
-                  <span className="text-xs text-slate-300">Promoção de roteiros e eventos</span>
+                  <span className="text-sm font-bold block text-white">Secretaria do Turismo</span>
+                  <span className="text-xs text-white/50">Promoção de roteiros e eventos</span>
                 </div>
               </label>
             </div>
           </div>
 
-          {/* Dados Principais: Data, FCT, Motorista */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          {/* Dados Principais: Data, FCT, Andar */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
             <div>
-              <label className="block text-sm font-bold text-slate-200 mb-2 flex items-center gap-1.5">
-                <Calendar className="w-4 h-4 text-amber-400" />
+              <label className="block text-xs font-semibold text-white/60 mb-1.5 flex items-center gap-1.5">
+                <Calendar className="w-3.5 h-3.5 text-amber-400" />
                 Data *
               </label>
               <input
@@ -260,68 +263,63 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
                 required
                 value={data}
                 onChange={(e) => setData(e.target.value)}
-                className="w-full bg-slate-950 border-2 border-slate-700 rounded-2xl px-4 py-3 text-sm sm:text-base text-white focus:outline-none focus:border-amber-500 font-medium min-h-[50px]"
+                className="w-full bg-white/[0.04] hover:bg-white/[0.06] focus:bg-white/[0.08] border border-white/[0.08] focus:border-white/30 rounded-2xl px-3.5 py-2.5 text-sm text-white focus:outline-none font-medium transition-all shadow-inner"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-bold text-slate-200 mb-2 flex items-center justify-between">
+              <label className="block text-xs font-semibold text-white/60 mb-1.5 flex items-center justify-between">
                 <span className="flex items-center gap-1.5">
-                  <FileText className={`w-4 h-4 ${isTurismo ? 'text-slate-500' : 'text-amber-400'}`} />
+                  <FileText className={`w-3.5 h-3.5 ${isTurismo ? 'text-white/30' : 'text-amber-400'}`} />
                   {isTurismo ? 'FCT (Não Aplicável)' : 'Nº da FCT *'}
                 </span>
-                <span className={`text-[11px] font-medium ${isTurismo ? 'text-amber-300 bg-amber-950/70 border border-amber-800/60 px-2 py-0.5 rounded-md' : 'text-amber-400/90'}`}>
-                  {isTurismo ? 'Turismo não possui FCT' : 'Mediante autorização'}
+                <span className={`text-[10px] font-medium ${isTurismo ? 'text-amber-300 bg-amber-500/15 border border-amber-400/30 px-1.5 py-0.5 rounded-md' : 'text-amber-400/80'}`}>
+                  {isTurismo ? 'Turismo não possui FCT' : 'Autorizada'}
                 </span>
               </label>
               {isTurismo ? (
-                <div className="w-full bg-slate-950 border-2 border-slate-800 rounded-2xl px-4 py-3 min-h-[50px] flex items-center gap-2.5 text-slate-400 select-none">
-                  <span className="w-2 h-2 rounded-full bg-amber-400/70 shrink-0"></span>
-                  <span className="text-xs sm:text-sm font-medium text-slate-300">
-                    Veículos da Secretaria do Turismo não têm FCT.
+                <div className="w-full bg-white/[0.02] border border-white/[0.06] rounded-2xl px-3.5 py-2.5 flex items-center gap-2 text-white/40 select-none">
+                  <span className="w-2 h-2 rounded-full bg-amber-400/60 shrink-0" />
+                  <span className="text-xs font-medium">
+                    Não aplicável ao Turismo
                   </span>
                 </div>
               ) : (
-                <>
-                  <input
-                    type="text"
-                    required
-                    value={fct}
-                    onChange={(e) => setFct(e.target.value)}
-                    placeholder="Ex: 105 ou FCT-105"
-                    className="w-full bg-slate-950 border-2 border-slate-700 rounded-2xl px-4 py-3 text-sm sm:text-base text-white font-mono font-bold placeholder-slate-500 focus:outline-none focus:border-amber-500 min-h-[50px]"
-                  />
-                  <p className="text-[11px] text-slate-400 mt-1">
-                    Registro inserido com a autorização do responsável.
-                  </p>
-                </>
+                <input
+                  type="text"
+                  required
+                  value={fct}
+                  onChange={(e) => setFct(e.target.value)}
+                  placeholder="Ex: 105 ou FCT-105"
+                  className="w-full bg-white/[0.04] hover:bg-white/[0.06] focus:bg-white/[0.08] border border-white/[0.08] focus:border-white/30 rounded-2xl px-3.5 py-2.5 text-sm text-white font-mono font-bold placeholder-white/30 focus:outline-none transition-all shadow-inner"
+                />
               )}
             </div>
 
             <div>
-              <label className="block text-sm font-bold text-slate-200 mb-2 flex items-center justify-between">
+              <label className="block text-xs font-semibold text-white/60 mb-1.5 flex items-center justify-between">
                 <span className="flex items-center gap-1.5">
-                  <Building className="w-4 h-4 text-amber-400" />
-                  Andar / Setor (1 a 7 ou SAA) *
+                  <Building className="w-3.5 h-3.5 text-amber-400" />
+                  Andar / Setor *
                 </span>
-                <span className="text-xs text-amber-400 font-bold bg-amber-950/80 border border-amber-800/40 px-2 py-0.5 rounded-md">
-                  Andar Atual: {andar}
+                <span className="text-[10px] text-amber-400 font-semibold bg-white/[0.04] border border-white/[0.08] px-1.5 py-0.5 rounded-md">
+                  Atual: {andar}
                 </span>
               </label>
 
               {/* Botões rápidos de 1 a 7 e SAA */}
-              <div className="grid grid-cols-4 sm:grid-cols-8 gap-1.5 mb-2">
+              <div className="grid grid-cols-4 sm:grid-cols-8 gap-1 mb-1.5">
                 {ANDARES_DISPONIVEIS.map((num) => (
                   <button
                     key={num}
                     type="button"
                     onClick={() => setAndar(num)}
-                    className={`py-2 px-1 text-center font-bold text-sm sm:text-base rounded-xl border-2 transition-all cursor-pointer ${
+                    className={`py-1.5 px-0.5 text-center font-bold text-xs rounded-xl border transition-all cursor-pointer active:scale-[0.94] ${
                       andar === num
-                        ? 'bg-amber-600 border-amber-400 text-white shadow-md scale-105'
+                        ? 'bg-amber-500 border-amber-400 text-slate-950 shadow-sm font-black'
                         : num === 'SAA'
-                        ? 'bg-amber-950/90 border-amber-500 text-amber-300 hover:border-amber-400 hover:text-white'
-                        : 'bg-slate-950 border-slate-700 text-slate-300 hover:border-slate-500 hover:text-white'
+                        ? 'bg-amber-500/15 border-amber-400/30 text-amber-300 hover:text-white'
+                        : 'bg-white/[0.03] border-white/[0.06] text-white/70 hover:bg-white/[0.08] hover:text-white'
                     }`}
                   >
                     {num === 'SAA' ? 'SAA' : num}
@@ -334,10 +332,10 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
                 required
                 value={andar}
                 onChange={(e) => setAndar(e.target.value)}
-                className="w-full bg-slate-950 border-2 border-slate-700 rounded-2xl px-4 py-2.5 text-sm sm:text-base text-white focus:outline-none focus:border-amber-500 min-h-[46px]"
+                className="w-full bg-[#1c1c1e] border border-white/[0.08] focus:border-white/30 rounded-2xl px-3 py-2 text-xs text-white focus:outline-none transition-all cursor-pointer shadow-inner"
               >
                 {ANDARES_DISPONIVEIS.map((num) => (
-                  <option key={num} value={num} className="bg-slate-900 text-white">
+                  <option key={num} value={num} className="bg-[#1c1c1e] text-white">
                     {num === 'SAA' ? 'Andar SAA (Prioritário)' : `Andar ${num}`}
                   </option>
                 ))}
@@ -346,10 +344,10 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
           </div>
 
           {/* Motorista e Veículo */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
             <div>
-              <label className="block text-sm font-bold text-slate-200 mb-2 flex items-center gap-1.5">
-                <User className="w-4 h-4 text-amber-400" />
+              <label className="block text-xs font-semibold text-white/60 mb-1.5 flex items-center gap-1.5">
+                <User className="w-3.5 h-3.5 text-amber-400" />
                 Motorista Responsável *
               </label>
               <input
@@ -358,39 +356,39 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
                 value={motorista}
                 onChange={(e) => setMotorista(e.target.value)}
                 placeholder="Nome completo do motorista"
-                className="w-full bg-slate-950 border-2 border-slate-700 rounded-2xl px-4 py-3 text-sm sm:text-base text-white placeholder-slate-500 focus:outline-none focus:border-amber-500 font-medium min-h-[50px]"
+                className="w-full bg-white/[0.04] hover:bg-white/[0.06] focus:bg-white/[0.08] border border-white/[0.08] focus:border-white/30 rounded-2xl px-3.5 py-2.5 text-sm text-white placeholder-white/30 focus:outline-none font-medium transition-all shadow-inner"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-bold text-slate-200 mb-2 flex items-center gap-1.5">
-                <Car className="w-4 h-4 text-amber-400" />
+              <label className="block text-xs font-semibold text-white/60 mb-1.5 flex items-center gap-1.5">
+                <Car className="w-3.5 h-3.5 text-amber-400" />
                 Veículo & Placa
               </label>
-              <div className="grid grid-cols-2 gap-2.5">
+              <div className="grid grid-cols-2 gap-2">
                 <input
                   type="text"
                   value={placa}
                   onChange={(e) => setPlaca(e.target.value)}
                   placeholder="Placa: BRA-2026"
-                  className="w-full bg-slate-950 border-2 border-slate-700 rounded-2xl px-3 py-3 text-sm sm:text-base text-white font-mono font-bold placeholder-slate-500 focus:outline-none focus:border-amber-500 min-h-[50px]"
+                  className="w-full bg-white/[0.04] hover:bg-white/[0.06] focus:bg-white/[0.08] border border-white/[0.08] focus:border-white/30 rounded-2xl px-3 py-2.5 text-sm text-white font-mono font-bold placeholder-white/30 focus:outline-none transition-all shadow-inner"
                 />
                 <input
                   type="text"
                   value={modeloVeiculo}
                   onChange={(e) => setModeloVeiculo(e.target.value)}
                   placeholder="Modelo: Hilux, Spin..."
-                  className="w-full bg-slate-950 border-2 border-slate-700 rounded-2xl px-3 py-3 text-sm sm:text-base text-white placeholder-slate-500 focus:outline-none focus:border-amber-500 min-h-[50px]"
+                  className="w-full bg-white/[0.04] hover:bg-white/[0.06] focus:bg-white/[0.08] border border-white/[0.08] focus:border-white/30 rounded-2xl px-3 py-2.5 text-sm text-white placeholder-white/30 focus:outline-none transition-all shadow-inner"
                 />
               </div>
             </div>
           </div>
 
           {/* Horários: Saída e Chegada */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
             <div>
-              <label className="block text-sm font-bold text-slate-200 mb-2 flex items-center gap-1.5">
-                <Clock className="w-4 h-4 text-amber-400" />
+              <label className="block text-xs font-semibold text-white/60 mb-1.5 flex items-center gap-1.5">
+                <Clock className="w-3.5 h-3.5 text-amber-400" />
                 Horário de Saída *
               </label>
               <input
@@ -398,17 +396,17 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
                 required
                 value={horarioSaida}
                 onChange={(e) => setHorarioSaida(e.target.value)}
-                className="w-full bg-slate-950 border-2 border-slate-700 rounded-2xl px-4 py-3 text-sm sm:text-base text-white font-mono font-bold focus:outline-none focus:border-amber-500 min-h-[50px]"
+                className="w-full bg-white/[0.04] hover:bg-white/[0.06] focus:bg-white/[0.08] border border-white/[0.08] focus:border-white/30 rounded-2xl px-3.5 py-2.5 text-sm text-white font-mono font-bold focus:outline-none transition-all shadow-inner"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-bold text-slate-200 mb-2 flex items-center justify-between">
+              <label className="block text-xs font-semibold text-white/60 mb-1.5 flex items-center justify-between">
                 <span className="flex items-center gap-1.5">
-                  <Clock className="w-4 h-4 text-amber-400" />
+                  <Clock className="w-3.5 h-3.5 text-amber-400" />
                   Horário de Chegada
                 </span>
-                <span className="text-xs text-slate-400 font-normal">
+                <span className="text-[10px] text-white/40">
                   (Em branco se em trânsito)
                 </span>
               </label>
@@ -416,14 +414,14 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
                 type="time"
                 value={horarioChegada}
                 onChange={(e) => setHorarioChegada(e.target.value)}
-                className="w-full bg-slate-950 border-2 border-slate-700 rounded-2xl px-4 py-3 text-sm sm:text-base text-white font-mono font-bold focus:outline-none focus:border-amber-500 min-h-[50px]"
+                className="w-full bg-white/[0.04] hover:bg-white/[0.06] focus:bg-white/[0.08] border border-white/[0.08] focus:border-white/30 rounded-2xl px-3.5 py-2.5 text-sm text-white font-mono font-bold focus:outline-none transition-all shadow-inner"
               />
             </div>
           </div>
 
           {/* Destino / Finalidade */}
           <div>
-            <label className="block text-sm font-bold text-slate-200 mb-2">
+            <label className="block text-xs font-semibold text-white/60 mb-1.5">
               Destino / Finalidade da Operação
             </label>
             <input
@@ -431,48 +429,45 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
               value={destino}
               onChange={(e) => setDestino(e.target.value)}
               placeholder="Ex: Vistoria técnica rural, transporte de comitiva turística..."
-              className="w-full bg-slate-950 border-2 border-slate-700 rounded-2xl px-4 py-3 text-sm sm:text-base text-white placeholder-slate-500 focus:outline-none focus:border-amber-500 min-h-[50px]"
+              className="w-full bg-white/[0.04] hover:bg-white/[0.06] focus:bg-white/[0.08] border border-white/[0.08] focus:border-white/30 rounded-2xl px-3.5 py-2.5 text-sm text-white placeholder-white/30 focus:outline-none transition-all shadow-inner"
             />
           </div>
 
           {/* Campo de Ocorrência / Anotações do Operador */}
-          <div className="bg-amber-950/30 border-2 border-amber-600/40 rounded-2xl p-4 sm:p-5 space-y-2.5">
+          <div className="bg-amber-500/10 border border-amber-400/25 rounded-2xl p-4 space-y-2">
             <div className="flex items-center justify-between flex-wrap gap-2">
-              <label className="text-sm sm:text-base font-bold text-amber-300 flex items-center gap-2">
-                <AlertTriangle className="w-5 h-5 text-amber-400 shrink-0" />
-                <span>Campo de Ocorrência / Anotações do Operador</span>
+              <label className="text-xs font-bold text-amber-300 flex items-center gap-1.5 uppercase">
+                <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0" />
+                <span>Ocorrência / Anotações da Portaria</span>
               </label>
-              <span className="text-xs text-amber-300/80 bg-amber-950/80 border border-amber-600/40 px-2.5 py-0.5 rounded-full font-medium">
+              <span className="text-[10px] text-amber-300/80 bg-white/[0.04] border border-white/[0.08] px-2 py-0.5 rounded-full font-medium">
                 Opcional
               </span>
             </div>
-            <p className="text-xs text-slate-300">
-              Registre imprevistos, avarias, multas, atrasos, vistorias, troca de passageiro ou qualquer observação relevante da portaria.
-            </p>
             <textarea
-              rows={3}
+              rows={2}
               value={ocorrencia}
               onChange={(e) => setOcorrencia(e.target.value)}
-              placeholder="Ex: Veículo retornou com farol direito trincado; Atraso na liberação devido a vistoria no pátio; Troca de itinerário autorizada pelo diretor..."
-              className="w-full bg-slate-950 border-2 border-amber-600/50 focus:border-amber-400 rounded-xl p-3.5 text-sm sm:text-base text-white placeholder-slate-500 focus:outline-none resize-y min-h-[85px]"
+              placeholder="Ex: Veículo retornou com farol trincado; atraso na liberação por vistoria..."
+              className="w-full bg-white/[0.04] hover:bg-white/[0.06] focus:bg-white/[0.08] border border-amber-400/30 focus:border-amber-400 rounded-xl p-3 text-xs sm:text-sm text-white placeholder-white/30 focus:outline-none resize-y transition-all shadow-inner"
             />
           </div>
 
           {/* Seção Obrigatória: Funcionário Responsável e Assinatura */}
-          <div className="pt-4 border-t-2 border-slate-800 space-y-4">
+          <div className="pt-4 border-t border-white/[0.08] space-y-3.5">
             <div>
-              <label className="block text-sm sm:text-base font-bold text-slate-100 mb-2 flex items-center justify-between">
+              <label className="block text-xs font-semibold text-white/70 mb-2 flex items-center justify-between">
                 <span className="flex items-center gap-1.5">
-                  <User className="w-4 h-4 text-amber-400" />
-                  Mudar Responsável pelo Cadastro (Selecione um Operador) *
+                  <User className="w-3.5 h-3.5 text-amber-400" />
+                  Operador Responsável pelo Cadastro *
                 </span>
-                <span className="text-xs text-amber-400 font-semibold">
-                  Todos os responsáveis são OPERADORES ({nomesResponsaveis.length} Cadastrados)
+                <span className="text-[11px] text-white/40 font-medium">
+                  {nomesResponsaveis.length} Operadores
                 </span>
               </label>
 
               {/* Botões de Seleção Rápida dos Operadores */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2 mb-3">
+              <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-1.5 mb-3">
                 {nomesResponsaveis.map((nome) => {
                   const isSelecionado = funcionarioResponsavel.toLowerCase() === nome.toLowerCase();
                   return (
@@ -480,32 +475,32 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
                       key={nome}
                       type="button"
                       onClick={() => selecionarResponsavel(nome)}
-                      className={`px-3 py-2.5 rounded-xl border-2 font-bold text-sm sm:text-base transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+                      className={`px-2.5 py-2 rounded-xl border font-semibold text-xs transition-all flex items-center justify-center gap-1 cursor-pointer active:scale-[0.96] ${
                         isSelecionado
-                          ? 'bg-amber-600 border-amber-400 text-white shadow-lg ring-2 ring-amber-400/30'
-                          : 'bg-slate-950 border-slate-750 text-slate-300 hover:border-slate-500 hover:bg-slate-800'
+                          ? 'bg-white text-black border-white shadow-md font-bold'
+                          : 'bg-white/[0.03] border-white/[0.06] text-white/70 hover:bg-white/[0.08] hover:text-white'
                       }`}
                     >
-                      {isSelecionado && <Check className="w-4 h-4 text-amber-950 shrink-0" />}
-                      <span>{nome}</span>
+                      {isSelecionado && <Check className="w-3.5 h-3.5 text-black shrink-0" />}
+                      <span className="truncate">{nome}</span>
                     </button>
                   );
                 })}
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-                    Operador Selecionado (Lista Suspensa)
+                  <label className="block text-[11px] font-medium text-white/50 mb-1">
+                    Operador Selecionado
                   </label>
                   <select
                     required
                     value={funcionarioResponsavel}
                     onChange={(e) => selecionarResponsavel(e.target.value)}
-                    className="w-full bg-slate-950 border-2 border-slate-700 rounded-2xl px-4 py-3 text-sm sm:text-base text-white font-bold focus:outline-none focus:border-amber-500 min-h-[50px]"
+                    className="w-full bg-[#1c1c1e] border border-white/[0.08] focus:border-white/30 rounded-2xl px-3 py-2.5 text-xs sm:text-sm text-white font-medium focus:outline-none transition-all cursor-pointer shadow-inner"
                   >
                     {nomesResponsaveis.map((nome) => (
-                      <option key={nome} value={nome} className="bg-slate-900 text-white">
+                      <option key={nome} value={nome} className="bg-[#1c1c1e] text-white">
                         {nome} (Operador de Cadastro)
                       </option>
                     ))}
@@ -513,15 +508,15 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-                    Matrícula Funcional do Operador
+                  <label className="block text-[11px] font-medium text-white/50 mb-1">
+                    Matrícula Funcional
                   </label>
                   <input
                     type="text"
                     value={matriculaFuncionario}
                     onChange={(e) => setMatriculaFuncionario(e.target.value)}
                     placeholder="Ex: OP-002"
-                    className="w-full bg-slate-950 border-2 border-slate-700 rounded-2xl px-4 py-3 text-sm sm:text-base text-white font-mono placeholder-slate-500 focus:outline-none focus:border-amber-500 min-h-[50px]"
+                    className="w-full bg-white/[0.04] hover:bg-white/[0.06] focus:bg-white/[0.08] border border-white/[0.08] focus:border-white/30 rounded-2xl px-3 py-2.5 text-xs sm:text-sm text-white font-mono placeholder-white/30 focus:outline-none transition-all shadow-inner"
                   />
                 </div>
               </div>
@@ -538,19 +533,19 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
           </div>
 
           {/* Modal Footer Buttons */}
-          <div className="pt-5 border-t-2 border-slate-800 flex items-center justify-end gap-3.5">
+          <div className="pt-4 border-t border-white/[0.08] flex items-center justify-end gap-2.5">
             <button
               type="button"
               onClick={onClose}
-              className="px-5 py-3 rounded-2xl text-sm sm:text-base font-bold text-slate-300 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer min-h-[50px]"
+              className="px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-semibold text-white/70 hover:text-white hover:bg-white/[0.05] border border-white/[0.08] transition-all cursor-pointer active:scale-[0.96]"
             >
               Cancelar
             </button>
             <button
               type="submit"
-              className="flex items-center gap-2 bg-gradient-to-r from-amber-600 to-amber-600 hover:from-amber-500 hover:to-amber-500 text-white px-7 py-3 rounded-2xl text-sm sm:text-base font-bold shadow-xl shadow-amber-950/50 transition-all cursor-pointer min-h-[50px]"
+              className="flex items-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 px-6 py-2.5 rounded-2xl text-xs sm:text-sm font-bold shadow-lg transition-all cursor-pointer active:scale-[0.96]"
             >
-              <Save className="w-5 h-5" />
+              <Save className="w-4 h-4" />
               <span>{registroEdicao ? 'Salvar Alterações' : 'Concluir Cadastro'}</span>
             </button>
           </div>
@@ -559,3 +554,4 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
     </div>
   );
 };
+

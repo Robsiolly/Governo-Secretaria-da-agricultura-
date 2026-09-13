@@ -179,65 +179,65 @@ export const SignaturePad: React.FC<SignaturePadProps> = ({
 
   return (
     <div id="signature-pad-container" className="space-y-2.5">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-sm text-slate-300">
-        <span className="flex items-center gap-2 font-bold text-white">
-          <PenTool className="w-4 h-4 text-amber-400" />
-          Assine na área em branco abaixo com o mouse ou dedo (Touch):
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-white/70">
+        <span className="flex items-center gap-1.5 font-medium text-white">
+          <PenTool className="w-3.5 h-3.5 text-amber-400" />
+          Assinatura no painel abaixo:
         </span>
-        <div className="flex items-center gap-2 flex-wrap">
+        <div className="flex items-center gap-1.5 flex-wrap">
           {hasSavedSig && (
             <button
               type="button"
               onClick={carregarAssinaturaSalva}
-              className="flex items-center gap-1.5 text-amber-400 hover:text-amber-300 bg-amber-950/80 border border-amber-600/50 px-3 py-1.5 rounded-xl transition-colors cursor-pointer text-xs font-semibold shadow-sm"
-              title="Inserir sua assinatura salva anteriormente com 1 clique"
+              className="flex items-center gap-1.5 text-amber-300 hover:text-white bg-amber-500/15 border border-amber-400/30 px-3 py-1 rounded-xl transition-all cursor-pointer text-xs font-medium active:scale-[0.96]"
+              title="Inserir sua assinatura salva anteriormente"
             >
-              <BookmarkCheck className="w-4 h-4" />
-              <span>Usar Assinatura Salva</span>
+              <BookmarkCheck className="w-3.5 h-3.5" />
+              <span>Usar Salva</span>
             </button>
           )}
 
           <button
             type="button"
             onClick={gerarAssinaturaDigitalPadrao}
-            className="flex items-center gap-1.5 text-amber-400 hover:text-amber-300 bg-amber-950/60 border border-amber-800/40 px-3 py-1.5 rounded-xl transition-colors cursor-pointer text-xs sm:text-sm font-semibold"
+            className="flex items-center gap-1.5 text-white/80 hover:text-white bg-white/[0.05] hover:bg-white/[0.1] border border-white/[0.08] px-3 py-1 rounded-xl transition-all cursor-pointer text-xs font-medium active:scale-[0.96]"
             title="Gerar rubrica digital com base no nome do responsável"
           >
-            <Sparkles className="w-4 h-4" />
-            <span>Rubrica Automática</span>
+            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+            <span>Rubrica Auto</span>
           </button>
 
           {hasSignature && (
             <button
               type="button"
               onClick={salvarComoAssinaturaPadrao}
-              className="flex items-center gap-1.5 text-amber-300 hover:text-amber-200 bg-amber-950/80 border border-amber-600/50 px-3 py-1.5 rounded-xl transition-colors cursor-pointer text-xs font-semibold shadow-sm"
+              className="flex items-center gap-1.5 text-amber-300 hover:text-white bg-white/[0.05] hover:bg-white/[0.1] border border-white/[0.08] px-3 py-1 rounded-xl transition-all cursor-pointer text-xs font-medium active:scale-[0.96]"
               title="Salvar esta assinatura para usar rapidamente em futuros registros"
             >
-              <Bookmark className="w-4 h-4" />
-              <span>Salvar como Padrão</span>
+              <Bookmark className="w-3.5 h-3.5" />
+              <span>Salvar Padrão</span>
             </button>
           )}
 
           <button
             type="button"
             onClick={limparAssinatura}
-            className="flex items-center gap-1.5 text-rose-400 hover:text-rose-300 bg-rose-950/60 border border-rose-500/40 px-3 py-1.5 rounded-xl transition-colors cursor-pointer text-xs sm:text-sm font-semibold"
+            className="flex items-center gap-1.5 text-rose-300 hover:text-rose-200 bg-rose-500/15 border border-rose-500/30 px-3 py-1 rounded-xl transition-all cursor-pointer text-xs font-medium active:scale-[0.96]"
           >
-            <Eraser className="w-4 h-4" />
+            <Eraser className="w-3.5 h-3.5" />
             <span>Limpar</span>
           </button>
         </div>
       </div>
 
       {saveSuccessMsg && (
-        <div className="bg-amber-950/90 border border-amber-500 text-amber-200 px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-2 animate-in fade-in">
-          <CheckCircle2 className="w-4 h-4 text-amber-400" />
-          Assinatura salva como padrão com sucesso! Agora você pode inseri-la com 1 clique em novos cadastros.
+        <div className="bg-emerald-500/15 border border-emerald-500/30 text-emerald-200 px-3 py-1.5 rounded-xl text-xs font-medium flex items-center gap-2 animate-in fade-in">
+          <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+          Assinatura padrão memorizada! Você pode usá-la com 1 clique em próximos cadastros.
         </div>
       )}
 
-      <div className="relative border-2 border-dashed border-slate-600 hover:border-amber-9500 rounded-2xl overflow-hidden bg-white shadow-lg transition-colors">
+      <div className="relative border border-white/20 hover:border-white/40 rounded-2xl overflow-hidden bg-white shadow-lg transition-colors">
         <canvas
           ref={canvasRef}
           onMouseDown={startDrawing}
@@ -247,23 +247,24 @@ export const SignaturePad: React.FC<SignaturePadProps> = ({
           onTouchStart={startDrawing}
           onTouchMove={draw}
           onTouchEnd={stopDrawing}
-          className="w-full h-36 cursor-crosshair touch-none"
+          className="w-full h-32 cursor-crosshair touch-none"
         />
 
         {!hasSignature && !isDrawing && (
-          <div className="absolute inset-0 pointer-events-none flex flex-col items-center justify-center text-slate-500">
-            <span className="text-sm sm:text-base font-bold">Toque ou desenhe aqui para assinar</span>
-            <span className="text-xs text-slate-400 mt-1">Assinatura do Funcionário Responsável pelo Cadastro</span>
+          <div className="absolute inset-0 pointer-events-none flex flex-col items-center justify-center text-slate-400">
+            <span className="text-sm font-medium">Toque ou desenhe aqui para assinar</span>
+            <span className="text-[11px] text-slate-400 mt-0.5">Assinatura / Rubrica do Operador</span>
           </div>
         )}
 
         {hasSignature && (
-          <div className="absolute top-2.5 right-2.5 pointer-events-none flex items-center gap-1.5 bg-amber-950 text-amber-950 px-3 py-1 rounded-full text-xs font-bold border border-amber-400 shadow-sm">
-            <CheckCircle2 className="w-4 h-4 text-amber-600" />
-            Assinatura Pronta
+          <div className="absolute top-2.5 right-2.5 pointer-events-none flex items-center gap-1.5 bg-slate-900/90 text-emerald-400 px-2.5 py-0.5 rounded-full text-xs font-medium border border-white/10 shadow-sm">
+            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+            <span>Assinado</span>
           </div>
         )}
       </div>
     </div>
   );
 };
+

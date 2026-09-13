@@ -43,93 +43,91 @@ export const Header: React.FC<HeaderProps> = ({
   }, []);
 
   return (
-    <header className="bg-black/90 backdrop-blur-2xl border-b border-[#252525] sticky top-0 z-40 w-full shadow-2xl">
-      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-[#5A3A2E] via-[#D97924] to-[#3A241D]" />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-5">
-        <div className="flex items-center justify-between gap-4">
+    <header className="sticky top-0 z-40 w-full bg-black/80 backdrop-blur-2xl border-b border-white/[0.08] transition-all pt-safe">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 sm:py-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3.5 sm:gap-4">
           {/* Brand & App Title */}
-          <div className="flex items-start sm:items-center gap-4">
-            <div className="flex -space-x-2 shrink-0">
+          <div className="flex items-start sm:items-center gap-3 sm:gap-3.5 min-w-0">
+            <div className="flex -space-x-1.5 shrink-0 mt-0.5 sm:mt-0">
               <div 
-                className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-[#3A241D] border border-[#5A3A2E] flex items-center justify-center text-[#D97924] shadow-lg"
+                className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-amber-500/10 border border-amber-400/30 flex items-center justify-center text-amber-400 shadow-sm backdrop-blur-md"
                 title="Secretaria da Agricultura"
               >
-                <Wheat className="w-5 h-5 text-[#D97924]" />
+                <Wheat className="w-5 h-5 text-amber-400" />
               </div>
               <div 
-                className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-[#252525] border border-[#6B6B6B]/40 flex items-center justify-center text-emerald-400 shadow-lg"
+                className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-emerald-500/10 border border-emerald-400/30 flex items-center justify-center text-emerald-400 shadow-sm backdrop-blur-md"
                 title="Secretaria do Turismo"
               >
                 <Plane className="w-5 h-5 text-emerald-400" />
               </div>
             </div>
-            <div className="min-w-0 flex-1">
-              <div className="flex items-center gap-2.5 flex-wrap">
-                <h1 className="text-base sm:text-lg md:text-xl font-bold text-white tracking-tight leading-snug break-words">
-                  Controle de Registros
-                </h1>
-                <span className="inline-flex items-center gap-1.5 bg-[#3A241D] text-[#D97924] border border-[#5A3A2E] px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wider shrink-0 shadow-inner">
-                  <ShieldCheck className="w-3.5 h-3.5 text-[#D97924]" />
-                  <span>Oficial</span>
-                </span>
-              </div>
-              <p className="text-[10px] sm:text-xs text-[#6B6B6B] mt-0.5 font-medium whitespace-nowrap overflow-visible">
+            <div className="min-w-0 flex-1 flex flex-col gap-1.5">
+              <h1 className="text-sm sm:text-base md:text-lg font-semibold text-white tracking-tight leading-none whitespace-nowrap">
+                SAA - Controle de Registro
+              </h1>
+              <p className="text-[10px] sm:text-xs text-white/70 font-normal leading-normal whitespace-nowrap">
                 Secretaria da Agricultura e Secretaria do Turismo
               </p>
             </div>
           </div>
 
-          {/* Main Actions & Hamburger Menu */}
-          <div className="flex items-center gap-2 sm:gap-3 shrink-0 relative" ref={menuRef}>
+          {/* Main Actions & Apple-Style Hamburger Menu */}
+          <div className="flex items-center gap-2 sm:gap-2.5 shrink-0 self-end sm:self-center relative" ref={menuRef}>
+            <span className="inline-flex items-center gap-1 bg-white/[0.08] text-white/90 border border-white/[0.12] px-2.5 py-1.5 rounded-full text-[10px] sm:text-xs font-semibold tracking-wider uppercase shrink-0">
+              <ShieldCheck className="w-3.5 h-3.5 text-amber-400" />
+              <span>Oficial</span>
+            </span>
+
             <button
               type="button"
               onClick={onNovoRegistro}
-              className="inline-flex items-center justify-center gap-2 bg-[#D97924] hover:bg-[#c2681e] text-white px-3.5 sm:px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold shadow-xl shadow-[#D97924]/20 transition-all cursor-pointer min-h-[44px]"
+              className="inline-flex items-center justify-center gap-1.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold px-4 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm shadow-md shadow-amber-500/20 active:scale-[0.96] transition-all duration-200 cursor-pointer min-h-[40px]"
             >
-              <Plus className="w-4 h-4 shrink-0" />
+              <Plus className="w-4 h-4 stroke-[2.5] shrink-0" />
               <span>Novo Veículo</span>
             </button>
 
             <button
               type="button"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2.5 text-[#F3F3F1] hover:bg-[#333] rounded-2xl transition-all border border-[#6B6B6B]/30 cursor-pointer min-h-[44px] min-w-[44px] flex items-center justify-center shadow-lg bg-[#252525]"
+              className="p-2.5 text-white/80 hover:text-white bg-white/[0.06] hover:bg-white/[0.1] active:scale-[0.95] rounded-full transition-all duration-200 border border-white/[0.08] cursor-pointer min-h-[40px] min-w-[40px] flex items-center justify-center shadow-sm"
               aria-label="Menu"
             >
-              <Menu className="w-5 h-5" />
+              <Menu className="w-4 h-4 sm:w-5 sm:h-5" />
             </button>
 
-            {/* Dropdown Menu */}
+            {/* iOS Style Floating Dropdown Menu */}
             {isMenuOpen && (
-              <div className="absolute top-full right-0 mt-3 w-64 bg-[#1a1a1a] border border-[#6B6B6B]/30 rounded-2xl shadow-2xl py-2 z-50 animate-in slide-in-from-top-2 fade-in duration-200">
+              <div className="absolute top-full right-0 mt-2.5 w-64 bg-[#1c1c1e]/95 border border-white/[0.12] rounded-2xl shadow-2xl py-2 z-50 animate-in slide-in-from-top-2 fade-in duration-200 backdrop-blur-2xl divide-y divide-white/[0.08]">
                 {/* User Profile */}
-                <div className="px-4 py-3 border-b border-[#6B6B6B]/30 mb-2">
+                <div className="px-4 py-3">
                   <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-xl bg-black border border-[#6B6B6B]/40 flex items-center justify-center text-[#D97924] shrink-0 overflow-hidden">
+                    <div className="w-9 h-9 rounded-full bg-white/[0.08] border border-white/[0.15] flex items-center justify-center text-amber-400 shrink-0 overflow-hidden">
                       {usuario.fotoPerfil ? (
                         <img src={usuario.fotoPerfil} alt={usuario.nome} className="w-full h-full object-cover" />
                       ) : (
-                        <User className="w-5 h-5" />
+                        <User className="w-4 h-4" />
                       )}
                     </div>
                     <div className="min-w-0 flex-1">
-                      <p className="font-bold text-sm text-white truncate">{usuario.nome}</p>
-                      <p className="text-[10px] text-[#6B6B6B] font-mono truncate">
-                        Mat: {usuario.matricula} ({usuario.nivelAcesso})
+                      <p className="font-semibold text-sm text-white truncate">{usuario.nome}</p>
+                      <p className="text-[11px] text-white/50 font-mono truncate">
+                        Mat: {usuario.matricula} • {usuario.nivelAcesso}
                       </p>
                     </div>
                   </div>
                 </div>
 
-                {/* Actions */}
-                <div className="flex flex-col px-2 gap-1">
+                {/* Primary System Actions */}
+                <div className="py-1.5 px-1.5 flex flex-col gap-0.5">
                   {onNovoOperador && usuario.nivelAcesso === 'ADMINISTRADOR' && (
                     <button
                       type="button"
                       onClick={() => { onNovoOperador(); setIsMenuOpen(false); }}
-                      className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold text-neutral-300 hover:text-white hover:bg-[#333333] transition-colors text-left"
+                      className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs sm:text-sm font-medium text-white/90 hover:text-white hover:bg-white/[0.08] active:scale-[0.98] transition-all text-left cursor-pointer"
                     >
-                      <UserPlus className="w-4 h-4 text-[#D97924]" />
+                      <UserPlus className="w-4 h-4 text-amber-400" />
                       <span>Novo Operador</span>
                     </button>
                   )}
@@ -138,9 +136,9 @@ export const Header: React.FC<HeaderProps> = ({
                     <button
                       type="button"
                       onClick={() => { onAlterarSenha(); setIsMenuOpen(false); }}
-                      className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold text-neutral-300 hover:text-white hover:bg-[#333333] transition-colors text-left"
+                      className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs sm:text-sm font-medium text-white/90 hover:text-white hover:bg-white/[0.08] active:scale-[0.98] transition-all text-left cursor-pointer"
                     >
-                      <KeyRound className="w-4 h-4 text-[#6B6B6B]" />
+                      <KeyRound className="w-4 h-4 text-white/60" />
                       <span>Alterar Senha</span>
                     </button>
                   )}
@@ -149,9 +147,9 @@ export const Header: React.FC<HeaderProps> = ({
                     <button
                       type="button"
                       onClick={() => { onAbrirEnviarRelatorio(); setIsMenuOpen(false); }}
-                      className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold text-neutral-300 hover:text-white hover:bg-[#333333] transition-colors text-left"
+                      className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs sm:text-sm font-medium text-white/90 hover:text-white hover:bg-white/[0.08] active:scale-[0.98] transition-all text-left cursor-pointer"
                     >
-                      <Share2 className="w-4 h-4 text-[#6B6B6B]" />
+                      <Share2 className="w-4 h-4 text-white/60" />
                       <span>Enviar Relatório</span>
                     </button>
                   )}
@@ -160,7 +158,7 @@ export const Header: React.FC<HeaderProps> = ({
                     <button
                       type="button"
                       onClick={() => { onResumoTurno(); setIsMenuOpen(false); }}
-                      className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold text-emerald-100 hover:text-white bg-emerald-950/20 hover:bg-emerald-900/60 transition-colors text-left"
+                      className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs sm:text-sm font-medium text-emerald-300 hover:text-emerald-200 hover:bg-emerald-500/10 active:scale-[0.98] transition-all text-left cursor-pointer"
                     >
                       <Clock className="w-4 h-4 text-emerald-400" />
                       <span>Resumo do Turno</span>
@@ -171,7 +169,7 @@ export const Header: React.FC<HeaderProps> = ({
                     <button
                       type="button"
                       onClick={() => { onEstatisticas(); setIsMenuOpen(false); }}
-                      className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold text-amber-300 hover:text-white bg-amber-950/20 hover:bg-amber-900/60 transition-colors text-left"
+                      className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs sm:text-sm font-medium text-amber-300 hover:text-amber-200 hover:bg-amber-500/10 active:scale-[0.98] transition-all text-left cursor-pointer"
                     >
                       <BarChart3 className="w-4 h-4 text-amber-400" />
                       <span>Estatísticas & Métricas</span>
@@ -182,7 +180,7 @@ export const Header: React.FC<HeaderProps> = ({
                     <button
                       type="button"
                       onClick={() => { onExportarExcel(); setIsMenuOpen(false); }}
-                      className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold text-emerald-300 hover:text-white bg-emerald-950/20 hover:bg-emerald-900/60 transition-colors text-left"
+                      className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs sm:text-sm font-medium text-emerald-300 hover:text-emerald-200 hover:bg-emerald-500/10 active:scale-[0.98] transition-all text-left cursor-pointer"
                     >
                       <FileSpreadsheet className="w-4 h-4 text-emerald-400" />
                       <span>Exportar Excel / CSV</span>
@@ -192,18 +190,19 @@ export const Header: React.FC<HeaderProps> = ({
                   <button
                     type="button"
                     onClick={() => { onExportarPdf(); setIsMenuOpen(false); }}
-                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold text-neutral-300 hover:text-white hover:bg-[#333333] transition-colors text-left"
+                    className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs sm:text-sm font-medium text-white/90 hover:text-white hover:bg-white/[0.08] active:scale-[0.98] transition-all text-left cursor-pointer"
                   >
-                    <FileDown className="w-4 h-4 text-[#6B6B6B]" />
+                    <FileDown className="w-4 h-4 text-white/60" />
                     <span>Exportar PDF</span>
                   </button>
-                  
-                  <div className="h-px bg-[#6B6B6B]/30 my-1 mx-2" />
+                </div>
 
+                {/* Logout Action */}
+                <div className="py-1 px-1.5">
                   <button
                     type="button"
                     onClick={() => { onLogout(); setIsMenuOpen(false); }}
-                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold text-rose-400 hover:text-rose-300 hover:bg-rose-950/30 transition-colors text-left"
+                    className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs sm:text-sm font-medium text-rose-400 hover:text-rose-300 hover:bg-rose-500/10 active:scale-[0.98] transition-all text-left cursor-pointer"
                   >
                     <LogOut className="w-4 h-4" />
                     <span>Sair do Sistema</span>
@@ -217,3 +216,4 @@ export const Header: React.FC<HeaderProps> = ({
     </header>
   );
 };
+
