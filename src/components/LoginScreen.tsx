@@ -149,7 +149,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
   return (
     <div className="min-h-screen w-full flex flex-col justify-between bg-[#050608] text-white p-4 md:p-8 relative overflow-hidden selection:bg-[#B08D57]/30 selection:text-[#DFBA73]">
       {/* BOTÃO DE DIAGNÓSTICO FLUTUANTE (Garantia de clique no APK) */}
-      <div className="fixed top-4 left-4 z-[9999] flex flex-col gap-2 max-w-[80%]">
+      <div className="fixed top-2 left-2 z-[9999] flex flex-col gap-1.5 max-w-[70%]">
         <button
           type="button"
           disabled={diagLoading}
@@ -162,44 +162,31 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
             const fullUrl = `${origin}/api/ping`;
             
             try {
-              console.log('[DIAG] Acessando:', fullUrl);
               const res = await fetch(fullUrl, { cache: 'no-store' });
-              
-              if (!res.ok) {
-                throw new Error(`Status HTTP: ${res.status}`);
-              }
-              
+              if (!res.ok) throw new Error(`Status: ${res.status}`);
               const data = await res.json();
-              setDiagMsg(`✅ OK: ${data.mensagem} (${new Date().toLocaleTimeString()})`);
+              setDiagMsg(`✅ OK: ${data.mensagem}`);
             } catch (err: any) {
-              console.error('[DIAG] Erro:', err);
-              setDiagMsg(`❌ ERRO: ${err.message || 'Sem resposta'}`);
+              setDiagMsg(`❌ Erro: ${err.message || 'Falha'}`);
             } finally {
               setDiagLoading(false);
             }
           }}
-          className={`bg-emerald-600/90 hover:bg-emerald-500 text-white p-3 rounded-full shadow-2xl border-2 border-white/20 flex items-center gap-2 cursor-pointer active:scale-90 transition-all pointer-events-auto ${diagLoading ? 'opacity-50' : ''}`}
+          className={`bg-emerald-600/80 hover:bg-emerald-500 text-white p-1.5 rounded-full shadow-lg border border-white/20 flex items-center gap-1.5 cursor-pointer active:scale-90 transition-all pointer-events-auto ${diagLoading ? 'opacity-50' : ''}`}
           title="Testar Conexão"
         >
-          <div className={`w-2.5 h-2.5 rounded-full bg-white ${diagLoading ? 'animate-spin' : 'animate-ping'}`} />
-          <span className="text-[10px] font-black uppercase tracking-tighter pr-1">
-            {diagLoading ? 'Processando...' : 'Teste APK v2.3'}
+          <div className={`w-1.5 h-1.5 rounded-full bg-white ${diagLoading ? 'animate-spin' : 'animate-pulse'}`} />
+          <span className="text-[9px] font-black uppercase tracking-tighter pr-0.5">
+            {diagLoading ? '...' : 'Teste'}
           </span>
         </button>
 
         {diagMsg && (
           <div 
             onClick={() => setDiagMsg(null)}
-            className="bg-black/80 backdrop-blur-md border border-[#B08D57]/30 p-3 rounded-xl text-[10px] font-mono text-[#DFBA73] shadow-2xl animate-in fade-in slide-in-from-left-2"
+            className="bg-black/90 backdrop-blur-md border border-[#B08D57]/30 p-2 rounded-lg text-[9px] font-mono text-[#DFBA73] shadow-xl animate-in fade-in slide-in-from-left-1 cursor-pointer"
           >
-            <div className="flex justify-between items-center mb-1">
-              <span className="font-bold uppercase opacity-50">Log do Servidor:</span>
-              <span className="text-[8px] opacity-40">Tocar para fechar</span>
-            </div>
             {diagMsg}
-            <div className="mt-1 pt-1 border-t border-white/10 text-[8px] opacity-40">
-              Host: {window.location.host || 'N/A'}
-            </div>
           </div>
         )}
       </div>
