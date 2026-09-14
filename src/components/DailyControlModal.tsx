@@ -639,14 +639,14 @@ export const DailyControlModal: React.FC<DailyControlModalProps> = ({
                     <div className="flex items-center justify-between md:justify-end gap-2 sm:gap-3 shrink-0 pt-1.5 md:pt-0 border-t md:border-t-0 border-white/5">
                       {/* Horários */}
                       <div className="flex items-center gap-1.5 bg-black/60 px-2.5 py-1 rounded-lg border border-[#B08D57]/20 font-mono text-xs shrink-0">
-                        <span className="text-[#C6A96B]/60 text-[10px] font-sans uppercase font-bold">Saída:</span>
+                        <span className="text-[#C6A96B] text-[10px] font-sans uppercase font-bold">Saída:</span>
                         <strong className="text-white">{hSaida}</strong>
-                        <ArrowRight className="w-3 h-3 text-slate-500 shrink-0" />
-                        <span className="text-[#C6A96B]/60 text-[10px] font-sans uppercase font-bold">Ret:</span>
+                        <ArrowRight className="w-3 h-3 text-[#DFBA73]/40 shrink-0" />
+                        <span className="text-[#C6A96B] text-[10px] font-sans uppercase font-bold">Chegada:</span>
                         {hChegada ? (
-                          <strong className="text-[#DFBA73]">{hChegada}</strong>
+                          <strong className="text-emerald-400">{hChegada}</strong>
                         ) : (
-                          <span className="text-[#DFBA73] font-bold font-sans animate-pulse text-[11px]">Fora</span>
+                          <span className="text-[#DFBA73] font-bold font-sans animate-pulse text-[11px]">Em trânsito</span>
                         )}
                       </div>
 

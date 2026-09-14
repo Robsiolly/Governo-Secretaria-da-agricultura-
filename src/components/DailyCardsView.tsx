@@ -269,17 +269,33 @@ export const DailyCardsView: React.FC<DailyCardsViewProps> = ({
 
                 {/* Right Side: Time capsule & Action buttons */}
                 <div className="flex items-center justify-between sm:justify-end gap-2 shrink-0 border-t sm:border-t-0 border-[#B08D57]/15 pt-2 sm:pt-0">
-                  {/* Time Pill */}
-                  <div className="flex items-center gap-1.5 bg-black/50 px-2.5 py-1 rounded-xl border border-[#B08D57]/20 font-mono text-[11px] sm:text-xs shrink-0">
-                    <span className="text-[#C6A96B]/60 font-sans font-bold text-[9px]">S:</span>
-                    <strong className="text-white">{hSaida}</strong>
-                    <ArrowRight className="w-3 h-3 text-white/30 mx-0.5" />
-                    <span className="text-[#C6A96B]/60 font-sans font-bold text-[9px]">C:</span>
-                    {hChegada ? (
-                      <strong className="text-emerald-400">{hChegada}</strong>
-                    ) : (
-                      <span className="text-[#DFBA73] font-bold font-sans text-[10px]">Em trânsito</span>
-                    )}
+                  {/* Time Pill com Saída e Chegada explícitos */}
+                  <div className="flex items-center gap-2 bg-black/60 px-3 py-1.5 rounded-xl border border-[#B08D57]/25 text-xs shrink-0 shadow-inner">
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-[#C6A96B] font-semibold text-[10px] sm:text-[11px] uppercase tracking-wider">
+                        Saída:
+                      </span>
+                      <strong className="font-mono font-bold text-white text-xs sm:text-sm">
+                        {hSaida}
+                      </strong>
+                    </div>
+
+                    <ArrowRight className="w-3.5 h-3.5 text-[#DFBA73]/40 mx-0.5 shrink-0" />
+
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-[#C6A96B] font-semibold text-[10px] sm:text-[11px] uppercase tracking-wider">
+                        Chegada:
+                      </span>
+                      {hChegada ? (
+                        <strong className="font-mono font-bold text-emerald-400 text-xs sm:text-sm">
+                          {hChegada}
+                        </strong>
+                      ) : (
+                        <span className="text-[#DFBA73] font-bold text-[10px] sm:text-[11px] bg-[#B08D57]/15 px-1.5 py-0.5 rounded-md border border-[#B08D57]/30">
+                          Em trânsito
+                        </span>
+                      )}
+                    </div>
                   </div>
 
                   {/* Actions */}

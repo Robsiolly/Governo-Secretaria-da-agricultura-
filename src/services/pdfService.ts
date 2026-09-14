@@ -489,7 +489,10 @@ export const PdfService = {
     doc.setTextColor(30, 41, 59);
     doc.text('Desenvolvido por Siolly Technology', pageWidth - 14, pageHeight - 10, { align: 'right' });
 
-    doc.save(`Registro-${registro.fct}.pdf`);
+    const nomeArquivo = registro.fct && registro.fct !== 'N/A' && registro.fct !== '-' 
+      ? `Registro-FCT-${registro.fct}.pdf` 
+      : (registro.placa ? `Registro-Placa-${registro.placa}.pdf` : `Registro-${registro.id}.pdf`);
+    doc.save(nomeArquivo);
   },
 
   // ==========================================

@@ -123,11 +123,6 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
       setErro('O campo Motorista é obrigatório.');
       return;
     }
-    // Veículos da Secretaria do Turismo NÃO têm FCT
-    if (!isTurismo && !fct.trim()) {
-      setErro('Informe o número de registro da FCT autorizado pelo responsável para a Secretaria da Agricultura.');
-      return;
-    }
     if (!andar.trim()) {
       setErro('O campo Andar é obrigatório.');
       return;
@@ -146,7 +141,7 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
       secretaria,
       data,
       motorista: motorista.trim(),
-      fct: isTurismo ? 'N/A' : fct.trim().toUpperCase(),
+      fct: isTurismo ? 'N/A' : (fct.trim() ? fct.trim().toUpperCase() : ''),
       horarioSaida: horarioSaida.trim(),
       horarioChegada: horarioChegada.trim(),
       andar: andar.trim(),
@@ -280,10 +275,10 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
               <label className="block text-xs font-semibold text-white/70 mb-1.5 flex items-center justify-between">
                 <span className="flex items-center gap-1.5">
                   <FileText className={`w-3.5 h-3.5 ${isTurismo ? 'text-white/30' : 'text-[#DFBA73]'}`} />
-                  {isTurismo ? 'FCT (Não Aplicável)' : 'Nº da FCT *'}
+                  {isTurismo ? 'FCT (Não Aplicável)' : 'Nº da FCT'}
                 </span>
-                <span className={`text-[10px] font-medium ${isTurismo ? 'text-emerald-400 bg-emerald-500/15 border border-emerald-400/30 px-1.5 py-0.5 rounded-md' : 'text-[#DFBA73]'}`}>
-                  {isTurismo ? 'Turismo não possui FCT' : 'Autorizada'}
+                <span className={`text-[10px] font-medium ${isTurismo ? 'text-emerald-400 bg-emerald-500/15 border border-emerald-400/30 px-1.5 py-0.5 rounded-md' : 'text-[#C6A96B]/70'}`}>
+                  {isTurismo ? 'Turismo não possui FCT' : '(Opcional)'}
                 </span>
               </label>
               {isTurismo ? (
@@ -296,10 +291,9 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
               ) : (
                 <input
                   type="text"
-                  required
                   value={fct}
                   onChange={(e) => setFct(e.target.value)}
-                  placeholder="Ex: 105 ou FCT-105"
+                  placeholder="Ex: 105 ou FCT-105 (Opcional)"
                   className="w-full bg-black/50 hover:bg-black/70 focus:bg-black/80 border border-[#B08D57]/25 focus:border-[#DFBA73] rounded-2xl px-3.5 py-2.5 text-sm text-white font-mono font-bold placeholder-white/30 focus:outline-none transition-all shadow-inner"
                 />
               )}
