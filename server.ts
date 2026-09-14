@@ -3,32 +3,42 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { GoogleGenAI, Type } from '@google/genai';
 import dotenv from 'dotenv';
+import cors from 'cors';
 
 dotenv.config();
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+// Compatibilidade absoluta para caminhos em ambientes empacotados (dist/server.cjs) e desenvolvimento
+let _dirname: string;
+try {
+  const _filename = fileURLToPath(import.meta.url);
+  _dirname = path.dirname(_filename);
+} catch (e) {
+  // @ts-ignore - __dirname existe no bundle CJS do esbuild
+  _dirname = typeof __dirname !== 'undefined' ? __dirname : process.cwd();
+}
 
 const app = express();
 const PORT = 3000;
 
-// Configuração de CORS robusta para APK e Web
+// Configuração de CORS Universal para permitir acesso total (necessário para APK/Shared App)
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin'],
+  credentials: true
+}));
+
+// Logger de tráfego para depuração em tempo real
 app.use((req, res, next) => {
-  const origin = req.headers.origin || '*';
-  res.header('Access-Control-Allow-Origin', origin);
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-  res.header('Access-Control-Allow-Credentials', 'true');
-  
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end();
+  if (req.url !== '/api/ping') {
+    console.log(`[REQ] ${new Date().toISOString()} | ${req.method} ${req.url} | Origin: ${req.headers.origin || 'N/A'}`);
   }
   next();
 });
 
-// Body parser com limite aumentado para imagens base64 de fotos
-app.use(express.json({ limit: '25mb' }));
-app.use(express.urlencoded({ extended: true, limit: '25mb' }));
+// Body parser com limite de 50MB para fotos de alta resolução do scanner
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
 // Lazy init Gemini SDK
 let genAIClient: GoogleGenAI | null = null;
@@ -36,11 +46,9 @@ function getGeminiClient(): GoogleGenAI {
   if (!genAIClient) {
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
-      throw new Error('Chave GEMINI_API_KEY não configurada no servidor.');
+      throw new Error('Chave GEMINI_API_KEY não encontrada nas variáveis de ambiente do servidor.');
     }
-    genAIClient = new GoogleGenAI({ 
-      apiKey
-    });
+    genAIClient = new GoogleGenAI({ apiKey });
   }
   return genAIClient;
 }
@@ -65,21 +73,21 @@ async function callGeminiWithRetry(
       if (!isTransient || attempt === maxRetries) break;
       
       const delay = baseDelay * Math.pow(2, attempt);
-      console.log(`Gemini ocupado. Tentativa ${attempt + 1}/${maxRetries} em ${delay}ms...`);
+      console.log(`[AI] Servidor ocupado. Tentativa ${attempt + 1}/${maxRetries} em ${delay}ms...`);
       await new Promise(resolve => setTimeout(resolve, delay));
     }
   }
   throw lastError;
 }
 
-// API routes go here FIRST
+// Rota de diagnóstico para o APK e Web
 app.get('/api/ping', (req, res) => {
   res.json({ 
     sucesso: true, 
-    mensagem: 'Conexão com o servidor OK',
-    timestamp: new Date().toISOString(),
-    origin: req.headers.origin || 'N/A',
-    userAgent: req.headers['user-agent']
+    mensagem: 'Servidor Operacional',
+    ia_ativa: !!process.env.GEMINI_API_KEY,
+    modelo: 'gemini-3-flash-preview',
+    timestamp: new Date().toISOString()
   });
 });
 
@@ -316,8 +324,13 @@ async function startServer() {
     app.use(vite.middlewares);
   } else {
     const distPath = path.join(process.cwd(), 'dist');
+    console.log(`[SERVIDO] Modo Produção: Servindo arquivos de ${distPath}`);
     app.use(express.static(distPath));
     app.get('*', (req, res) => {
+      // Evitar que rotas de API caiam no catch-all de SPA
+      if (req.url.startsWith('/api/')) {
+        return res.status(404).json({ error: 'API Endpoint não encontrado.' });
+      }
       res.sendFile(path.join(distPath, 'index.html'));
     });
   }
