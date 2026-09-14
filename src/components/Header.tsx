@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Wheat, Plane, Plus, FileDown, LogOut, ShieldCheck, User, UserPlus, Share2, KeyRound, Clock, Menu, BarChart3, FileSpreadsheet, RefreshCw, UploadCloud, Camera } from 'lucide-react';
+import { Wheat, Plane, Plus, FileDown, LogOut, ShieldCheck, User, UserPlus, Share2, KeyRound, Clock, Menu, BarChart3, FileSpreadsheet, RefreshCw, UploadCloud } from 'lucide-react';
 import { UsuarioAutenticado } from '../types';
 
 interface HeaderProps {
@@ -12,7 +12,6 @@ interface HeaderProps {
   onEstatisticas?: () => void;
   onExportarExcel?: () => void;
   onImportarExcel?: () => void;
-  onEscanearFoto?: () => void;
   onAlterarSenha?: () => void;
   onSincronizarBanco?: () => void;
   onLogout: () => void;
@@ -29,7 +28,6 @@ export const Header: React.FC<HeaderProps> = ({
   onEstatisticas,
   onExportarExcel,
   onImportarExcel,
-  onEscanearFoto,
   onAlterarSenha,
   onSincronizarBanco,
   onLogout,
@@ -93,17 +91,7 @@ export const Header: React.FC<HeaderProps> = ({
                 <span>Novo Veículo</span>
               </button>
 
-              {onEscanearFoto && (
-                <button
-                  type="button"
-                  onClick={onEscanearFoto}
-                  className="inline-flex items-center justify-center gap-1.5 bg-black/40 hover:bg-[#B08D57]/20 active:scale-[0.96] text-[#DFBA73] hover:text-white font-semibold px-3.5 h-[42px] rounded-full text-xs sm:text-sm border border-[#B08D57]/35 transition-all duration-200 cursor-pointer whitespace-nowrap shadow-sm"
-                  title="Tirar foto de prancheta/folha para importar registros automaticamente com IA"
-                >
-                  <Camera className="w-4 h-4 shrink-0 text-[#DFBA73]" />
-                  <span className="hidden md:inline">Escanear Foto</span>
-                </button>
-              )}
+
             </div>
           </div>
 
@@ -216,17 +204,6 @@ export const Header: React.FC<HeaderProps> = ({
                     >
                       <FileSpreadsheet className="w-4 h-4 text-emerald-400" />
                       <span>Exportar Excel / CSV</span>
-                    </button>
-                  )}
-
-                  {onEscanearFoto && (
-                    <button
-                      type="button"
-                      onClick={() => { onEscanearFoto(); setIsMenuOpen(false); }}
-                      className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold text-[#DFBA73] hover:text-white hover:bg-[#B08D57]/20 active:scale-[0.98] transition-all text-left cursor-pointer"
-                    >
-                      <Camera className="w-4 h-4 text-[#DFBA73]" />
-                      <span>Escanear Foto (IA)</span>
                     </button>
                   )}
 

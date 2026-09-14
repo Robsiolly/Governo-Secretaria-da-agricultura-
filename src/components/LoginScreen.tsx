@@ -74,7 +74,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
           const tempoBloqueio = Date.now() + 30000; // 30 segundos de bloqueio
           setBloqueadoAte(tempoBloqueio);
           setSegundosRestantes(30);
-          setErro('Sistema temporariamente bloqueado por 30 segundos devido a 5 tentativas com erro. Medida de segurança ativa.');
+          setErro('Sistema temporariamente bloqueado por 30 segundos devido a 5 tentativas com erro. Medida de segurança activa.');
         } else {
           setErro(resultado.erro || `Falha na autenticação. Tentativa ${novasFalhas} de 5.`);
         }
@@ -143,53 +143,8 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
     setErro(null);
   };
 
-  const [diagMsg, setDiagMsg] = React.useState<string | null>(null);
-  const [diagLoading, setDiagLoading] = React.useState(false);
-
   return (
     <div className="min-h-screen w-full flex flex-col justify-between bg-[#050608] text-white p-4 md:p-8 relative overflow-hidden selection:bg-[#B08D57]/30 selection:text-[#DFBA73]">
-      {/* BOTÃO DE DIAGNÓSTICO FLUTUANTE (Garantia de clique no APK) */}
-      <div className="fixed top-2 left-2 z-[9999] flex flex-col gap-1.5 max-w-[70%]">
-        <button
-          type="button"
-          disabled={diagLoading}
-          onClick={async (e) => {
-            e.stopPropagation();
-            setDiagLoading(true);
-            setDiagMsg('Testando...');
-            
-            const origin = window.location.origin;
-            const fullUrl = `${origin}/api/ping`;
-            
-            try {
-              const res = await fetch(fullUrl, { cache: 'no-store' });
-              if (!res.ok) throw new Error(`Status: ${res.status}`);
-              const data = await res.json();
-              setDiagMsg(`✅ OK: ${data.mensagem}`);
-            } catch (err: any) {
-              setDiagMsg(`❌ Erro: ${err.message || 'Falha'}`);
-            } finally {
-              setDiagLoading(false);
-            }
-          }}
-          className={`bg-emerald-600/80 hover:bg-emerald-500 text-white p-1.5 rounded-full shadow-lg border border-white/20 flex items-center gap-1.5 cursor-pointer active:scale-90 transition-all pointer-events-auto ${diagLoading ? 'opacity-50' : ''}`}
-          title="Testar Conexão"
-        >
-          <div className={`w-1.5 h-1.5 rounded-full bg-white ${diagLoading ? 'animate-spin' : 'animate-pulse'}`} />
-          <span className="text-[9px] font-black uppercase tracking-tighter pr-0.5">
-            {diagLoading ? '...' : 'Teste'}
-          </span>
-        </button>
-
-        {diagMsg && (
-          <div 
-            onClick={() => setDiagMsg(null)}
-            className="bg-black/90 backdrop-blur-md border border-[#B08D57]/30 p-2 rounded-lg text-[9px] font-mono text-[#DFBA73] shadow-xl animate-in fade-in slide-in-from-left-1 cursor-pointer"
-          >
-            {diagMsg}
-          </div>
-        )}
-      </div>
 
       {/* Specular Radial Background Glows - Ouro Velho & Champagne */}
       <div className="absolute top-0 left-1/2 w-[600px] h-[300px] bg-[#B08D57]/10 rounded-full blur-[140px] pointer-events-none -translate-x-1/2 -translate-y-1/2" />

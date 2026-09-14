@@ -272,7 +272,6 @@ export default function App() {
         onEstatisticas={() => setIsModalEstatisticasOpen(true)}
         onExportarExcel={() => setIsModalExportExcelOpen(true)}
         onImportarExcel={() => setIsModalImportExcelOpen(true)}
-        onEscanearFoto={() => setIsModalScannerFotoOpen(true)}
         onAlterarSenha={() => setIsModalAlterarSenhaOpen(true)}
         onSincronizarBanco={handleSincronizarBanco}
         onLogout={handleLogout}
@@ -546,17 +545,6 @@ export default function App() {
         />
       )}
 
-      {/* Modal de Scanner e Reconhecimento de Folha/Prancheta por Foto com IA */}
-      {isModalScannerFotoOpen && (
-        <PhotoScannerModal
-          isOpen={isModalScannerFotoOpen}
-          onClose={() => setIsModalScannerFotoOpen(false)}
-          registrosExistentes={registros}
-          onImportarNovos={handleImportarNovosRegistros}
-          usuarioAtual={usuario}
-        />
-      )}
-
       {/* Modal de Alteração de Senha */}
       {isModalAlterarSenhaOpen && (
         <ChangePasswordModal
@@ -564,28 +552,6 @@ export default function App() {
           onClose={() => setIsModalAlterarSenhaOpen(false)}
           usuario={usuario}
           onSuccess={() => showToast('Senha alterada com sucesso!', 'success')}
-        />
-      )}
-
-      {/* Floating AI Assistant Button */}
-      <button
-        type="button"
-        onClick={() => setIsGlobalAiAssistantOpen(true)}
-        className="fixed bottom-6 right-6 sm:bottom-10 sm:right-10 z-40 bg-gradient-to-r from-[#C6A96B] via-[#B08D57] to-[#80683F] text-black p-4 rounded-full shadow-2xl shadow-[#B08D57]/30 hover:scale-105 active:scale-95 transition-all cursor-pointer flex items-center justify-center group"
-        title="IA de Busca"
-      >
-        <Sparkles className="w-6 h-6 animate-pulse" />
-        <span className="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs transition-all duration-300 font-bold ml-0 group-hover:ml-2">
-          Buscar com IA
-        </span>
-      </button>
-
-      {/* Global AI Assistant Modal */}
-      {isGlobalAiAssistantOpen && (
-        <GlobalAiAssistantModal
-          isOpen={isGlobalAiAssistantOpen}
-          onClose={() => setIsGlobalAiAssistantOpen(false)}
-          registros={registros}
         />
       )}
     </div>
