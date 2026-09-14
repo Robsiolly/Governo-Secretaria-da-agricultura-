@@ -32,7 +32,6 @@ export const RESPONSAVEIS_CADASTRO = [
   'Carlos',
   'Sacchi',
   'Jean',
-  'Karina',
 ] as const;
 
 export type ResponsavelNome = typeof RESPONSAVEIS_CADASTRO[number];
@@ -133,16 +132,6 @@ export const OPERADORES_PADRAO: ContaOperador[] = [
     nivelAcesso: 'OPERADOR',
     senha: '123',
   },
-  {
-    id: 'op-karina-8',
-    nome: 'Karina',
-    email: 'karina@governo.gov.br',
-    matricula: 'OP-008',
-    cargo: 'Operadora de Cadastro',
-    secretariaPadrao: 'Ambas',
-    nivelAcesso: 'OPERADOR',
-    senha: '123',
-  },
 ];
 
 // Compatibilidade
@@ -212,7 +201,7 @@ export const StorageService = {
         operadoresValidos.push(operadorSaneado);
       }
 
-      // 2. Garantir que todos os operadores padrão (Roberto, Diego, Ricardo, Rivaldo, Carlos, Sacchi, Jean, Karina) existam
+      // 2. Garantir que todos os operadores padrão (Roberto, Diego, Ricardo, Rivaldo, Carlos, Sacchi, Jean) existam
       for (const opPadrao of OPERADORES_PADRAO) {
         const existe = operadoresValidos.some(
           o => o.id === opPadrao.id ||

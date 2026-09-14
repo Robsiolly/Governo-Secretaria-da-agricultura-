@@ -143,8 +143,67 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
     setErro(null);
   };
 
+  const [diagMsg, setDiagMsg] = React.useState<string | null>(null);
+  const [diagLoading, setDiagLoading] = React.useState(false);
+
   return (
     <div className="min-h-screen w-full flex flex-col justify-between bg-[#050608] text-white p-4 md:p-8 relative overflow-hidden selection:bg-[#B08D57]/30 selection:text-[#DFBA73]">
+      {/* BOTÃO DE DIAGNÓSTICO FLUTUANTE (Garantia de clique no APK) */}
+      <div className="fixed top-4 left-4 z-[9999] flex flex-col gap-2 max-w-[80%]">
+        <button
+          type="button"
+          disabled={diagLoading}
+          onClick={async (e) => {
+            e.stopPropagation();
+            setDiagLoading(true);
+            setDiagMsg('Testando...');
+            
+            const origin = window.location.origin;
+            const fullUrl = `${origin}/api/ping`;
+            
+            try {
+              console.log('[DIAG] Acessando:', fullUrl);
+              const res = await fetch(fullUrl, { cache: 'no-store' });
+              
+              if (!res.ok) {
+                throw new Error(`Status HTTP: ${res.status}`);
+              }
+              
+              const data = await res.json();
+              setDiagMsg(`✅ OK: ${data.mensagem} (${new Date().toLocaleTimeString()})`);
+            } catch (err: any) {
+              console.error('[DIAG] Erro:', err);
+              setDiagMsg(`❌ ERRO: ${err.message || 'Sem resposta'}`);
+            } finally {
+              setDiagLoading(false);
+            }
+          }}
+          className={`bg-emerald-600/90 hover:bg-emerald-500 text-white p-3 rounded-full shadow-2xl border-2 border-white/20 flex items-center gap-2 cursor-pointer active:scale-90 transition-all pointer-events-auto ${diagLoading ? 'opacity-50' : ''}`}
+          title="Testar Conexão"
+        >
+          <div className={`w-2.5 h-2.5 rounded-full bg-white ${diagLoading ? 'animate-spin' : 'animate-ping'}`} />
+          <span className="text-[10px] font-black uppercase tracking-tighter pr-1">
+            {diagLoading ? 'Processando...' : 'Teste APK v2.3'}
+          </span>
+        </button>
+
+        {diagMsg && (
+          <div 
+            onClick={() => setDiagMsg(null)}
+            className="bg-black/80 backdrop-blur-md border border-[#B08D57]/30 p-3 rounded-xl text-[10px] font-mono text-[#DFBA73] shadow-2xl animate-in fade-in slide-in-from-left-2"
+          >
+            <div className="flex justify-between items-center mb-1">
+              <span className="font-bold uppercase opacity-50">Log do Servidor:</span>
+              <span className="text-[8px] opacity-40">Tocar para fechar</span>
+            </div>
+            {diagMsg}
+            <div className="mt-1 pt-1 border-t border-white/10 text-[8px] opacity-40">
+              Host: {window.location.host || 'N/A'}
+            </div>
+          </div>
+        )}
+      </div>
+
       {/* Specular Radial Background Glows - Ouro Velho & Champagne */}
       <div className="absolute top-0 left-1/2 w-[600px] h-[300px] bg-[#B08D57]/10 rounded-full blur-[140px] pointer-events-none -translate-x-1/2 -translate-y-1/2" />
       <div className="absolute bottom-0 right-1/4 w-[400px] h-[250px] bg-emerald-500/10 rounded-full blur-[160px] pointer-events-none" />
@@ -300,6 +359,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
                     </>
                   )}
                 </button>
+
               </form>
 
               {/* Fast Selector */}
@@ -450,24 +510,6 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
         <p>
           Secretaria da Agricultura e Abastecimento • Secretaria do Turismo
         </p>
-        
-        {/* Botão de Verificação Técnica (Apenas para depuração do APK) */}
-        <button
-          type="button"
-          onClick={async () => {
-            try {
-              const res = await fetch('/api/ping');
-              const data = await res.json();
-              alert(`Conexão OK!\nOrigem: ${data.origin}\nIA Aura: Online`);
-            } catch (e) {
-              alert('Erro de Conexão: O servidor não respondeu ao pedido do APK.');
-            }
-          }}
-          className="text-[10px] text-[#C6A96B]/60 hover:text-[#C6A96B] transition-colors flex items-center gap-1.5 uppercase tracking-widest font-bold"
-        >
-          <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-          Testar Conexão com Servidor
-        </button>
 
         <div className="inline-block px-3.5 py-1 rounded-xl bg-[#B08D57]/10 border border-[#B08D57]/25 font-semibold text-[#DFBA73]">
           Desenvolvido por Siolly Technology
