@@ -3,6 +3,7 @@ import { FirebaseSyncService } from './firebaseSyncService';
 
 const STORAGE_KEYS = {
   REGISTROS: 'controle_registros_veiculos_prod_v2',
+  REGISTROS_BACKUP: 'controle_registros_backup_permanente_v1',
   AUTH_USER: 'controle_registros_auth_user_v1',
   OPERADORES: 'controle_operadores_contas_v3',
 };
@@ -383,17 +384,31 @@ export const StorageService = {
     return Array.from(nomes);
   },
 
-  // Registros de Veículos
+  // Registros de Veículos com espelho de redundância contra perda
   getRegistros(): RegistroVeiculo[] {
     try {
       const data = localStorage.getItem(STORAGE_KEYS.REGISTROS);
-      if (!data) {
-        localStorage.setItem(STORAGE_KEYS.REGISTROS, JSON.stringify([]));
-        return [];
+      let registros: RegistroVeiculo[] = data ? JSON.parse(data) : [];
+
+      // Se o array principal estiver vazio ou corrompido, tenta restaurar do backup permanente
+      if (!Array.isArray(registros) || registros.length === 0) {
+        const backup = localStorage.getItem(STORAGE_KEYS.REGISTROS_BACKUP);
+        if (backup) {
+          const registrosBackup: RegistroVeiculo[] = JSON.parse(backup);
+          if (Array.isArray(registrosBackup) && registrosBackup.length > 0) {
+            registros = registrosBackup;
+            localStorage.setItem(STORAGE_KEYS.REGISTROS, JSON.stringify(registros));
+          }
+        }
       }
-      return JSON.parse(data);
+
+      return Array.isArray(registros) ? registros : [];
     } catch (e) {
       console.error('Erro ao ler registros do localStorage:', e);
+      try {
+        const backup = localStorage.getItem(STORAGE_KEYS.REGISTROS_BACKUP);
+        if (backup) return JSON.parse(backup);
+      } catch {}
       return [];
     }
   },
@@ -411,6 +426,7 @@ export const StorageService = {
         };
         registros[index] = atualizado;
         localStorage.setItem(STORAGE_KEYS.REGISTROS, JSON.stringify(registros));
+        localStorage.setItem(STORAGE_KEYS.REGISTROS_BACKUP, JSON.stringify(registros));
         notifyChange();
         FirebaseSyncService.salvarRegistro(atualizado);
         return atualizado;
@@ -420,20 +436,35 @@ export const StorageService = {
     // Criação de novo registro real
     const novo: RegistroVeiculo = {
       ...registro,
-      id: `reg-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
+      id: registro.id || `reg-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
       criadoEm: new Date().toISOString(),
     };
-    const atualizados = [novo, ...registros];
+    const atualizados = [novo, ...registros.filter(r => r.id !== novo.id)];
     localStorage.setItem(STORAGE_KEYS.REGISTROS, JSON.stringify(atualizados));
+    localStorage.setItem(STORAGE_KEYS.REGISTROS_BACKUP, JSON.stringify(atualizados));
     notifyChange();
     FirebaseSyncService.salvarRegistro(novo);
     return novo;
+  },
+
+  salvarLoteRegistros(novos: RegistroVeiculo[]): RegistroVeiculo[] {
+    if (!novos || novos.length === 0) return [];
+    const registros = this.getRegistros();
+    const idsExistentes = new Set(registros.map(r => r.id));
+    const novosUnicos = novos.filter(n => !idsExistentes.has(n.id));
+    const atualizados = [...novosUnicos, ...registros];
+    localStorage.setItem(STORAGE_KEYS.REGISTROS, JSON.stringify(atualizados));
+    localStorage.setItem(STORAGE_KEYS.REGISTROS_BACKUP, JSON.stringify(atualizados));
+    notifyChange();
+    FirebaseSyncService.salvarLoteRegistros(novosUnicos);
+    return novosUnicos;
   },
 
   excluirRegistro(id: string): boolean {
     const registros = this.getRegistros();
     const filtrados = registros.filter(r => r.id !== id);
     localStorage.setItem(STORAGE_KEYS.REGISTROS, JSON.stringify(filtrados));
+    localStorage.setItem(STORAGE_KEYS.REGISTROS_BACKUP, JSON.stringify(filtrados));
     notifyChange();
     FirebaseSyncService.excluirRegistro(id);
     return true;

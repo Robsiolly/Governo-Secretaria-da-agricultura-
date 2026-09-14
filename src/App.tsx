@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { RegistroVeiculo, UsuarioAutenticado, FiltrosRegistros } from './types';
 import { 
+  StorageService,
   obterRegistros, 
   salvarRegistro, 
   excluirRegistro, 
@@ -21,12 +22,15 @@ import { SendReportModal } from './components/SendReportModal';
 import { ShiftSummaryModal } from './components/ShiftSummaryModal';
 import { StatsMetricsModal } from './components/StatsMetricsModal';
 import { ExportExcelModal } from './components/ExportExcelModal';
+import { ImportExcelModal } from './components/ImportExcelModal';
+import { PhotoScannerModal } from './components/PhotoScannerModal';
 import { ChangePasswordModal } from './components/ChangePasswordModal';
 import { PainelDiarioSubPasta } from './components/PainelDiarioSubPasta';
 import { gerarRelatorioGeralPDF } from './services/pdfService';
 import { PwaInstallPrompt } from './components/PwaInstallPrompt';
 import { Footer } from './components/Footer';
-import { CheckCircle2, FileText, Plus, Calendar, LayoutGrid, List, FolderGit2 } from 'lucide-react';
+import { GlobalAiAssistantModal } from './components/GlobalAiAssistantModal';
+import { CheckCircle2, FileText, Plus, Calendar, LayoutGrid, List, FolderGit2, Sparkles } from 'lucide-react';
 
 export default function App() {
   const [usuario, setUsuario] = useState<UsuarioAutenticado | null>(null);
@@ -48,7 +52,10 @@ export default function App() {
   const [isModalResumoTurnoOpen, setIsModalResumoTurnoOpen] = useState(false);
   const [isModalEstatisticasOpen, setIsModalEstatisticasOpen] = useState(false);
   const [isModalExportExcelOpen, setIsModalExportExcelOpen] = useState(false);
+  const [isModalImportExcelOpen, setIsModalImportExcelOpen] = useState(false);
+  const [isModalScannerFotoOpen, setIsModalScannerFotoOpen] = useState(false);
   const [isModalAlterarSenhaOpen, setIsModalAlterarSenhaOpen] = useState(false);
+  const [isGlobalAiAssistantOpen, setIsGlobalAiAssistantOpen] = useState(false);
   const [registroEmEdicao, setRegistroEmEdicao] = useState<RegistroVeiculo | null>(null);
   const [registroSelecionadoDetalhes, setRegistroSelecionadoDetalhes] = useState<RegistroVeiculo | null>(null);
   const [registroAjusteHorarios, setRegistroAjusteHorarios] = useState<RegistroVeiculo | null>(null);
@@ -177,6 +184,15 @@ export default function App() {
     }
   };
 
+  // Importação e implantação de novos registros vindos de planilha conciliada
+  const handleImportarNovosRegistros = (novos: RegistroVeiculo[]) => {
+    if (!novos || novos.length === 0) return;
+    StorageService.salvarLoteRegistros(novos);
+    const dados = obterRegistros();
+    setRegistros(dados);
+    showToast(`${novos.length} novo(s) registro(s) implantados no banco de dados!`, 'success');
+  };
+
   // Filtragem de dados
   const registrosFiltrados = registros.filter((reg) => {
     // Filtro Secretaria
@@ -255,6 +271,8 @@ export default function App() {
         onExportarPdf={handleExportarPdf}
         onEstatisticas={() => setIsModalEstatisticasOpen(true)}
         onExportarExcel={() => setIsModalExportExcelOpen(true)}
+        onImportarExcel={() => setIsModalImportExcelOpen(true)}
+        onEscanearFoto={() => setIsModalScannerFotoOpen(true)}
         onAlterarSenha={() => setIsModalAlterarSenhaOpen(true)}
         onSincronizarBanco={handleSincronizarBanco}
         onLogout={handleLogout}
@@ -517,6 +535,28 @@ export default function App() {
         />
       )}
 
+      {/* Modal de Importação e Conciliação Inteligente de Planilha */}
+      {isModalImportExcelOpen && (
+        <ImportExcelModal
+          isOpen={isModalImportExcelOpen}
+          onClose={() => setIsModalImportExcelOpen(false)}
+          registrosExistentes={registros}
+          onImportarNovos={handleImportarNovosRegistros}
+          usuarioAtual={usuario}
+        />
+      )}
+
+      {/* Modal de Scanner e Reconhecimento de Folha/Prancheta por Foto com IA */}
+      {isModalScannerFotoOpen && (
+        <PhotoScannerModal
+          isOpen={isModalScannerFotoOpen}
+          onClose={() => setIsModalScannerFotoOpen(false)}
+          registrosExistentes={registros}
+          onImportarNovos={handleImportarNovosRegistros}
+          usuarioAtual={usuario}
+        />
+      )}
+
       {/* Modal de Alteração de Senha */}
       {isModalAlterarSenhaOpen && (
         <ChangePasswordModal
@@ -524,6 +564,28 @@ export default function App() {
           onClose={() => setIsModalAlterarSenhaOpen(false)}
           usuario={usuario}
           onSuccess={() => showToast('Senha alterada com sucesso!', 'success')}
+        />
+      )}
+
+      {/* Floating AI Assistant Button */}
+      <button
+        type="button"
+        onClick={() => setIsGlobalAiAssistantOpen(true)}
+        className="fixed bottom-6 right-6 sm:bottom-10 sm:right-10 z-40 bg-gradient-to-r from-[#C6A96B] via-[#B08D57] to-[#80683F] text-black p-4 rounded-full shadow-2xl shadow-[#B08D57]/30 hover:scale-105 active:scale-95 transition-all cursor-pointer flex items-center justify-center group"
+        title="IA de Busca"
+      >
+        <Sparkles className="w-6 h-6 animate-pulse" />
+        <span className="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs transition-all duration-300 font-bold ml-0 group-hover:ml-2">
+          Buscar com IA
+        </span>
+      </button>
+
+      {/* Global AI Assistant Modal */}
+      {isGlobalAiAssistantOpen && (
+        <GlobalAiAssistantModal
+          isOpen={isGlobalAiAssistantOpen}
+          onClose={() => setIsGlobalAiAssistantOpen(false)}
+          registros={registros}
         />
       )}
     </div>

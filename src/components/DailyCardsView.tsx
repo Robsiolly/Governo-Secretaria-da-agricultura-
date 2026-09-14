@@ -199,7 +199,7 @@ export const DailyCardsView: React.FC<DailyCardsViewProps> = ({
             return (
               <div
                 key={reg.id}
-                className={`bg-[#111317]/80 hover:bg-[#161822]/90 backdrop-blur-xl border rounded-2xl p-3 sm:px-4 shadow-sm transition-all duration-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 ${
+                className={`bg-[#111317]/80 hover:bg-[#161822]/90 backdrop-blur-xl border rounded-2xl p-3 sm:px-4 shadow-sm transition-all duration-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3 overflow-hidden ${
                   isEmTransito
                     ? 'border-l-4 border-l-[#B08D57] border-t-[#B08D57]/20 border-r-[#B08D57]/20 border-b-[#B08D57]/20 bg-[#B08D57]/[0.04]'
                     : 'border-l-4 border-l-emerald-400 border-t-white/[0.08] border-r-white/[0.08] border-b-white/[0.08]'
@@ -268,10 +268,10 @@ export const DailyCardsView: React.FC<DailyCardsViewProps> = ({
                 </div>
 
                 {/* Right Side: Time capsule & Action buttons */}
-                <div className="flex items-center justify-between sm:justify-end gap-2 shrink-0 border-t sm:border-t-0 border-[#B08D57]/15 pt-2 sm:pt-0">
+                <div className="flex flex-wrap sm:flex-nowrap items-center justify-between sm:justify-end gap-2 w-full sm:w-auto border-t sm:border-t-0 border-[#B08D57]/15 pt-2.5 sm:pt-0">
                   {/* Time Pill com Saída e Chegada explícitos */}
-                  <div className="flex items-center gap-2 bg-black/60 px-3 py-1.5 rounded-xl border border-[#B08D57]/25 text-xs shrink-0 shadow-inner">
-                    <div className="flex items-center gap-1.5">
+                  <div className="flex items-center gap-1.5 sm:gap-2 bg-black/60 px-2.5 sm:px-3 py-1.5 rounded-xl border border-[#B08D57]/25 text-xs shadow-inner max-w-full">
+                    <div className="flex items-center gap-1">
                       <span className="text-[#C6A96B] font-semibold text-[10px] sm:text-[11px] uppercase tracking-wider">
                         Saída:
                       </span>
@@ -280,9 +280,9 @@ export const DailyCardsView: React.FC<DailyCardsViewProps> = ({
                       </strong>
                     </div>
 
-                    <ArrowRight className="w-3.5 h-3.5 text-[#DFBA73]/40 mx-0.5 shrink-0" />
+                    <ArrowRight className="w-3 sm:w-3.5 h-3 sm:h-3.5 text-[#DFBA73]/40 mx-0.5 shrink-0" />
 
-                    <div className="flex items-center gap-1.5">
+                    <div className="flex items-center gap-1">
                       <span className="text-[#C6A96B] font-semibold text-[10px] sm:text-[11px] uppercase tracking-wider">
                         Chegada:
                       </span>
@@ -291,7 +291,7 @@ export const DailyCardsView: React.FC<DailyCardsViewProps> = ({
                           {hChegada}
                         </strong>
                       ) : (
-                        <span className="text-[#DFBA73] font-bold text-[10px] sm:text-[11px] bg-[#B08D57]/15 px-1.5 py-0.5 rounded-md border border-[#B08D57]/30">
+                        <span className="text-[#DFBA73] font-bold text-[10px] sm:text-[11px] bg-[#B08D57]/15 px-1.5 py-0.5 rounded-md border border-[#B08D57]/30 whitespace-nowrap">
                           Em trânsito
                         </span>
                       )}
@@ -299,12 +299,12 @@ export const DailyCardsView: React.FC<DailyCardsViewProps> = ({
                   </div>
 
                   {/* Actions */}
-                  <div className="flex items-center gap-1.5 shrink-0 ml-1">
+                  <div className="flex items-center gap-1 sm:gap-1.5 shrink-0 ml-auto sm:ml-1">
                     {isEmTransito && (
                       <button
                         type="button"
                         onClick={() => onAjustarHorarios(reg)}
-                        className="inline-flex items-center gap-1 px-2.5 py-1 text-[11px] sm:text-xs text-slate-950 bg-gradient-to-r from-[#C6A96B] to-[#B08D57] hover:brightness-110 rounded-lg font-bold transition-all duration-200 cursor-pointer shadow-sm active:scale-[0.96]"
+                        className="inline-flex items-center gap-1 px-2.5 py-1.5 text-[11px] sm:text-xs text-slate-950 bg-gradient-to-r from-[#C6A96B] to-[#B08D57] hover:brightness-110 rounded-lg font-bold transition-all duration-200 cursor-pointer shadow-sm active:scale-[0.96]"
                         title="Registrar Retorno do Veículo"
                       >
                         <Check className="w-3 h-3 stroke-[3]" />
@@ -315,7 +315,7 @@ export const DailyCardsView: React.FC<DailyCardsViewProps> = ({
                     <button
                       type="button"
                       onClick={() => onVerDetalhes(reg)}
-                      className="inline-flex items-center gap-1 px-2.5 py-1 text-[11px] sm:text-xs text-[#DFBA73] hover:text-white bg-[#B08D57]/10 hover:bg-[#B08D57]/20 border border-[#B08D57]/25 rounded-lg transition-all duration-200 cursor-pointer active:scale-[0.96]"
+                      className="inline-flex items-center gap-1 px-2.5 py-1.5 text-[11px] sm:text-xs text-[#DFBA73] hover:text-white bg-[#B08D57]/10 hover:bg-[#B08D57]/20 border border-[#B08D57]/25 rounded-lg transition-all duration-200 cursor-pointer active:scale-[0.96]"
                       title="Ver Ficha Completa e Assinatura"
                     >
                       <Eye className="w-3.5 h-3.5" />
@@ -326,7 +326,7 @@ export const DailyCardsView: React.FC<DailyCardsViewProps> = ({
                       <button
                         type="button"
                         onClick={() => setRegistroParaExcluir(reg)}
-                        className="p-1.5 text-white/40 hover:text-rose-400 hover:bg-rose-500/10 border border-transparent hover:border-rose-500/20 rounded-lg transition-all duration-200 cursor-pointer active:scale-[0.96]"
+                        className="p-1.5 sm:p-2 text-white/40 hover:text-rose-400 hover:bg-rose-500/10 border border-transparent hover:border-rose-500/20 rounded-lg transition-all duration-200 cursor-pointer active:scale-[0.96]"
                         title="Excluir Registro"
                       >
                         <Trash2 className="w-3.5 h-3.5" />

@@ -1,6 +1,6 @@
 {
   "name": "Controle de Registros Secretaria da Agricultura e Secretaria do Turismo",
   "description": "Sistema de controle e cadastro de registros de veículos da Secretaria da Agricultura e Secretaria do Turismo com emissão de relatórios diários em PDF e autenticação segura.",
-  "requestFramePermissions": [],
+  "requestFramePermissions": ["camera"],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

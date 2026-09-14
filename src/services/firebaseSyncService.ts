@@ -64,8 +64,13 @@ export const FirebaseSyncService = {
           // Ordenar por data/criadoEm mais recente primeiro
           listaRegistros.sort((a, b) => new Date(b.criadoEm || b.data).getTime() - new Date(a.criadoEm || a.data).getTime());
 
-          // Atualizar o cache local e notificar a interface
-          if (listaRegistros.length > 0 || !snapshot.metadata.hasPendingWrites) {
+          // Atualizar o cache local, o backup de segurança e notificar a interface
+          if (listaRegistros.length > 0) {
+            localStorage.setItem(STORAGE_KEYS.REGISTROS, JSON.stringify(listaRegistros));
+            localStorage.setItem('controle_registros_backup_permanente_v1', JSON.stringify(listaRegistros));
+            notifyChange();
+          } else if (!snapshot.metadata.hasPendingWrites) {
+            // Preserva backup se por algum motivo receber lista vazia
             localStorage.setItem(STORAGE_KEYS.REGISTROS, JSON.stringify(listaRegistros));
             notifyChange();
           }
@@ -126,6 +131,7 @@ export const FirebaseSyncService = {
 
       if (listaRegistros.length > 0) {
         localStorage.setItem(STORAGE_KEYS.REGISTROS, JSON.stringify(listaRegistros));
+        localStorage.setItem('controle_registros_backup_permanente_v1', JSON.stringify(listaRegistros));
         notifyChange();
       }
 
@@ -161,6 +167,23 @@ export const FirebaseSyncService = {
     } catch (e) {
       console.warn('Falha ao semear operadores padrão no Firebase:', e);
     }
+  },
+
+  // Salvar lote de registros no Firebase Firestore
+  async salvarLoteRegistros(novosRegistros: RegistroVeiculo[]): Promise<{ sucessos: number; erros: number }> {
+    let sucessos = 0;
+    let erros = 0;
+    for (const reg of novosRegistros) {
+      try {
+        const payload = sanitizarParaFirestore(reg);
+        await setDoc(doc(db, 'registros', reg.id), payload, { merge: true });
+        sucessos++;
+      } catch (e) {
+        console.error(`❌ Erro ao salvar registro em lote ${reg.id}:`, e);
+        erros++;
+      }
+    }
+    return { sucessos, erros };
   },
 
   // Salvar registro no Firebase Firestore em tempo real

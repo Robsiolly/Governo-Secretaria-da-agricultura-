@@ -384,21 +384,21 @@ export const RecordsTable: React.FC<RecordsTableProps> = ({
               </div>
 
               {/* Responsável & Assinatura & Ações */}
-              <div className="flex items-center justify-between pt-2 border-t border-[#B08D57]/15" onClick={(e) => e.stopPropagation()}>
-                <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-[#B08D57]/15" onClick={(e) => e.stopPropagation()}>
+                <div className="flex items-center gap-2 min-w-0">
                   {reg.assinaturaUrl && (
                     <img
                       src={reg.assinaturaUrl}
                       alt="Assinatura"
-                      className="h-7 w-14 object-contain bg-white rounded-lg border border-white/20 px-1"
+                      className="h-7 w-14 object-contain bg-white rounded-lg border border-white/20 px-1 shrink-0"
                     />
                   )}
-                  <span className="text-white/90 text-xs font-semibold whitespace-nowrap">
+                  <span className="text-white/90 text-xs font-semibold truncate max-w-[150px]">
                     {reg.funcionarioResponsavel}
                   </span>
                 </div>
 
-                <div className="flex items-center gap-1">
+                <div className="flex items-center gap-1 shrink-0 ml-auto">
                   <button
                     type="button"
                     onClick={() => PdfService.gerarFichaIndividual(reg, usuarioAtual)}
