@@ -164,6 +164,19 @@ export default function App() {
     }
   };
 
+  // Sincronização direta sob demanda com o Firebase Firestore
+  const handleSincronizarBanco = async () => {
+    showToast('Sincronizando com o Banco de Dados...', 'info');
+    const res = await FirebaseSyncService.sincronizarAgora();
+    const dados = obterRegistros();
+    setRegistros(dados);
+    if (res.sucesso) {
+      showToast(`Sincronização concluída! ${res.totalRegistros} registro(s) no banco.`, 'success');
+    } else {
+      showToast('Sincronização concluída com base local.', 'info');
+    }
+  };
+
   // Filtragem de dados
   const registrosFiltrados = registros.filter((reg) => {
     // Filtro Secretaria
@@ -243,6 +256,7 @@ export default function App() {
         onEstatisticas={() => setIsModalEstatisticasOpen(true)}
         onExportarExcel={() => setIsModalExportExcelOpen(true)}
         onAlterarSenha={() => setIsModalAlterarSenhaOpen(true)}
+        onSincronizarBanco={handleSincronizarBanco}
         onLogout={handleLogout}
         totalRegistros={registros.length}
       />

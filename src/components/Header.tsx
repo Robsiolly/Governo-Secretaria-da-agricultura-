@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Wheat, Plane, Plus, FileDown, LogOut, ShieldCheck, User, UserPlus, Share2, KeyRound, Clock, Menu, BarChart3, FileSpreadsheet } from 'lucide-react';
+import { Wheat, Plane, Plus, FileDown, LogOut, ShieldCheck, User, UserPlus, Share2, KeyRound, Clock, Menu, BarChart3, FileSpreadsheet, RefreshCw } from 'lucide-react';
 import { UsuarioAutenticado } from '../types';
 
 interface HeaderProps {
@@ -12,6 +12,7 @@ interface HeaderProps {
   onEstatisticas?: () => void;
   onExportarExcel?: () => void;
   onAlterarSenha?: () => void;
+  onSincronizarBanco?: () => void;
   onLogout: () => void;
   totalRegistros: number;
 }
@@ -26,6 +27,7 @@ export const Header: React.FC<HeaderProps> = ({
   onEstatisticas,
   onExportarExcel,
   onAlterarSenha,
+  onSincronizarBanco,
   onLogout,
   totalRegistros,
 }) => {
@@ -124,6 +126,17 @@ export const Header: React.FC<HeaderProps> = ({
 
                 {/* Primary System Actions */}
                 <div className="py-1.5 px-1.5 flex flex-col gap-0.5">
+                  {onSincronizarBanco && (
+                    <button
+                      type="button"
+                      onClick={() => { onSincronizarBanco(); setIsMenuOpen(false); }}
+                      className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs sm:text-sm font-medium text-[#DFBA73] hover:text-white hover:bg-[#B08D57]/15 active:scale-[0.98] transition-all text-left cursor-pointer"
+                    >
+                      <RefreshCw className="w-4 h-4 text-[#DFBA73]" />
+                      <span>Sincronizar Banco de Dados</span>
+                    </button>
+                  )}
+
                   {onNovoOperador && usuario.nivelAcesso === 'ADMINISTRADOR' && (
                     <button
                       type="button"

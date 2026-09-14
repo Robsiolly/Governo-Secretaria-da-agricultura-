@@ -4,7 +4,8 @@ import {
   setDoc, 
   deleteDoc, 
   onSnapshot, 
-  query 
+  query,
+  getDocs
 } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 import { RegistroVeiculo, ContaOperador } from '../types';
@@ -102,8 +103,50 @@ export const FirebaseSyncService = {
           console.warn('⚠️ Escuta em tempo real de operadores ativada via cache local:', error);
         }
       );
+      // 3. Forçar busca imediata via HTTP para garantia de dados frescos imediatos
+      this.sincronizarAgora();
     } catch (err) {
       console.error('❌ Erro ao iniciar sincronização com Firebase Firestore:', err);
+    }
+  },
+
+  // Busca imediata direta no Firestore garantindo que todos os registros existentes venham para a memória
+  async sincronizarAgora(): Promise<{ sucesso: boolean; totalRegistros: number; erro?: string }> {
+    try {
+      const snapReg = await getDocs(collection(db, 'registros'));
+      const listaRegistros: RegistroVeiculo[] = [];
+      snapReg.forEach((docSnap) => {
+        const data = docSnap.data() as RegistroVeiculo;
+        if (data && data.id) {
+          listaRegistros.push(data);
+        }
+      });
+
+      listaRegistros.sort((a, b) => new Date(b.criadoEm || b.data).getTime() - new Date(a.criadoEm || a.data).getTime());
+
+      if (listaRegistros.length > 0) {
+        localStorage.setItem(STORAGE_KEYS.REGISTROS, JSON.stringify(listaRegistros));
+        notifyChange();
+      }
+
+      const snapOp = await getDocs(collection(db, 'operadores'));
+      const listaOperadores: ContaOperador[] = [];
+      snapOp.forEach((docSnap) => {
+        const data = docSnap.data() as ContaOperador;
+        if (data && data.id) {
+          listaOperadores.push(data);
+        }
+      });
+
+      if (listaOperadores.length > 0) {
+        localStorage.setItem(STORAGE_KEYS.OPERADORES, JSON.stringify(listaOperadores));
+        notifyChange();
+      }
+
+      return { sucesso: true, totalRegistros: listaRegistros.length };
+    } catch (e) {
+      console.warn('Tentativa de sincronização manual do Firestore:', e);
+      return { sucesso: false, totalRegistros: 0, erro: String(e) };
     }
   },
 

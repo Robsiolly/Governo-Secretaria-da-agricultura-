@@ -13,6 +13,7 @@ import {
   AlertTriangle
 } from 'lucide-react';
 import { RegistroVeiculo, UsuarioAutenticado, Secretaria } from '../types';
+import { getLocalDateString } from '../utils/dateUtils';
 
 interface PainelDiarioSubPastaProps {
   registros: RegistroVeiculo[];
@@ -32,8 +33,8 @@ export const PainelDiarioSubPasta: React.FC<PainelDiarioSubPastaProps> = ({
   onExportarPdf,
   onExcluir,
 }) => {
-  // Data atual como padrão
-  const hoje = new Date().toISOString().split('T')[0];
+  // Data atual local como padrão
+  const hoje = getLocalDateString();
   const [dataSelecionada, setDataSelecionada] = useState<string>(hoje);
   const [secretariaFiltro] = useState<'TODAS' | Secretaria>('TODAS');
   const [statusFiltro, setStatusFiltro] = useState<'TODOS' | 'EM_TRANSITO' | 'FINALIZADO'>('TODOS');
