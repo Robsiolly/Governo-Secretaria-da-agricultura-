@@ -239,19 +239,19 @@ export const DailyCardsView: React.FC<DailyCardsViewProps> = ({
 
                   {/* Driver Name & Destination Info */}
                   <div className="min-w-0 flex-1 flex flex-col sm:flex-row sm:items-center gap-0.5 sm:gap-2">
-                    <span className="font-semibold text-xs sm:text-sm text-white truncate max-w-[160px] sm:max-w-[220px]">
+                    <span className="font-bold text-xs sm:text-sm text-white break-words sm:truncate max-w-full sm:max-w-[280px]">
                       {motoristaNome}
                     </span>
-                    <div className="flex items-center gap-1.5 text-[11px] text-[#C6A96B]/70 truncate flex-wrap">
+                    <div className="flex items-center gap-1.5 text-[11px] text-[#C6A96B]/70 flex-wrap">
                       <span className="hidden sm:inline">•</span>
                       <span className="truncate max-w-[130px]">{reg.destino || 'Serviço'}</span>
-                      {andarLocal && andarLocal !== 'Térreo' && (
-                        <span className={`px-1.5 py-0.5 rounded-md text-[9px] font-semibold border ${
-                          andarLocal === 'SAA'
-                            ? 'bg-[#B08D57]/20 text-[#DFBA73] border-[#B08D57]/40'
-                            : 'bg-white/[0.05] text-white/70 border-white/[0.08]'
+                      {andarLocal && (
+                        <span className={`px-2 py-0.5 rounded-md text-[10px] font-bold border whitespace-nowrap shrink-0 shadow-sm ${
+                          andarLocal.includes('Kalunga') || andarLocal.includes('Sub Solo') || andarLocal === 'SAA'
+                            ? 'bg-[#B08D57]/25 text-[#DFBA73] border-[#B08D57]/45'
+                            : 'bg-white/[0.06] text-white/85 border-white/[0.12]'
                         }`}>
-                          Andar {andarLocal}
+                          {andarLocal.includes('Kalunga') || andarLocal.includes('Sub Solo') || andarLocal === 'SAA' || andarLocal.toLowerCase().startsWith('andar') ? andarLocal : `Andar ${andarLocal}`}
                         </span>
                       )}
                       {reg.ocorrencia && (

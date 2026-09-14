@@ -607,13 +607,13 @@ export const DailyControlModal: React.FC<DailyControlModalProps> = ({
                           <span className="text-xs text-[#C6A96B]/80 font-medium truncate max-w-[180px] sm:max-w-[260px]">
                             {reg.destino || 'Serviço'}
                           </span>
-                          {andarLocal && andarLocal !== 'Térreo' && (
-                            <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg text-xs font-black border tracking-wide shadow-sm ${
-                              andarLocal === 'SAA'
-                                ? 'bg-[#B08D57]/20 text-[#DFBA73] border-[#B08D57]/50 animate-pulse'
+                          {andarLocal && (
+                            <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg text-xs font-bold border tracking-wide shadow-sm whitespace-nowrap shrink-0 ${
+                              andarLocal.includes('Kalunga') || andarLocal.includes('Sub Solo') || andarLocal === 'SAA'
+                                ? 'bg-[#B08D57]/25 text-[#DFBA73] border-[#B08D57]/50'
                                 : 'bg-black/60 text-[#C6A96B] border-white/10'
                             }`}>
-                              <span>Andar {andarLocal}</span>
+                              <span>{andarLocal.includes('Kalunga') || andarLocal.includes('Sub Solo') || andarLocal === 'SAA' || andarLocal.toLowerCase().startsWith('andar') ? andarLocal : `Andar ${andarLocal}`}</span>
                             </span>
                           )}
                         </div>

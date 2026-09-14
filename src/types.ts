@@ -8,7 +8,8 @@ export interface RegistroVeiculo {
   fct: string; // Nº do registro FCT (apenas para Secretaria da Agricultura mediante autorização; Secretaria do Turismo NÃO utiliza FCT)
   horarioSaida: string; // HH:mm
   horarioChegada: string; // HH:mm (pode estar em aberto se em trânsito ou preenchido)
-  andar: string; // Ex: Térreo, 1º Andar, Subsolo, Pátio/Garagem
+  garagem?: string; // Ex: 'Kalunga' ou 'Sub Solo'
+  andar: string; // Ex: Kalunga, Sub Solo, Andar 1..7, SAA, ou composto: Kalunga • Andar 2
   funcionarioResponsavel: string; // Nome do funcionário responsável pelo cadastro
   matriculaFuncionario?: string;
   assinaturaUrl: string; // Base64 dataURL da assinatura desenhada no canvas

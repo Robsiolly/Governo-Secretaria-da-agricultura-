@@ -33,7 +33,8 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
   const [horarioSaida, setHorarioSaida] = useState('');
   const [horarioChegada, setHorarioChegada] = useState('');
   const [statusViagem, setStatusViagem] = useState<'EM_TRANSITO' | 'FINALIZADO'>('EM_TRANSITO');
-  const [andar, setAndar] = useState<string>('1');
+  const [garagem, setGaragem] = useState<string>('Kalunga');
+  const [andar, setAndar] = useState<string>('');
   const [funcionarioResponsavel, setFuncionarioResponsavel] = useState<string>('Diego');
   const [matriculaFuncionario, setMatriculaFuncionario] = useState('OP-002');
   const [assinaturaUrl, setAssinaturaUrl] = useState('');
@@ -63,7 +64,32 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
       setHorarioSaida(registroAtivo.horarioSaida || '');
       setHorarioChegada(registroAtivo.horarioChegada || '');
       setStatusViagem(registroAtivo.status || (registroAtivo.horarioChegada ? 'FINALIZADO' : 'EM_TRANSITO'));
-      setAndar(registroAtivo.andar || '1');
+
+      // Restaurar garagem e andar
+      let gInicial = registroAtivo.garagem || '';
+      let aInicial = registroAtivo.andar || '';
+
+      if (!gInicial) {
+        if (aInicial.toLowerCase().includes('kalunga')) {
+          gInicial = 'Kalunga';
+        } else if (aInicial.toLowerCase().includes('sub solo') || aInicial.toLowerCase().includes('subsolo')) {
+          gInicial = 'Sub Solo';
+        }
+      }
+
+      let andarExtraido = aInicial;
+      if (gInicial && andarExtraido) {
+        andarExtraido = andarExtraido
+          .replace(gInicial, '')
+          .replace(/^[•\-\/\s]+/, '')
+          .replace(/^Andar\s+/i, '')
+          .replace(/º\s*Andar/i, '')
+          .trim();
+      }
+
+      setGaragem(gInicial || (aInicial === 'Kalunga' || aInicial === 'Sub Solo' ? aInicial : 'Kalunga'));
+      setAndar(andarExtraido);
+
       setFuncionarioResponsavel(registroAtivo.funcionarioResponsavel || 'Diego');
       setMatriculaFuncionario(registroAtivo.matriculaFuncionario || 'OP-002');
       setAssinaturaUrl(registroAtivo.assinaturaUrl || '');
@@ -87,7 +113,8 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
       setModeloVeiculo('');
       setDestino('');
       setOcorrencia('');
-      setAndar('1');
+      setGaragem('Kalunga');
+      setAndar('');
 
       if (usuarioAtual) {
         const respEncontrado = nomesResponsaveis.find(r => r.toLowerCase() === usuarioAtual.nome.toLowerCase());
@@ -123,10 +150,15 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
       setErro('O campo Motorista é obrigatório.');
       return;
     }
-    if (!andar.trim()) {
-      setErro('O campo Andar é obrigatório.');
+    // Validação de localização: aceita Garagem (Kalunga ou Sub Solo), Andar ou ambos
+    const garagemInformada = garagem.trim();
+    const andarInformado = andar.trim();
+
+    if (!garagemInformada && !andarInformado) {
+      setErro('Informe a Garagem de entrada (Kalunga ou Sub Solo) ou o Andar.');
       return;
     }
+
     if (!funcionarioResponsavel.trim()) {
       setErro('O Funcionário responsável pelo cadastro é obrigatório.');
       return;
@@ -134,6 +166,21 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
     if (!assinaturaUrl) {
       setErro('A Assinatura do Funcionário responsável pelo cadastro é obrigatória. Assine na área indicada.');
       return;
+    }
+
+    // Formatar a localização preservando tanto a Garagem informada quanto o Andar de destino
+    let localizacaoComposta = '';
+    if (garagemInformada && andarInformado) {
+      const andarFormatado = ['SAA', 'Térreo'].includes(andarInformado)
+        ? andarInformado
+        : (andarInformado.toLowerCase().startsWith('andar') ? andarInformado : `Andar ${andarInformado}`);
+      localizacaoComposta = `${garagemInformada} • ${andarFormatado}`;
+    } else if (garagemInformada) {
+      localizacaoComposta = garagemInformada;
+    } else {
+      localizacaoComposta = ['SAA', 'Térreo'].includes(andarInformado)
+        ? andarInformado
+        : (andarInformado.toLowerCase().startsWith('andar') ? andarInformado : `Andar ${andarInformado}`);
     }
 
     const payload = {
@@ -144,7 +191,8 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
       fct: isTurismo ? 'N/A' : (fct.trim() ? fct.trim().toUpperCase() : ''),
       horarioSaida: horarioSaida.trim(),
       horarioChegada: horarioChegada.trim(),
-      andar: andar.trim(),
+      garagem: garagemInformada,
+      andar: localizacaoComposta,
       funcionarioResponsavel: funcionarioResponsavel.trim(),
       matriculaFuncionario: matriculaFuncionario.trim(),
       assinaturaUrl,
@@ -255,8 +303,8 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
             </div>
           </div>
 
-          {/* Dados Principais: Data, FCT, Andar */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+          {/* Dados Principais: Data e FCT */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
             <div>
               <label className="block text-xs font-semibold text-white/70 mb-1.5 flex items-center gap-1.5">
                 <Calendar className="w-3.5 h-3.5 text-[#DFBA73]" />
@@ -298,51 +346,144 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
                 />
               )}
             </div>
+          </div>
 
-            <div>
-              <label className="block text-xs font-semibold text-white/70 mb-1.5 flex items-center justify-between">
-                <span className="flex items-center gap-1.5">
-                  <Building className="w-3.5 h-3.5 text-[#DFBA73]" />
-                  Andar / Setor *
-                </span>
-                <span className="text-[10px] text-[#DFBA73] font-semibold bg-black/50 border border-[#B08D57]/30 px-1.5 py-0.5 rounded-md">
-                  Atual: {andar}
-                </span>
+          {/* SELEÇÃO DE GARAGEM E ANDAR DE ENTRADA/DESTINO */}
+          <div className="bg-black/40 border border-[#B08D57]/25 rounded-2xl p-4 space-y-3.5">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <label className="text-xs font-bold text-white flex items-center gap-1.5">
+                <Building className="w-4 h-4 text-[#DFBA73]" />
+                <span>Local de Entrada & Destino *</span>
               </label>
-
-              {/* Botões rápidos de 1 a 7 e SAA */}
-              <div className="grid grid-cols-4 sm:grid-cols-8 gap-1 mb-1.5">
-                {ANDARES_DISPONIVEIS.map((num) => (
-                  <button
-                    key={num}
-                    type="button"
-                    onClick={() => setAndar(num)}
-                    className={`py-1.5 px-0.5 text-center font-bold text-xs rounded-xl border transition-all cursor-pointer active:scale-[0.94] ${
-                      andar === num
-                        ? 'bg-gradient-to-r from-[#C6A96B] to-[#B08D57] border-[#DFBA73]/60 text-slate-950 shadow-sm font-black'
-                        : num === 'SAA'
-                        ? 'bg-[#B08D57]/15 border-[#B08D57]/30 text-[#DFBA73] hover:text-white'
-                        : 'bg-black/40 border-[#B08D57]/15 text-white/70 hover:bg-black/60 hover:text-white'
-                    }`}
-                  >
-                    {num === 'SAA' ? 'SAA' : num}
-                  </button>
-                ))}
+              
+              {/* Badge indicando claramente o que está selecionado */}
+              <div className="flex items-center gap-2">
+                <span className="text-[11px] font-bold text-[#DFBA73] bg-[#B08D57]/20 border border-[#B08D57]/35 px-2.5 py-1 rounded-xl shadow-sm whitespace-nowrap">
+                  {garagem ? `Garagem: ${garagem}` : 'Sem garagem'}
+                  {andar ? ` • Andar: ${['SAA', 'Térreo'].includes(andar) ? andar : `${andar}º`}` : ''}
+                </span>
               </div>
+            </div>
 
-              {/* Select para confirmação */}
-              <select
-                required
-                value={andar}
-                onChange={(e) => setAndar(e.target.value)}
-                className="w-full bg-[#111317] border border-[#B08D57]/25 focus:border-[#DFBA73] rounded-2xl px-3 py-2 text-xs text-white focus:outline-none transition-all cursor-pointer shadow-inner"
-              >
-                {ANDARES_DISPONIVEIS.map((num) => (
-                  <option key={num} value={num} className="bg-[#111317] text-white">
-                    {num === 'SAA' ? 'Andar SAA (Prioritário)' : `Andar ${num}`}
-                  </option>
-                ))}
-              </select>
+            {/* SELEÇÃO DA GARAGEM: KALUNGA E SUB SOLO */}
+            <div>
+              <span className="text-[11px] font-semibold text-white/70 block mb-2">
+                1. Garagem de Entrada (Selecione em qual garagem o veículo entrou):
+              </span>
+              <div className="grid grid-cols-2 gap-3">
+                {/* Mini Card 1: Kalunga - 100% Visível sem cortes */}
+                <button
+                  type="button"
+                  id="mini-card-kalunga"
+                  onClick={() => setGaragem(garagem === 'Kalunga' ? '' : 'Kalunga')}
+                  className={`relative p-3.5 rounded-2xl border text-left transition-all duration-200 cursor-pointer active:scale-[0.97] flex items-center gap-3 ${
+                    garagem === 'Kalunga'
+                      ? 'bg-gradient-to-br from-[#C6A96B] via-[#B08D57] to-[#80683F] border-[#DFBA73] text-slate-950 shadow-lg shadow-[#B08D57]/25 ring-2 ring-[#DFBA73]/60'
+                      : 'bg-[#111317]/90 border-[#B08D57]/25 text-white/80 hover:border-[#DFBA73]/50 hover:bg-[#16181D]'
+                  }`}
+                >
+                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 border ${
+                    garagem === 'Kalunga'
+                      ? 'bg-slate-950/20 border-slate-950/30 text-slate-950'
+                      : 'bg-[#B08D57]/15 border-[#B08D57]/30 text-[#DFBA73]'
+                  }`}>
+                    <Building className="w-5 h-5" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <span className={`text-base font-black tracking-wide block whitespace-nowrap ${garagem === 'Kalunga' ? 'text-slate-950' : 'text-white'}`}>
+                      Kalunga
+                    </span>
+                    <span className={`text-[11px] block whitespace-nowrap ${garagem === 'Kalunga' ? 'text-slate-950 font-bold' : 'text-white/60'}`}>
+                      Garagem Kalunga
+                    </span>
+                  </div>
+                  {garagem === 'Kalunga' && (
+                    <span className="w-6 h-6 rounded-full bg-slate-950 text-[#DFBA73] flex items-center justify-center text-xs font-black shrink-0 shadow">
+                      ✓
+                    </span>
+                  )}
+                </button>
+
+                {/* Mini Card 2: Sub Solo */}
+                <button
+                  type="button"
+                  id="mini-card-sub-solo"
+                  onClick={() => setGaragem(garagem === 'Sub Solo' ? '' : 'Sub Solo')}
+                  className={`relative p-3.5 rounded-2xl border text-left transition-all duration-200 cursor-pointer active:scale-[0.97] flex items-center gap-3 ${
+                    garagem === 'Sub Solo'
+                      ? 'bg-gradient-to-br from-[#C6A96B] via-[#B08D57] to-[#80683F] border-[#DFBA73] text-slate-950 shadow-lg shadow-[#B08D57]/25 ring-2 ring-[#DFBA73]/60'
+                      : 'bg-[#111317]/90 border-[#B08D57]/25 text-white/80 hover:border-[#DFBA73]/50 hover:bg-[#16181D]'
+                  }`}
+                >
+                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 border ${
+                    garagem === 'Sub Solo'
+                      ? 'bg-slate-950/20 border-slate-950/30 text-slate-950'
+                      : 'bg-[#B08D57]/15 border-[#B08D57]/30 text-[#DFBA73]'
+                  }`}>
+                    <Car className="w-5 h-5" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <span className={`text-base font-black tracking-wide block whitespace-nowrap ${garagem === 'Sub Solo' ? 'text-slate-950' : 'text-white'}`}>
+                      Sub Solo
+                    </span>
+                    <span className={`text-[11px] block whitespace-nowrap ${garagem === 'Sub Solo' ? 'text-slate-950 font-bold' : 'text-white/60'}`}>
+                      Garagem Subsolo
+                    </span>
+                  </div>
+                  {garagem === 'Sub Solo' && (
+                    <span className="w-6 h-6 rounded-full bg-slate-950 text-[#DFBA73] flex items-center justify-center text-xs font-black shrink-0 shadow">
+                      ✓
+                    </span>
+                  )}
+                </button>
+              </div>
+            </div>
+
+            {/* SELEÇÃO DO ANDAR DE DESTINO */}
+            <div className="pt-2.5 border-t border-[#B08D57]/20">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-[11px] font-semibold text-white/70">
+                  2. Andar de Destino (Em qual andar o veículo/serviço vai):
+                </span>
+                {andar && (
+                  <button
+                    type="button"
+                    onClick={() => setAndar('')}
+                    className="text-[10px] text-[#DFBA73]/80 hover:text-[#DFBA73] font-semibold underline cursor-pointer"
+                  >
+                    Limpar Andar
+                  </button>
+                )}
+              </div>
+              <div className="grid grid-cols-3 sm:grid-cols-9 gap-1.5">
+                {[
+                  { id: 'Térreo', label: 'Térreo' },
+                  { id: '1', label: '1º Andar' },
+                  { id: '2', label: '2º Andar' },
+                  { id: '3', label: '3º Andar' },
+                  { id: '4', label: '4º Andar' },
+                  { id: '5', label: '5º Andar' },
+                  { id: '6', label: '6º Andar' },
+                  { id: '7', label: '7º Andar' },
+                  { id: 'SAA', label: 'SAA' },
+                ].map((item) => {
+                  const isSelecionado = andar === item.id;
+                  return (
+                    <button
+                      key={item.id}
+                      type="button"
+                      onClick={() => setAndar(isSelecionado ? '' : item.id)}
+                      className={`py-2 px-1 text-center font-bold text-xs rounded-xl border transition-all cursor-pointer active:scale-[0.95] flex flex-col items-center justify-center ${
+                        isSelecionado
+                          ? 'bg-[#DFBA73] border-[#DFBA73] text-slate-950 font-black shadow-md'
+                          : 'bg-black/50 border-[#B08D57]/20 text-white/80 hover:bg-black/80 hover:border-[#DFBA73]/40 hover:text-white'
+                      }`}
+                    >
+                      <span className="whitespace-nowrap">{item.label}</span>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           </div>
 
@@ -527,7 +668,7 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
               </label>
 
               {/* Botões de Seleção Rápida dos Operadores */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-1.5 mb-3">
+              <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-4 xl:grid-cols-8 gap-2 mb-3">
                 {nomesResponsaveis.map((nome) => {
                   const isSelecionado = funcionarioResponsavel.toLowerCase() === nome.toLowerCase();
                   return (
@@ -535,14 +676,14 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
                       key={nome}
                       type="button"
                       onClick={() => selecionarResponsavel(nome)}
-                      className={`px-2.5 py-2 rounded-xl border font-semibold text-xs transition-all flex items-center justify-center gap-1 cursor-pointer active:scale-[0.96] ${
+                      className={`px-3 py-2 rounded-xl border font-bold text-xs transition-all flex items-center justify-center gap-1.5 cursor-pointer active:scale-[0.96] ${
                         isSelecionado
-                          ? 'bg-gradient-to-r from-[#C6A96B] to-[#B08D57] text-slate-950 border-[#DFBA73]/60 shadow-md font-bold'
-                          : 'bg-black/40 border-[#B08D57]/20 text-white/70 hover:bg-black/60 hover:text-white'
+                          ? 'bg-gradient-to-r from-[#C6A96B] to-[#B08D57] text-slate-950 border-[#DFBA73]/60 shadow-md font-extrabold'
+                          : 'bg-black/40 border-[#B08D57]/20 text-white/80 hover:bg-black/60 hover:text-white'
                       }`}
                     >
                       {isSelecionado && <Check className="w-3.5 h-3.5 text-slate-950 shrink-0" />}
-                      <span className="truncate">{nome}</span>
+                      <span className="whitespace-nowrap tracking-wide">{nome}</span>
                     </button>
                   );
                 })}

@@ -136,13 +136,48 @@ export const PdfService = {
     doc.setTextColor(71, 85, 105);
     doc.text(`Matrícula: ${usuario?.matricula || 'OP-002'} (Operador de Cadastro)`, card3X + 4, cardY + 14.5);
 
+    // Ordenar cronologicamente para o PDF:
+    // O primeiro veículo registrado / que saiu no dia fica em cima (linha 1),
+    // e o último veículo que entrou / saiu fica embaixo (última linha).
+    const registrosOrdenados = [...registros].sort((a, b) => {
+      // 1. Data da operação (mais antiga primeiro)
+      const dataA = a.data || '';
+      const dataB = b.data || '';
+      if (dataA !== dataB) {
+        return dataA.localeCompare(dataB);
+      }
+
+      // 2. Horário de saída (mais cedo primeiro, ex: 07:00 antes de 14:00)
+      const horaA = a.horarioSaida || '';
+      const horaB = b.horarioSaida || '';
+      if (horaA && horaB && horaA !== horaB) {
+        return horaA.localeCompare(horaB);
+      }
+
+      // 3. Data/Hora de criação no sistema (mais antigo primeiro)
+      const criadoA = a.criadoEm || '';
+      const criadoB = b.criadoEm || '';
+      return criadoA.localeCompare(criadoB);
+    });
+
     // Prepare table data
-    const tableBody = registros.map((r, index) => {
+    const tableBody = registrosOrdenados.map((r, index) => {
       const dataFormatada = r.data ? new Date(r.data + 'T00:00:00').toLocaleDateString('pt-BR') : '-';
       const secSigla = r.secretaria === 'Secretaria da Agricultura' ? 'Agricultura' : 'Turismo';
       const veiculoPlaca = r.placa ? `${r.placa}${r.modeloVeiculo ? ` (${r.modeloVeiculo})` : ''}` : '-';
       const chegada = r.horarioChegada ? r.horarioChegada : 'Em trânsito';
       const respNome = r.funcionarioResponsavel || 'Não informado';
+
+      let andarFormatado = '-';
+      if (r.garagem && r.andar && r.garagem !== r.andar) {
+        andarFormatado = r.andar.includes(r.garagem) ? r.andar : `${r.garagem} • ${r.andar}`;
+      } else if (r.andar) {
+        andarFormatado = (r.andar.includes('•') || ['Kalunga', 'Sub Solo', 'SAA', 'Térreo'].includes(r.andar) || r.andar.toLowerCase().startsWith('andar'))
+          ? r.andar
+          : `Andar ${r.andar}`;
+      } else if (r.garagem) {
+        andarFormatado = r.garagem;
+      }
 
       return [
         (index + 1).toString(),
@@ -153,7 +188,7 @@ export const PdfService = {
         veiculoPlaca,
         r.horarioSaida || '-',
         chegada,
-        r.andar ? `Andar ${r.andar}` : '-',
+        andarFormatado,
         respNome,
         'Assinado ✓'
       ];
@@ -187,7 +222,7 @@ export const PdfService = {
         'Veículo / Placa',
         'Saída',
         'Chegada',
-        'Andar',
+        'Local / Andar',
         'Resp. Cadastro',
         'Assinatura'
       ]],
@@ -311,8 +346,23 @@ export const PdfService = {
     if (registros.length === 0) {
       texto += `_Nenhum veículo registrado para o dia selecionado._\n\n`;
     } else {
+      // Ordenar cronologicamente para o resumo de texto (primeiro veículo no topo)
+      const registrosOrdenados = [...registros].sort((a, b) => {
+        const dataA = a.data || '';
+        const dataB = b.data || '';
+        if (dataA !== dataB) return dataA.localeCompare(dataB);
+
+        const horaA = a.horarioSaida || '';
+        const horaB = b.horarioSaida || '';
+        if (horaA && horaB && horaA !== horaB) return horaA.localeCompare(horaB);
+
+        const criadoA = a.criadoEm || '';
+        const criadoB = b.criadoEm || '';
+        return criadoA.localeCompare(criadoB);
+      });
+
       texto += `*RELAÇÃO DOS VEÍCULOS NO DIA SELECIONADO:*\n\n`;
-      registros.forEach((r, idx) => {
+      registrosOrdenados.forEach((r, idx) => {
         const secCurta = r.secretaria === 'Secretaria da Agricultura' ? 'Agricultura' : 'Turismo';
         const veiculo = r.placa ? `${r.placa}${r.modeloVeiculo ? ` (${r.modeloVeiculo})` : ''}` : 'Não informada';
         const chegada = r.horarioChegada ? r.horarioChegada : 'Em trânsito';
@@ -400,7 +450,17 @@ export const PdfService = {
     renderCampo('Órgão / Secretaria', registro.secretaria, 20, 62);
     renderCampo('Motorista Responsável', registro.motorista, 20, 78);
     renderCampo('Horário de Saída', registro.horarioSaida || '-', 20, 94);
-    renderCampo('Andar de Liberação', registro.andar ? `Andar ${registro.andar}` : '-', 20, 110);
+    let andarFicha = '-';
+    if (registro.garagem && registro.andar && registro.garagem !== registro.andar) {
+      andarFicha = registro.andar.includes(registro.garagem) ? registro.andar : `${registro.garagem} • ${registro.andar}`;
+    } else if (registro.andar) {
+      andarFicha = (registro.andar.includes('•') || ['Kalunga', 'Sub Solo', 'SAA', 'Térreo'].includes(registro.andar) || registro.andar.toLowerCase().startsWith('andar'))
+        ? registro.andar
+        : `Andar ${registro.andar}`;
+    } else if (registro.garagem) {
+      andarFicha = registro.garagem;
+    }
+    renderCampo('Local de Saída / Andar', andarFicha, 20, 110);
     renderCampo('Destino / Finalidade', registro.destino || 'Operacional de rotina', 20, 126);
 
     // Coluna 2 (Direita: x = 110)

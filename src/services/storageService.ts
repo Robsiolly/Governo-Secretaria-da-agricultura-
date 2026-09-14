@@ -31,12 +31,34 @@ export const RESPONSAVEIS_CADASTRO = [
   'Carlos',
   'Sacchi',
   'Jean',
+  'Karina',
 ] as const;
 
 export type ResponsavelNome = typeof RESPONSAVEIS_CADASTRO[number];
 
-export const ANDARES_DISPONIVEIS = ['1', '2', '3', '4', '5', '6', '7', 'SAA'] as const;
+export const GARAGENS_DISPONIVEIS = ['Kalunga', 'Sub Solo'] as const;
+export type GaragemDisponivel = typeof GARAGENS_DISPONIVEIS[number];
+
+export const ANDARES_DISPONIVEIS = ['Térreo', '1', '2', '3', '4', '5', '6', '7', 'SAA', 'Kalunga', 'Sub Solo'] as const;
 export type AndarDisponivel = typeof ANDARES_DISPONIVEIS[number];
+
+/** Formata localização legível aceitando garagem, andar ou ambos */
+export const formatarLocalizacaoCompleta = (garagem?: string, andar?: string): string => {
+  const g = garagem?.trim() || '';
+  const a = andar?.trim() || '';
+
+  if (g && a && g !== a) {
+    const andarFormatado = ['SAA', 'Térreo'].includes(a) ? a : (a.toLowerCase().startsWith('andar') ? a : `Andar ${a}`);
+    return `${g} • ${andarFormatado}`;
+  }
+  if (g) return g;
+  if (a) {
+    if (a.includes('•') || a.includes('-')) return a;
+    if (['Kalunga', 'Sub Solo', 'SAA', 'Térreo'].includes(a)) return a;
+    return a.toLowerCase().startsWith('andar') ? a : `Andar ${a}`;
+  }
+  return 'Kalunga';
+};
 
 // Todos os responsáveis pelo cadastro são OPERADORES
 export const OPERADORES_PADRAO: ContaOperador[] = [
@@ -110,6 +132,16 @@ export const OPERADORES_PADRAO: ContaOperador[] = [
     nivelAcesso: 'OPERADOR',
     senha: '123',
   },
+  {
+    id: 'op-karina-8',
+    nome: 'Karina',
+    email: 'karina@governo.gov.br',
+    matricula: 'OP-008',
+    cargo: 'Operadora de Cadastro',
+    secretariaPadrao: 'Ambas',
+    nivelAcesso: 'OPERADOR',
+    senha: '123',
+  },
 ];
 
 // Compatibilidade
@@ -179,22 +211,17 @@ export const StorageService = {
         operadoresValidos.push(operadorSaneado);
       }
 
-      // 2. Garantir que o Administrador Roberto exista. Outros operadores padrão só na primeira inicialização.
-      const robertoExiste = operadoresValidos.some(
-        o => o.id === 'op-roberto-adm' || o.matricula === 'ADM-01' || o.nome.toLowerCase().includes('roberto')
-      );
-
-      if (!robertoExiste) {
-        operadoresValidos.unshift(OPERADORES_PADRAO[0]); // Roberto
-        modificado = true;
-      }
-
-      // Se a lista de operadores salvos estava vazia inicialmente, inserir os demais operadores padrão como demonstração
-      if (parsed.length === 0) {
-        for (let i = 1; i < OPERADORES_PADRAO.length; i++) {
-          operadoresValidos.push(OPERADORES_PADRAO[i]);
+      // 2. Garantir que todos os operadores padrão (Roberto, Diego, Ricardo, Rivaldo, Carlos, Sacchi, Jean, Karina) existam
+      for (const opPadrao of OPERADORES_PADRAO) {
+        const existe = operadoresValidos.some(
+          o => o.id === opPadrao.id ||
+               o.matricula.trim().toUpperCase() === opPadrao.matricula.trim().toUpperCase() ||
+               o.nome.trim().toLowerCase() === opPadrao.nome.trim().toLowerCase()
+        );
+        if (!existe) {
+          operadoresValidos.push(opPadrao);
+          modificado = true;
         }
-        modificado = true;
       }
 
       // 3. Forçar senha e privilégios atualizados para o Administrador Roberto Siolly

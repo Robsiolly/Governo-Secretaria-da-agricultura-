@@ -169,10 +169,10 @@ export const RecordsTable: React.FC<RecordsTableProps> = ({
                       </div>
                     </td>
 
-                    {/* Andar */}
+                    {/* Andar / Garagem */}
                     <td className="py-4 px-5 text-white/80 font-medium">
-                      <span className="inline-block bg-black/40 px-2.5 py-1 rounded-xl text-xs font-medium text-white/80 border border-[#B08D57]/20">
-                        {reg.andar}
+                      <span className="inline-block bg-black/40 px-2.5 py-1 rounded-xl text-xs font-semibold text-white/90 border border-[#B08D57]/30 whitespace-nowrap shadow-sm">
+                        {reg.andar || reg.garagem || '-'}
                       </span>
                     </td>
 
@@ -353,8 +353,8 @@ export const RecordsTable: React.FC<RecordsTableProps> = ({
                   <span className="text-white font-mono font-medium">{dataFormatada}</span>
                 </div>
                 <div>
-                  <span className="text-[10px] text-[#C6A96B]/60 block font-semibold uppercase tracking-wider">Andar / Setor:</span>
-                  <span className="text-white font-medium truncate block">{reg.andar}</span>
+                  <span className="text-[10px] text-[#C6A96B]/60 block font-semibold uppercase tracking-wider">Local / Andar:</span>
+                  <span className="text-white font-medium block whitespace-nowrap">{reg.andar || reg.garagem || '-'}</span>
                 </div>
                 <div className="col-span-2 pt-2 border-t border-[#B08D57]/15">
                   <div className="flex items-center justify-between">
@@ -393,7 +393,7 @@ export const RecordsTable: React.FC<RecordsTableProps> = ({
                       className="h-7 w-14 object-contain bg-white rounded-lg border border-white/20 px-1"
                     />
                   )}
-                  <span className="text-white/80 text-xs font-medium truncate max-w-[140px]">
+                  <span className="text-white/90 text-xs font-semibold whitespace-nowrap">
                     {reg.funcionarioResponsavel}
                   </span>
                 </div>

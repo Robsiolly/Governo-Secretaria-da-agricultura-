@@ -64,10 +64,10 @@ export const ExportExcelModal: React.FC<ExportExcelModalProps> = ({
     { id: 'id', label: 'ID do Registro', selecionada: false, obterValor: (r) => r.id },
   ]);
 
-  // Filtragem dos registros
+  // Filtragem dos registros com ordenação cronológica (primeiro no topo, último embaixo)
   const registrosFiltrados = useMemo(() => {
     const hoje = new Date();
-    return registros.filter(reg => {
+    const filtrados = registros.filter(reg => {
       // Filtro Secretaria
       if (secretariaFiltro !== 'TODAS' && reg.secretaria !== secretariaFiltro) return false;
       // Filtro Status
@@ -86,6 +86,21 @@ export const ExportExcelModal: React.FC<ExportExcelModalProps> = ({
         if (dataFim && reg.data > dataFim) return false;
       }
       return true;
+    });
+
+    // Ordenar cronologicamente: primeiro que entrou em cima, último em baixo
+    return filtrados.sort((a, b) => {
+      const dataA = a.data || '';
+      const dataB = b.data || '';
+      if (dataA !== dataB) return dataA.localeCompare(dataB);
+
+      const horaA = a.horarioSaida || '';
+      const horaB = b.horarioSaida || '';
+      if (horaA && horaB && horaA !== horaB) return horaA.localeCompare(horaB);
+
+      const criadoA = a.criadoEm || '';
+      const criadoB = b.criadoEm || '';
+      return criadoA.localeCompare(criadoB);
     });
   }, [registros, periodoFiltro, secretariaFiltro, statusFiltro, hojeStr, dataInicio, dataFim]);
 

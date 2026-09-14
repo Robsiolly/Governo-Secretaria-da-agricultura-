@@ -256,9 +256,9 @@ export const RecordDetailModal: React.FC<RecordDetailModalProps> = ({
             <div className="bg-black/40 border border-[#B08D57]/15 p-3 rounded-2xl">
               <span className="text-[10px] font-semibold uppercase tracking-wider text-[#C6A96B]/70 flex items-center gap-1 mb-1">
                 <Building className="w-3 h-3 text-[#DFBA73]" />
-                Andar / Setor
+                Local / Garagem / Andar
               </span>
-              <span className="text-sm font-semibold text-white block">{registro.andar}</span>
+              <span className="text-sm font-semibold text-white block">{registro.andar || registro.garagem || '-'}</span>
             </div>
           </div>
 
