@@ -12,13 +12,16 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = 3000;
 
-// Manual CORS middleware para acesso do APK
+// Configuração de CORS robusta para APK e Web
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
+  const origin = req.headers.origin || '*';
+  res.header('Access-Control-Allow-Origin', origin);
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  
   if (req.method === 'OPTIONS') {
-    return res.sendStatus(200);
+    return res.status(200).end();
   }
   next();
 });
@@ -69,8 +72,20 @@ async function callGeminiWithRetry(
   throw lastError;
 }
 
+// API routes go here FIRST
+app.get('/api/ping', (req, res) => {
+  res.json({ 
+    sucesso: true, 
+    mensagem: 'Conexão com o servidor OK',
+    timestamp: new Date().toISOString(),
+    origin: req.headers.origin || 'N/A',
+    userAgent: req.headers['user-agent']
+  });
+});
+
 // Endpoint de OCR e extração estruturada de foto de controle de veículos
 app.post('/api/ocr-scan', async (req, res) => {
+  console.log('[API] Recebido /api/ocr-scan de:', req.headers.origin || 'Desconhecido');
   try {
     const { imageBase64, mimeType = 'image/jpeg' } = req.body;
 
@@ -226,6 +241,7 @@ IMPORTANTE: Responda estritamente com um array JSON válido contendo os objetos 
 
 // Endpoint de Chat IA Global de Busca de Registros
 app.post('/api/global-search-chat', async (req, res) => {
+  console.log('[API] Recebido /api/global-search-chat de:', req.headers.origin || 'Desconhecido');
   try {
     const { prompt, history = [], registros = [] } = req.body;
     if (!prompt) {

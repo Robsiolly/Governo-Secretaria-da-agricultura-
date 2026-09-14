@@ -450,6 +450,25 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
         <p>
           Secretaria da Agricultura e Abastecimento • Secretaria do Turismo
         </p>
+        
+        {/* Botão de Verificação Técnica (Apenas para depuração do APK) */}
+        <button
+          type="button"
+          onClick={async () => {
+            try {
+              const res = await fetch('/api/ping');
+              const data = await res.json();
+              alert(`Conexão OK!\nOrigem: ${data.origin}\nIA Aura: Online`);
+            } catch (e) {
+              alert('Erro de Conexão: O servidor não respondeu ao pedido do APK.');
+            }
+          }}
+          className="text-[10px] text-[#C6A96B]/60 hover:text-[#C6A96B] transition-colors flex items-center gap-1.5 uppercase tracking-widest font-bold"
+        >
+          <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+          Testar Conexão com Servidor
+        </button>
+
         <div className="inline-block px-3.5 py-1 rounded-xl bg-[#B08D57]/10 border border-[#B08D57]/25 font-semibold text-[#DFBA73]">
           Desenvolvido por Siolly Technology
         </div>
