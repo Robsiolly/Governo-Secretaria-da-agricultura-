@@ -27,7 +27,8 @@ export const AdminSummaryBar: React.FC<AdminSummaryBarProps> = ({
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4">
       {/* Widget 1: Sec. Agricultura */}
-      <div className="bg-[#161618]/70 backdrop-blur-2xl border border-white/[0.08] hover:border-amber-400/40 p-5 rounded-3xl text-left transition-all duration-200 shadow-xl flex flex-col justify-between group">
+      <div className="bg-[#111317]/85 backdrop-blur-2xl border border-[#B08D57]/20 hover:border-[#B08D57]/50 p-5 rounded-3xl text-left transition-all duration-200 shadow-xl flex flex-col justify-between group relative overflow-hidden">
+        <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#C6A96B]/30 to-transparent" />
         <button
           type="button"
           onClick={() => onFiltrarSecretaria('Secretaria da Agricultura')}
@@ -35,17 +36,17 @@ export const AdminSummaryBar: React.FC<AdminSummaryBarProps> = ({
         >
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-3">
-              <div className="w-11 h-11 rounded-2xl bg-amber-500/10 border border-amber-400/30 flex items-center justify-center text-amber-400 shrink-0">
+              <div className="w-11 h-11 rounded-2xl bg-[#B08D57]/20 border border-[#B08D57]/40 flex items-center justify-center text-[#DFBA73] shrink-0 shadow-inner">
                 <Wheat className="w-5 h-5" />
               </div>
               <span className="text-sm font-semibold text-white/90">Sec. Agricultura</span>
             </div>
-            <span className="text-2xl sm:text-3xl font-bold font-mono text-amber-400">
+            <span className="text-2xl sm:text-3xl font-bold font-mono text-[#DFBA73]">
               {agriRegistros.length}
             </span>
           </div>
         </button>
-        <div className="flex items-center justify-between text-xs pt-3 border-t border-white/[0.08]">
+        <div className="flex items-center justify-between text-xs pt-3 border-t border-[#B08D57]/15">
           <button
             type="button"
             onClick={(e) => {
@@ -56,7 +57,7 @@ export const AdminSummaryBar: React.FC<AdminSummaryBarProps> = ({
                 onFiltrarStatus('EM_TRANSITO');
               }
             }}
-            className="text-amber-400/90 hover:text-amber-300 font-medium flex items-center gap-1.5 cursor-pointer py-1 px-2 rounded-lg hover:bg-amber-500/10 active:scale-[0.96] transition-all"
+            className="text-[#DFBA73] hover:text-[#C6A96B] font-medium flex items-center gap-1.5 cursor-pointer py-1 px-2 rounded-lg hover:bg-[#B08D57]/15 active:scale-[0.96] transition-all"
             title="Ver veículos fora da Sec. Agricultura"
           >
             <Clock className="w-3.5 h-3.5" />
@@ -69,7 +70,8 @@ export const AdminSummaryBar: React.FC<AdminSummaryBarProps> = ({
       </div>
 
       {/* Widget 2: Sec. Turismo */}
-      <div className="bg-[#161618]/70 backdrop-blur-2xl border border-white/[0.08] hover:border-emerald-400/40 p-5 rounded-3xl text-left transition-all duration-200 shadow-xl flex flex-col justify-between group">
+      <div className="bg-[#111317]/85 backdrop-blur-2xl border border-emerald-500/20 hover:border-emerald-400/40 p-5 rounded-3xl text-left transition-all duration-200 shadow-xl flex flex-col justify-between group relative overflow-hidden">
+        <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-emerald-400/30 to-transparent" />
         <button
           type="button"
           onClick={() => onFiltrarSecretaria('Secretaria do Turismo')}
@@ -77,7 +79,7 @@ export const AdminSummaryBar: React.FC<AdminSummaryBarProps> = ({
         >
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-3">
-              <div className="w-11 h-11 rounded-2xl bg-emerald-500/10 border border-emerald-400/30 flex items-center justify-center text-emerald-400 shrink-0">
+              <div className="w-11 h-11 rounded-2xl bg-emerald-500/15 border border-emerald-400/30 flex items-center justify-center text-emerald-400 shrink-0 shadow-inner">
                 <Plane className="w-5 h-5 text-emerald-400" />
               </div>
               <span className="text-sm font-semibold text-white/90">Sec. Turismo</span>
@@ -87,7 +89,7 @@ export const AdminSummaryBar: React.FC<AdminSummaryBarProps> = ({
             </span>
           </div>
         </button>
-        <div className="flex items-center justify-between text-xs pt-3 border-t border-white/[0.08]">
+        <div className="flex items-center justify-between text-xs pt-3 border-t border-emerald-500/15">
           <button
             type="button"
             onClick={(e) => {
@@ -98,7 +100,7 @@ export const AdminSummaryBar: React.FC<AdminSummaryBarProps> = ({
                 onFiltrarStatus('EM_TRANSITO');
               }
             }}
-            className="text-emerald-400/90 hover:text-emerald-300 font-medium flex items-center gap-1.5 cursor-pointer py-1 px-2 rounded-lg hover:bg-emerald-500/10 active:scale-[0.96] transition-all"
+            className="text-emerald-400/90 hover:text-emerald-300 font-medium flex items-center gap-1.5 cursor-pointer py-1 px-2 rounded-lg hover:bg-emerald-500/15 active:scale-[0.96] transition-all"
             title="Ver veículos fora da Sec. Turismo"
           >
             <Clock className="w-3.5 h-3.5" />
@@ -114,26 +116,27 @@ export const AdminSummaryBar: React.FC<AdminSummaryBarProps> = ({
       <button
         type="button"
         onClick={() => onFiltrarStatus('EM_TRANSITO')}
-        className="bg-[#161618]/70 backdrop-blur-2xl border border-amber-500/30 hover:border-amber-400 p-5 rounded-3xl text-left transition-all duration-200 group cursor-pointer shadow-xl active:scale-[0.98]"
+        className="bg-[#111317]/85 backdrop-blur-2xl border border-[#B08D57]/30 hover:border-[#DFBA73] p-5 rounded-3xl text-left transition-all duration-200 group cursor-pointer shadow-xl active:scale-[0.98] relative overflow-hidden"
         title="Clique para ver todos os registros em trânsito"
       >
+        <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#C6A96B]/40 to-transparent" />
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-3">
-            <div className="w-11 h-11 rounded-2xl bg-amber-500/10 border border-amber-400/30 flex items-center justify-center text-amber-400 shrink-0">
+            <div className="w-11 h-11 rounded-2xl bg-[#B08D57]/20 border border-[#B08D57]/40 flex items-center justify-center text-[#DFBA73] shrink-0 shadow-inner">
               <Clock className="w-5 h-5" />
             </div>
             <div>
               <span className="text-sm font-semibold text-white/90 block">Em Trânsito</span>
-              <span className="text-[11px] text-amber-400/80 font-medium">Fora do pátio</span>
+              <span className="text-[11px] text-[#C6A96B]/80 font-medium">Fora do pátio</span>
             </div>
           </div>
-          <span className="text-2xl sm:text-3xl font-bold font-mono text-amber-400">
+          <span className="text-2xl sm:text-3xl font-bold font-mono text-[#DFBA73]">
             {totalEmTransito}
           </span>
         </div>
-        <div className="text-xs text-white/50 font-medium flex items-center justify-between pt-3 border-t border-white/[0.08]">
+        <div className="text-xs text-white/50 font-medium flex items-center justify-between pt-3 border-t border-[#B08D57]/15">
           <span>Aguardando retorno</span>
-          <span className="text-amber-400 font-medium group-hover:translate-x-0.5 transition-transform">Ver →</span>
+          <span className="text-[#DFBA73] font-medium group-hover:translate-x-0.5 transition-transform">Ver →</span>
         </div>
       </button>
 
@@ -141,11 +144,12 @@ export const AdminSummaryBar: React.FC<AdminSummaryBarProps> = ({
       <button
         type="button"
         onClick={() => onFiltrarStatus('FINALIZADO')}
-        className="bg-[#161618]/70 backdrop-blur-2xl border border-white/[0.08] hover:border-white/[0.2] p-5 rounded-3xl text-left transition-all duration-200 group cursor-pointer shadow-xl active:scale-[0.98]"
+        className="bg-[#111317]/85 backdrop-blur-2xl border border-white/[0.08] hover:border-white/[0.2] p-5 rounded-3xl text-left transition-all duration-200 group cursor-pointer shadow-xl active:scale-[0.98] relative overflow-hidden"
       >
+        <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-3">
-            <div className="w-11 h-11 rounded-2xl bg-emerald-500/10 border border-emerald-400/30 flex items-center justify-center text-emerald-400 shrink-0">
+            <div className="w-11 h-11 rounded-2xl bg-emerald-500/15 border border-emerald-400/30 flex items-center justify-center text-emerald-400 shrink-0 shadow-inner">
               <CheckCircle2 className="w-5 h-5" />
             </div>
             <div>
@@ -165,4 +169,3 @@ export const AdminSummaryBar: React.FC<AdminSummaryBarProps> = ({
     </div>
   );
 };
-

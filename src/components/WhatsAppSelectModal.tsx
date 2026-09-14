@@ -184,23 +184,26 @@ export const WhatsAppSelectModal: React.FC<WhatsAppSelectModalProps> = ({
   return (
     <div
       id="modal-whatsapp-select-backdrop"
-      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-slate-950/85 backdrop-blur-md overflow-y-auto"
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-black/80 backdrop-blur-xl overflow-y-auto"
     >
       <div
         id="modal-whatsapp-select-container"
-        className="bg-slate-900 border-2 border-amber-9500/40 rounded-3xl w-full max-w-2xl max-h-[92vh] flex flex-col shadow-2xl overflow-hidden my-auto animate-in fade-in zoom-in-95 duration-150"
+        className="bg-[#111317]/95 border border-[#B08D57]/30 rounded-3xl w-full max-w-2xl max-h-[92vh] flex flex-col shadow-2xl overflow-hidden my-auto animate-in fade-in zoom-in-95 duration-200 relative"
       >
+        {/* Specular Top Edge Light */}
+        <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#C6A96B]/40 to-transparent" />
+
         {/* Cabeçalho */}
-        <div className="bg-slate-950 px-6 py-5 border-b-2 border-slate-800 flex items-center justify-between shrink-0">
+        <div className="bg-black/40 px-6 py-5 border-b border-[#B08D57]/20 flex items-center justify-between shrink-0">
           <div className="flex items-center gap-3.5">
-            <div className="w-12 h-12 rounded-2xl bg-amber-600/20 border-2 border-amber-400/50 flex items-center justify-center text-amber-400 shadow-md">
+            <div className="w-12 h-12 rounded-2xl bg-[#B08D57]/20 border border-[#B08D57]/40 flex items-center justify-center text-[#DFBA73] shadow-md">
               <MessageCircle className="w-6 h-6" />
             </div>
             <div>
               <h2 className="text-lg sm:text-xl font-bold text-white tracking-wide flex items-center gap-2">
                 Escolher Destinatário do WhatsApp
               </h2>
-              <p className="text-xs sm:text-sm text-slate-400">
+              <p className="text-xs sm:text-sm text-[#C6A96B]/70">
                 Selecione o setor, operador ou informe para qual WhatsApp enviar o relatório
               </p>
             </div>
@@ -208,7 +211,7 @@ export const WhatsAppSelectModal: React.FC<WhatsAppSelectModalProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="w-10 h-10 rounded-2xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center transition-colors cursor-pointer"
+            className="w-10 h-10 rounded-2xl bg-black/50 hover:bg-[#B08D57]/20 border border-white/5 hover:border-[#B08D57]/30 text-white/70 hover:text-white flex items-center justify-center transition-colors cursor-pointer"
             aria-label="Fechar"
           >
             <X className="w-5 h-5" />
@@ -216,27 +219,27 @@ export const WhatsAppSelectModal: React.FC<WhatsAppSelectModalProps> = ({
         </div>
 
         {/* Corpo com Rolagem */}
-        <div className="p-5 sm:p-6 overflow-y-auto space-y-6">
+        <div className="p-5 sm:p-6 overflow-y-auto space-y-6 flex-1 custom-scrollbar">
           {/* Opção 1: Escolha Geral no WhatsApp */}
           <div className="space-y-2">
-            <label className="text-xs font-bold text-slate-300 uppercase tracking-wider block">
+            <label className="text-xs font-bold text-[#C6A96B]/80 uppercase tracking-wider block">
               1. Destinatário Aberto (Escolher no Aparelho):
             </label>
             <div
               onClick={() => setOpcaoSelecionadaId('setor-geral')}
-              className={`p-4 rounded-2xl border-2 transition-all cursor-pointer flex items-center justify-between gap-3 ${
+              className={`p-4 rounded-2xl border transition-all cursor-pointer flex items-center justify-between gap-3 ${
                 opcaoSelecionadaId === 'setor-geral'
-                  ? 'bg-amber-950/60 border-amber-400 shadow-md shadow-amber-950/50'
-                  : 'bg-slate-950 border-slate-800 hover:border-slate-700'
+                  ? 'bg-[#B08D57]/15 border-[#B08D57]/60 shadow-md shadow-[#B08D57]/10'
+                  : 'bg-black/40 border-[#B08D57]/15 hover:border-[#B08D57]/30'
               }`}
             >
               <div className="flex items-center gap-3.5">
-                <div className="w-10 h-10 rounded-xl bg-amber-600/30 border border-amber-400/40 flex items-center justify-center text-amber-400 shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-[#B08D57]/20 border border-[#B08D57]/40 flex items-center justify-center text-[#DFBA73] shrink-0">
                   <Users className="w-5 h-5" />
                 </div>
                 <div>
                   <h4 className="text-sm font-bold text-white">Escolher o Contato no próprio WhatsApp</h4>
-                  <p className="text-xs text-slate-300 font-medium">
+                  <p className="text-xs text-[#C6A96B]/70 font-medium">
                     Abre a lista de contatos/grupos do seu WhatsApp para você selecionar
                   </p>
                 </div>
@@ -245,8 +248,8 @@ export const WhatsAppSelectModal: React.FC<WhatsAppSelectModalProps> = ({
               <div
                 className={`w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 ${
                   opcaoSelecionadaId === 'setor-geral'
-                    ? 'border-amber-400 bg-amber-500 text-slate-950'
-                    : 'border-slate-600'
+                    ? 'border-[#DFBA73] bg-gradient-to-r from-[#C6A96B] to-[#B08D57] text-slate-950'
+                    : 'border-white/20'
                 }`}
               >
                 {opcaoSelecionadaId === 'setor-geral' && <Check className="w-4 h-4 stroke-[3]" />}
@@ -256,7 +259,7 @@ export const WhatsAppSelectModal: React.FC<WhatsAppSelectModalProps> = ({
 
           {/* Opção 2: Setores Governamentais Predefinidos */}
           <div className="space-y-2">
-            <label className="text-xs font-bold text-slate-300 uppercase tracking-wider block">
+            <label className="text-xs font-bold text-[#C6A96B]/80 uppercase tracking-wider block">
               2. Setores de Frotas e Coordenadorias:
             </label>
             <div className="grid grid-cols-1 gap-2">
@@ -266,20 +269,20 @@ export const WhatsAppSelectModal: React.FC<WhatsAppSelectModalProps> = ({
                   <div
                     key={setor.id}
                     onClick={() => setOpcaoSelecionadaId(setor.id)}
-                    className={`p-3.5 rounded-2xl border-2 transition-all cursor-pointer flex items-center justify-between gap-3 ${
+                    className={`p-3.5 rounded-2xl border transition-all cursor-pointer flex items-center justify-between gap-3 ${
                       isSelected
-                        ? 'bg-amber-950/60 border-amber-400 shadow-md'
-                        : 'bg-slate-950 border-slate-800 hover:border-slate-700'
+                        ? 'bg-[#B08D57]/15 border-[#B08D57]/60 shadow-md'
+                        : 'bg-black/40 border-[#B08D57]/15 hover:border-[#B08D57]/30'
                     }`}
                   >
                     <div className="flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-300 shrink-0">
+                      <div className="w-9 h-9 rounded-xl bg-black/60 border border-[#B08D57]/20 flex items-center justify-center text-slate-300 shrink-0">
                         {setor.nome.includes('Agricultura') ? (
-                          <Wheat className="w-4 h-4 text-amber-400" />
+                          <Wheat className="w-4 h-4 text-[#DFBA73]" />
                         ) : setor.nome.includes('Turismo') ? (
                           <Plane className="w-4 h-4 text-emerald-400" />
                         ) : (
-                          <Building2 className="w-4 h-4 text-sky-400" />
+                          <Building2 className="w-4 h-4 text-[#C6A96B]" />
                         )}
                       </div>
                       <div>
@@ -291,8 +294,8 @@ export const WhatsAppSelectModal: React.FC<WhatsAppSelectModalProps> = ({
                     <div
                       className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${
                         isSelected
-                          ? 'border-amber-400 bg-amber-500 text-slate-950'
-                          : 'border-slate-600'
+                          ? 'border-[#DFBA73] bg-gradient-to-r from-[#C6A96B] to-[#B08D57] text-slate-950'
+                          : 'border-white/20'
                       }`}
                     >
                       {isSelected && <Check className="w-3.5 h-3.5 stroke-[3]" />}
@@ -305,27 +308,27 @@ export const WhatsAppSelectModal: React.FC<WhatsAppSelectModalProps> = ({
 
           {/* Opção 3: Digitar Novo Número Personalizado */}
           <div className="space-y-2">
-            <label className="text-xs font-bold text-slate-300 uppercase tracking-wider block">
+            <label className="text-xs font-bold text-[#C6A96B]/80 uppercase tracking-wider block">
               3. Enviar para Número Específico (Informe o WhatsApp):
             </label>
             <div
               onClick={() => setOpcaoSelecionadaId('custom-input')}
-              className={`p-4 rounded-2xl border-2 transition-all cursor-pointer space-y-3 ${
+              className={`p-4 rounded-2xl border transition-all cursor-pointer space-y-3 ${
                 opcaoSelecionadaId === 'custom-input'
-                  ? 'bg-amber-950/60 border-amber-400 shadow-md'
-                  : 'bg-slate-950 border-slate-800 hover:border-slate-700'
+                  ? 'bg-[#B08D57]/15 border-[#B08D57]/60 shadow-md'
+                  : 'bg-black/40 border-[#B08D57]/15 hover:border-[#B08D57]/30'
               }`}
             >
               <div className="flex items-center justify-between gap-2">
                 <div className="flex items-center gap-2.5">
-                  <Phone className="w-4 h-4 text-amber-400" />
+                  <Phone className="w-4 h-4 text-[#DFBA73]" />
                   <span className="text-sm font-bold text-white">Digitar Número do WhatsApp</span>
                 </div>
                 <div
                   className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${
                     opcaoSelecionadaId === 'custom-input'
-                      ? 'border-amber-400 bg-amber-500 text-slate-950'
-                      : 'border-slate-600'
+                      ? 'border-[#DFBA73] bg-gradient-to-r from-[#C6A96B] to-[#B08D57] text-slate-950'
+                      : 'border-white/20'
                   }`}
                 >
                   {opcaoSelecionadaId === 'custom-input' && <Check className="w-3.5 h-3.5 stroke-[3]" />}
@@ -334,7 +337,7 @@ export const WhatsAppSelectModal: React.FC<WhatsAppSelectModalProps> = ({
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1" onClick={(e) => e.stopPropagation()}>
                 <div>
-                  <label className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-1">
+                  <label className="text-[11px] font-bold text-[#C6A96B]/70 uppercase tracking-wider block mb-1">
                     DDD + Telefone / Celular:
                   </label>
                   <input
@@ -343,12 +346,12 @@ export const WhatsAppSelectModal: React.FC<WhatsAppSelectModalProps> = ({
                     value={numeroCustom}
                     onFocus={() => setOpcaoSelecionadaId('custom-input')}
                     onChange={(e) => setNumeroCustom(e.target.value)}
-                    className="w-full bg-slate-900 border-2 border-slate-700 focus:border-amber-400 text-white rounded-xl px-3.5 py-2 text-sm focus:outline-none transition-colors"
+                    className="w-full bg-black/60 border border-[#B08D57]/30 focus:border-[#DFBA73] text-white rounded-xl px-3.5 py-2 text-sm focus:outline-none transition-colors"
                   />
                 </div>
 
                 <div>
-                  <label className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-1">
+                  <label className="text-[11px] font-bold text-[#C6A96B]/70 uppercase tracking-wider block mb-1">
                     Nome do Destinatário (Opcional):
                   </label>
                   <input
@@ -357,7 +360,7 @@ export const WhatsAppSelectModal: React.FC<WhatsAppSelectModalProps> = ({
                     value={nomeCustom}
                     onFocus={() => setOpcaoSelecionadaId('custom-input')}
                     onChange={(e) => setNomeCustom(e.target.value)}
-                    className="w-full bg-slate-900 border-2 border-slate-700 focus:border-amber-400 text-white rounded-xl px-3.5 py-2 text-sm focus:outline-none transition-colors"
+                    className="w-full bg-black/60 border border-[#B08D57]/30 focus:border-[#DFBA73] text-white rounded-xl px-3.5 py-2 text-sm focus:outline-none transition-colors"
                   />
                 </div>
               </div>
@@ -368,7 +371,7 @@ export const WhatsAppSelectModal: React.FC<WhatsAppSelectModalProps> = ({
                   id="chk-salvar-contato"
                   checked={salvarContatoCustom}
                   onChange={(e) => setSalvarContatoCustom(e.target.checked)}
-                  className="w-4 h-4 rounded text-amber-600 focus:ring-amber-9500 bg-slate-900 border-slate-700 cursor-pointer"
+                  className="w-4 h-4 rounded text-[#B08D57] focus:ring-[#DFBA73] bg-black border-[#B08D57]/30 cursor-pointer"
                 />
                 <label htmlFor="chk-salvar-contato" className="text-xs text-slate-300 cursor-pointer font-medium">
                   Salvar este número na minha lista de contatos frequentes
@@ -380,8 +383,8 @@ export const WhatsAppSelectModal: React.FC<WhatsAppSelectModalProps> = ({
           {/* Opção 4: Contatos Frequentes / Recentes Salvos */}
           {contatosSalvos.length > 0 && (
             <div className="space-y-2">
-              <label className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
-                <Star className="w-3.5 h-3.5 text-amber-400" />
+              <label className="text-xs font-bold text-[#C6A96B]/80 uppercase tracking-wider flex items-center gap-1.5">
+                <Star className="w-3.5 h-3.5 text-[#DFBA73]" />
                 Meus Contatos Frequentes Salvos:
               </label>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -391,17 +394,17 @@ export const WhatsAppSelectModal: React.FC<WhatsAppSelectModalProps> = ({
                     <div
                       key={c.id}
                       onClick={() => setOpcaoSelecionadaId(c.id)}
-                      className={`p-3 rounded-2xl border-2 transition-all cursor-pointer flex items-center justify-between gap-2 ${
+                      className={`p-3 rounded-2xl border transition-all cursor-pointer flex items-center justify-between gap-2 ${
                         isSelected
-                          ? 'bg-amber-950/60 border-amber-400 shadow-md'
-                          : 'bg-slate-950 border-slate-800 hover:border-slate-700'
+                          ? 'bg-[#B08D57]/15 border-[#B08D57]/60 shadow-md'
+                          : 'bg-black/40 border-[#B08D57]/15 hover:border-[#B08D57]/30'
                       }`}
                     >
                       <div className="flex items-center gap-2.5 overflow-hidden">
-                        <User className="w-4 h-4 text-amber-400 shrink-0" />
+                        <User className="w-4 h-4 text-[#DFBA73] shrink-0" />
                         <div className="truncate">
                           <span className="text-xs font-bold text-white block truncate">{c.nome}</span>
-                          <span className="text-[11px] font-mono text-slate-400">{c.numero}</span>
+                          <span className="text-[11px] font-mono text-[#C6A96B]/70">{c.numero}</span>
                         </div>
                       </div>
 
@@ -417,8 +420,8 @@ export const WhatsAppSelectModal: React.FC<WhatsAppSelectModalProps> = ({
                         <div
                           className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
                             isSelected
-                              ? 'border-amber-400 bg-amber-500 text-slate-950'
-                              : 'border-slate-600'
+                              ? 'border-[#DFBA73] bg-gradient-to-r from-[#C6A96B] to-[#B08D57] text-slate-950'
+                              : 'border-white/20'
                           }`}
                         >
                           {isSelected && <Check className="w-3 h-3 stroke-[3]" />}
@@ -432,23 +435,23 @@ export const WhatsAppSelectModal: React.FC<WhatsAppSelectModalProps> = ({
           )}
 
           {/* Prévia Sanfonada da Mensagem */}
-          <div className="bg-slate-950 border border-slate-800 rounded-2xl p-3.5 space-y-2">
+          <div className="bg-black/40 border border-[#B08D57]/15 rounded-2xl p-3.5 space-y-2">
             <button
               type="button"
               onClick={() => setMostrarPreviewText(!mostrarPreviewText)}
               className="w-full flex items-center justify-between text-xs font-bold text-slate-300 hover:text-white cursor-pointer"
             >
               <div className="flex items-center gap-2">
-                <FileText className="w-4 h-4 text-amber-400" />
+                <FileText className="w-4 h-4 text-[#DFBA73]" />
                 <span>Ver prévia da mensagem que será enviada</span>
               </div>
-              <span className="text-[11px] text-amber-400 hover:underline">
+              <span className="text-[11px] text-[#DFBA73] hover:underline">
                 {mostrarPreviewText ? 'Ocultar' : 'Expandir prévia'}
               </span>
             </button>
 
             {mostrarPreviewText && (
-              <pre className="bg-slate-900 border border-slate-800 rounded-xl p-3 text-[11px] font-mono text-slate-300 whitespace-pre-wrap max-h-40 overflow-y-auto">
+              <pre className="bg-black/60 border border-[#B08D57]/20 rounded-xl p-3 text-[11px] font-mono text-slate-300 whitespace-pre-wrap max-h-40 overflow-y-auto">
                 {textoRelatorio}
               </pre>
             )}
@@ -456,11 +459,11 @@ export const WhatsAppSelectModal: React.FC<WhatsAppSelectModalProps> = ({
         </div>
 
         {/* Rodapé do Modal */}
-        <div className="bg-slate-950 px-6 py-4 border-t-2 border-slate-800 flex items-center justify-between shrink-0">
+        <div className="bg-black/40 px-6 py-4 border-t border-[#B08D57]/20 flex items-center justify-between shrink-0">
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-sm cursor-pointer transition-colors"
+            className="px-4 py-2.5 rounded-xl bg-black/50 hover:bg-[#B08D57]/20 border border-white/10 text-slate-300 hover:text-white font-bold text-sm cursor-pointer transition-colors"
           >
             Cancelar
           </button>
@@ -468,7 +471,7 @@ export const WhatsAppSelectModal: React.FC<WhatsAppSelectModalProps> = ({
           <button
             type="button"
             onClick={handleEnviar}
-            className="flex items-center gap-2 bg-gradient-to-r from-emerald-600 to-emerald-600 hover:from-emerald-500 hover:to-emerald-500 text-white font-bold text-sm px-6 py-3 rounded-2xl shadow-xl shadow-emerald-950/60 cursor-pointer transition-all min-h-[46px]"
+            className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm px-6 py-3 rounded-2xl shadow-xl shadow-emerald-950/60 cursor-pointer transition-all min-h-[46px]"
           >
             <Send className="w-4 h-4" />
             <span>

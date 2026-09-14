@@ -144,24 +144,24 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
   };
 
   return (
-    <div className="min-h-screen w-full flex flex-col justify-between bg-[#0b0b0d] text-white p-4 md:p-8 relative overflow-hidden">
-      {/* Specular Radial Background Glows */}
-      <div className="absolute top-0 left-1/2 w-[600px] h-[300px] bg-amber-500/10 rounded-full blur-[140px] pointer-events-none -translate-x-1/2 -translate-y-1/2" />
+    <div className="min-h-screen w-full flex flex-col justify-between bg-[#050608] text-white p-4 md:p-8 relative overflow-hidden selection:bg-[#B08D57]/30 selection:text-[#DFBA73]">
+      {/* Specular Radial Background Glows - Ouro Velho & Champagne */}
+      <div className="absolute top-0 left-1/2 w-[600px] h-[300px] bg-[#B08D57]/10 rounded-full blur-[140px] pointer-events-none -translate-x-1/2 -translate-y-1/2" />
       <div className="absolute bottom-0 right-1/4 w-[400px] h-[250px] bg-emerald-500/10 rounded-full blur-[160px] pointer-events-none" />
 
       {/* Top Navigation Bar */}
-      <div className="w-full max-w-4xl mx-auto flex items-center justify-between py-4 border-b border-white/[0.08] relative z-10">
+      <div className="w-full max-w-4xl mx-auto flex items-center justify-between py-4 border-b border-[#B08D57]/20 relative z-10">
         <div className="flex items-center gap-3">
           <div className="flex -space-x-2">
-            <div className="w-9 h-9 rounded-xl bg-amber-500/15 border border-amber-400/30 flex items-center justify-center text-amber-400 shadow-md">
-              <Wheat className="w-4 h-4" />
+            <div className="w-9 h-9 rounded-xl bg-[#B08D57]/15 border border-[#B08D57]/40 flex items-center justify-center text-[#DFBA73] shadow-md">
+              <Wheat className="w-4 h-4 text-[#DFBA73]" />
             </div>
-            <div className="w-9 h-9 rounded-xl bg-emerald-500/15 border border-emerald-400/30 flex items-center justify-center text-emerald-400 shadow-md">
+            <div className="w-9 h-9 rounded-xl bg-emerald-500/15 border border-emerald-400/40 flex items-center justify-center text-emerald-400 shadow-md">
               <Plane className="w-4 h-4" />
             </div>
           </div>
           <div>
-            <span className="text-[11px] tracking-wider uppercase text-amber-400/90 font-semibold block">
+            <span className="text-[11px] tracking-wider uppercase text-[#DFBA73] font-semibold block">
               Secretaria da Agricultura • Secretaria do Turismo
             </span>
             <span className="text-sm font-semibold text-white">
@@ -170,33 +170,33 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
           </div>
         </div>
 
-        <div className="flex items-center gap-2 bg-white/[0.04] border border-white/[0.08] px-3.5 py-1.5 rounded-full text-xs text-white/80 shadow-sm backdrop-blur-md">
-          <ShieldCheck className="w-3.5 h-3.5 text-amber-400" />
+        <div className="flex items-center gap-2 bg-[#12141A]/80 border border-[#B08D57]/25 px-3.5 py-1.5 rounded-full text-xs text-[#DFBA73] shadow-sm backdrop-blur-md">
+          <ShieldCheck className="w-3.5 h-3.5 text-[#DFBA73]" />
           <span className="font-medium">Ambiente Seguro</span>
         </div>
       </div>
 
       {/* Main Login Card */}
       <div className="w-full max-w-lg mx-auto my-auto py-6 relative z-10">
-        <div className="bg-[#161618]/75 border border-white/[0.08] shadow-2xl rounded-3xl p-6 sm:p-9 backdrop-blur-3xl relative overflow-hidden">
+        <div className="bg-[#111317]/85 border border-[#B08D57]/25 shadow-2xl rounded-3xl p-6 sm:p-9 backdrop-blur-3xl relative overflow-hidden">
           {/* Specular Top Line */}
-          <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+          <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#C6A96B]/30 to-transparent" />
 
           {/* Card Header */}
           <div className="text-center mb-6">
-            <div className="inline-flex p-3.5 rounded-2xl bg-white/[0.04] border border-white/[0.08] text-amber-400 mb-3 shadow-inner">
-              <Lock className="w-6 h-6" />
+            <div className="inline-flex p-3.5 rounded-2xl bg-[#B08D57]/15 border border-[#B08D57]/30 text-[#DFBA73] mb-3 shadow-inner">
+              <Lock className="w-6 h-6 text-[#DFBA73]" />
             </div>
             <h1 className="text-2xl font-bold text-white tracking-tight">
               Controle de Registros
             </h1>
-            <p className="text-xs text-white/50 mt-1">
+            <p className="text-xs text-[#C6A96B]/80 mt-1">
               Portaria e Acesso Operacional
             </p>
           </div>
 
           {/* Apple Segmented Control */}
-          <div className="flex rounded-2xl bg-white/[0.04] p-1 border border-white/[0.08] mb-6">
+          <div className="flex rounded-2xl bg-black/50 p-1 border border-[#B08D57]/20 mb-6">
             <button
               type="button"
               onClick={() => {
@@ -205,8 +205,8 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
               }}
               className={`flex-1 py-2.5 rounded-xl font-semibold text-xs sm:text-sm transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer active:scale-[0.98] ${
                 abaAtiva === 'LOGIN'
-                  ? 'bg-white text-black shadow-md font-bold'
-                  : 'text-white/60 hover:text-white'
+                  ? 'bg-gradient-to-r from-[#C6A96B] to-[#B08D57] text-slate-950 shadow-md font-bold'
+                  : 'text-[#C6A96B]/70 hover:text-white'
               }`}
             >
               <UserCheck className="w-4 h-4" />
@@ -220,8 +220,8 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
               }}
               className={`flex-1 py-2.5 rounded-xl font-semibold text-xs sm:text-sm transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer active:scale-[0.98] ${
                 abaAtiva === 'CRIAR_CONTA'
-                  ? 'bg-white text-black shadow-md font-bold'
-                  : 'text-white/60 hover:text-white'
+                  ? 'bg-gradient-to-r from-[#C6A96B] to-[#B08D57] text-slate-950 shadow-md font-bold'
+                  : 'text-[#C6A96B]/70 hover:text-white'
               }`}
             >
               <UserPlus className="w-4 h-4" />
@@ -258,17 +258,17 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
                       value={identificador}
                       onChange={(e) => setIdentificador(e.target.value)}
                       placeholder="Ex: OP-002 ou Diego"
-                      className="w-full bg-white/[0.04] hover:bg-white/[0.06] focus:bg-white/[0.08] border border-white/[0.08] focus:border-white/30 rounded-2xl px-4 py-3 text-sm text-white placeholder-white/30 focus:outline-none pl-11 font-medium transition-all duration-200 shadow-inner"
+                      className="w-full bg-black/40 hover:bg-black/60 focus:bg-[#161820] border border-[#B08D57]/25 focus:border-[#C6A96B]/60 rounded-2xl px-4 py-3 text-sm text-white placeholder-white/30 focus:outline-none pl-11 font-medium transition-all duration-200 shadow-inner"
                     />
-                    <UserCheck className="w-4 h-4 text-white/40 absolute left-3.5 top-3.5" />
+                    <UserCheck className="w-4 h-4 text-[#C6A96B]/60 absolute left-3.5 top-3.5" />
                   </div>
                 </div>
 
                 <div>
                   <label className="block text-[11px] uppercase tracking-wider font-semibold text-white/50 mb-1.5 flex items-center justify-between">
                     <span>Senha de Acesso</span>
-                    <span className="text-[10px] text-amber-400 flex items-center gap-1 font-medium">
-                      <Lock className="w-3 h-3 text-amber-400" />
+                    <span className="text-[10px] text-[#DFBA73] flex items-center gap-1 font-medium">
+                      <Lock className="w-3 h-3 text-[#DFBA73]" />
                       Sigilosa
                     </span>
                   </label>
@@ -280,16 +280,16 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
                       value={senha}
                       onChange={(e) => setSenha(e.target.value)}
                       placeholder="Digite sua senha de operador"
-                      className="w-full bg-white/[0.04] hover:bg-white/[0.06] focus:bg-white/[0.08] border border-white/[0.08] focus:border-white/30 rounded-2xl px-4 py-3 text-sm text-white placeholder-white/30 focus:outline-none pl-11 font-bold tracking-wider transition-all duration-200 shadow-inner"
+                      className="w-full bg-black/40 hover:bg-black/60 focus:bg-[#161820] border border-[#B08D57]/25 focus:border-[#C6A96B]/60 rounded-2xl px-4 py-3 text-sm text-white placeholder-white/30 focus:outline-none pl-11 font-bold tracking-wider transition-all duration-200 shadow-inner"
                     />
-                    <KeyRound className="w-4 h-4 text-white/40 absolute left-3.5 top-3.5" />
+                    <KeyRound className="w-4 h-4 text-[#C6A96B]/60 absolute left-3.5 top-3.5" />
                   </div>
                 </div>
 
                 <button
                   type="submit"
                   disabled={carregando}
-                  className="w-full mt-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 active:scale-[0.98] text-slate-950 font-bold py-3.5 px-6 rounded-2xl text-sm transition-all duration-200 shadow-lg flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                  className="w-full mt-2 bg-gradient-to-r from-[#C6A96B] via-[#B08D57] to-[#80683F] hover:brightness-110 active:scale-[0.98] text-slate-950 font-bold py-3.5 px-6 rounded-2xl text-sm transition-all duration-200 shadow-lg shadow-[#B08D57]/20 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 border border-[#DFBA73]/40"
                 >
                   {carregando ? (
                     <span>Verificando credenciais...</span>
@@ -303,10 +303,10 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
               </form>
 
               {/* Fast Selector */}
-              <div className="mt-6 pt-4 border-t border-white/[0.08]">
+              <div className="mt-6 pt-4 border-t border-[#B08D57]/15">
                 <div className="flex items-center justify-between mb-2.5">
-                  <span className="text-[11px] font-semibold text-white/40 uppercase tracking-wider flex items-center gap-1.5">
-                    <Users className="w-3.5 h-3.5 text-amber-400" />
+                  <span className="text-[11px] font-semibold text-[#DFBA73] uppercase tracking-wider flex items-center gap-1.5">
+                    <Users className="w-3.5 h-3.5 text-[#DFBA73]" />
                     <span>Acesso Rápido ({operadoresCadastrados.length})</span>
                   </span>
                   <span className="text-[11px] text-white/40 font-medium">
@@ -319,12 +319,12 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
                       key={`${op.id}-${op.matricula || idx}`}
                       type="button"
                       onClick={() => selecionarOperadorRapido(op)}
-                      className="p-2.5 rounded-2xl bg-white/[0.03] hover:bg-white/[0.08] border border-white/[0.06] hover:border-amber-400/40 text-left transition-all duration-200 cursor-pointer group active:scale-[0.96]"
+                      className="p-2.5 rounded-2xl bg-black/40 hover:bg-[#B08D57]/15 border border-[#B08D57]/20 hover:border-[#B08D57]/50 text-left transition-all duration-200 cursor-pointer group active:scale-[0.96]"
                     >
-                      <span className="font-semibold text-xs text-white group-hover:text-amber-400 block truncate">
+                      <span className="font-semibold text-xs text-white group-hover:text-[#DFBA73] block truncate">
                         {op.nome}
                       </span>
-                      <span className="text-[10px] text-white/40 block font-mono mt-0.5">
+                      <span className="text-[10px] text-[#C6A96B]/60 block font-mono mt-0.5">
                         {op.matricula}
                       </span>
                     </button>
@@ -348,7 +348,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
                     value={novoNome}
                     onChange={(e) => setNovoNome(e.target.value)}
                     placeholder="Ex: Roberto, Diego ou seu nome"
-                    className="w-full bg-white/[0.04] hover:bg-white/[0.06] focus:bg-white/[0.08] border border-white/[0.08] focus:border-white/30 rounded-2xl px-4 py-2.5 text-sm text-white placeholder-white/30 focus:outline-none font-medium transition-all duration-200 shadow-inner"
+                    className="w-full bg-black/40 hover:bg-black/60 focus:bg-[#161820] border border-[#B08D57]/25 focus:border-[#C6A96B]/60 rounded-2xl px-4 py-2.5 text-sm text-white placeholder-white/30 focus:outline-none font-medium transition-all duration-200 shadow-inner"
                   />
                 </div>
 
@@ -363,7 +363,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
                       value={novaMatricula}
                       onChange={(e) => setNovaMatricula(e.target.value)}
                       placeholder="Ex: OP-008"
-                      className="w-full bg-white/[0.04] hover:bg-white/[0.06] focus:bg-white/[0.08] border border-white/[0.08] focus:border-white/30 rounded-2xl px-4 py-2.5 text-sm text-white font-mono placeholder-white/30 focus:outline-none font-bold uppercase transition-all duration-200 shadow-inner"
+                      className="w-full bg-black/40 hover:bg-black/60 focus:bg-[#161820] border border-[#B08D57]/25 focus:border-[#C6A96B]/60 rounded-2xl px-4 py-2.5 text-sm text-white font-mono placeholder-white/30 focus:outline-none font-bold uppercase transition-all duration-200 shadow-inner"
                     />
                   </div>
 
@@ -374,7 +374,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
                     <select
                       value={novaSecretaria}
                       onChange={(e) => setNovaSecretaria(e.target.value as Secretaria | 'Ambas')}
-                      className="w-full bg-[#1c1c1e] border border-white/[0.08] focus:border-white/30 rounded-2xl px-3 py-2.5 text-sm text-white font-medium focus:outline-none transition-all duration-200 cursor-pointer shadow-inner"
+                      className="w-full bg-[#12141A] border border-[#B08D57]/25 focus:border-[#C6A96B]/60 rounded-2xl px-3 py-2.5 text-sm text-white font-medium focus:outline-none transition-all duration-200 cursor-pointer shadow-inner"
                     >
                       <option value="Ambas">Ambas Secretarias</option>
                       <option value="Secretaria da Agricultura">Agricultura</option>
@@ -392,16 +392,16 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
                     value={novoEmail}
                     onChange={(e) => setNovoEmail(e.target.value)}
                     placeholder="operador@governo.gov.br"
-                    className="w-full bg-white/[0.04] hover:bg-white/[0.06] focus:bg-white/[0.08] border border-white/[0.08] focus:border-white/30 rounded-2xl px-4 py-2.5 text-sm text-white placeholder-white/30 focus:outline-none font-medium transition-all duration-200 shadow-inner"
+                    className="w-full bg-black/40 hover:bg-black/60 focus:bg-[#161820] border border-[#B08D57]/25 focus:border-[#C6A96B]/60 rounded-2xl px-4 py-2.5 text-sm text-white placeholder-white/30 focus:outline-none font-medium transition-all duration-200 shadow-inner"
                   />
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 border-t border-white/[0.08]">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 border-t border-[#B08D57]/15">
                   <div>
                     <label className="block text-[11px] uppercase tracking-wider font-semibold text-white/50 mb-1 flex items-center justify-between">
                       <span>Senha *</span>
-                      <span className="text-[10px] text-amber-400 flex items-center gap-1 font-medium">
-                        <Lock className="w-2.5 h-2.5 text-amber-400" />
+                      <span className="text-[10px] text-[#DFBA73] flex items-center gap-1 font-medium">
+                        <Lock className="w-2.5 h-2.5 text-[#DFBA73]" />
                         Sigilosa
                       </span>
                     </label>
@@ -412,7 +412,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
                       value={novaSenha}
                       onChange={(e) => setNovaSenha(e.target.value)}
                       placeholder="Mínimo 6 caracteres"
-                      className="w-full bg-white/[0.04] hover:bg-white/[0.06] focus:bg-white/[0.08] border border-white/[0.08] focus:border-white/30 rounded-2xl px-4 py-2.5 text-sm text-white placeholder-white/30 focus:outline-none font-bold tracking-wider transition-all duration-200 shadow-inner"
+                      className="w-full bg-black/40 hover:bg-black/60 focus:bg-[#161820] border border-[#B08D57]/25 focus:border-[#C6A96B]/60 rounded-2xl px-4 py-2.5 text-sm text-white placeholder-white/30 focus:outline-none font-bold tracking-wider transition-all duration-200 shadow-inner"
                     />
                   </div>
 
@@ -427,14 +427,14 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
                       value={novaConfirmarSenha}
                       onChange={(e) => setNovaConfirmarSenha(e.target.value)}
                       placeholder="Repita a senha"
-                      className="w-full bg-white/[0.04] hover:bg-white/[0.06] focus:bg-white/[0.08] border border-white/[0.08] focus:border-white/30 rounded-2xl px-4 py-2.5 text-sm text-white placeholder-white/30 focus:outline-none font-bold tracking-wider transition-all duration-200 shadow-inner"
+                      className="w-full bg-black/40 hover:bg-black/60 focus:bg-[#161820] border border-[#B08D57]/25 focus:border-[#C6A96B]/60 rounded-2xl px-4 py-2.5 text-sm text-white placeholder-white/30 focus:outline-none font-bold tracking-wider transition-all duration-200 shadow-inner"
                     />
                   </div>
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full mt-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 active:scale-[0.98] text-slate-950 font-bold py-3.5 px-6 rounded-2xl text-sm transition-all duration-200 shadow-lg flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full mt-2 bg-gradient-to-r from-[#C6A96B] via-[#B08D57] to-[#80683F] hover:brightness-110 active:scale-[0.98] text-slate-950 font-bold py-3.5 px-6 rounded-2xl text-sm transition-all duration-200 shadow-lg shadow-[#B08D57]/20 flex items-center justify-center gap-2 cursor-pointer border border-[#DFBA73]/40"
                 >
                   <UserPlus className="w-4 h-4" />
                   <span>Cadastrar Conta de Operador</span>
@@ -446,15 +446,14 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
       </div>
 
       {/* Footer */}
-      <footer className="w-full max-w-4xl mx-auto py-4 border-t border-white/[0.08] flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left relative z-10 text-xs text-white/40">
+      <footer className="w-full max-w-4xl mx-auto py-4 border-t border-[#B08D57]/20 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left relative z-10 text-xs text-white/40">
         <p>
           Secretaria da Agricultura e Abastecimento • Secretaria do Turismo
         </p>
-        <div className="inline-block px-3.5 py-1 rounded-xl bg-white/[0.04] border border-white/[0.08] font-medium text-white/70">
+        <div className="inline-block px-3.5 py-1 rounded-xl bg-[#B08D57]/10 border border-[#B08D57]/25 font-semibold text-[#DFBA73]">
           Desenvolvido por Siolly Technology
         </div>
       </footer>
     </div>
   );
 };
-

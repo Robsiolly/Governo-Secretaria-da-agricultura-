@@ -161,26 +161,26 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/75 backdrop-blur-xl overflow-y-auto">
-      <div className="bg-[#161618]/90 border border-white/[0.1] rounded-3xl w-full max-w-2xl max-h-[92vh] flex flex-col shadow-2xl overflow-hidden my-auto animate-in fade-in zoom-in-95 duration-200 relative">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/80 backdrop-blur-xl overflow-y-auto">
+      <div className="bg-[#111317]/95 border border-[#B08D57]/30 rounded-3xl w-full max-w-2xl max-h-[92vh] flex flex-col shadow-2xl overflow-hidden my-auto animate-in fade-in zoom-in-95 duration-200 relative">
         {/* Specular Top Edge Light */}
-        <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+        <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#C6A96B]/40 to-transparent" />
 
         {/* Modal Header */}
-        <div className="flex items-center justify-between px-6 py-4.5 border-b border-white/[0.08] bg-white/[0.02]">
+        <div className="flex items-center justify-between px-6 py-4.5 border-b border-[#B08D57]/20 bg-black/40">
           <div>
             <h2 className="text-lg sm:text-xl font-bold text-white tracking-tight flex items-center gap-2.5">
-              <FileText className="w-5 h-5 text-amber-400" />
+              <FileText className="w-5 h-5 text-[#DFBA73]" />
               <span>{registroEdicao ? 'Editar Registro de Veículo' : 'Novo Cadastro de Veículo'}</span>
             </h2>
-            <p className="text-xs text-white/50 mt-0.5 font-medium">
+            <p className="text-xs text-[#C6A96B]/70 mt-0.5 font-medium">
               Secretaria da Agricultura & Secretaria do Turismo
             </p>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="p-2 text-white/50 hover:text-white rounded-2xl hover:bg-white/[0.08] active:scale-[0.94] transition-all cursor-pointer border border-transparent hover:border-white/[0.08]"
+            className="p-2 text-white/50 hover:text-white rounded-2xl hover:bg-[#B08D57]/20 active:scale-[0.94] transition-all cursor-pointer border border-transparent hover:border-[#B08D57]/30"
           >
             <X className="w-5 h-5" />
           </button>
@@ -197,15 +197,15 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
 
           {/* Seleção da Secretaria */}
           <div>
-            <label className="block text-[11px] font-semibold text-white/50 mb-2 uppercase tracking-wider">
+            <label className="block text-[11px] font-semibold text-[#C6A96B]/80 mb-2 uppercase tracking-wider">
               Secretaria Responsável *
             </label>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
               <label
                 className={`flex items-center gap-3 p-3.5 rounded-2xl border cursor-pointer transition-all active:scale-[0.98] ${
                   secretaria === 'Secretaria da Agricultura'
-                    ? 'bg-amber-500/15 border-amber-400/40 text-white shadow-md'
-                    : 'bg-white/[0.03] border-white/[0.06] text-white/70 hover:bg-white/[0.06]'
+                    ? 'bg-[#B08D57]/20 border-[#B08D57]/60 text-white shadow-md'
+                    : 'bg-black/40 border-[#B08D57]/20 text-white/70 hover:bg-black/60'
                 }`}
               >
                 <input
@@ -216,20 +216,20 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
                   onChange={() => setSecretaria('Secretaria da Agricultura')}
                   className="sr-only"
                 />
-                <div className="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0 border border-amber-400/30">
+                <div className="w-10 h-10 rounded-xl bg-[#B08D57]/20 text-[#DFBA73] flex items-center justify-center shrink-0 border border-[#B08D57]/40">
                   <Wheat className="w-5 h-5" />
                 </div>
                 <div>
                   <span className="text-sm font-bold block text-white">Secretaria da Agricultura</span>
-                  <span className="text-xs text-white/50">Desenvolvimento rural e abastecimento</span>
+                  <span className="text-xs text-[#C6A96B]/60">Desenvolvimento rural e abastecimento</span>
                 </div>
               </label>
 
               <label
                 className={`flex items-center gap-3 p-3.5 rounded-2xl border cursor-pointer transition-all active:scale-[0.98] ${
                   secretaria === 'Secretaria do Turismo'
-                    ? 'bg-emerald-500/15 border-emerald-400/40 text-white shadow-md'
-                    : 'bg-white/[0.03] border-white/[0.06] text-white/70 hover:bg-white/[0.06]'
+                    ? 'bg-emerald-500/20 border-emerald-400/50 text-white shadow-md'
+                    : 'bg-black/40 border-white/[0.08] text-white/70 hover:bg-black/60'
                 }`}
               >
                 <input
@@ -254,8 +254,8 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
           {/* Dados Principais: Data, FCT, Andar */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
             <div>
-              <label className="block text-xs font-semibold text-white/60 mb-1.5 flex items-center gap-1.5">
-                <Calendar className="w-3.5 h-3.5 text-amber-400" />
+              <label className="block text-xs font-semibold text-white/70 mb-1.5 flex items-center gap-1.5">
+                <Calendar className="w-3.5 h-3.5 text-[#DFBA73]" />
                 Data *
               </label>
               <input
@@ -263,23 +263,23 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
                 required
                 value={data}
                 onChange={(e) => setData(e.target.value)}
-                className="w-full bg-white/[0.04] hover:bg-white/[0.06] focus:bg-white/[0.08] border border-white/[0.08] focus:border-white/30 rounded-2xl px-3.5 py-2.5 text-sm text-white focus:outline-none font-medium transition-all shadow-inner"
+                className="w-full bg-black/50 hover:bg-black/70 focus:bg-black/80 border border-[#B08D57]/25 focus:border-[#DFBA73] rounded-2xl px-3.5 py-2.5 text-sm text-white focus:outline-none font-medium transition-all shadow-inner"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-white/60 mb-1.5 flex items-center justify-between">
+              <label className="block text-xs font-semibold text-white/70 mb-1.5 flex items-center justify-between">
                 <span className="flex items-center gap-1.5">
-                  <FileText className={`w-3.5 h-3.5 ${isTurismo ? 'text-white/30' : 'text-amber-400'}`} />
+                  <FileText className={`w-3.5 h-3.5 ${isTurismo ? 'text-white/30' : 'text-[#DFBA73]'}`} />
                   {isTurismo ? 'FCT (Não Aplicável)' : 'Nº da FCT *'}
                 </span>
-                <span className={`text-[10px] font-medium ${isTurismo ? 'text-amber-300 bg-amber-500/15 border border-amber-400/30 px-1.5 py-0.5 rounded-md' : 'text-amber-400/80'}`}>
+                <span className={`text-[10px] font-medium ${isTurismo ? 'text-emerald-400 bg-emerald-500/15 border border-emerald-400/30 px-1.5 py-0.5 rounded-md' : 'text-[#DFBA73]'}`}>
                   {isTurismo ? 'Turismo não possui FCT' : 'Autorizada'}
                 </span>
               </label>
               {isTurismo ? (
-                <div className="w-full bg-white/[0.02] border border-white/[0.06] rounded-2xl px-3.5 py-2.5 flex items-center gap-2 text-white/40 select-none">
-                  <span className="w-2 h-2 rounded-full bg-amber-400/60 shrink-0" />
+                <div className="w-full bg-black/40 border border-white/[0.08] rounded-2xl px-3.5 py-2.5 flex items-center gap-2 text-white/40 select-none">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400/60 shrink-0" />
                   <span className="text-xs font-medium">
                     Não aplicável ao Turismo
                   </span>
@@ -291,18 +291,18 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
                   value={fct}
                   onChange={(e) => setFct(e.target.value)}
                   placeholder="Ex: 105 ou FCT-105"
-                  className="w-full bg-white/[0.04] hover:bg-white/[0.06] focus:bg-white/[0.08] border border-white/[0.08] focus:border-white/30 rounded-2xl px-3.5 py-2.5 text-sm text-white font-mono font-bold placeholder-white/30 focus:outline-none transition-all shadow-inner"
+                  className="w-full bg-black/50 hover:bg-black/70 focus:bg-black/80 border border-[#B08D57]/25 focus:border-[#DFBA73] rounded-2xl px-3.5 py-2.5 text-sm text-white font-mono font-bold placeholder-white/30 focus:outline-none transition-all shadow-inner"
                 />
               )}
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-white/60 mb-1.5 flex items-center justify-between">
+              <label className="block text-xs font-semibold text-white/70 mb-1.5 flex items-center justify-between">
                 <span className="flex items-center gap-1.5">
-                  <Building className="w-3.5 h-3.5 text-amber-400" />
+                  <Building className="w-3.5 h-3.5 text-[#DFBA73]" />
                   Andar / Setor *
                 </span>
-                <span className="text-[10px] text-amber-400 font-semibold bg-white/[0.04] border border-white/[0.08] px-1.5 py-0.5 rounded-md">
+                <span className="text-[10px] text-[#DFBA73] font-semibold bg-black/50 border border-[#B08D57]/30 px-1.5 py-0.5 rounded-md">
                   Atual: {andar}
                 </span>
               </label>
@@ -316,10 +316,10 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
                     onClick={() => setAndar(num)}
                     className={`py-1.5 px-0.5 text-center font-bold text-xs rounded-xl border transition-all cursor-pointer active:scale-[0.94] ${
                       andar === num
-                        ? 'bg-amber-500 border-amber-400 text-slate-950 shadow-sm font-black'
+                        ? 'bg-gradient-to-r from-[#C6A96B] to-[#B08D57] border-[#DFBA73]/60 text-slate-950 shadow-sm font-black'
                         : num === 'SAA'
-                        ? 'bg-amber-500/15 border-amber-400/30 text-amber-300 hover:text-white'
-                        : 'bg-white/[0.03] border-white/[0.06] text-white/70 hover:bg-white/[0.08] hover:text-white'
+                        ? 'bg-[#B08D57]/15 border-[#B08D57]/30 text-[#DFBA73] hover:text-white'
+                        : 'bg-black/40 border-[#B08D57]/15 text-white/70 hover:bg-black/60 hover:text-white'
                     }`}
                   >
                     {num === 'SAA' ? 'SAA' : num}
@@ -332,10 +332,10 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
                 required
                 value={andar}
                 onChange={(e) => setAndar(e.target.value)}
-                className="w-full bg-[#1c1c1e] border border-white/[0.08] focus:border-white/30 rounded-2xl px-3 py-2 text-xs text-white focus:outline-none transition-all cursor-pointer shadow-inner"
+                className="w-full bg-[#111317] border border-[#B08D57]/25 focus:border-[#DFBA73] rounded-2xl px-3 py-2 text-xs text-white focus:outline-none transition-all cursor-pointer shadow-inner"
               >
                 {ANDARES_DISPONIVEIS.map((num) => (
-                  <option key={num} value={num} className="bg-[#1c1c1e] text-white">
+                  <option key={num} value={num} className="bg-[#111317] text-white">
                     {num === 'SAA' ? 'Andar SAA (Prioritário)' : `Andar ${num}`}
                   </option>
                 ))}
@@ -346,8 +346,8 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
           {/* Motorista e Veículo */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
             <div>
-              <label className="block text-xs font-semibold text-white/60 mb-1.5 flex items-center gap-1.5">
-                <User className="w-3.5 h-3.5 text-amber-400" />
+              <label className="block text-xs font-semibold text-white/70 mb-1.5 flex items-center gap-1.5">
+                <User className="w-3.5 h-3.5 text-[#DFBA73]" />
                 Motorista Responsável *
               </label>
               <input
@@ -356,13 +356,13 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
                 value={motorista}
                 onChange={(e) => setMotorista(e.target.value)}
                 placeholder="Nome completo do motorista"
-                className="w-full bg-white/[0.04] hover:bg-white/[0.06] focus:bg-white/[0.08] border border-white/[0.08] focus:border-white/30 rounded-2xl px-3.5 py-2.5 text-sm text-white placeholder-white/30 focus:outline-none font-medium transition-all shadow-inner"
+                className="w-full bg-black/50 hover:bg-black/70 focus:bg-black/80 border border-[#B08D57]/25 focus:border-[#DFBA73] rounded-2xl px-3.5 py-2.5 text-sm text-white placeholder-white/30 focus:outline-none font-medium transition-all shadow-inner"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-white/60 mb-1.5 flex items-center gap-1.5">
-                <Car className="w-3.5 h-3.5 text-amber-400" />
+              <label className="block text-xs font-semibold text-white/70 mb-1.5 flex items-center gap-1.5">
+                <Car className="w-3.5 h-3.5 text-[#DFBA73]" />
                 Veículo & Placa
               </label>
               <div className="grid grid-cols-2 gap-2">
@@ -371,14 +371,14 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
                   value={placa}
                   onChange={(e) => setPlaca(e.target.value)}
                   placeholder="Placa: BRA-2026"
-                  className="w-full bg-white/[0.04] hover:bg-white/[0.06] focus:bg-white/[0.08] border border-white/[0.08] focus:border-white/30 rounded-2xl px-3 py-2.5 text-sm text-white font-mono font-bold placeholder-white/30 focus:outline-none transition-all shadow-inner"
+                  className="w-full bg-black/50 hover:bg-black/70 focus:bg-black/80 border border-[#B08D57]/25 focus:border-[#DFBA73] rounded-2xl px-3 py-2.5 text-sm text-white font-mono font-bold placeholder-white/30 focus:outline-none transition-all shadow-inner"
                 />
                 <input
                   type="text"
                   value={modeloVeiculo}
                   onChange={(e) => setModeloVeiculo(e.target.value)}
                   placeholder="Modelo: Hilux, Spin..."
-                  className="w-full bg-white/[0.04] hover:bg-white/[0.06] focus:bg-white/[0.08] border border-white/[0.08] focus:border-white/30 rounded-2xl px-3 py-2.5 text-sm text-white placeholder-white/30 focus:outline-none transition-all shadow-inner"
+                  className="w-full bg-black/50 hover:bg-black/70 focus:bg-black/80 border border-[#B08D57]/25 focus:border-[#DFBA73] rounded-2xl px-3 py-2.5 text-sm text-white placeholder-white/30 focus:outline-none transition-all shadow-inner"
                 />
               </div>
             </div>
@@ -387,8 +387,8 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
           {/* Horários: Saída e Chegada */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
             <div>
-              <label className="block text-xs font-semibold text-white/60 mb-1.5 flex items-center gap-1.5">
-                <Clock className="w-3.5 h-3.5 text-amber-400" />
+              <label className="block text-xs font-semibold text-white/70 mb-1.5 flex items-center gap-1.5">
+                <Clock className="w-3.5 h-3.5 text-[#DFBA73]" />
                 Horário de Saída *
               </label>
               <input
@@ -396,14 +396,14 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
                 required
                 value={horarioSaida}
                 onChange={(e) => setHorarioSaida(e.target.value)}
-                className="w-full bg-white/[0.04] hover:bg-white/[0.06] focus:bg-white/[0.08] border border-white/[0.08] focus:border-white/30 rounded-2xl px-3.5 py-2.5 text-sm text-white font-mono font-bold focus:outline-none transition-all shadow-inner"
+                className="w-full bg-black/50 hover:bg-black/70 focus:bg-black/80 border border-[#B08D57]/25 focus:border-[#DFBA73] rounded-2xl px-3.5 py-2.5 text-sm text-[#DFBA73] font-mono font-bold focus:outline-none transition-all shadow-inner"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-white/60 mb-1.5 flex items-center justify-between">
+              <label className="block text-xs font-semibold text-white/70 mb-1.5 flex items-center justify-between">
                 <span className="flex items-center gap-1.5">
-                  <Clock className="w-3.5 h-3.5 text-amber-400" />
+                  <Clock className="w-3.5 h-3.5 text-[#DFBA73]" />
                   Horário de Chegada
                 </span>
                 <span className="text-[10px] text-white/40">
@@ -414,14 +414,14 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
                 type="time"
                 value={horarioChegada}
                 onChange={(e) => setHorarioChegada(e.target.value)}
-                className="w-full bg-white/[0.04] hover:bg-white/[0.06] focus:bg-white/[0.08] border border-white/[0.08] focus:border-white/30 rounded-2xl px-3.5 py-2.5 text-sm text-white font-mono font-bold focus:outline-none transition-all shadow-inner"
+                className="w-full bg-black/50 hover:bg-black/70 focus:bg-black/80 border border-[#B08D57]/25 focus:border-[#DFBA73] rounded-2xl px-3.5 py-2.5 text-sm text-white font-mono font-bold focus:outline-none transition-all shadow-inner"
               />
             </div>
           </div>
 
           {/* Destino / Finalidade */}
           <div>
-            <label className="block text-xs font-semibold text-white/60 mb-1.5">
+            <label className="block text-xs font-semibold text-white/70 mb-1.5">
               Destino / Finalidade da Operação
             </label>
             <input
@@ -429,18 +429,18 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
               value={destino}
               onChange={(e) => setDestino(e.target.value)}
               placeholder="Ex: Vistoria técnica rural, transporte de comitiva turística..."
-              className="w-full bg-white/[0.04] hover:bg-white/[0.06] focus:bg-white/[0.08] border border-white/[0.08] focus:border-white/30 rounded-2xl px-3.5 py-2.5 text-sm text-white placeholder-white/30 focus:outline-none transition-all shadow-inner"
+              className="w-full bg-black/50 hover:bg-black/70 focus:bg-black/80 border border-[#B08D57]/25 focus:border-[#DFBA73] rounded-2xl px-3.5 py-2.5 text-sm text-white placeholder-white/30 focus:outline-none transition-all shadow-inner"
             />
           </div>
 
           {/* Campo de Ocorrência / Anotações do Operador */}
-          <div className="bg-amber-500/10 border border-amber-400/25 rounded-2xl p-4 space-y-2">
+          <div className="bg-[#B08D57]/15 border border-[#B08D57]/30 rounded-2xl p-4 space-y-2">
             <div className="flex items-center justify-between flex-wrap gap-2">
-              <label className="text-xs font-bold text-amber-300 flex items-center gap-1.5 uppercase">
-                <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0" />
+              <label className="text-xs font-bold text-[#DFBA73] flex items-center gap-1.5 uppercase">
+                <AlertTriangle className="w-4 h-4 text-[#DFBA73] shrink-0" />
                 <span>Ocorrência / Anotações da Portaria</span>
               </label>
-              <span className="text-[10px] text-amber-300/80 bg-white/[0.04] border border-white/[0.08] px-2 py-0.5 rounded-full font-medium">
+              <span className="text-[10px] text-[#DFBA73] bg-black/40 border border-[#B08D57]/30 px-2 py-0.5 rounded-full font-medium">
                 Opcional
               </span>
             </div>
@@ -449,19 +449,19 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
               value={ocorrencia}
               onChange={(e) => setOcorrencia(e.target.value)}
               placeholder="Ex: Veículo retornou com farol trincado; atraso na liberação por vistoria..."
-              className="w-full bg-white/[0.04] hover:bg-white/[0.06] focus:bg-white/[0.08] border border-amber-400/30 focus:border-amber-400 rounded-xl p-3 text-xs sm:text-sm text-white placeholder-white/30 focus:outline-none resize-y transition-all shadow-inner"
+              className="w-full bg-black/60 border border-[#B08D57]/30 focus:border-[#DFBA73] rounded-xl p-3 text-xs sm:text-sm text-white placeholder-white/40 focus:outline-none resize-y transition-all shadow-inner"
             />
           </div>
 
           {/* Seção Obrigatória: Funcionário Responsável e Assinatura */}
-          <div className="pt-4 border-t border-white/[0.08] space-y-3.5">
+          <div className="pt-4 border-t border-[#B08D57]/20 space-y-3.5">
             <div>
               <label className="block text-xs font-semibold text-white/70 mb-2 flex items-center justify-between">
                 <span className="flex items-center gap-1.5">
-                  <User className="w-3.5 h-3.5 text-amber-400" />
+                  <User className="w-3.5 h-3.5 text-[#DFBA73]" />
                   Operador Responsável pelo Cadastro *
                 </span>
-                <span className="text-[11px] text-white/40 font-medium">
+                <span className="text-[11px] text-[#C6A96B]/70 font-medium">
                   {nomesResponsaveis.length} Operadores
                 </span>
               </label>
@@ -477,11 +477,11 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
                       onClick={() => selecionarResponsavel(nome)}
                       className={`px-2.5 py-2 rounded-xl border font-semibold text-xs transition-all flex items-center justify-center gap-1 cursor-pointer active:scale-[0.96] ${
                         isSelecionado
-                          ? 'bg-white text-black border-white shadow-md font-bold'
-                          : 'bg-white/[0.03] border-white/[0.06] text-white/70 hover:bg-white/[0.08] hover:text-white'
+                          ? 'bg-gradient-to-r from-[#C6A96B] to-[#B08D57] text-slate-950 border-[#DFBA73]/60 shadow-md font-bold'
+                          : 'bg-black/40 border-[#B08D57]/20 text-white/70 hover:bg-black/60 hover:text-white'
                       }`}
                     >
-                      {isSelecionado && <Check className="w-3.5 h-3.5 text-black shrink-0" />}
+                      {isSelecionado && <Check className="w-3.5 h-3.5 text-slate-950 shrink-0" />}
                       <span className="truncate">{nome}</span>
                     </button>
                   );
@@ -490,17 +490,17 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-[11px] font-medium text-white/50 mb-1">
+                  <label className="block text-[11px] font-medium text-[#C6A96B]/70 mb-1">
                     Operador Selecionado
                   </label>
                   <select
                     required
                     value={funcionarioResponsavel}
                     onChange={(e) => selecionarResponsavel(e.target.value)}
-                    className="w-full bg-[#1c1c1e] border border-white/[0.08] focus:border-white/30 rounded-2xl px-3 py-2.5 text-xs sm:text-sm text-white font-medium focus:outline-none transition-all cursor-pointer shadow-inner"
+                    className="w-full bg-[#111317] border border-[#B08D57]/25 focus:border-[#DFBA73] rounded-2xl px-3 py-2.5 text-xs sm:text-sm text-white font-medium focus:outline-none transition-all cursor-pointer shadow-inner"
                   >
                     {nomesResponsaveis.map((nome) => (
-                      <option key={nome} value={nome} className="bg-[#1c1c1e] text-white">
+                      <option key={nome} value={nome} className="bg-[#111317] text-white">
                         {nome} (Operador de Cadastro)
                       </option>
                     ))}
@@ -508,7 +508,7 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-medium text-white/50 mb-1">
+                  <label className="block text-[11px] font-medium text-[#C6A96B]/70 mb-1">
                     Matrícula Funcional
                   </label>
                   <input
@@ -516,7 +516,7 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
                     value={matriculaFuncionario}
                     onChange={(e) => setMatriculaFuncionario(e.target.value)}
                     placeholder="Ex: OP-002"
-                    className="w-full bg-white/[0.04] hover:bg-white/[0.06] focus:bg-white/[0.08] border border-white/[0.08] focus:border-white/30 rounded-2xl px-3 py-2.5 text-xs sm:text-sm text-white font-mono placeholder-white/30 focus:outline-none transition-all shadow-inner"
+                    className="w-full bg-black/50 hover:bg-black/70 focus:bg-black/80 border border-[#B08D57]/25 focus:border-[#DFBA73] rounded-2xl px-3 py-2.5 text-xs sm:text-sm text-[#DFBA73] font-mono placeholder-white/30 focus:outline-none transition-all shadow-inner font-bold"
                   />
                 </div>
               </div>
@@ -533,7 +533,7 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
           </div>
 
           {/* Modal Footer Buttons */}
-          <div className="pt-4 border-t border-white/[0.08] flex items-center justify-end gap-2.5">
+          <div className="pt-4 border-t border-[#B08D57]/20 flex items-center justify-end gap-2.5">
             <button
               type="button"
               onClick={onClose}
@@ -543,7 +543,7 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
             </button>
             <button
               type="submit"
-              className="flex items-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 px-6 py-2.5 rounded-2xl text-xs sm:text-sm font-bold shadow-lg transition-all cursor-pointer active:scale-[0.96]"
+              className="flex items-center gap-2 bg-gradient-to-r from-[#C6A96B] via-[#B08D57] to-[#80683F] hover:brightness-110 text-slate-950 px-6 py-2.5 rounded-2xl text-xs sm:text-sm font-bold shadow-lg transition-all cursor-pointer active:scale-[0.96] border border-[#DFBA73]/40"
             >
               <Save className="w-4 h-4" />
               <span>{registroEdicao ? 'Salvar Alterações' : 'Concluir Cadastro'}</span>
@@ -554,4 +554,3 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
     </div>
   );
 };
-

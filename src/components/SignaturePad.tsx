@@ -1,106 +1,133 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Eraser, CheckCircle2, PenTool, Sparkles, BookmarkCheck, Bookmark } from 'lucide-react';
+import { Eraser, PenTool, CheckCircle2, Bookmark, BookmarkCheck, Sparkles } from 'lucide-react';
+import { StorageService } from '../services/storageService';
 
 interface SignaturePadProps {
-  initialSignature?: string;
-  onSave: (dataUrl: string) => void;
-  funcionarioNome?: string;
+  onSave: (signatureDataUrl: string) => void;
+  responsavelNome?: string;
+  matricula?: string;
 }
 
 export const SignaturePad: React.FC<SignaturePadProps> = ({
-  initialSignature,
   onSave,
-  funcionarioNome = 'Funcionário',
+  responsavelNome = 'Operador',
+  matricula = '',
 }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [hasSignature, setHasSignature] = useState(false);
-  const [hasSavedSig, setHasSavedSig] = useState(false);
   const [saveSuccessMsg, setSaveSuccessMsg] = useState(false);
+  const [hasSavedSig, setHasSavedSig] = useState(false);
 
-  useEffect(() => {
-    const saved = localStorage.getItem('saved_operator_signature');
-    if (saved) {
-      setHasSavedSig(true);
-    }
-  }, []);
-
-  useEffect(() => {
+  // Redimensiona o canvas para sua resolução nativa sem distorcer
+  const resizeCanvas = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
+    const rect = canvas.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+
+    // Salva imagem atual antes do resize
+    const data = canvas.toDataURL();
+
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
+    ctx.scale(dpr, dpr);
 
-    // Handle high DPI
-    const rect = canvas.getBoundingClientRect();
-    canvas.width = rect.width * 2;
-    canvas.height = rect.height * 2;
-    ctx.scale(2, 2);
-
+    // Fundo branco
     ctx.fillStyle = '#ffffff';
     ctx.fillRect(0, 0, rect.width, rect.height);
-    ctx.lineWidth = 2.2;
-    ctx.lineCap = 'round';
-    ctx.lineJoin = 'round';
-    ctx.strokeStyle = '#0f172a';
 
-    if (initialSignature) {
+    // Linha de assinatura suave no padrão SP
+    ctx.strokeStyle = '#e2e8f0';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(20, rect.height - 24);
+    ctx.lineTo(rect.width - 20, rect.height - 24);
+    ctx.stroke();
+
+    if (hasSignature) {
       const img = new Image();
       img.onload = () => {
         ctx.drawImage(img, 0, 0, rect.width, rect.height);
-        setHasSignature(true);
       };
-      img.src = initialSignature;
+      img.src = data;
     }
-  }, [initialSignature]);
+  };
 
-  const getCoordinates = (e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>) => {
+  useEffect(() => {
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    // Verifica se há assinatura salva para esta matrícula
+    if (matricula) {
+      const saved = StorageService.getAssinaturaSalva(matricula);
+      if (saved) {
+        setHasSavedSig(true);
+      }
+    }
+
+    return () => window.removeEventListener('resize', resizeCanvas);
+  }, [matricula]);
+
+  const getCoordinates = (e: React.MouseEvent | React.TouchEvent) => {
     const canvas = canvasRef.current;
     if (!canvas) return { x: 0, y: 0 };
     const rect = canvas.getBoundingClientRect();
 
     if ('touches' in e) {
+      const touch = e.touches[0];
       return {
-        x: e.touches[0].clientX - rect.left,
-        y: e.touches[0].clientY - rect.top,
+        x: touch.clientX - rect.left,
+        y: touch.clientY - rect.top,
+      };
+    } else {
+      return {
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top,
       };
     }
-    return {
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
-    };
   };
 
-  const startDrawing = (e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>) => {
+  const startDrawing = (e: React.MouseEvent | React.TouchEvent) => {
     e.preventDefault();
+    const { x, y } = getCoordinates(e);
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    const { x, y } = getCoordinates(e);
+    ctx.strokeStyle = '#0f172a';
+    ctx.lineWidth = 2.5;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
     ctx.beginPath();
     ctx.moveTo(x, y);
+
     setIsDrawing(true);
   };
 
-  const draw = (e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>) => {
+  const draw = (e: React.MouseEvent | React.TouchEvent) => {
     if (!isDrawing) return;
     e.preventDefault();
+    const { x, y } = getCoordinates(e);
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    const { x, y } = getCoordinates(e);
     ctx.lineTo(x, y);
     ctx.stroke();
-    setHasSignature(true);
   };
 
-  const stopDrawing = () => {
+  const stopDrawing = (e: React.MouseEvent | React.TouchEvent) => {
     if (!isDrawing) return;
+    e.preventDefault();
     setIsDrawing(false);
+    setHasSignature(true);
+
     const canvas = canvasRef.current;
     if (canvas) {
       onSave(canvas.toDataURL('image/png'));
@@ -113,12 +140,22 @@ export const SignaturePad: React.FC<SignaturePadProps> = ({
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
     const rect = canvas.getBoundingClientRect();
+
     ctx.fillStyle = '#ffffff';
     ctx.fillRect(0, 0, rect.width, rect.height);
+
+    ctx.strokeStyle = '#e2e8f0';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(20, rect.height - 24);
+    ctx.lineTo(rect.width - 20, rect.height - 24);
+    ctx.stroke();
+
     setHasSignature(false);
     onSave('');
   };
 
+  // Gerar assinatura digital estilizada (Rubrica automática)
   const gerarAssinaturaDigitalPadrao = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -126,40 +163,53 @@ export const SignaturePad: React.FC<SignaturePadProps> = ({
     if (!ctx) return;
     const rect = canvas.getBoundingClientRect();
 
+    // Limpa fundo
     ctx.fillStyle = '#ffffff';
     ctx.fillRect(0, 0, rect.width, rect.height);
 
-    // Linha fluida da assinatura
-    ctx.strokeStyle = '#0f172a';
-    ctx.lineWidth = 2.4;
+    // Linha de base
+    ctx.strokeStyle = '#e2e8f0';
+    ctx.lineWidth = 1;
     ctx.beginPath();
-    ctx.moveTo(35, rect.height * 0.65);
-    ctx.bezierCurveTo(70, rect.height * 0.25, 110, rect.height * 0.85, 160, rect.height * 0.45);
-    ctx.bezierCurveTo(200, rect.height * 0.2, 230, rect.height * 0.75, 290, rect.height * 0.5);
+    ctx.moveTo(20, rect.height - 24);
+    ctx.lineTo(rect.width - 20, rect.height - 24);
     ctx.stroke();
 
-    // Texto de validação
-    ctx.font = '500 11px sans-serif';
-    ctx.fillStyle = '#475569';
-    ctx.fillText(`Assinado digitalmente por ${funcionarioNome}`, 25, rect.height - 12);
+    // Desenha rubrica caligráfica estilizada em preto
+    ctx.fillStyle = '#0f172a';
+    ctx.font = 'italic bold 26px "Brush Script MT", "Caveat", "Segoe Script", cursive, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(responsavelNome, rect.width / 2, rect.height / 2 - 6);
+
+    // Traço estilizado sob o nome
+    ctx.strokeStyle = '#0f172a';
+    ctx.lineWidth = 1.8;
+    ctx.beginPath();
+    ctx.moveTo(rect.width / 2 - 80, rect.height / 2 + 12);
+    ctx.quadraticCurveTo(rect.width / 2, rect.height / 2 + 18, rect.width / 2 + 80, rect.height / 2 + 10);
+    ctx.stroke();
 
     setHasSignature(true);
-    onSave(canvas.toDataURL('image/png'));
+    const dataUrl = canvas.toDataURL('image/png');
+    onSave(dataUrl);
   };
 
   const salvarComoAssinaturaPadrao = () => {
     const canvas = canvasRef.current;
-    if (!canvas || !hasSignature) return;
+    if (!canvas || !matricula) return;
     const dataUrl = canvas.toDataURL('image/png');
-    localStorage.setItem('saved_operator_signature', dataUrl);
+    StorageService.salvarAssinaturaPadrao(matricula, dataUrl);
     setHasSavedSig(true);
     setSaveSuccessMsg(true);
     setTimeout(() => setSaveSuccessMsg(false), 3000);
   };
 
   const carregarAssinaturaSalva = () => {
-    const saved = localStorage.getItem('saved_operator_signature');
+    if (!matricula) return;
+    const saved = StorageService.getAssinaturaSalva(matricula);
     if (!saved) return;
+
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
@@ -181,7 +231,7 @@ export const SignaturePad: React.FC<SignaturePadProps> = ({
     <div id="signature-pad-container" className="space-y-2.5">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-white/70">
         <span className="flex items-center gap-1.5 font-medium text-white">
-          <PenTool className="w-3.5 h-3.5 text-amber-400" />
+          <PenTool className="w-3.5 h-3.5 text-[#DFBA73]" />
           Assinatura no painel abaixo:
         </span>
         <div className="flex items-center gap-1.5 flex-wrap">
@@ -189,7 +239,7 @@ export const SignaturePad: React.FC<SignaturePadProps> = ({
             <button
               type="button"
               onClick={carregarAssinaturaSalva}
-              className="flex items-center gap-1.5 text-amber-300 hover:text-white bg-amber-500/15 border border-amber-400/30 px-3 py-1 rounded-xl transition-all cursor-pointer text-xs font-medium active:scale-[0.96]"
+              className="flex items-center gap-1.5 text-[#DFBA73] hover:text-white bg-[#B08D57]/20 border border-[#B08D57]/40 px-3 py-1 rounded-xl transition-all cursor-pointer text-xs font-medium active:scale-[0.96]"
               title="Inserir sua assinatura salva anteriormente"
             >
               <BookmarkCheck className="w-3.5 h-3.5" />
@@ -200,10 +250,10 @@ export const SignaturePad: React.FC<SignaturePadProps> = ({
           <button
             type="button"
             onClick={gerarAssinaturaDigitalPadrao}
-            className="flex items-center gap-1.5 text-white/80 hover:text-white bg-white/[0.05] hover:bg-white/[0.1] border border-white/[0.08] px-3 py-1 rounded-xl transition-all cursor-pointer text-xs font-medium active:scale-[0.96]"
+            className="flex items-center gap-1.5 text-white/80 hover:text-white bg-white/[0.05] hover:bg-[#B08D57]/20 border border-white/[0.08] hover:border-[#B08D57]/30 px-3 py-1 rounded-xl transition-all cursor-pointer text-xs font-medium active:scale-[0.96]"
             title="Gerar rubrica digital com base no nome do responsável"
           >
-            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+            <Sparkles className="w-3.5 h-3.5 text-[#DFBA73]" />
             <span>Rubrica Auto</span>
           </button>
 
@@ -211,7 +261,7 @@ export const SignaturePad: React.FC<SignaturePadProps> = ({
             <button
               type="button"
               onClick={salvarComoAssinaturaPadrao}
-              className="flex items-center gap-1.5 text-amber-300 hover:text-white bg-white/[0.05] hover:bg-white/[0.1] border border-white/[0.08] px-3 py-1 rounded-xl transition-all cursor-pointer text-xs font-medium active:scale-[0.96]"
+              className="flex items-center gap-1.5 text-[#DFBA73] hover:text-white bg-white/[0.05] hover:bg-[#B08D57]/20 border border-white/[0.08] hover:border-[#B08D57]/30 px-3 py-1 rounded-xl transition-all cursor-pointer text-xs font-medium active:scale-[0.96]"
               title="Salvar esta assinatura para usar rapidamente em futuros registros"
             >
               <Bookmark className="w-3.5 h-3.5" />
@@ -237,7 +287,7 @@ export const SignaturePad: React.FC<SignaturePadProps> = ({
         </div>
       )}
 
-      <div className="relative border border-white/20 hover:border-white/40 rounded-2xl overflow-hidden bg-white shadow-lg transition-colors">
+      <div className="relative border border-[#B08D57]/30 hover:border-[#B08D57]/60 rounded-2xl overflow-hidden bg-white shadow-lg transition-colors">
         <canvas
           ref={canvasRef}
           onMouseDown={startDrawing}
@@ -249,22 +299,12 @@ export const SignaturePad: React.FC<SignaturePadProps> = ({
           onTouchEnd={stopDrawing}
           className="w-full h-32 cursor-crosshair touch-none"
         />
-
-        {!hasSignature && !isDrawing && (
-          <div className="absolute inset-0 pointer-events-none flex flex-col items-center justify-center text-slate-400">
-            <span className="text-sm font-medium">Toque ou desenhe aqui para assinar</span>
-            <span className="text-[11px] text-slate-400 mt-0.5">Assinatura / Rubrica do Operador</span>
-          </div>
-        )}
-
-        {hasSignature && (
-          <div className="absolute top-2.5 right-2.5 pointer-events-none flex items-center gap-1.5 bg-slate-900/90 text-emerald-400 px-2.5 py-0.5 rounded-full text-xs font-medium border border-white/10 shadow-sm">
-            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-            <span>Assinado</span>
+        {!hasSignature && (
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none text-slate-400 text-xs italic">
+            Desenhe a assinatura com o dedo ou mouse aqui...
           </div>
         )}
       </div>
     </div>
   );
 };
-

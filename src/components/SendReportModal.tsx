@@ -295,23 +295,26 @@ export const SendReportModal: React.FC<SendReportModalProps> = ({
   return (
     <div
       id="modal-enviar-relatorio-backdrop"
-      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-slate-950/80 backdrop-blur-sm overflow-y-auto"
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-black/80 backdrop-blur-xl overflow-y-auto"
     >
       <div
         id="modal-enviar-relatorio-container"
-        className="bg-slate-900 border-2 border-slate-700 rounded-3xl w-full max-w-4xl max-h-[92vh] flex flex-col shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150"
+        className="bg-[#111317]/95 border border-[#B08D57]/30 rounded-3xl w-full max-w-4xl max-h-[92vh] flex flex-col shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200 relative"
       >
+        {/* Specular Top Edge Light */}
+        <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#C6A96B]/40 to-transparent" />
+
         {/* Cabeçalho do Modal */}
-        <div className="bg-slate-950 px-6 py-5 border-b-2 border-slate-800 flex items-center justify-between shrink-0">
+        <div className="bg-black/40 px-6 py-5 border-b border-[#B08D57]/20 flex items-center justify-between shrink-0">
           <div className="flex items-center gap-3.5">
-            <div className="w-11 h-11 rounded-2xl bg-amber-500/20 border-2 border-amber-400/40 flex items-center justify-center text-amber-400">
+            <div className="w-11 h-11 rounded-2xl bg-[#B08D57]/20 border border-[#B08D57]/40 flex items-center justify-center text-[#DFBA73]">
               <Share2 className="w-6 h-6" />
             </div>
             <div>
               <h2 className="text-lg sm:text-xl font-bold text-white tracking-wide flex items-center gap-2">
                 Emitir e Enviar Relatório por Dia
               </h2>
-              <p className="text-xs sm:text-sm text-slate-400">
+              <p className="text-xs sm:text-sm text-[#C6A96B]/70">
                 Selecione qualquer dia para acessar os dados e enviar o relatório oficial
               </p>
             </div>
@@ -319,7 +322,7 @@ export const SendReportModal: React.FC<SendReportModalProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="w-10 h-10 rounded-2xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center transition-colors cursor-pointer"
+            className="w-10 h-10 rounded-2xl bg-black/50 hover:bg-[#B08D57]/20 text-white/70 hover:text-white flex items-center justify-center transition-colors cursor-pointer border border-white/5 hover:border-[#B08D57]/30"
             aria-label="Fechar"
           >
             <X className="w-5 h-5" />
@@ -327,12 +330,12 @@ export const SendReportModal: React.FC<SendReportModalProps> = ({
         </div>
 
         {/* Corpo com Rolagem */}
-        <div className="p-5 sm:p-7 overflow-y-auto space-y-6">
+        <div className="p-5 sm:p-7 overflow-y-auto space-y-6 flex-1">
           {/* AVISO DE SIGILO DAS SENHAS */}
-          <div className="bg-amber-950/40 border-2 border-amber-600/40 rounded-2xl p-4 flex items-start gap-3">
-            <ShieldCheck className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
-            <div className="text-xs sm:text-sm text-amber-950">
-              <strong className="text-amber-400 font-bold block mb-0.5">
+          <div className="bg-[#B08D57]/10 border border-[#B08D57]/30 rounded-2xl p-4 flex items-start gap-3">
+            <ShieldCheck className="w-5 h-5 text-[#DFBA73] shrink-0 mt-0.5" />
+            <div className="text-xs sm:text-sm text-slate-300">
+              <strong className="text-[#DFBA73] font-bold block mb-0.5">
                 Segurança e Sigilo de Credenciais Ativos
               </strong>
               As senhas criadas pelos operadores são estritamente sigilosas e criptografadas.
@@ -341,10 +344,10 @@ export const SendReportModal: React.FC<SendReportModalProps> = ({
           </div>
 
           {/* PAINEL DE SELEÇÃO DE DATA */}
-          <div className="bg-slate-950 border-2 border-slate-800 rounded-2xl p-4 sm:p-5 space-y-4">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800/80 pb-3">
+          <div className="bg-black/40 border border-[#B08D57]/15 rounded-2xl p-4 sm:p-5 space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#B08D57]/15 pb-3">
               <div className="flex items-center gap-2">
-                <Calendar className="w-5 h-5 text-amber-400" />
+                <Calendar className="w-5 h-5 text-[#DFBA73]" />
                 <span className="text-sm sm:text-base font-bold text-white uppercase tracking-wider">
                   1. Selecione o Dia do Relatório:
                 </span>
@@ -357,8 +360,8 @@ export const SendReportModal: React.FC<SendReportModalProps> = ({
                   onClick={definirHoje}
                   className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                     dataSelecionada === hojeStr
-                      ? 'bg-amber-500 text-slate-950 font-black shadow-sm'
-                      : 'bg-slate-800 text-slate-300 hover:text-white border border-slate-700'
+                      ? 'bg-gradient-to-r from-[#C6A96B] to-[#B08D57] text-slate-950 font-black shadow-sm'
+                      : 'bg-black/50 text-slate-300 hover:text-white border border-[#B08D57]/20'
                   }`}
                 >
                   Hoje
@@ -366,7 +369,7 @@ export const SendReportModal: React.FC<SendReportModalProps> = ({
                 <button
                   type="button"
                   onClick={definirOntem}
-                  className="px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 hover:text-white border border-slate-700 transition-all cursor-pointer"
+                  className="px-3 py-1.5 rounded-xl text-xs font-bold bg-black/50 text-slate-300 hover:text-white border border-[#B08D57]/20 transition-all cursor-pointer"
                 >
                   Ontem
                 </button>
@@ -375,8 +378,8 @@ export const SendReportModal: React.FC<SendReportModalProps> = ({
                   onClick={definirTodosDias}
                   className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                     dataSelecionada === ''
-                      ? 'bg-amber-500 text-slate-950 font-black shadow-sm'
-                      : 'bg-slate-800 text-slate-300 hover:text-white border border-slate-700'
+                      ? 'bg-gradient-to-r from-[#C6A96B] to-[#B08D57] text-slate-950 font-black shadow-sm'
+                      : 'bg-black/50 text-slate-300 hover:text-white border border-[#B08D57]/20'
                   }`}
                 >
                   Todos os Dias
@@ -390,7 +393,7 @@ export const SendReportModal: React.FC<SendReportModalProps> = ({
                 <button
                   type="button"
                   onClick={() => alterarDia(-1)}
-                  className="w-11 h-11 rounded-2xl bg-slate-800 hover:bg-slate-700 text-slate-200 flex items-center justify-center border border-slate-700 cursor-pointer shrink-0 transition-colors"
+                  className="w-11 h-11 rounded-2xl bg-black/50 hover:bg-[#B08D57]/20 text-slate-200 flex items-center justify-center border border-[#B08D57]/20 cursor-pointer shrink-0 transition-colors"
                   title="Dia anterior"
                 >
                   <ChevronLeft className="w-5 h-5" />
@@ -400,20 +403,20 @@ export const SendReportModal: React.FC<SendReportModalProps> = ({
                   type="date"
                   value={dataSelecionada}
                   onChange={(e) => setDataSelecionada(e.target.value)}
-                  className="w-full bg-slate-900 border-2 border-slate-700 rounded-2xl px-4 py-2.5 text-base text-white font-bold focus:outline-none focus:border-amber-400 transition-colors cursor-pointer min-h-[44px]"
+                  className="w-full bg-black/60 border border-[#B08D57]/25 focus:border-[#DFBA73] rounded-2xl px-4 py-2.5 text-base text-white font-bold focus:outline-none transition-colors cursor-pointer min-h-[44px]"
                 />
 
                 <button
                   type="button"
                   onClick={() => alterarDia(1)}
-                  className="w-11 h-11 rounded-2xl bg-slate-800 hover:bg-slate-700 text-slate-200 flex items-center justify-center border border-slate-700 cursor-pointer shrink-0 transition-colors"
+                  className="w-11 h-11 rounded-2xl bg-black/50 hover:bg-[#B08D57]/20 text-slate-200 flex items-center justify-center border border-[#B08D57]/20 cursor-pointer shrink-0 transition-colors"
                   title="Próximo dia"
                 >
                   <ChevronRight className="w-5 h-5" />
                 </button>
               </div>
 
-              <div className="md:col-span-5 text-sm font-semibold text-amber-300 capitalize bg-amber-950/30 border border-amber-500/30 px-3.5 py-2.5 rounded-2xl text-center">
+              <div className="md:col-span-5 text-sm font-semibold text-[#DFBA73] capitalize bg-[#B08D57]/15 border border-[#B08D57]/30 px-3.5 py-2.5 rounded-2xl text-center">
                 {dataFormatadaExibicao}
               </div>
             </div>
@@ -424,13 +427,13 @@ export const SendReportModal: React.FC<SendReportModalProps> = ({
                 <label className="text-xs font-bold text-slate-300 uppercase tracking-wider block mb-1.5">
                   Secretaria:
                 </label>
-                <div className="grid grid-cols-3 gap-1.5 bg-slate-900 p-1 rounded-xl border border-slate-800">
+                <div className="grid grid-cols-3 gap-1.5 bg-black/60 p-1 rounded-xl border border-[#B08D57]/15">
                   <button
                     type="button"
                     onClick={() => setSecretariaFiltro('TODAS')}
                     className={`py-1.5 text-xs font-bold rounded-lg transition-all cursor-pointer ${
                       secretariaFiltro === 'TODAS'
-                        ? 'bg-slate-700 text-white shadow-sm'
+                        ? 'bg-[#B08D57]/30 text-[#DFBA73] border border-[#B08D57]/40 shadow-sm'
                         : 'text-slate-400 hover:text-white'
                     }`}
                   >
@@ -441,8 +444,8 @@ export const SendReportModal: React.FC<SendReportModalProps> = ({
                     onClick={() => setSecretariaFiltro('Secretaria da Agricultura')}
                     className={`py-1.5 text-xs font-bold rounded-lg transition-all cursor-pointer flex items-center justify-center gap-1 ${
                       secretariaFiltro === 'Secretaria da Agricultura'
-                        ? 'bg-amber-600 text-white shadow-sm'
-                        : 'text-slate-400 hover:text-amber-400'
+                        ? 'bg-gradient-to-r from-[#C6A96B] to-[#B08D57] text-slate-950 font-bold shadow-sm'
+                        : 'text-slate-400 hover:text-[#DFBA73]'
                     }`}
                   >
                     <Wheat className="w-3 h-3" />
@@ -453,7 +456,7 @@ export const SendReportModal: React.FC<SendReportModalProps> = ({
                     onClick={() => setSecretariaFiltro('Secretaria do Turismo')}
                     className={`py-1.5 text-xs font-bold rounded-lg transition-all cursor-pointer flex items-center justify-center gap-1 ${
                       secretariaFiltro === 'Secretaria do Turismo'
-                        ? 'bg-emerald-600 text-white shadow-sm'
+                        ? 'bg-emerald-600 text-white shadow-sm font-bold'
                         : 'text-slate-400 hover:text-emerald-400'
                     }`}
                   >
@@ -467,13 +470,13 @@ export const SendReportModal: React.FC<SendReportModalProps> = ({
                 <label className="text-xs font-bold text-slate-300 uppercase tracking-wider block mb-1.5">
                   Situação da Frota:
                 </label>
-                <div className="grid grid-cols-3 gap-1.5 bg-slate-900 p-1 rounded-xl border border-slate-800">
+                <div className="grid grid-cols-3 gap-1.5 bg-black/60 p-1 rounded-xl border border-[#B08D57]/15">
                   <button
                     type="button"
                     onClick={() => setStatusFiltro('TODOS')}
                     className={`py-1.5 text-xs font-bold rounded-lg transition-all cursor-pointer ${
                       statusFiltro === 'TODOS'
-                        ? 'bg-slate-700 text-white shadow-sm'
+                        ? 'bg-[#B08D57]/30 text-[#DFBA73] border border-[#B08D57]/40 shadow-sm'
                         : 'text-slate-400 hover:text-white'
                     }`}
                   >
@@ -484,8 +487,8 @@ export const SendReportModal: React.FC<SendReportModalProps> = ({
                     onClick={() => setStatusFiltro('EM_TRANSITO')}
                     className={`py-1.5 text-xs font-bold rounded-lg transition-all cursor-pointer ${
                       statusFiltro === 'EM_TRANSITO'
-                        ? 'bg-amber-600 text-white shadow-sm'
-                        : 'text-slate-400 hover:text-amber-300'
+                        ? 'bg-gradient-to-r from-[#C6A96B] to-[#B08D57] text-slate-950 font-bold shadow-sm'
+                        : 'text-slate-400 hover:text-[#DFBA73]'
                     }`}
                   >
                     Em Trânsito
@@ -495,7 +498,7 @@ export const SendReportModal: React.FC<SendReportModalProps> = ({
                     onClick={() => setStatusFiltro('FINALIZADO')}
                     className={`py-1.5 text-xs font-bold rounded-lg transition-all cursor-pointer ${
                       statusFiltro === 'FINALIZADO'
-                        ? 'bg-emerald-600 text-white shadow-sm'
+                        ? 'bg-emerald-600 text-white shadow-sm font-bold'
                         : 'text-slate-400 hover:text-emerald-400'
                     }`}
                   >
@@ -508,56 +511,56 @@ export const SendReportModal: React.FC<SendReportModalProps> = ({
 
           {/* DADOS RESUMIDOS DO DIA SELECIONADO */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            <div className="bg-slate-950 border border-slate-800 rounded-2xl p-3.5">
-              <div className="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5 mb-1">
-                <Car className="w-3.5 h-3.5 text-amber-400" />
+            <div className="bg-black/40 border border-[#B08D57]/15 rounded-2xl p-3.5">
+              <div className="text-xs font-bold text-[#C6A96B]/70 uppercase tracking-wider flex items-center gap-1.5 mb-1">
+                <Car className="w-3.5 h-3.5 text-[#DFBA73]" />
                 Veículos no Dia
               </div>
-              <div className="text-2xl font-black text-white">{totalNoDia}</div>
+              <div className="text-2xl font-bold text-white">{totalNoDia}</div>
               <div className="text-[11px] text-slate-400 mt-0.5">cadastrados</div>
             </div>
 
-            <div className="bg-slate-950 border border-slate-800 rounded-2xl p-3.5">
-              <div className="text-xs font-bold text-amber-400 uppercase tracking-wider flex items-center gap-1.5 mb-1">
+            <div className="bg-black/40 border border-[#B08D57]/15 rounded-2xl p-3.5">
+              <div className="text-xs font-bold text-[#DFBA73] uppercase tracking-wider flex items-center gap-1.5 mb-1">
                 <Clock className="w-3.5 h-3.5" />
                 Em Trânsito
               </div>
-              <div className="text-2xl font-black text-amber-300">{totalEmTransitoNoDia}</div>
+              <div className="text-2xl font-bold text-[#DFBA73]">{totalEmTransitoNoDia}</div>
               <div className="text-[11px] text-slate-400 mt-0.5">aguardando retorno</div>
             </div>
 
-            <div className="bg-slate-950 border border-slate-800 rounded-2xl p-3.5">
+            <div className="bg-black/40 border border-[#B08D57]/15 rounded-2xl p-3.5">
               <div className="text-xs font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-1.5 mb-1">
                 <CheckCircle2 className="w-3.5 h-3.5" />
                 Finalizados
               </div>
-              <div className="text-2xl font-black text-emerald-400">{totalFinalizadosNoDia}</div>
+              <div className="text-2xl font-bold text-emerald-400">{totalFinalizadosNoDia}</div>
               <div className="text-[11px] text-slate-400 mt-0.5">viagens concluídas</div>
             </div>
 
-            <div className="bg-slate-950 border border-slate-800 rounded-2xl p-3.5">
-              <div className="text-xs font-bold text-sky-400 uppercase tracking-wider flex items-center gap-1.5 mb-1">
-                <UserCheck className="w-3.5 h-3.5" />
+            <div className="bg-black/40 border border-[#B08D57]/15 rounded-2xl p-3.5">
+              <div className="text-xs font-bold text-[#C6A96B]/80 uppercase tracking-wider flex items-center gap-1.5 mb-1">
+                <UserCheck className="w-3.5 h-3.5 text-[#DFBA73]" />
                 Operadores
               </div>
-              <div className="text-2xl font-black text-sky-300">{operadoresDoDia.length}</div>
+              <div className="text-2xl font-bold text-white">{operadoresDoDia.length}</div>
               <div className="text-[11px] text-slate-400 mt-0.5">atuantes no dia</div>
             </div>
           </div>
 
           {/* LISTA PREVIA DOS VEÍCULOS DO DIA SELECIONADO */}
-          <div className="bg-slate-950 border-2 border-slate-800 rounded-2xl p-4 sm:p-5 space-y-3">
+          <div className="bg-black/40 border border-[#B08D57]/15 rounded-2xl p-4 sm:p-5 space-y-3">
             <div className="flex items-center justify-between">
-              <h3 className="text-sm font-bold text-slate-200 uppercase tracking-wider">
+              <h3 className="text-sm font-bold text-[#DFBA73] uppercase tracking-wider">
                 Informações dos Veículos do Dia ({totalNoDia})
               </h3>
-              <span className="text-xs text-slate-400">
+              <span className="text-xs text-[#C6A96B]/60">
                 Auditado por Operadores de Cadastro
               </span>
             </div>
 
             {totalNoDia === 0 ? (
-              <div className="text-center py-8 text-slate-400 text-sm bg-slate-900/60 rounded-xl border border-dashed border-slate-800">
+              <div className="text-center py-8 text-slate-400 text-sm bg-black/30 rounded-xl border border-dashed border-[#B08D57]/20">
                 Nenhum registro de veículo encontrado para a data{' '}
                 <strong className="text-slate-200">
                   {dataSelecionada ? new Date(dataSelecionada + 'T00:00:00').toLocaleDateString('pt-BR') : 'selecionada'}
@@ -571,24 +574,24 @@ export const SendReportModal: React.FC<SendReportModalProps> = ({
                   return (
                     <div
                       key={`${r.id}-${idx}`}
-                      className="bg-slate-900 border border-slate-800 rounded-xl p-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs sm:text-sm"
+                      className="bg-black/40 border border-[#B08D57]/15 rounded-xl p-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs sm:text-sm"
                     >
                       <div className="flex items-center gap-3">
-                        <span className="font-bold text-slate-400 w-5">#{idx + 1}</span>
+                        <span className="font-bold text-[#C6A96B]/70 w-5">#{idx + 1}</span>
                         <div>
                           <div className="flex items-center gap-2">
                             {r.secretaria === 'Secretaria da Agricultura' && r.fct && r.fct !== 'N/A' && r.fct !== '-' ? (
                               <strong className="text-white font-bold text-sm">FCT: {r.fct}</strong>
                             ) : (
-                              <span className="text-slate-300 font-semibold text-xs bg-slate-800 border border-slate-700 px-2 py-0.5 rounded-md">
+                              <span className="text-emerald-400 font-semibold text-xs bg-emerald-500/15 border border-emerald-400/30 px-2 py-0.5 rounded-md">
                                 Sem FCT
                               </span>
                             )}
                             <span
                               className={`text-[10px] font-bold px-2 py-0.5 rounded-md border ${
                                 r.secretaria === 'Secretaria da Agricultura'
-                                  ? 'bg-amber-950 text-amber-400 border-amber-600/40'
-                                  : 'bg-emerald-950 text-emerald-400 border-emerald-600/40'
+                                  ? 'bg-[#B08D57]/20 text-[#DFBA73] border-[#B08D57]/40'
+                                  : 'bg-emerald-500/20 text-emerald-400 border-emerald-400/30'
                               }`}
                             >
                               {r.secretaria === 'Secretaria da Agricultura' ? 'Agricultura' : 'Turismo'}
@@ -596,8 +599,8 @@ export const SendReportModal: React.FC<SendReportModalProps> = ({
                             <span
                               className={`text-[10px] font-bold px-2 py-0.5 rounded-md ${
                                 isFinalizado
-                                  ? 'bg-emerald-950/80 text-emerald-400 border border-emerald-600/40'
-                                  : 'bg-amber-950/80 text-amber-400 border border-amber-600/40'
+                                  ? 'bg-emerald-500/15 text-emerald-300 border border-emerald-400/30'
+                                  : 'bg-[#B08D57]/20 text-[#DFBA73] border border-[#B08D57]/40'
                               }`}
                             >
                               {isFinalizado ? 'Finalizado' : 'Em Trânsito'}
@@ -613,8 +616,8 @@ export const SendReportModal: React.FC<SendReportModalProps> = ({
 
                       <div className="text-right shrink-0">
                         <div className="text-slate-300">
-                          Saída: <span className="text-white font-semibold">{r.horarioSaida || '-'}</span> | Chegada:{' '}
-                          <span className="text-white font-semibold">{r.horarioChegada || 'Em trânsito'}</span>
+                          Saída: <span className="text-[#DFBA73] font-mono font-semibold">{r.horarioSaida || '-'}</span> | Chegada:{' '}
+                          <span className="text-white font-mono font-semibold">{r.horarioChegada || 'Em trânsito'}</span>
                         </div>
                         <div className="text-slate-400 text-[11px] mt-0.5">
                           Operador: <span className="text-slate-200 font-medium">{r.funcionarioResponsavel}</span>
@@ -628,12 +631,12 @@ export const SendReportModal: React.FC<SendReportModalProps> = ({
           </div>
 
           {/* CANAIS PARA ENVIAR O RELATÓRIO DO DIA */}
-          <div className="bg-slate-950 border-2 border-slate-800 rounded-2xl p-4 sm:p-5 space-y-3">
+          <div className="bg-black/40 border border-[#B08D57]/15 rounded-2xl p-4 sm:p-5 space-y-3">
             <h3 className="text-sm sm:text-base font-bold text-white uppercase tracking-wider flex items-center gap-2">
-              <Share2 className="w-4 h-4 text-amber-400" />
+              <Share2 className="w-4 h-4 text-[#DFBA73]" />
               2. Como deseja Enviar ou Compartilhar o Relatório?
             </h3>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-[#C6A96B]/70">
               Escolha o canal de envio com todas as informações consolidadas da data selecionada:
             </p>
 
@@ -643,7 +646,7 @@ export const SendReportModal: React.FC<SendReportModalProps> = ({
                 type="button"
                 onClick={handleCompartilharPdf}
                 disabled={compartilhando}
-                className="flex items-center justify-center gap-2.5 bg-gradient-to-r from-amber-600 to-amber-600 hover:from-amber-500 hover:to-amber-500 text-white px-4 py-3 rounded-2xl text-sm font-bold shadow-md cursor-pointer transition-all min-h-[48px]"
+                className="flex items-center justify-center gap-2.5 bg-gradient-to-r from-[#C6A96B] via-[#B08D57] to-[#80683F] hover:brightness-110 text-slate-950 px-4 py-3 rounded-2xl text-sm font-bold shadow-md cursor-pointer transition-all min-h-[48px] border border-[#DFBA73]/40"
               >
                 <Share2 className="w-4 h-4" />
                 <span>{compartilhando ? 'Processando...' : 'Compartilhar PDF'}</span>
@@ -663,9 +666,9 @@ export const SendReportModal: React.FC<SendReportModalProps> = ({
               <button
                 type="button"
                 onClick={handleEnviarEmail}
-                className="flex items-center justify-center gap-2.5 bg-sky-600 hover:bg-sky-500 text-white px-4 py-3 rounded-2xl text-sm font-bold shadow-md cursor-pointer transition-all min-h-[48px]"
+                className="flex items-center justify-center gap-2.5 bg-[#B08D57]/20 hover:bg-[#B08D57]/30 text-white border border-[#B08D57]/40 px-4 py-3 rounded-2xl text-sm font-bold shadow-md cursor-pointer transition-all min-h-[48px]"
               >
-                <Mail className="w-4 h-4" />
+                <Mail className="w-4 h-4 text-[#DFBA73]" />
                 <span>Enviar p/ E-mail</span>
               </button>
 
@@ -673,7 +676,7 @@ export const SendReportModal: React.FC<SendReportModalProps> = ({
               <button
                 type="button"
                 onClick={handleBaixarPdf}
-                className="flex items-center justify-center gap-2.5 bg-amber-600 hover:bg-amber-500 text-white px-4 py-3 rounded-2xl text-sm font-bold shadow-md cursor-pointer transition-all min-h-[48px]"
+                className="flex items-center justify-center gap-2.5 bg-black/60 hover:bg-black/90 text-[#DFBA73] border border-[#B08D57]/40 px-4 py-3 rounded-2xl text-sm font-bold shadow-md cursor-pointer transition-all min-h-[48px]"
               >
                 <Download className="w-4 h-4" />
                 <span>Baixar PDF Oficial</span>
@@ -685,16 +688,16 @@ export const SendReportModal: React.FC<SendReportModalProps> = ({
               <button
                 type="button"
                 onClick={handleCopiarTexto}
-                className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-slate-300 hover:text-white bg-slate-800 hover:bg-slate-700 px-3.5 py-2 rounded-xl border border-slate-700 cursor-pointer transition-colors"
+                className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-slate-300 hover:text-white bg-black/50 hover:bg-[#B08D57]/20 px-3.5 py-2 rounded-xl border border-[#B08D57]/20 cursor-pointer transition-colors"
               >
                 {copiado ? (
                   <>
-                    <Check className="w-4 h-4 text-amber-400" />
-                    <span className="text-amber-400">Copiado para a área de transferência!</span>
+                    <Check className="w-4 h-4 text-emerald-400" />
+                    <span className="text-emerald-400">Copiado para a área de transferência!</span>
                   </>
                 ) : (
                   <>
-                    <Copy className="w-4 h-4 text-slate-400" />
+                    <Copy className="w-4 h-4 text-[#C6A96B]/60" />
                     <span>Copiar Texto do Relatório</span>
                   </>
                 )}
@@ -704,9 +707,9 @@ export const SendReportModal: React.FC<SendReportModalProps> = ({
         </div>
 
         {/* Rodapé do Modal */}
-        <div className="bg-slate-950 px-6 py-4 border-t-2 border-slate-800 flex items-center justify-between shrink-0">
-          <div className="text-xs text-slate-400 flex items-center gap-2">
-            <span className="font-semibold text-amber-400">Desenvolvido por Siolly Technology</span>
+        <div className="bg-black/40 px-6 py-4 border-t border-[#B08D57]/20 flex items-center justify-between shrink-0">
+          <div className="text-xs text-[#C6A96B]/70 flex items-center gap-2">
+            <span className="font-semibold text-[#DFBA73]">Desenvolvido por Siolly Technology</span>
             <span>•</span>
             <span>Documento Oficial Auditado</span>
           </div>
@@ -714,7 +717,7 @@ export const SendReportModal: React.FC<SendReportModalProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-sm cursor-pointer transition-colors"
+            className="px-5 py-2.5 rounded-xl bg-black/50 hover:bg-black/80 border border-white/10 text-white font-bold text-sm cursor-pointer transition-colors"
           >
             Fechar
           </button>

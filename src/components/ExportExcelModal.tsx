@@ -162,9 +162,9 @@ export const ExportExcelModal: React.FC<ExportExcelModalProps> = ({
         <![endif]-->
         <style>
           table { border-collapse: collapse; width: 100%; font-family: Arial, sans-serif; font-size: 12px; }
-          th { background-color: #3A241D; color: #FFFFFF; font-weight: bold; border: 1px solid #666; padding: 8px; text-align: left; }
+          th { background-color: #80683F; color: #FFFFFF; font-weight: bold; border: 1px solid #666; padding: 8px; text-align: left; }
           td { border: 1px solid #CCCCCC; padding: 6px 8px; }
-          .highlight { background-color: #FFF3CD; }
+          .highlight { background-color: #FAF5EB; }
         </style>
       </head>
       <body>
@@ -228,15 +228,18 @@ export const ExportExcelModal: React.FC<ExportExcelModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/85 backdrop-blur-md overflow-y-auto animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/80 backdrop-blur-xl overflow-y-auto animate-in fade-in duration-200">
       <div 
-        className="bg-[#181818] border border-[#6B6B6B]/40 rounded-3xl w-full max-w-4xl overflow-hidden shadow-2xl my-auto text-[#F3F3F1] flex flex-col max-h-[92vh]"
+        className="bg-[#111317]/95 border border-[#B08D57]/30 rounded-3xl w-full max-w-4xl overflow-hidden shadow-2xl my-auto text-slate-100 flex flex-col max-h-[92vh] relative"
         onClick={(e) => e.stopPropagation()}
       >
+        {/* Specular Top Edge Light */}
+        <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#C6A96B]/40 to-transparent" />
+
         {/* Cabeçalho */}
-        <div className="bg-[#1f1f1f] border-b border-[#6B6B6B]/30 px-5 sm:px-8 py-5 flex items-center justify-between shrink-0">
+        <div className="bg-black/40 border-b border-[#B08D57]/20 px-5 sm:px-8 py-5 flex items-center justify-between shrink-0">
           <div className="flex items-center gap-3.5">
-            <div className="w-12 h-12 rounded-2xl bg-emerald-950 border border-emerald-500/40 flex items-center justify-center text-emerald-400 shadow-lg shrink-0">
+            <div className="w-12 h-12 rounded-2xl bg-[#B08D57]/20 border border-[#B08D57]/40 flex items-center justify-center text-[#DFBA73] shadow-lg shrink-0">
               <FileSpreadsheet className="w-6 h-6" />
             </div>
             <div>
@@ -244,11 +247,11 @@ export const ExportExcelModal: React.FC<ExportExcelModalProps> = ({
                 <h2 className="text-lg sm:text-xl font-bold text-white tracking-tight">
                   Exportar para Excel / Planilhas
                 </h2>
-                <span className="bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 text-[11px] font-bold px-2.5 py-0.5 rounded-full uppercase">
+                <span className="bg-[#B08D57]/20 border border-[#B08D57]/40 text-[#DFBA73] text-[11px] font-bold px-2.5 py-0.5 rounded-full uppercase">
                   {registrosFiltrados.length} {registrosFiltrados.length === 1 ? 'Linha' : 'Linhas'}
                 </span>
               </div>
-              <p className="text-xs text-[#6B6B6B] mt-0.5">
+              <p className="text-xs text-[#C6A96B]/70 mt-0.5">
                 Gere arquivos compatíveis com Microsoft Excel, Google Planilhas e LibreOffice
               </p>
             </div>
@@ -257,7 +260,7 @@ export const ExportExcelModal: React.FC<ExportExcelModalProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="w-10 h-10 rounded-2xl bg-black/50 hover:bg-[#333] border border-[#6B6B6B]/30 flex items-center justify-center text-[#6B6B6B] hover:text-white transition-all cursor-pointer shrink-0"
+            className="w-10 h-10 rounded-2xl bg-black/50 hover:bg-[#B08D57]/20 border border-white/5 hover:border-[#B08D57]/30 flex items-center justify-center text-white/70 hover:text-white transition-all cursor-pointer shrink-0"
             title="Fechar"
           >
             <X className="w-5 h-5" />
@@ -265,22 +268,22 @@ export const ExportExcelModal: React.FC<ExportExcelModalProps> = ({
         </div>
 
         {/* Conteúdo com Rolagem */}
-        <div className="p-5 sm:p-8 overflow-y-auto space-y-6 flex-1">
+        <div className="p-5 sm:p-8 overflow-y-auto space-y-6 flex-1 custom-scrollbar">
           {/* Seção 1: Filtros de Exportação */}
-          <div className="bg-[#212121] border border-[#6B6B6B]/30 rounded-2xl p-4 sm:p-5 space-y-4">
+          <div className="bg-black/40 border border-[#B08D57]/15 rounded-2xl p-4 sm:p-5 space-y-4">
             <div className="flex items-center gap-2 text-sm font-bold text-white">
-              <Filter className="w-4 h-4 text-[#D97924]" />
+              <Filter className="w-4 h-4 text-[#DFBA73]" />
               <span>1. Filtrar Dados para a Planilha</span>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               {/* Período */}
               <div>
-                <label className="block text-xs font-semibold text-[#6B6B6B] mb-1.5">Período:</label>
+                <label className="block text-xs font-semibold text-[#C6A96B]/70 mb-1.5">Período:</label>
                 <select
                   value={periodoFiltro}
                   onChange={(e) => setPeriodoFiltro(e.target.value as any)}
-                  className="w-full bg-[#181818] border border-[#6B6B6B]/40 text-xs font-semibold rounded-xl px-3 py-2 text-white focus:outline-none focus:border-[#D97924]"
+                  className="w-full bg-black/60 border border-[#B08D57]/30 text-xs font-semibold rounded-xl px-3 py-2 text-white focus:outline-none focus:border-[#DFBA73]"
                 >
                   <option value="MES_ATUAL">Este Mês</option>
                   <option value="HOJE">Somente Hoje</option>
@@ -291,11 +294,11 @@ export const ExportExcelModal: React.FC<ExportExcelModalProps> = ({
 
               {/* Secretaria */}
               <div>
-                <label className="block text-xs font-semibold text-[#6B6B6B] mb-1.5">Secretaria:</label>
+                <label className="block text-xs font-semibold text-[#C6A96B]/70 mb-1.5">Secretaria:</label>
                 <select
                   value={secretariaFiltro}
                   onChange={(e) => setSecretariaFiltro(e.target.value as any)}
-                  className="w-full bg-[#181818] border border-[#6B6B6B]/40 text-xs font-semibold rounded-xl px-3 py-2 text-white focus:outline-none focus:border-[#D97924]"
+                  className="w-full bg-black/60 border border-[#B08D57]/30 text-xs font-semibold rounded-xl px-3 py-2 text-white focus:outline-none focus:border-[#DFBA73]"
                 >
                   <option value="TODAS">Todas as Secretarias</option>
                   <option value="Secretaria da Agricultura">Secretaria da Agricultura</option>
@@ -305,11 +308,11 @@ export const ExportExcelModal: React.FC<ExportExcelModalProps> = ({
 
               {/* Status */}
               <div>
-                <label className="block text-xs font-semibold text-[#6B6B6B] mb-1.5">Status:</label>
+                <label className="block text-xs font-semibold text-[#C6A96B]/70 mb-1.5">Status:</label>
                 <select
                   value={statusFiltro}
                   onChange={(e) => setStatusFiltro(e.target.value as any)}
-                  className="w-full bg-[#181818] border border-[#6B6B6B]/40 text-xs font-semibold rounded-xl px-3 py-2 text-white focus:outline-none focus:border-[#D97924]"
+                  className="w-full bg-black/60 border border-[#B08D57]/30 text-xs font-semibold rounded-xl px-3 py-2 text-white focus:outline-none focus:border-[#DFBA73]"
                 >
                   <option value="TODOS">Todos os Registros</option>
                   <option value="FINALIZADO">Somente Viagens Concluídas</option>
@@ -320,23 +323,23 @@ export const ExportExcelModal: React.FC<ExportExcelModalProps> = ({
 
             {/* Custom Dates */}
             {periodoFiltro === 'CUSTOM' && (
-              <div className="grid grid-cols-2 gap-3 pt-2 border-t border-[#6B6B6B]/20">
+              <div className="grid grid-cols-2 gap-3 pt-2 border-t border-[#B08D57]/15">
                 <div>
-                  <label className="block text-[11px] text-[#6B6B6B] mb-1">Data Inicial:</label>
+                  <label className="block text-[11px] text-[#C6A96B]/70 mb-1">Data Inicial:</label>
                   <input
                     type="date"
                     value={dataInicio}
                     onChange={(e) => setDataInicio(e.target.value)}
-                    className="w-full bg-[#181818] border border-[#6B6B6B]/40 rounded-xl px-3 py-1.5 text-xs text-white"
+                    className="w-full bg-black/60 border border-[#B08D57]/30 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-[#DFBA73]"
                   />
                 </div>
                 <div>
-                  <label className="block text-[11px] text-[#6B6B6B] mb-1">Data Final:</label>
+                  <label className="block text-[11px] text-[#C6A96B]/70 mb-1">Data Final:</label>
                   <input
                     type="date"
                     value={dataFim}
                     onChange={(e) => setDataFim(e.target.value)}
-                    className="w-full bg-[#181818] border border-[#6B6B6B]/40 rounded-xl px-3 py-1.5 text-xs text-white"
+                    className="w-full bg-black/60 border border-[#B08D57]/30 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-[#DFBA73]"
                   />
                 </div>
               </div>
@@ -344,25 +347,25 @@ export const ExportExcelModal: React.FC<ExportExcelModalProps> = ({
           </div>
 
           {/* Seção 2: Seleção de Colunas */}
-          <div className="bg-[#212121] border border-[#6B6B6B]/30 rounded-2xl p-4 sm:p-5 space-y-3">
+          <div className="bg-black/40 border border-[#B08D57]/15 rounded-2xl p-4 sm:p-5 space-y-3">
             <div className="flex items-center justify-between flex-wrap gap-2">
               <div className="flex items-center gap-2 text-sm font-bold text-white">
-                <Table className="w-4 h-4 text-[#D97924]" />
+                <Table className="w-4 h-4 text-[#DFBA73]" />
                 <span>2. Selecionar Colunas para a Planilha ({colunasAtivas.length} de {colunas.length})</span>
               </div>
               <div className="flex items-center gap-2">
                 <button
                   type="button"
                   onClick={() => selecionarTodasColunas(true)}
-                  className="text-[11px] text-[#D97924] hover:underline font-semibold cursor-pointer"
+                  className="text-[11px] text-[#DFBA73] hover:underline font-semibold cursor-pointer"
                 >
                   Marcar Todas
                 </button>
-                <span className="text-[#6B6B6B]">•</span>
+                <span className="text-[#B08D57]/40">•</span>
                 <button
                   type="button"
                   onClick={() => selecionarTodasColunas(false)}
-                  className="text-[11px] text-[#6B6B6B] hover:text-white hover:underline cursor-pointer"
+                  className="text-[11px] text-[#C6A96B]/60 hover:text-white hover:underline cursor-pointer"
                 >
                   Desmarcar
                 </button>
@@ -377,14 +380,14 @@ export const ExportExcelModal: React.FC<ExportExcelModalProps> = ({
                   onClick={() => toggleColuna(col.id)}
                   className={`flex items-center gap-2 p-2.5 rounded-xl border text-xs text-left transition-all cursor-pointer ${
                     col.selecionada
-                      ? 'bg-[#181818] border-[#D97924]/60 text-white shadow-sm'
-                      : 'bg-[#141414] border-[#6B6B6B]/20 text-[#6B6B6B] hover:text-white'
+                      ? 'bg-[#B08D57]/15 border-[#B08D57]/50 text-white shadow-sm'
+                      : 'bg-black/40 border-white/5 text-slate-400 hover:text-white'
                   }`}
                 >
                   {col.selecionada ? (
-                    <CheckSquare className="w-4 h-4 text-[#D97924] shrink-0" />
+                    <CheckSquare className="w-4 h-4 text-[#DFBA73] shrink-0" />
                   ) : (
-                    <Square className="w-4 h-4 text-[#6B6B6B] shrink-0" />
+                    <Square className="w-4 h-4 text-slate-500 shrink-0" />
                   )}
                   <span className="truncate">{col.label}</span>
                 </button>
@@ -393,7 +396,7 @@ export const ExportExcelModal: React.FC<ExportExcelModalProps> = ({
           </div>
 
           {/* Seção 3: Pré-visualização dos Dados */}
-          <div className="bg-[#212121] border border-[#6B6B6B]/30 rounded-2xl p-4 sm:p-5 space-y-3">
+          <div className="bg-black/40 border border-[#B08D57]/15 rounded-2xl p-4 sm:p-5 space-y-3">
             <div className="flex items-center justify-between">
               <span className="text-xs font-bold text-white uppercase tracking-wider">
                 Prévia da Planilha (Primeiras linhas)
@@ -404,16 +407,16 @@ export const ExportExcelModal: React.FC<ExportExcelModalProps> = ({
             </div>
 
             {registrosFiltrados.length === 0 ? (
-              <p className="text-xs text-[#6B6B6B] py-4 text-center">
+              <p className="text-xs text-[#C6A96B]/60 py-4 text-center">
                 Nenhum registro corresponde aos filtros selecionados.
               </p>
             ) : (
-              <div className="overflow-x-auto border border-[#6B6B6B]/20 rounded-xl bg-[#141414]">
+              <div className="overflow-x-auto border border-[#B08D57]/15 rounded-xl bg-black/40">
                 <table className="w-full text-left text-xs border-collapse">
                   <thead>
-                    <tr className="bg-[#1f1f1f] border-b border-[#6B6B6B]/30 text-white font-bold">
+                    <tr className="bg-black/60 border-b border-[#B08D57]/20 text-white font-bold">
                       {colunasAtivas.map(c => (
-                        <th key={c.id} className="p-2.5 whitespace-nowrap border-r border-[#6B6B6B]/20 last:border-r-0">
+                        <th key={c.id} className="p-2.5 whitespace-nowrap border-r border-[#B08D57]/15 last:border-r-0 text-[#DFBA73]">
                           {c.label}
                         </th>
                       ))}
@@ -421,9 +424,9 @@ export const ExportExcelModal: React.FC<ExportExcelModalProps> = ({
                   </thead>
                   <tbody>
                     {registrosFiltrados.slice(0, 4).map((reg, idx) => (
-                      <tr key={reg.id} className="border-b border-[#6B6B6B]/15 hover:bg-[#1f1f1f]/50">
+                      <tr key={reg.id} className="border-b border-[#B08D57]/10 hover:bg-[#B08D57]/5">
                         {colunasAtivas.map(c => (
-                          <td key={c.id} className="p-2.5 whitespace-nowrap text-[#F3F3F1]/80 border-r border-[#6B6B6B]/15 last:border-r-0">
+                          <td key={c.id} className="p-2.5 whitespace-nowrap text-slate-200 border-r border-[#B08D57]/10 last:border-r-0">
                             {c.obterValor(reg)}
                           </td>
                         ))}
@@ -437,13 +440,13 @@ export const ExportExcelModal: React.FC<ExportExcelModalProps> = ({
         </div>
 
         {/* Rodapé com Botões de Ação */}
-        <div className="bg-[#1f1f1f] border-t border-[#6B6B6B]/30 px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-3 shrink-0">
+        <div className="bg-black/40 border-t border-[#B08D57]/20 px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-3 shrink-0">
           <button
             type="button"
             onClick={copiarParaAreaTransferencia}
-            className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2.5 rounded-2xl bg-[#252525] hover:bg-[#333] border border-[#6B6B6B]/40 text-white text-xs font-bold transition-all cursor-pointer"
+            className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2.5 rounded-2xl bg-black/50 hover:bg-[#B08D57]/20 border border-[#B08D57]/30 text-white text-xs font-bold transition-all cursor-pointer"
           >
-            {copiado ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4 text-[#D97924]" />}
+            {copiado ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4 text-[#DFBA73]" />}
             <span>{copiado ? 'Copiado com Sucesso!' : 'Copiar para Área de Transferência'}</span>
           </button>
 
@@ -460,7 +463,7 @@ export const ExportExcelModal: React.FC<ExportExcelModalProps> = ({
             <button
               type="button"
               onClick={baixarXlsNativo}
-              className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2.5 rounded-2xl bg-[#D97924] hover:bg-[#c2681e] text-white text-xs font-bold shadow-lg transition-all cursor-pointer"
+              className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2.5 rounded-2xl bg-gradient-to-r from-[#C6A96B] via-[#B08D57] to-[#80683F] hover:brightness-110 text-slate-950 text-xs font-bold shadow-lg transition-all cursor-pointer border border-[#DFBA73]/30"
             >
               <FileSpreadsheet className="w-4 h-4" />
               <span>Baixar Excel (.XLS)</span>

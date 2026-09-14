@@ -42,22 +42,22 @@ export const RecordDetailModal: React.FC<RecordDetailModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/75 backdrop-blur-xl overflow-y-auto">
-      <div className="bg-[#161618]/90 border border-white/[0.1] rounded-3xl w-full max-w-2xl max-h-[92vh] flex flex-col shadow-2xl overflow-hidden my-auto animate-in fade-in zoom-in-95 duration-200 relative">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/80 backdrop-blur-xl overflow-y-auto">
+      <div className="bg-[#111317]/95 border border-[#B08D57]/30 rounded-3xl w-full max-w-2xl max-h-[92vh] flex flex-col shadow-2xl overflow-hidden my-auto animate-in fade-in zoom-in-95 duration-200 relative">
         {/* Specular Top Edge Light */}
-        <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+        <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#C6A96B]/40 to-transparent" />
 
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4.5 border-b border-white/[0.08] bg-white/[0.02]">
+        <div className="flex items-center justify-between px-6 py-4.5 border-b border-[#B08D57]/20 bg-black/40">
           <div className="flex items-center gap-3.5">
             <div
               className={`w-11 h-11 rounded-2xl flex items-center justify-center text-white shadow-md border ${
                 isAgri
-                  ? 'bg-amber-500/20 text-amber-400 border-amber-400/30'
+                  ? 'bg-[#B08D57]/20 text-[#DFBA73] border-[#B08D57]/40'
                   : 'bg-emerald-500/20 text-emerald-400 border-emerald-400/30'
               }`}
             >
-              {isAgri ? <Wheat className="w-5 h-5 text-amber-400" /> : <Plane className="w-5 h-5 text-emerald-400" />}
+              {isAgri ? <Wheat className="w-5 h-5 text-[#DFBA73]" /> : <Plane className="w-5 h-5 text-emerald-400" />}
             </div>
             <div>
               <div className="flex items-center gap-2.5 flex-wrap">
@@ -71,13 +71,13 @@ export const RecordDetailModal: React.FC<RecordDetailModalProps> = ({
                 <span
                   className={`text-[11px] font-semibold px-2.5 py-0.5 rounded-full inline-flex items-center gap-1.5 ${
                     registro.status === 'EM_TRANSITO'
-                      ? 'bg-amber-500/15 text-amber-300 border border-amber-400/30'
+                      ? 'bg-[#B08D57]/20 text-[#DFBA73] border border-[#B08D57]/40'
                       : 'bg-emerald-500/15 text-emerald-300 border border-emerald-400/30'
                   }`}
                 >
                   {registro.status === 'EM_TRANSITO' ? (
                     <>
-                      <Clock className="w-3 h-3 animate-pulse text-amber-400" />
+                      <Clock className="w-3 h-3 animate-pulse text-[#DFBA73]" />
                       <span>Em Trânsito</span>
                     </>
                   ) : (
@@ -88,7 +88,7 @@ export const RecordDetailModal: React.FC<RecordDetailModalProps> = ({
                   )}
                 </span>
               </div>
-              <span className="text-xs font-medium text-white/50 block mt-0.5">{registro.secretaria}</span>
+              <span className="text-xs font-medium text-[#C6A96B]/70 block mt-0.5">{registro.secretaria}</span>
             </div>
           </div>
 
@@ -96,7 +96,7 @@ export const RecordDetailModal: React.FC<RecordDetailModalProps> = ({
             <button
               type="button"
               onClick={handleExportarFicha}
-              className="p-2 text-white/50 hover:text-white hover:bg-white/[0.08] rounded-xl transition-all cursor-pointer active:scale-[0.94]"
+              className="p-2 text-white/50 hover:text-white hover:bg-[#B08D57]/20 rounded-xl transition-all cursor-pointer active:scale-[0.94]"
               title="Exportar Comprovante do Registro em PDF"
             >
               <FileDown className="w-4 h-4" />
@@ -104,7 +104,7 @@ export const RecordDetailModal: React.FC<RecordDetailModalProps> = ({
             <button
               type="button"
               onClick={() => onEdit(registro)}
-              className="p-2 text-white/50 hover:text-white hover:bg-white/[0.08] rounded-xl transition-all cursor-pointer active:scale-[0.94]"
+              className="p-2 text-white/50 hover:text-white hover:bg-[#B08D57]/20 rounded-xl transition-all cursor-pointer active:scale-[0.94]"
               title="Editar Registro"
             >
               <Edit3 className="w-4 h-4" />
@@ -112,7 +112,7 @@ export const RecordDetailModal: React.FC<RecordDetailModalProps> = ({
             <button
               type="button"
               onClick={onClose}
-              className="p-2 text-white/50 hover:text-white hover:bg-white/[0.08] rounded-xl transition-all cursor-pointer active:scale-[0.94]"
+              className="p-2 text-white/50 hover:text-white hover:bg-[#B08D57]/20 rounded-xl transition-all cursor-pointer active:scale-[0.94]"
             >
               <X className="w-4 h-4" />
             </button>
@@ -123,9 +123,9 @@ export const RecordDetailModal: React.FC<RecordDetailModalProps> = ({
         <div className="flex-1 overflow-y-auto p-5 sm:p-6 space-y-4">
           {/* Status Alert if in transit */}
           {registro.status === 'EM_TRANSITO' && (
-            <div className="bg-amber-500/15 border border-amber-400/30 rounded-2xl p-3.5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-md">
-              <div className="flex items-center gap-2.5 text-xs sm:text-sm text-amber-200 font-semibold">
-                <Clock className="w-4 h-4 text-amber-400 shrink-0 animate-pulse" />
+            <div className="bg-[#B08D57]/15 border border-[#B08D57]/35 rounded-2xl p-3.5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-md">
+              <div className="flex items-center gap-2.5 text-xs sm:text-sm text-[#DFBA73] font-semibold">
+                <Clock className="w-4 h-4 text-[#DFBA73] shrink-0 animate-pulse" />
                 <span>Veículo em trânsito externo (Aguardando retorno na portaria)</span>
               </div>
               {!mostrarCampoRetorno ? (
@@ -135,7 +135,7 @@ export const RecordDetailModal: React.FC<RecordDetailModalProps> = ({
                     setHorarioRetornoInput(new Date().toTimeString().slice(0, 5));
                     setMostrarCampoRetorno(true);
                   }}
-                  className="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 text-xs font-bold px-3.5 py-1.5 rounded-xl transition-all cursor-pointer shrink-0 shadow-md active:scale-[0.96]"
+                  className="bg-gradient-to-r from-[#C6A96B] via-[#B08D57] to-[#80683F] hover:brightness-110 text-slate-950 text-xs font-bold px-3.5 py-1.5 rounded-xl transition-all cursor-pointer shrink-0 shadow-md active:scale-[0.96] border border-[#DFBA73]/40"
                 >
                   Registrar Chegada
                 </button>
@@ -145,12 +145,12 @@ export const RecordDetailModal: React.FC<RecordDetailModalProps> = ({
                     type="time"
                     value={horarioRetornoInput}
                     onChange={(e) => setHorarioRetornoInput(e.target.value)}
-                    className="bg-white/[0.06] border border-white/20 rounded-xl px-2.5 py-1 text-xs text-white font-mono"
+                    className="bg-black/60 border border-[#B08D57]/40 rounded-xl px-2.5 py-1 text-xs text-white font-mono"
                   />
                   <button
                     type="button"
                     onClick={handleSalvarRetorno}
-                    className="bg-amber-500 text-slate-950 text-xs font-bold px-3 py-1 rounded-xl transition-all cursor-pointer active:scale-[0.96]"
+                    className="bg-gradient-to-r from-[#C6A96B] to-[#B08D57] text-slate-950 text-xs font-bold px-3 py-1 rounded-xl transition-all cursor-pointer active:scale-[0.96]"
                   >
                     Confirmar
                   </button>
@@ -168,14 +168,14 @@ export const RecordDetailModal: React.FC<RecordDetailModalProps> = ({
 
           {/* Botão Dedicado de Acesso para Alterar Horários */}
           {onEditarHorarios && (
-            <div className="bg-white/[0.03] border border-amber-400/20 rounded-2xl p-3.5 flex items-center justify-between flex-wrap gap-3">
+            <div className="bg-black/40 border border-[#B08D57]/20 rounded-2xl p-3.5 flex items-center justify-between flex-wrap gap-3">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-xl bg-amber-500/15 border border-amber-400/30 flex items-center justify-center text-amber-400">
+                <div className="w-8 h-8 rounded-xl bg-[#B08D57]/15 border border-[#B08D57]/30 flex items-center justify-center text-[#DFBA73]">
                   <Clock className="w-4 h-4" />
                 </div>
                 <div>
                   <span className="text-xs font-bold text-white block">Ajuste de Horários</span>
-                  <span className="text-[11px] text-white/50">Altere horários de saída ou chegada a qualquer momento</span>
+                  <span className="text-[11px] text-[#C6A96B]/70">Altere horários de saída ou chegada a qualquer momento</span>
                 </div>
               </div>
               <button
@@ -184,7 +184,7 @@ export const RecordDetailModal: React.FC<RecordDetailModalProps> = ({
                   onClose();
                   onEditarHorarios(registro);
                 }}
-                className="bg-white/[0.06] hover:bg-white/[0.1] text-amber-300 border border-amber-400/30 font-semibold text-xs px-3.5 py-1.5 rounded-xl transition-all shadow-sm cursor-pointer flex items-center gap-1.5 active:scale-[0.96]"
+                className="bg-black/50 hover:bg-[#B08D57]/20 text-[#DFBA73] border border-[#B08D57]/30 font-semibold text-xs px-3.5 py-1.5 rounded-xl transition-all shadow-sm cursor-pointer flex items-center gap-1.5 active:scale-[0.96]"
               >
                 <Clock className="w-3.5 h-3.5" />
                 <span>Ajustar Horários</span>
@@ -194,45 +194,45 @@ export const RecordDetailModal: React.FC<RecordDetailModalProps> = ({
 
           {/* Dados em Grade */}
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-            <div className="bg-white/[0.03] border border-white/[0.06] p-3 rounded-2xl">
-              <span className="text-[10px] font-semibold uppercase tracking-wider text-white/40 flex items-center gap-1 mb-1">
-                <Calendar className="w-3 h-3 text-amber-400" />
+            <div className="bg-black/40 border border-[#B08D57]/15 p-3 rounded-2xl">
+              <span className="text-[10px] font-semibold uppercase tracking-wider text-[#C6A96B]/70 flex items-center gap-1 mb-1">
+                <Calendar className="w-3 h-3 text-[#DFBA73]" />
                 Data
               </span>
               <span className="text-sm font-semibold text-white block">{dataFormatada}</span>
             </div>
 
-            <div className="bg-white/[0.03] border border-white/[0.06] p-3 rounded-2xl">
-              <span className="text-[10px] font-semibold uppercase tracking-wider text-white/40 flex items-center gap-1 mb-1">
-                <Clock className="w-3 h-3 text-amber-400" />
+            <div className="bg-black/40 border border-[#B08D57]/15 p-3 rounded-2xl">
+              <span className="text-[10px] font-semibold uppercase tracking-wider text-[#C6A96B]/70 flex items-center gap-1 mb-1">
+                <Clock className="w-3 h-3 text-[#DFBA73]" />
                 Horário de Saída
               </span>
-              <span className="text-sm font-bold font-mono text-amber-400 block">{registro.horarioSaida}</span>
+              <span className="text-sm font-bold font-mono text-[#DFBA73] block">{registro.horarioSaida}</span>
             </div>
 
-            <div className="bg-white/[0.03] border border-white/[0.06] p-3 rounded-2xl">
-              <span className="text-[10px] font-semibold uppercase tracking-wider text-white/40 flex items-center gap-1 mb-1">
-                <Clock className="w-3 h-3 text-amber-400" />
+            <div className="bg-black/40 border border-[#B08D57]/15 p-3 rounded-2xl">
+              <span className="text-[10px] font-semibold uppercase tracking-wider text-[#C6A96B]/70 flex items-center gap-1 mb-1">
+                <Clock className="w-3 h-3 text-[#DFBA73]" />
                 Horário de Chegada
               </span>
               <span className="text-sm font-bold font-mono text-white block">
                 {registro.horarioChegada || (
-                  <span className="text-amber-400 italic font-medium text-xs">Em trânsito</span>
+                  <span className="text-[#DFBA73] italic font-medium text-xs">Em trânsito</span>
                 )}
               </span>
             </div>
 
-            <div className="bg-white/[0.03] border border-white/[0.06] p-3 rounded-2xl col-span-2 sm:col-span-2">
-              <span className="text-[10px] font-semibold uppercase tracking-wider text-white/40 flex items-center gap-1 mb-1">
-                <User className="w-3 h-3 text-amber-400" />
+            <div className="bg-black/40 border border-[#B08D57]/15 p-3 rounded-2xl col-span-2 sm:col-span-2">
+              <span className="text-[10px] font-semibold uppercase tracking-wider text-[#C6A96B]/70 flex items-center gap-1 mb-1">
+                <User className="w-3 h-3 text-[#DFBA73]" />
                 Motorista Designado
               </span>
               <span className="text-sm font-semibold text-white block">{registro.motorista}</span>
             </div>
 
-            <div className="bg-white/[0.03] border border-white/[0.06] p-3 rounded-2xl">
-              <span className="text-[10px] font-semibold uppercase tracking-wider text-white/40 flex items-center gap-1 mb-1">
-                <Building className="w-3 h-3 text-purple-400" />
+            <div className="bg-black/40 border border-[#B08D57]/15 p-3 rounded-2xl">
+              <span className="text-[10px] font-semibold uppercase tracking-wider text-[#C6A96B]/70 flex items-center gap-1 mb-1">
+                <Building className="w-3 h-3 text-[#DFBA73]" />
                 Andar / Setor
               </span>
               <span className="text-sm font-semibold text-white block">{registro.andar}</span>
@@ -241,16 +241,16 @@ export const RecordDetailModal: React.FC<RecordDetailModalProps> = ({
 
           {/* Veículo & Destino se existirem */}
           {(registro.placa || registro.modeloVeiculo || registro.destino) && (
-            <div className="bg-white/[0.03] border border-white/[0.06] p-3 rounded-2xl space-y-2">
+            <div className="bg-black/40 border border-[#B08D57]/15 p-3 rounded-2xl space-y-2">
               <div className="flex items-center gap-2 text-xs sm:text-sm text-white/80">
-                <Car className="w-4 h-4 text-amber-400 shrink-0" />
+                <Car className="w-4 h-4 text-[#DFBA73] shrink-0" />
                 <span>
                   Veículo: <strong className="text-white font-semibold">{registro.placa || 'Sem placa'}</strong> {registro.modeloVeiculo ? `(${registro.modeloVeiculo})` : ''}
                 </span>
               </div>
               {registro.destino && (
                 <div className="flex items-start gap-2 text-xs sm:text-sm text-white/80">
-                  <MapPin className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+                  <MapPin className="w-4 h-4 text-[#DFBA73] shrink-0 mt-0.5" />
                   <span>
                     Destino / Rota: <strong className="text-white font-semibold">{registro.destino}</strong>
                   </span>
@@ -261,30 +261,30 @@ export const RecordDetailModal: React.FC<RecordDetailModalProps> = ({
 
           {/* Campo de Ocorrência Registrada */}
           {registro.ocorrencia ? (
-            <div className="bg-amber-500/10 border border-amber-400/25 rounded-2xl p-3.5 space-y-2">
+            <div className="bg-[#B08D57]/15 border border-[#B08D57]/30 rounded-2xl p-3.5 space-y-2">
               <div className="flex items-center justify-between gap-2 flex-wrap">
-                <span className="text-xs font-bold text-amber-300 flex items-center gap-1.5 uppercase">
-                  <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0" />
+                <span className="text-xs font-bold text-[#DFBA73] flex items-center gap-1.5 uppercase">
+                  <AlertTriangle className="w-4 h-4 text-[#DFBA73] shrink-0" />
                   <span>Ocorrência / Anotação da Portaria</span>
                 </span>
-                <span className="text-[10px] bg-white/[0.04] text-amber-300 border border-white/[0.08] px-2 py-0.5 rounded-full font-medium">
+                <span className="text-[10px] bg-black/40 text-[#DFBA73] border border-[#B08D57]/30 px-2 py-0.5 rounded-full font-medium">
                   Registrada
                 </span>
               </div>
-              <p className="text-xs sm:text-sm text-white/90 bg-white/[0.02] p-2.5 rounded-xl border border-white/[0.06] whitespace-pre-wrap leading-relaxed">
+              <p className="text-xs sm:text-sm text-white/90 bg-black/40 p-2.5 rounded-xl border border-[#B08D57]/20 whitespace-pre-wrap leading-relaxed">
                 {registro.ocorrencia}
               </p>
             </div>
           ) : (
-            <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-3 flex items-center justify-between text-xs text-white/40">
+            <div className="bg-black/30 border border-[#B08D57]/15 rounded-2xl p-3 flex items-center justify-between text-xs text-[#C6A96B]/60">
               <span className="flex items-center gap-1.5">
-                <AlertTriangle className="w-3.5 h-3.5 text-white/30" />
+                <AlertTriangle className="w-3.5 h-3.5 text-[#C6A96B]/50" />
                 Nenhuma ocorrência registrada.
               </span>
               <button
                 type="button"
                 onClick={() => onEdit(registro)}
-                className="text-amber-400 hover:text-white font-medium cursor-pointer ml-2"
+                className="text-[#DFBA73] hover:text-white font-medium cursor-pointer ml-2"
               >
                 + Adicionar Ocorrência
               </button>
@@ -292,10 +292,10 @@ export const RecordDetailModal: React.FC<RecordDetailModalProps> = ({
           )}
 
           {/* Assinatura do Operador Responsável */}
-          <div className="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-4 space-y-2.5">
+          <div className="bg-black/40 border border-[#B08D57]/15 rounded-2xl p-4 space-y-2.5">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
               <span className="text-xs font-semibold text-white/70 flex items-center gap-1.5">
-                <PenTool className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                <PenTool className="w-3.5 h-3.5 text-[#DFBA73] shrink-0" />
                 <span>Assinatura do Operador de Cadastro</span>
               </span>
               <span className="inline-flex items-center justify-center gap-1 text-[10px] uppercase font-semibold text-emerald-400 bg-emerald-500/15 px-2.5 py-0.5 rounded-full border border-emerald-400/30 leading-none self-start sm:self-auto">
@@ -316,13 +316,13 @@ export const RecordDetailModal: React.FC<RecordDetailModalProps> = ({
               )}
             </div>
 
-            <div className="flex items-center justify-between text-xs text-white/60 pt-0.5">
+            <div className="flex items-center justify-between text-xs text-[#C6A96B]/70 pt-0.5">
               <span>
                 Operador: <strong className="text-white font-semibold">{registro.funcionarioResponsavel}</strong>
               </span>
               {registro.matriculaFuncionario && (
                 <span>
-                  Matrícula: <strong className="text-amber-400 font-mono font-semibold">{registro.matriculaFuncionario}</strong>
+                  Matrícula: <strong className="text-[#DFBA73] font-mono font-semibold">{registro.matriculaFuncionario}</strong>
                 </span>
               )}
             </div>
@@ -369,7 +369,7 @@ export const RecordDetailModal: React.FC<RecordDetailModalProps> = ({
               <button
                 type="button"
                 onClick={handleExportarFicha}
-                className="flex items-center gap-1.5 text-xs text-amber-400 hover:text-amber-300 font-semibold cursor-pointer"
+                className="flex items-center gap-1.5 text-xs text-[#DFBA73] hover:text-white font-semibold cursor-pointer"
               >
                 <FileDown className="w-3.5 h-3.5" />
                 <span>Baixar Ficha Oficial (PDF)</span>
@@ -381,4 +381,3 @@ export const RecordDetailModal: React.FC<RecordDetailModalProps> = ({
     </div>
   );
 };
-

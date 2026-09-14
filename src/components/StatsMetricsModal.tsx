@@ -311,18 +311,21 @@ export const StatsMetricsModal: React.FC<StatsMetricsModalProps> = ({
   return (
     <div 
       id="modal-estatisticas-backdrop"
-      className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 md:p-6 bg-slate-950/85 backdrop-blur-md animate-in fade-in duration-200"
+      className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 md:p-6 bg-black/80 backdrop-blur-xl animate-in fade-in duration-200"
       onClick={onClose}
     >
       <div 
         id="modal-estatisticas-container"
-        className="bg-slate-900 border-2 border-slate-700 rounded-3xl w-full max-w-5xl overflow-hidden shadow-2xl text-slate-100 flex flex-col h-[92vh] max-h-[92vh]"
+        className="bg-[#111317]/95 border border-[#B08D57]/30 rounded-3xl w-full max-w-5xl overflow-hidden shadow-2xl text-slate-100 flex flex-col h-[92vh] max-h-[92vh] relative"
         onClick={(e) => e.stopPropagation()}
       >
+        {/* Specular Top Edge Light */}
+        <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#C6A96B]/40 to-transparent" />
+
         {/* CABEÇALHO PRINCIPAL FIXO E COMPACTO */}
-        <div className="bg-slate-950 border-b-2 border-slate-800 px-4 sm:px-6 py-3.5 flex flex-col md:flex-row md:items-center justify-between gap-3 shrink-0">
+        <div className="bg-black/40 border-b border-[#B08D57]/20 px-4 sm:px-6 py-3.5 flex flex-col md:flex-row md:items-center justify-between gap-3 shrink-0">
           <div className="flex items-center gap-3 min-w-0">
-            <div className="w-10 h-10 rounded-2xl bg-amber-500/20 border-2 border-amber-400/40 flex items-center justify-center text-amber-400 shadow-sm shrink-0">
+            <div className="w-10 h-10 rounded-2xl bg-[#B08D57]/20 border border-[#B08D57]/40 flex items-center justify-center text-[#DFBA73] shadow-sm shrink-0">
               <BarChart3 className="w-5 h-5" />
             </div>
             <div className="min-w-0">
@@ -331,7 +334,7 @@ export const StatsMetricsModal: React.FC<StatsMetricsModalProps> = ({
                   Estatísticas & Métricas de Frotas
                 </h2>
               </div>
-              <div className="flex items-center gap-2 text-xs text-slate-400 mt-0.5 flex-wrap">
+              <div className="flex items-center gap-2 text-xs text-[#C6A96B]/70 mt-0.5 flex-wrap">
                 <span>{periodoRotulo}</span>
                 <span>•</span>
                 <span>{secretariaFiltro === 'TODAS' ? 'Agricultura & Turismo' : secretariaFiltro}</span>
@@ -342,8 +345,8 @@ export const StatsMetricsModal: React.FC<StatsMetricsModalProps> = ({
           {/* Ações de Exportação e Fechar */}
           <div className="flex items-center gap-2 shrink-0 flex-wrap justify-end">
             {/* Tag de Total de Registros em Destaque */}
-            <div className="inline-flex items-center gap-1.5 bg-amber-500/15 border border-amber-400/40 text-amber-300 text-xs font-bold px-3 py-1.5 rounded-xl whitespace-nowrap shrink-0 shadow-sm mr-1">
-              <Layers className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+            <div className="inline-flex items-center gap-1.5 bg-[#B08D57]/15 border border-[#B08D57]/30 text-[#DFBA73] text-xs font-bold px-3 py-1.5 rounded-xl whitespace-nowrap shrink-0 shadow-sm mr-1">
+              <Layers className="w-3.5 h-3.5 text-[#DFBA73] shrink-0" />
               <span>{stats.totalViagens} {stats.totalViagens === 1 ? 'Registro' : 'Registros'}</span>
             </div>
 
@@ -351,7 +354,7 @@ export const StatsMetricsModal: React.FC<StatsMetricsModalProps> = ({
             <button
               type="button"
               onClick={handleBaixarPdf}
-              className="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold shadow transition-all cursor-pointer min-h-[36px]"
+              className="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-gradient-to-r from-[#C6A96B] via-[#B08D57] to-[#80683F] hover:brightness-110 text-slate-950 text-xs font-bold shadow transition-all cursor-pointer min-h-[36px] border border-[#DFBA73]/30"
               title="Baixar relatório completo em formato PDF"
             >
               <FileDown className="w-4 h-4" />
@@ -373,10 +376,10 @@ export const StatsMetricsModal: React.FC<StatsMetricsModalProps> = ({
             <button
               type="button"
               onClick={handleEnviarEmail}
-              className="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold shadow transition-all cursor-pointer min-h-[36px]"
+              className="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-black/50 hover:bg-[#B08D57]/20 border border-[#B08D57]/30 text-white text-xs font-bold shadow transition-all cursor-pointer min-h-[36px]"
               title="Enviar por E-mail"
             >
-              <Mail className="w-4 h-4" />
+              <Mail className="w-4 h-4 text-[#DFBA73]" />
               <span className="hidden md:inline">E-mail</span>
             </button>
 
@@ -384,10 +387,10 @@ export const StatsMetricsModal: React.FC<StatsMetricsModalProps> = ({
             <button
               type="button"
               onClick={handleCopiarTexto}
-              className="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold border border-slate-700 transition-all cursor-pointer min-h-[36px]"
+              className="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-black/50 hover:bg-[#B08D57]/20 text-slate-200 text-xs font-bold border border-[#B08D57]/20 transition-all cursor-pointer min-h-[36px]"
               title="Copiar resumo textual para colar onde quiser"
             >
-              {copiado ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4 text-slate-400" />}
+              {copiado ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4 text-[#C6A96B]/60" />}
               <span className="hidden md:inline">{copiado ? 'Copiado!' : 'Copiar'}</span>
             </button>
 
@@ -395,7 +398,7 @@ export const StatsMetricsModal: React.FC<StatsMetricsModalProps> = ({
             <button
               type="button"
               onClick={onClose}
-              className="w-9 h-9 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 flex items-center justify-center text-slate-300 hover:text-white transition-all cursor-pointer shrink-0 ml-1"
+              className="w-9 h-9 rounded-xl bg-black/50 hover:bg-[#B08D57]/20 border border-white/5 hover:border-[#B08D57]/30 flex items-center justify-center text-white/70 hover:text-white transition-all cursor-pointer shrink-0 ml-1"
               title="Fechar painel"
             >
               <X className="w-4 h-4" />
@@ -404,11 +407,11 @@ export const StatsMetricsModal: React.FC<StatsMetricsModalProps> = ({
         </div>
 
         {/* BARRA DE FILTROS FIXA COM SEPARAÇÃO NÍTIDA */}
-        <div className="bg-slate-950/90 border-b border-slate-800 px-4 sm:px-6 py-2.5 flex flex-wrap items-center justify-between gap-3 shrink-0 shadow-sm">
+        <div className="bg-black/30 border-b border-[#B08D57]/15 px-4 sm:px-6 py-2.5 flex flex-wrap items-center justify-between gap-3 shrink-0 shadow-sm">
           {/* Pílulas de Seleção de Período */}
           <div className="flex items-center gap-1.5 flex-wrap">
-            <span className="text-xs font-bold text-slate-400 mr-1 flex items-center gap-1.5">
-              <Calendar className="w-3.5 h-3.5 text-amber-400" />
+            <span className="text-xs font-bold text-[#C6A96B]/70 mr-1 flex items-center gap-1.5">
+              <Calendar className="w-3.5 h-3.5 text-[#DFBA73]" />
               <span>Período:</span>
             </span>
             {(
@@ -427,8 +430,8 @@ export const StatsMetricsModal: React.FC<StatsMetricsModalProps> = ({
                 onClick={() => setPeriodo(item.id)}
                 className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                   periodo === item.id
-                    ? 'bg-amber-500 text-slate-950 font-black shadow-sm'
-                    : 'bg-slate-800 text-slate-300 hover:text-white hover:bg-slate-700 border border-slate-700'
+                    ? 'bg-gradient-to-r from-[#C6A96B] to-[#B08D57] text-slate-950 font-black shadow-sm'
+                    : 'bg-black/50 text-slate-300 hover:text-white hover:bg-[#B08D57]/20 border border-[#B08D57]/20'
                 }`}
               >
                 {item.label}
@@ -438,11 +441,11 @@ export const StatsMetricsModal: React.FC<StatsMetricsModalProps> = ({
 
           {/* Filtro por Secretaria */}
           <div className="flex items-center gap-2 ml-auto">
-            <span className="text-xs font-bold text-slate-400 hidden xs:inline">Secretaria:</span>
+            <span className="text-xs font-bold text-[#C6A96B]/70 hidden xs:inline">Secretaria:</span>
             <select
               value={secretariaFiltro}
               onChange={(e) => setSecretariaFiltro(e.target.value as any)}
-              className="bg-slate-900 border-2 border-slate-700 text-xs font-bold rounded-xl px-3 py-1.5 text-slate-200 focus:outline-none focus:border-amber-400 cursor-pointer min-h-[36px]"
+              className="bg-black/60 border border-[#B08D57]/30 text-xs font-bold rounded-xl px-3 py-1.5 text-slate-200 focus:outline-none focus:border-[#DFBA73] cursor-pointer min-h-[36px]"
             >
               <option value="TODAS">Ambas Secretarias</option>
               <option value="Secretaria da Agricultura">Agricultura</option>
@@ -452,57 +455,57 @@ export const StatsMetricsModal: React.FC<StatsMetricsModalProps> = ({
 
           {/* Seletor Customizado de Datas se ativado */}
           {periodo === 'CUSTOM' && (
-            <div className="w-full flex items-center gap-2 pt-2 border-t border-slate-800 text-xs text-slate-300">
+            <div className="w-full flex items-center gap-2 pt-2 border-t border-[#B08D57]/15 text-xs text-slate-300">
               <span className="font-semibold text-slate-400">De:</span>
               <input
                 type="date"
                 value={dataInicioCustom}
                 onChange={(e) => setDataInicioCustom(e.target.value)}
-                className="bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1 text-xs text-white focus:outline-none focus:border-amber-400"
+                className="bg-black/60 border border-[#B08D57]/30 rounded-lg px-2.5 py-1 text-xs text-white focus:outline-none focus:border-[#DFBA73]"
               />
               <span className="font-semibold text-slate-400">Até:</span>
               <input
                 type="date"
                 value={dataFimCustom}
                 onChange={(e) => setDataFimCustom(e.target.value)}
-                className="bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1 text-xs text-white focus:outline-none focus:border-amber-400"
+                className="bg-black/60 border border-[#B08D57]/30 rounded-lg px-2.5 py-1 text-xs text-white focus:outline-none focus:border-[#DFBA73]"
               />
             </div>
           )}
         </div>
 
         {/* ÁREA DE CONTEÚDO PRINCIPAL (100% ROLÁVEL COM BARRA VISÍVEL E SEM OBSTÁCULOS) */}
-        <div className="p-4 sm:p-6 overflow-y-auto space-y-6 flex-1 min-h-0 bg-slate-900/60">
+        <div className="p-4 sm:p-6 overflow-y-auto space-y-6 flex-1 min-h-0 bg-transparent custom-scrollbar">
           {/* Cartões Principais de KPI */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
             {/* Total de Saídas */}
-            <div className="bg-slate-950 border-2 border-slate-800 rounded-2xl p-4 shadow-md flex items-center justify-between">
+            <div className="bg-black/40 border border-[#B08D57]/15 rounded-2xl p-4 shadow-md flex items-center justify-between">
               <div className="space-y-1">
-                <p className="text-xs text-slate-400 font-bold uppercase tracking-wider">Total de Viagens</p>
+                <p className="text-xs text-[#C6A96B]/70 font-bold uppercase tracking-wider">Total de Viagens</p>
                 <p className="text-2xl sm:text-3xl font-black text-white">{stats.totalViagens}</p>
                 <p className="text-[10px] text-emerald-400 font-bold flex items-center gap-1">
                   <TrendingUp className="w-3 h-3" /> No período filtrado
                 </p>
               </div>
-              <div className="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400">
+              <div className="w-12 h-12 rounded-2xl bg-[#B08D57]/10 border border-[#B08D57]/30 flex items-center justify-center text-[#DFBA73]">
                 <Car className="w-6 h-6" />
               </div>
             </div>
 
             {/* Em Trânsito */}
-            <div className="bg-slate-950 border-2 border-amber-600/40 rounded-2xl p-4 shadow-md flex items-center justify-between">
+            <div className="bg-[#B08D57]/10 border border-[#B08D57]/30 rounded-2xl p-4 shadow-md flex items-center justify-between">
               <div className="space-y-1">
-                <p className="text-xs text-amber-400 font-bold uppercase tracking-wider">Em Trânsito (Na Rua)</p>
-                <p className="text-2xl sm:text-3xl font-black text-amber-300">{stats.emTransito}</p>
-                <p className="text-[10px] text-amber-400/80 font-medium">Aguardando retorno</p>
+                <p className="text-xs text-[#DFBA73] font-bold uppercase tracking-wider">Em Trânsito (Na Rua)</p>
+                <p className="text-2xl sm:text-3xl font-black text-[#DFBA73]">{stats.emTransito}</p>
+                <p className="text-[10px] text-[#C6A96B]/80 font-medium">Aguardando retorno</p>
               </div>
-              <div className="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400">
+              <div className="w-12 h-12 rounded-2xl bg-[#B08D57]/10 border border-[#B08D57]/30 flex items-center justify-center text-[#DFBA73]">
                 <Clock className="w-6 h-6 animate-pulse" />
               </div>
             </div>
 
             {/* Finalizadas */}
-            <div className="bg-slate-950 border-2 border-emerald-600/40 rounded-2xl p-4 shadow-md flex items-center justify-between">
+            <div className="bg-black/40 border border-emerald-500/30 rounded-2xl p-4 shadow-md flex items-center justify-between">
               <div className="space-y-1">
                 <p className="text-xs text-emerald-400 font-bold uppercase tracking-wider">Viagens Concluídas</p>
                 <p className="text-2xl sm:text-3xl font-black text-emerald-400">{stats.finalizados}</p>
@@ -514,37 +517,37 @@ export const StatsMetricsModal: React.FC<StatsMetricsModalProps> = ({
             </div>
 
             {/* Eficiência da Frota */}
-            <div className="bg-slate-950 border-2 border-slate-800 rounded-2xl p-4 shadow-md flex items-center justify-between">
+            <div className="bg-black/40 border border-[#B08D57]/15 rounded-2xl p-4 shadow-md flex items-center justify-between">
               <div className="space-y-1">
-                <p className="text-xs text-slate-400 font-bold uppercase tracking-wider">Taxa de Conclusão</p>
+                <p className="text-xs text-[#C6A96B]/70 font-bold uppercase tracking-wider">Taxa de Conclusão</p>
                 <p className="text-2xl sm:text-3xl font-black text-white">
                   {stats.totalViagens > 0 ? Math.round((stats.finalizados / stats.totalViagens) * 100) : 100}%
                 </p>
                 <p className="text-[10px] text-slate-400 font-medium">Retornos confirmados</p>
               </div>
-              <div className="w-12 h-12 rounded-2xl bg-sky-500/10 border border-sky-500/30 flex items-center justify-center text-sky-400">
+              <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-[#DFBA73]">
                 <PieChart className="w-6 h-6" />
               </div>
             </div>
           </div>
 
           {/* Comparativo de Secretarias */}
-          <div className="bg-slate-950 border-2 border-slate-800 rounded-2xl p-4 sm:p-5 shadow-lg space-y-3.5">
+          <div className="bg-black/40 border border-[#B08D57]/15 rounded-2xl p-4 sm:p-5 shadow-lg space-y-3.5">
             <div className="flex items-center justify-between">
               <h3 className="text-sm sm:text-base font-bold text-white flex items-center gap-2">
-                <Building className="w-4 h-4 text-amber-400" />
+                <Building className="w-4 h-4 text-[#DFBA73]" />
                 <span>Distribuição de Demanda por Secretaria</span>
               </h3>
-              <div className="inline-flex items-center gap-1.5 text-xs text-slate-300 font-semibold bg-slate-900 border border-slate-800 px-2.5 py-1 rounded-xl">
-                <Layers className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+              <div className="inline-flex items-center gap-1.5 text-xs text-[#C6A96B]/80 font-semibold bg-black/60 border border-[#B08D57]/20 px-2.5 py-1 rounded-xl">
+                <Layers className="w-3.5 h-3.5 text-[#DFBA73] shrink-0" />
                 <span>Total de {stats.totalViagens} {stats.totalViagens === 1 ? 'viagem' : 'viagens'}</span>
               </div>
             </div>
 
             {/* Barra Visual de Proporção */}
-            <div className="w-full h-4 bg-slate-900 rounded-full overflow-hidden flex border border-slate-800">
+            <div className="w-full h-4 bg-black/60 rounded-full overflow-hidden flex border border-[#B08D57]/20">
               <div 
-                className="h-full bg-gradient-to-r from-amber-600 to-amber-400 transition-all duration-500" 
+                className="h-full bg-gradient-to-r from-[#C6A96B] to-[#80683F] transition-all duration-500" 
                 style={{ width: `${stats.pctAgri}%` }}
                 title={`Agricultura: ${stats.totalAgri} (${stats.pctAgri}%)`}
               />
@@ -557,9 +560,9 @@ export const StatsMetricsModal: React.FC<StatsMetricsModalProps> = ({
 
             {/* Legenda e Detalhes */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
-              <div className="bg-slate-900 border border-amber-600/30 rounded-xl p-3 flex items-center justify-between">
+              <div className="bg-black/40 border border-[#B08D57]/30 rounded-xl p-3 flex items-center justify-between">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-lg bg-amber-950 flex items-center justify-center text-amber-400">
+                  <div className="w-8 h-8 rounded-lg bg-[#B08D57]/20 flex items-center justify-center text-[#DFBA73]">
                     <Wheat className="w-4 h-4" />
                   </div>
                   <div>
@@ -568,14 +571,14 @@ export const StatsMetricsModal: React.FC<StatsMetricsModalProps> = ({
                   </div>
                 </div>
                 <div className="text-right">
-                  <span className="text-sm sm:text-base font-black text-amber-400">{stats.totalAgri}</span>
+                  <span className="text-sm sm:text-base font-black text-[#DFBA73]">{stats.totalAgri}</span>
                   <p className="text-[10px] text-slate-400 font-mono">{stats.pctAgri}% do total</p>
                 </div>
               </div>
 
-              <div className="bg-slate-900 border border-emerald-600/30 rounded-xl p-3 flex items-center justify-between">
+              <div className="bg-black/40 border border-emerald-500/30 rounded-xl p-3 flex items-center justify-between">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-lg bg-emerald-950 flex items-center justify-center text-emerald-400">
+                  <div className="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400">
                     <Plane className="w-4 h-4" />
                   </div>
                   <div>
@@ -594,9 +597,9 @@ export const StatsMetricsModal: React.FC<StatsMetricsModalProps> = ({
           {/* Gráficos em Duas Colunas: Motoristas mais Ativos & Veículos mais Demandados */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             {/* Top Motoristas */}
-            <div className="bg-slate-950 border-2 border-slate-800 rounded-2xl p-4 sm:p-5 shadow-lg space-y-3.5">
+            <div className="bg-black/40 border border-[#B08D57]/15 rounded-2xl p-4 sm:p-5 shadow-lg space-y-3.5">
               <h3 className="text-sm sm:text-base font-bold text-white flex items-center gap-2">
-                <Users className="w-4 h-4 text-amber-400" />
+                <Users className="w-4 h-4 text-[#DFBA73]" />
                 <span>Top Motoristas com Mais Saídas</span>
               </h3>
 
@@ -611,18 +614,18 @@ export const StatsMetricsModal: React.FC<StatsMetricsModalProps> = ({
                       <div key={item.nome} className="space-y-1">
                         <div className="flex items-center justify-between text-xs">
                           <span className="font-semibold text-slate-200 flex items-center gap-2">
-                            <span className="w-4 h-4 rounded-full bg-slate-900 border border-slate-700 flex items-center justify-center text-[9px] text-amber-400 font-bold">
+                            <span className="w-4 h-4 rounded-full bg-black/60 border border-[#B08D57]/30 flex items-center justify-center text-[9px] text-[#DFBA73] font-bold">
                               {idx + 1}
                             </span>
                             {item.nome}
                           </span>
-                          <span className="font-bold text-amber-400 font-mono">
+                          <span className="font-bold text-[#DFBA73] font-mono">
                             {item.count} {item.count === 1 ? 'viagem' : 'viagens'}
                           </span>
                         </div>
-                        <div className="w-full h-1.5 bg-slate-900 rounded-full overflow-hidden">
+                        <div className="w-full h-1.5 bg-black/60 rounded-full overflow-hidden">
                           <div
-                            className="h-full bg-gradient-to-r from-amber-600 to-amber-400 rounded-full"
+                            className="h-full bg-gradient-to-r from-[#80683F] via-[#B08D57] to-[#C6A96B] rounded-full"
                             style={{ width: `${percent}%` }}
                           />
                         </div>
@@ -634,9 +637,9 @@ export const StatsMetricsModal: React.FC<StatsMetricsModalProps> = ({
             </div>
 
             {/* Top Veículos / Placas */}
-            <div className="bg-slate-950 border-2 border-slate-800 rounded-2xl p-4 sm:p-5 shadow-lg space-y-3.5">
+            <div className="bg-black/40 border border-[#B08D57]/15 rounded-2xl p-4 sm:p-5 shadow-lg space-y-3.5">
               <h3 className="text-sm sm:text-base font-bold text-white flex items-center gap-2">
-                <Car className="w-4 h-4 text-amber-400" />
+                <Car className="w-4 h-4 text-[#DFBA73]" />
                 <span>Veículos / Placas Mais Utilizados</span>
               </h3>
 
@@ -651,10 +654,10 @@ export const StatsMetricsModal: React.FC<StatsMetricsModalProps> = ({
                       <div key={item.placa} className="space-y-1">
                         <div className="flex items-center justify-between text-xs">
                           <div className="flex items-center gap-2">
-                            <span className="w-4 h-4 rounded-full bg-slate-900 border border-slate-700 flex items-center justify-center text-[9px] text-slate-300 font-bold">
+                            <span className="w-4 h-4 rounded-full bg-black/60 border border-[#B08D57]/30 flex items-center justify-center text-[9px] text-slate-300 font-bold">
                               {idx + 1}
                             </span>
-                            <span className="font-mono font-bold text-amber-400 bg-slate-900 px-1.5 py-0.5 rounded border border-slate-700">
+                            <span className="font-mono font-bold text-[#DFBA73] bg-black/60 px-1.5 py-0.5 rounded border border-[#B08D57]/30">
                               {item.placa}
                             </span>
                             <span className="text-slate-400 truncate max-w-[120px]">{item.modelo}</span>
@@ -663,7 +666,7 @@ export const StatsMetricsModal: React.FC<StatsMetricsModalProps> = ({
                             {item.count} {item.count === 1 ? 'saída' : 'saídas'}
                           </span>
                         </div>
-                        <div className="w-full h-1.5 bg-slate-900 rounded-full overflow-hidden">
+                        <div className="w-full h-1.5 bg-black/60 rounded-full overflow-hidden">
                           <div
                             className="h-full bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full"
                             style={{ width: `${percent}%` }}
@@ -680,9 +683,9 @@ export const StatsMetricsModal: React.FC<StatsMetricsModalProps> = ({
           {/* Terceira Linha: Destinos Frequentes + Horários de Pico */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             {/* Destinos */}
-            <div className="bg-slate-950 border-2 border-slate-800 rounded-2xl p-4 sm:p-5 shadow-lg space-y-3.5">
+            <div className="bg-black/40 border border-[#B08D57]/15 rounded-2xl p-4 sm:p-5 shadow-lg space-y-3.5">
               <h3 className="text-sm sm:text-base font-bold text-white flex items-center gap-2">
-                <MapPin className="w-4 h-4 text-amber-400" />
+                <MapPin className="w-4 h-4 text-[#DFBA73]" />
                 <span>Destinos e Itinerários Mais Comuns</span>
               </h3>
 
@@ -691,11 +694,11 @@ export const StatsMetricsModal: React.FC<StatsMetricsModalProps> = ({
               ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {stats.topDestinos.map((d) => (
-                    <div key={d.destino} className="bg-slate-900 border border-slate-800 p-2.5 rounded-xl flex items-center justify-between">
+                    <div key={d.destino} className="bg-black/40 border border-[#B08D57]/15 p-2.5 rounded-xl flex items-center justify-between">
                       <span className="text-xs font-semibold text-slate-200 truncate max-w-[140px]" title={d.destino}>
                         {d.destino}
                       </span>
-                      <span className="text-xs font-bold text-amber-400 bg-amber-950/80 px-2 py-0.5 rounded-md border border-amber-600/40">
+                      <span className="text-xs font-bold text-[#DFBA73] bg-[#B08D57]/20 px-2 py-0.5 rounded-md border border-[#B08D57]/40">
                         {d.count}x
                       </span>
                     </div>
@@ -705,31 +708,31 @@ export const StatsMetricsModal: React.FC<StatsMetricsModalProps> = ({
             </div>
 
             {/* Horários de Movimentação */}
-            <div className="bg-slate-950 border-2 border-slate-800 rounded-2xl p-4 sm:p-5 shadow-lg space-y-3.5">
+            <div className="bg-black/40 border border-[#B08D57]/15 rounded-2xl p-4 sm:p-5 shadow-lg space-y-3.5">
               <h3 className="text-sm sm:text-base font-bold text-white flex items-center gap-2">
-                <Clock className="w-4 h-4 text-amber-400" />
+                <Clock className="w-4 h-4 text-[#DFBA73]" />
                 <span>Turnos de Maior Fluxo na Portaria</span>
               </h3>
 
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                <div className="bg-slate-900 border border-slate-800 p-2.5 rounded-xl text-center space-y-0.5">
-                  <span className="text-[10px] text-slate-400 font-bold uppercase">Manhã</span>
-                  <p className="text-base font-black text-amber-400">{stats.turnos.manha}</p>
+                <div className="bg-black/40 border border-[#B08D57]/15 p-2.5 rounded-xl text-center space-y-0.5">
+                  <span className="text-[10px] text-[#C6A96B]/70 font-bold uppercase">Manhã</span>
+                  <p className="text-base font-bold font-mono text-[#DFBA73]">{stats.turnos.manha}</p>
                   <p className="text-[9px] text-slate-500">06h-12h</p>
                 </div>
-                <div className="bg-slate-900 border border-slate-800 p-2.5 rounded-xl text-center space-y-0.5">
+                <div className="bg-black/40 border border-[#B08D57]/15 p-2.5 rounded-xl text-center space-y-0.5">
                   <span className="text-[10px] text-slate-400 font-bold uppercase">Tarde</span>
-                  <p className="text-base font-black text-emerald-400">{stats.turnos.tarde}</p>
+                  <p className="text-base font-bold font-mono text-emerald-400">{stats.turnos.tarde}</p>
                   <p className="text-[9px] text-slate-500">12h-18h</p>
                 </div>
-                <div className="bg-slate-900 border border-slate-800 p-2.5 rounded-xl text-center space-y-0.5">
+                <div className="bg-black/40 border border-[#B08D57]/15 p-2.5 rounded-xl text-center space-y-0.5">
                   <span className="text-[10px] text-slate-400 font-bold uppercase">Noite</span>
-                  <p className="text-base font-black text-sky-400">{stats.turnos.noite}</p>
+                  <p className="text-base font-bold font-mono text-white/80">{stats.turnos.noite}</p>
                   <p className="text-[9px] text-slate-500">18h-24h</p>
                 </div>
-                <div className="bg-slate-900 border border-slate-800 p-2.5 rounded-xl text-center space-y-0.5">
+                <div className="bg-black/40 border border-[#B08D57]/15 p-2.5 rounded-xl text-center space-y-0.5">
                   <span className="text-[10px] text-slate-400 font-bold uppercase">Madrugada</span>
-                  <p className="text-base font-black text-purple-400">{stats.turnos.madrugada}</p>
+                  <p className="text-base font-bold font-mono text-[#C6A96B]">{stats.turnos.madrugada}</p>
                   <p className="text-[9px] text-slate-500">00h-06h</p>
                 </div>
               </div>
@@ -738,18 +741,18 @@ export const StatsMetricsModal: React.FC<StatsMetricsModalProps> = ({
         </div>
 
         {/* RODAPÉ FIXO E COMPACTO */}
-        <div className="bg-slate-950 border-t-2 border-slate-800 px-4 sm:px-6 py-3 flex items-center justify-between text-xs text-slate-400 shrink-0">
+        <div className="bg-black/40 border-t border-[#B08D57]/20 px-4 sm:px-6 py-3 flex items-center justify-between text-xs text-[#C6A96B]/70 shrink-0">
           <div className="flex items-center gap-2">
-            <span className="font-semibold text-amber-400">Desenvolvido por Siolly Technology</span>
-            <span className="hidden sm:inline text-slate-600">•</span>
+            <span className="font-semibold text-[#DFBA73]">Desenvolvido por Siolly Technology</span>
+            <span className="hidden sm:inline text-[#B08D57]/40">•</span>
             <span className="hidden sm:inline">
-              Exibindo dados de <strong className="text-slate-200">{periodoRotulo}</strong>
+              Exibindo dados de <strong className="text-white">{periodoRotulo}</strong>
             </span>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs border border-slate-700 transition-all cursor-pointer"
+            className="px-4 py-1.5 rounded-xl bg-black/50 hover:bg-[#B08D57]/20 border border-white/10 text-white font-bold text-xs transition-all cursor-pointer"
           >
             Fechar
           </button>

@@ -451,5 +451,31 @@ export const StorageService = {
       return true;
     }
     return false;
+  },
+
+  salvarAssinaturaPadrao(matricula: string, dataUrl: string): void {
+    if (!matricula) return;
+    try {
+      localStorage.setItem(`sig_padrao_${matricula.toUpperCase()}`, dataUrl);
+    } catch {
+      // Ignorar quota exceeded
+    }
+  },
+
+  getAssinaturaSalva(matricula: string): string | null {
+    if (!matricula) return null;
+    try {
+      return localStorage.getItem(`sig_padrao_${matricula.toUpperCase()}`);
+    } catch {
+      return null;
+    }
   }
 };
+
+// Aliases para compatibilidade
+export const obterRegistros = () => StorageService.getRegistros();
+export const salvarRegistro = (reg: Parameters<typeof StorageService.salvarRegistro>[0]) => StorageService.salvarRegistro(reg);
+export const excluirRegistro = (id: string) => StorageService.excluirRegistro(id);
+export const obterSessao = () => StorageService.getUsuarioAutenticado();
+export const encerrarSessao = () => StorageService.setUsuarioAutenticado(null);
+

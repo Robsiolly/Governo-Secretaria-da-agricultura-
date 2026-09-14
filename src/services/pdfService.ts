@@ -883,3 +883,14 @@ export const PdfService = {
   }
 };
 
+// Aliases de exportação direta
+export const gerarRelatorioGeralPDF = (registros: any[], filtros?: any, usuario?: any) => {
+  PdfService.gerarRelatorioDiario({
+    registros,
+    secretariaFiltro: filtros?.secretaria || 'TODAS',
+    dataFiltro: filtros?.data || '',
+    usuario,
+  });
+};
+
+
