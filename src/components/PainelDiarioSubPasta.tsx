@@ -8,7 +8,9 @@ import {
   Search, 
   FileText, 
   Plus, 
-  Car
+  Car,
+  Trash2,
+  AlertTriangle
 } from 'lucide-react';
 import { RegistroVeiculo, UsuarioAutenticado, Secretaria } from '../types';
 
@@ -18,6 +20,7 @@ interface PainelDiarioSubPastaProps {
   onAjustarHorarios: (registro: RegistroVeiculo) => void;
   onNovoRegistro: () => void;
   onExportarPdf: () => void;
+  onExcluir?: (id: string) => void;
   usuarioAtual?: UsuarioAutenticado | null;
 }
 
@@ -27,6 +30,7 @@ export const PainelDiarioSubPasta: React.FC<PainelDiarioSubPastaProps> = ({
   onAjustarHorarios,
   onNovoRegistro,
   onExportarPdf,
+  onExcluir,
 }) => {
   // Data atual como padrão
   const hoje = new Date().toISOString().split('T')[0];
@@ -34,6 +38,7 @@ export const PainelDiarioSubPasta: React.FC<PainelDiarioSubPastaProps> = ({
   const [secretariaFiltro] = useState<'TODAS' | Secretaria>('TODAS');
   const [statusFiltro, setStatusFiltro] = useState<'TODOS' | 'EM_TRANSITO' | 'FINALIZADO'>('TODOS');
   const [buscaTermo, setBuscaTermo] = useState<string>('');
+  const [registroParaExcluir, setRegistroParaExcluir] = useState<RegistroVeiculo | null>(null);
 
   // Filtragem dos registros pela data do painel diário e status
   const registrosFiltrados = useMemo(() => {
@@ -307,7 +312,7 @@ export const PainelDiarioSubPasta: React.FC<PainelDiarioSubPastaProps> = ({
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2.5 pt-4 border-t border-[#B08D57]/15">
+                <div className="flex items-center gap-2 pt-4 border-t border-[#B08D57]/15">
                   <button
                     type="button"
                     onClick={() => onVerDetalhes(reg)}
@@ -323,12 +328,67 @@ export const PainelDiarioSubPasta: React.FC<PainelDiarioSubPastaProps> = ({
                   >
                     {isEmTransito ? 'Registrar Retorno' : 'Ajustar Horário'}
                   </button>
+
+                  {onExcluir && (
+                    <button
+                      type="button"
+                      onClick={() => setRegistroParaExcluir(reg)}
+                      className="p-2.5 bg-black/50 hover:bg-rose-500/10 text-white/40 hover:text-rose-400 border border-transparent hover:border-rose-500/20 rounded-2xl transition-all cursor-pointer active:scale-95"
+                      title="Excluir Registro"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  )}
                 </div>
               </div>
             );
           })
         )}
       </div>
+
+      {/* Modal de Confirmação de Exclusão */}
+      {registroParaExcluir && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-xl animate-in fade-in">
+          <div className="bg-[#111317] border border-rose-500/30 rounded-3xl p-6 max-w-md w-full shadow-2xl space-y-4">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-2xl bg-rose-500/20 border border-rose-500/40 flex items-center justify-center text-rose-400 shrink-0">
+                <AlertTriangle className="w-5 h-5" />
+              </div>
+              <div>
+                <h3 className="text-base font-bold text-white">Excluir Registro?</h3>
+                <p className="text-xs text-slate-400">Esta ação não poderá ser desfeita.</p>
+              </div>
+            </div>
+
+            <p className="text-xs text-slate-300 leading-relaxed">
+              Tem certeza que deseja excluir permanentemente o registro do motorista <strong className="text-white">{registroParaExcluir.motorista}</strong>
+              {registroParaExcluir.placa ? ` (Veículo: ${registroParaExcluir.placa})` : ''}?
+            </p>
+
+            <div className="flex items-center justify-end gap-2.5 pt-2">
+              <button
+                type="button"
+                onClick={() => setRegistroParaExcluir(null)}
+                className="px-4 py-2 rounded-xl text-xs font-semibold text-slate-300 hover:text-white bg-white/5 hover:bg-white/10 transition-colors cursor-pointer"
+              >
+                Cancelar
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  if (onExcluir && registroParaExcluir) {
+                    onExcluir(registroParaExcluir.id);
+                  }
+                  setRegistroParaExcluir(null);
+                }}
+                className="px-4 py-2 rounded-xl text-xs font-bold text-white bg-rose-600 hover:bg-rose-500 shadow-lg shadow-rose-900/30 transition-all cursor-pointer active:scale-95"
+              >
+                Sim, Excluir
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

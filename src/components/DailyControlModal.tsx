@@ -19,6 +19,7 @@ import {
   Eye,
   Check,
   AlertTriangle,
+  Trash2,
 } from 'lucide-react';
 import { RegistroVeiculo, Secretaria } from '../types';
 import { getDateStringFromDate } from '../utils/dateUtils';
@@ -32,6 +33,7 @@ interface DailyControlModalProps {
   onAjustarHorarios: (reg: RegistroVeiculo) => void;
   onAbrirEnviarRelatorio: () => void;
   onAbrirCadastro?: () => void;
+  onExcluir?: (id: string) => void;
   filtroSecretariaInicial?: 'TODAS' | Secretaria;
   filtroStatusInicial?: 'TODOS' | 'EM_TRANSITO' | 'FINALIZADO';
 }
@@ -58,9 +60,12 @@ export const DailyControlModal: React.FC<DailyControlModalProps> = ({
   onAjustarHorarios,
   onAbrirEnviarRelatorio,
   onAbrirCadastro,
+  onExcluir,
   filtroSecretariaInicial = 'TODAS',
   filtroStatusInicial = 'TODOS',
 }) => {
+  const [registroParaExcluir, setRegistroParaExcluir] = useState<RegistroVeiculo | null>(null);
+
   // Data de hoje em horário local (Brasil YYYY-MM-DD)
   const dataHojeStr = useMemo(() => {
     const agora = new Date();
@@ -693,6 +698,17 @@ export const DailyControlModal: React.FC<DailyControlModalProps> = ({
                           <Eye className="w-3.5 h-3.5 text-[#DFBA73]" />
                           <span className="hidden xs:inline">Ficha</span>
                         </button>
+
+                        {onExcluir && (
+                          <button
+                            type="button"
+                            onClick={() => setRegistroParaExcluir(reg)}
+                            className="p-1.5 text-white/40 hover:text-rose-400 hover:bg-rose-500/10 border border-transparent hover:border-rose-500/20 rounded-lg transition-all cursor-pointer active:scale-95"
+                            title="Excluir Registro"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -701,6 +717,50 @@ export const DailyControlModal: React.FC<DailyControlModalProps> = ({
             </div>
           )}
         </div>
+
+        {/* Modal de Confirmação de Exclusão */}
+        {registroParaExcluir && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-xl animate-in fade-in">
+            <div className="bg-[#111317] border border-rose-500/30 rounded-3xl p-6 max-w-md w-full shadow-2xl space-y-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-2xl bg-rose-500/20 border border-rose-500/40 flex items-center justify-center text-rose-400 shrink-0">
+                  <AlertTriangle className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="text-base font-bold text-white">Excluir Registro?</h3>
+                  <p className="text-xs text-slate-400">Esta ação não poderá ser desfeita.</p>
+                </div>
+              </div>
+
+              <p className="text-xs text-slate-300 leading-relaxed">
+                Tem certeza que deseja excluir permanentemente o registro do motorista <strong className="text-white">{registroParaExcluir.motorista}</strong>
+                {registroParaExcluir.placa ? ` (Veículo: ${registroParaExcluir.placa})` : ''}?
+              </p>
+
+              <div className="flex items-center justify-end gap-2.5 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setRegistroParaExcluir(null)}
+                  className="px-4 py-2 rounded-xl text-xs font-semibold text-slate-300 hover:text-white bg-white/5 hover:bg-white/10 transition-colors cursor-pointer"
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (onExcluir && registroParaExcluir) {
+                      onExcluir(registroParaExcluir.id);
+                    }
+                    setRegistroParaExcluir(null);
+                  }}
+                  className="px-4 py-2 rounded-xl text-xs font-bold text-white bg-rose-600 hover:bg-rose-500 shadow-lg shadow-rose-900/30 transition-all cursor-pointer active:scale-95"
+                >
+                  Sim, Excluir
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Rodapé do Modal */}
         <div className="bg-black/40 border-t border-[#B08D57]/20 p-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-3 shrink-0">

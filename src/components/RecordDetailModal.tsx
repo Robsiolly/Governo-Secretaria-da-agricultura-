@@ -4,12 +4,16 @@ import { RegistroVeiculo, UsuarioAutenticado } from '../types';
 import { PdfService } from '../services/pdfService';
 
 interface RecordDetailModalProps {
+  isOpen?: boolean;
   registro: RegistroVeiculo | null;
   onClose: () => void;
-  onEdit: (registro: RegistroVeiculo) => void;
+  onEdit?: (registro: RegistroVeiculo) => void;
+  onEditar?: (registro: RegistroVeiculo) => void;
   onEditarHorarios?: (registro: RegistroVeiculo) => void;
-  onDelete: (id: string) => void;
-  onFinalizarViagem: (id: string, horarioChegada: string) => void;
+  onAjustarHorarios?: (registro: RegistroVeiculo) => void;
+  onDelete?: (id: string) => void;
+  onExcluir?: (id: string) => void;
+  onFinalizarViagem?: (id: string, horarioChegada: string) => void;
   usuarioAtual?: UsuarioAutenticado | null;
 }
 
@@ -17,8 +21,11 @@ export const RecordDetailModal: React.FC<RecordDetailModalProps> = ({
   registro,
   onClose,
   onEdit,
+  onEditar,
   onEditarHorarios,
+  onAjustarHorarios,
   onDelete,
+  onExcluir,
   onFinalizarViagem,
   usuarioAtual,
 }) => {
@@ -28,12 +35,24 @@ export const RecordDetailModal: React.FC<RecordDetailModalProps> = ({
 
   if (!registro) return null;
 
+  const handleEdit = () => {
+    if (onEdit) onEdit(registro);
+    else if (onEditar) onEditar(registro);
+  };
+
+  const handleDelete = (id: string) => {
+    if (onDelete) onDelete(id);
+    else if (onExcluir) onExcluir(id);
+  };
+
   const isAgri = registro.secretaria === 'Secretaria da Agricultura';
   const dataFormatada = registro.data ? new Date(registro.data + 'T00:00:00').toLocaleDateString('pt-BR') : '-';
 
   const handleSalvarRetorno = () => {
     const hora = horarioRetornoInput.trim() || new Date().toTimeString().slice(0, 5);
-    onFinalizarViagem(registro.id, hora);
+    if (onFinalizarViagem) {
+      onFinalizarViagem(registro.id, hora);
+    }
     setMostrarCampoRetorno(false);
   };
 
@@ -103,7 +122,7 @@ export const RecordDetailModal: React.FC<RecordDetailModalProps> = ({
             </button>
             <button
               type="button"
-              onClick={() => onEdit(registro)}
+              onClick={handleEdit}
               className="p-2 text-white/50 hover:text-white hover:bg-[#B08D57]/20 rounded-xl transition-all cursor-pointer active:scale-[0.94]"
               title="Editar Registro"
             >
@@ -339,7 +358,7 @@ export const RecordDetailModal: React.FC<RecordDetailModalProps> = ({
                 <button
                   type="button"
                   onClick={() => {
-                    onDelete(registro.id);
+                    handleDelete(registro.id);
                     onClose();
                   }}
                   className="px-3 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold cursor-pointer active:scale-[0.96]"

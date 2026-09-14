@@ -137,12 +137,13 @@ export default function App() {
   };
 
   const handleExcluirRegistro = (id: string) => {
-    if (confirm('Tem certeza que deseja excluir permanentemente este registro?')) {
-      excluirRegistro(id);
-      setRegistros(obterRegistros());
-      window.dispatchEvent(new Event('registros_atualizados'));
-      showToast('Registro excluído com sucesso.', 'info');
+    excluirRegistro(id);
+    setRegistros(obterRegistros());
+    if (registroSelecionadoDetalhes?.id === id) {
+      setRegistroSelecionadoDetalhes(null);
     }
+    window.dispatchEvent(new Event('registros_atualizados'));
+    showToast('Registro excluído com sucesso.', 'info');
   };
 
   // Exportar Relatório em PDF
@@ -286,6 +287,7 @@ export default function App() {
               setIsModalCadastroOpen(true);
             }}
             onExportarPdf={handleExportarPdf}
+            onExcluir={handleExcluirRegistro}
             usuarioAtual={usuario}
           />
         ) : (
@@ -353,6 +355,7 @@ export default function App() {
                   registros={registrosFiltrados}
                   onVerDetalhes={(reg) => setRegistroSelecionadoDetalhes(reg)}
                   onAjustarHorarios={(reg) => setRegistroAjusteHorarios(reg)}
+                  onExcluir={handleExcluirRegistro}
                   onNovoRegistro={() => {
                     setRegistroEmEdicao(null);
                     setIsModalCadastroOpen(true);
@@ -416,6 +419,18 @@ export default function App() {
           onAjustarHorarios={(reg) => {
             setRegistroSelecionadoDetalhes(null);
             setRegistroAjusteHorarios(reg);
+          }}
+          onExcluir={handleExcluirRegistro}
+          onDelete={handleExcluirRegistro}
+          onFinalizarViagem={(id, hora) => {
+            const regAtual = registros.find((r) => r.id === id);
+            if (regAtual) {
+              handleSalvarHorarios({
+                ...regAtual,
+                horarioChegada: hora,
+                status: 'FINALIZADO',
+              });
+            }
           }}
           usuarioAtual={usuario}
         />
