@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { X, Clock, Check, CheckCircle2, User, AlertCircle, AlertTriangle } from 'lucide-react';
-import { RegistroVeiculo } from '../types';
+import { RegistroVeiculo, UsuarioAutenticado } from '../types';
 
 interface QuickTimeModalProps {
   registro: RegistroVeiculo | null;
   isOpen: boolean;
   onClose: () => void;
-  onSalvarHorarios: (id: string, horarioSaida: string, horarioChegada: string, ocorrencia?: string) => void;
+  onSalvarHorarios?: (id: string, horarioSaida: string, horarioChegada: string, ocorrencia?: string) => void;
+  onSave?: (registroAtualizado: RegistroVeiculo) => void;
+  usuarioAtual?: UsuarioAutenticado | null;
 }
 
 export const QuickTimeModal: React.FC<QuickTimeModalProps> = ({
@@ -14,9 +16,11 @@ export const QuickTimeModal: React.FC<QuickTimeModalProps> = ({
   isOpen,
   onClose,
   onSalvarHorarios,
+  onSave,
 }) => {
   const [saida, setSaida] = useState('');
   const [chegada, setChegada] = useState('');
+  const [statusViagem, setStatusViagem] = useState<'EM_TRANSITO' | 'FINALIZADO'>('EM_TRANSITO');
   const [ocorrencia, setOcorrencia] = useState('');
   const [erro, setErro] = useState<string | null>(null);
 
@@ -25,6 +29,7 @@ export const QuickTimeModal: React.FC<QuickTimeModalProps> = ({
       setSaida(registro.horarioSaida || '');
       setChegada(registro.horarioChegada || '');
       setOcorrencia(registro.ocorrencia || '');
+      setStatusViagem(registro.status || (registro.horarioChegada ? 'FINALIZADO' : 'EM_TRANSITO'));
       setErro(null);
     }
   }, [registro]);
@@ -40,27 +45,38 @@ export const QuickTimeModal: React.FC<QuickTimeModalProps> = ({
   const handleDefinirChegadaAgora = () => {
     const agora = new Date().toTimeString().slice(0, 5);
     setChegada(agora);
+    setStatusViagem('FINALIZADO');
     setErro(null);
   };
 
   const handleLimparChegada = () => {
     setChegada('');
+    setStatusViagem('EM_TRANSITO');
     setErro(null);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!saida.trim()) {
-      setErro('O horário de saída é obrigatório.');
-      return;
+    setErro(null);
+
+    const registroAtualizado: RegistroVeiculo = {
+      ...registro,
+      horarioSaida: saida.trim(),
+      horarioChegada: chegada.trim(),
+      ocorrencia: ocorrencia.trim(),
+      status: statusViagem,
+    };
+
+    if (onSave) {
+      onSave(registroAtualizado);
+    } else if (onSalvarHorarios) {
+      onSalvarHorarios(registro.id, saida.trim(), chegada.trim(), ocorrencia.trim());
     }
 
-    onSalvarHorarios(registro.id, saida.trim(), chegada.trim(), ocorrencia.trim());
     onClose();
   };
 
   const isAgri = registro.secretaria === 'Secretaria da Agricultura';
-  const statusPrevisto = chegada.trim() ? 'FINALIZADO' : 'EM_TRANSITO';
 
   return (
     <div
@@ -78,10 +94,10 @@ export const QuickTimeModal: React.FC<QuickTimeModalProps> = ({
             </div>
             <div>
               <h2 id="modal-horarios-titulo" className="text-xl sm:text-2xl font-bold text-white tracking-tight">
-                Acessar e Alterar Horários
+                Acessar e Alterar Horários / Status
               </h2>
               <p className="text-sm text-[#C6A96B]/80">
-                Ajuste os horários de <strong className="text-[#DFBA73]">Saída</strong> e <strong className="text-[#DFBA73]">Chegada</strong> do veículo
+                Ajuste os horários ou finalize a viagem do veículo
               </p>
             </div>
           </div>
@@ -120,7 +136,7 @@ export const QuickTimeModal: React.FC<QuickTimeModalProps> = ({
           </div>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-6 sm:p-7 space-y-6">
+        <form onSubmit={handleSubmit} className="p-6 sm:p-7 space-y-5">
           {erro && (
             <div className="p-4 rounded-2xl bg-rose-950/90 border border-rose-700 text-rose-100 text-sm font-semibold flex items-center gap-3">
               <AlertCircle className="w-5 h-5 shrink-0 text-rose-400" />
@@ -128,17 +144,66 @@ export const QuickTimeModal: React.FC<QuickTimeModalProps> = ({
             </div>
           )}
 
-          {/* Bloco 1: Horário de Saída */}
-          <div className="bg-black/40 border border-[#B08D57]/25 rounded-2xl p-5 space-y-3">
+          {/* Seletor de Status da Viagem */}
+          <div className="bg-black/40 border border-[#B08D57]/25 rounded-2xl p-4 space-y-2.5">
+            <div className="flex items-center justify-between">
+              <label className="text-sm font-bold text-white flex items-center gap-2">
+                <Check className="w-4 h-4 text-[#DFBA73]" />
+                <span>Status da Viagem / Registro</span>
+              </label>
+              <span className={`text-xs font-bold px-3 py-1 rounded-xl border ${
+                statusViagem === 'FINALIZADO'
+                  ? 'bg-emerald-500/20 text-emerald-300 border-emerald-400/40'
+                  : 'bg-[#B08D57]/20 text-[#DFBA73] border-[#B08D57]/40'
+              }`}>
+                {statusViagem === 'FINALIZADO' ? '✅ Viagem Concluída' : '⏳ Em Trânsito'}
+              </span>
+            </div>
+
+            <div className="grid grid-cols-2 gap-2.5 pt-1">
+              <button
+                type="button"
+                onClick={() => setStatusViagem('EM_TRANSITO')}
+                className={`py-3 px-4 rounded-xl border text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-95 ${
+                  statusViagem === 'EM_TRANSITO'
+                    ? 'bg-[#B08D57]/25 border-[#DFBA73] text-[#DFBA73] shadow-md'
+                    : 'bg-black/50 border-white/10 text-white/60 hover:text-white hover:bg-black/70'
+                }`}
+              >
+                <Clock className="w-4 h-4" />
+                <span>Em Trânsito</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setStatusViagem('FINALIZADO')}
+                className={`py-3 px-4 rounded-xl border text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-95 ${
+                  statusViagem === 'FINALIZADO'
+                    ? 'bg-emerald-500/25 border-emerald-400 text-emerald-300 shadow-md'
+                    : 'bg-black/50 border-white/10 text-white/60 hover:text-white hover:bg-black/70'
+                }`}
+              >
+                <Check className="w-4 h-4" />
+                <span>Finalizado</span>
+              </button>
+            </div>
+            <p className="text-xs text-[#C6A96B]/70">
+              Você pode finalizar o registro mesmo sem informar o horário de saída ou chegada.
+            </p>
+          </div>
+
+          {/* Bloco 1: Horário de Saída (Opcional) */}
+          <div className="bg-black/40 border border-[#B08D57]/25 rounded-2xl p-4.5 space-y-2.5">
             <div className="flex items-center justify-between flex-wrap gap-2">
-              <label htmlFor="input-horario-saida" className="text-base font-bold text-white flex items-center gap-2">
-                <span className="w-3 h-3 rounded-full bg-[#DFBA73]"></span>
+              <label htmlFor="input-horario-saida" className="text-sm sm:text-base font-bold text-white flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#DFBA73]"></span>
                 Horário de Saída do Veículo
+                <span className="text-xs font-normal text-[#C6A96B]/70">(Opcional)</span>
               </label>
               <button
                 type="button"
                 onClick={handleDefinirSaidaAgora}
-                className="px-4 py-2 bg-[#B08D57]/20 hover:bg-[#B08D57]/30 text-[#DFBA73] font-semibold text-sm rounded-xl border border-[#B08D57]/40 transition-colors cursor-pointer"
+                className="px-3.5 py-1.5 bg-[#B08D57]/20 hover:bg-[#B08D57]/30 text-[#DFBA73] font-semibold text-xs rounded-xl border border-[#B08D57]/40 transition-colors cursor-pointer"
               >
                 Colocar Hora Atual
               </button>
@@ -148,29 +213,26 @@ export const QuickTimeModal: React.FC<QuickTimeModalProps> = ({
               <input
                 id="input-horario-saida"
                 type="time"
-                required
                 value={saida}
                 onChange={(e) => setSaida(e.target.value)}
-                className="w-full bg-black/60 border border-[#B08D57]/30 focus:border-[#DFBA73] rounded-2xl px-5 py-3.5 text-2xl font-bold font-mono text-[#DFBA73] focus:outline-none transition-colors"
+                className="w-full bg-black/60 border border-[#B08D57]/30 focus:border-[#DFBA73] rounded-2xl px-5 py-3 text-xl sm:text-2xl font-bold font-mono text-[#DFBA73] focus:outline-none transition-colors"
               />
             </div>
-            <p className="text-xs text-[#C6A96B]/70">
-              Momento em que o veículo oficial saiu da garagem/estacionamento.
-            </p>
           </div>
 
-          {/* Bloco 2: Horário de Chegada */}
-          <div className="bg-black/40 border border-[#B08D57]/25 rounded-2xl p-5 space-y-3">
+          {/* Bloco 2: Horário de Chegada (Opcional) */}
+          <div className="bg-black/40 border border-[#B08D57]/25 rounded-2xl p-4.5 space-y-2.5">
             <div className="flex items-center justify-between flex-wrap gap-2">
-              <label htmlFor="input-horario-chegada" className="text-base font-bold text-white flex items-center gap-2">
-                <span className="w-3 h-3 rounded-full bg-[#DFBA73]"></span>
+              <label htmlFor="input-horario-chegada" className="text-sm sm:text-base font-bold text-white flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
                 Horário de Chegada / Retorno
+                <span className="text-xs font-normal text-[#C6A96B]/70">(Opcional)</span>
               </label>
               <div className="flex items-center gap-2">
                 <button
                   type="button"
                   onClick={handleDefinirChegadaAgora}
-                  className="px-4 py-2 bg-[#B08D57]/30 hover:bg-[#B08D57]/40 text-[#DFBA73] font-semibold text-sm rounded-xl border border-[#B08D57]/50 transition-colors cursor-pointer"
+                  className="px-3.5 py-1.5 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 font-semibold text-xs rounded-xl border border-emerald-400/40 transition-colors cursor-pointer"
                 >
                   Chegou Agora
                 </button>
@@ -178,10 +240,10 @@ export const QuickTimeModal: React.FC<QuickTimeModalProps> = ({
                   <button
                     type="button"
                     onClick={handleLimparChegada}
-                    className="px-3 py-2 bg-black/60 hover:bg-black/80 text-white/70 text-xs font-semibold rounded-xl border border-white/20 transition-colors cursor-pointer"
-                    title="Remover horário de retorno e marcar como Em Trânsito"
+                    className="px-3 py-1.5 bg-black/60 hover:bg-black/80 text-white/70 text-xs font-semibold rounded-xl border border-white/20 transition-colors cursor-pointer"
+                    title="Remover horário de retorno"
                   >
-                    Em Trânsito
+                    Limpar
                   </button>
                 )}
               </div>
@@ -192,32 +254,16 @@ export const QuickTimeModal: React.FC<QuickTimeModalProps> = ({
                 id="input-horario-chegada"
                 type="time"
                 value={chegada}
-                onChange={(e) => setChegada(e.target.value)}
+                onChange={(e) => {
+                  setChegada(e.target.value);
+                  if (e.target.value) {
+                    setStatusViagem('FINALIZADO');
+                  }
+                }}
                 placeholder="--:--"
-                className="w-full bg-black/60 border border-[#B08D57]/30 focus:border-[#DFBA73] rounded-2xl px-5 py-3.5 text-2xl font-bold font-mono text-emerald-400 focus:outline-none transition-colors"
+                className="w-full bg-black/60 border border-[#B08D57]/30 focus:border-[#DFBA73] rounded-2xl px-5 py-3 text-xl sm:text-2xl font-bold font-mono text-emerald-400 focus:outline-none transition-colors"
               />
             </div>
-            <p className="text-xs text-[#C6A96B]/70">
-              {chegada
-                ? 'Com o horário preenchido, a viagem será marcada como Concluída.'
-                : 'Deixe em branco se o veículo ainda estiver em trânsito/operação externa.'}
-            </p>
-          </div>
-
-          {/* Indicador de Status Resultante */}
-          <div className="bg-black/40 border border-[#B08D57]/20 rounded-2xl p-4 flex items-center justify-between">
-            <span className="text-sm font-semibold text-white/80">Status resultante da viagem:</span>
-            {statusPrevisto === 'FINALIZADO' ? (
-              <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-sm font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-400/40">
-                <CheckCircle2 className="w-4 h-4" />
-                Viagem Concluída
-              </span>
-            ) : (
-              <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-sm font-bold bg-[#B08D57]/20 text-[#DFBA73] border border-[#B08D57]/40">
-                <Clock className="w-4 h-4 animate-pulse" />
-                Veículo Em Trânsito
-              </span>
-            )}
           </div>
 
           {/* Campo de Ocorrência / Anotações Rápidas */}
@@ -253,7 +299,7 @@ export const QuickTimeModal: React.FC<QuickTimeModalProps> = ({
               className="w-full sm:w-2/3 py-3.5 rounded-2xl bg-gradient-to-r from-[#C6A96B] via-[#B08D57] to-[#80683F] hover:brightness-110 text-slate-950 font-bold text-base shadow-xl shadow-[#B08D57]/25 transition-all cursor-pointer flex items-center justify-center gap-2 border border-[#DFBA73]/40"
             >
               <Check className="w-6 h-6" />
-              <span>Salvar Horários Atualizados</span>
+              <span>Salvar Registro / Status</span>
             </button>
           </div>
         </form>

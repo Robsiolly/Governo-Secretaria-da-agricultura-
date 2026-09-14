@@ -2,7 +2,7 @@
   "entities": {
     "RegistroVeiculo": {
       "title": "RegistroVeiculo",
-      "description": "Registro de tráfego e circulação de veículo oficial",
+      "description": "Registro de tráfego e circulação de veículo oficial no banco de dados",
       "type": "object",
       "properties": {
         "id": { "type": "string" },
@@ -20,11 +20,12 @@
         "modeloVeiculo": { "type": "string" },
         "destino": { "type": "string" },
         "observacoes": { "type": "string" },
+        "ocorrencia": { "type": "string" },
         "status": { "type": "string", "enum": ["EM_TRANSITO", "FINALIZADO"] },
         "criadoEm": { "type": "string" },
         "atualizadoEm": { "type": "string" }
       },
-      "required": ["id", "secretaria", "data", "motorista", "horarioSaida", "andar", "funcionarioResponsavel", "status", "criadoEm"]
+      "required": ["id", "secretaria", "data", "motorista", "andar", "funcionarioResponsavel", "status", "criadoEm"]
     },
     "ContaOperador": {
       "title": "ContaOperador",
@@ -39,6 +40,7 @@
         "secretariaPadrao": { "type": "string" },
         "nivelAcesso": { "type": "string", "enum": ["ADMINISTRADOR", "FISCAL", "OPERADOR"] },
         "senha": { "type": "string" },
+        "fotoPerfil": { "type": "string" },
         "criadoEm": { "type": "string" }
       },
       "required": ["id", "nome", "email", "matricula", "cargo", "nivelAcesso"]

@@ -7,6 +7,7 @@ import {
   obterSessao, 
   encerrarSessao 
 } from './services/storageService';
+import { FirebaseSyncService } from './services/firebaseSyncService';
 import { Header } from './components/Header';
 import { FiltersBar } from './components/FiltersBar';
 import { RecordsTable } from './components/RecordsTable';
@@ -70,8 +71,11 @@ export default function App() {
     }
   }, []);
 
-  // Carregar dados e sincronizar registros
+  // Inicializar escuta e sincronização com o Banco de Dados Firestore em tempo real
   useEffect(() => {
+    // Iniciar escuta ao vivo no Firebase Firestore
+    FirebaseSyncService.iniciarSincronizacaoAoVivo();
+
     const carregar = () => {
       const dados = obterRegistros();
       setRegistros(dados);
@@ -80,7 +84,7 @@ export default function App() {
     carregar();
 
     const handleStorageChange = (e: StorageEvent) => {
-      if (e.key === 'frota_registros_veiculos') {
+      if (e.key === 'controle_registros_veiculos_prod_v2') {
         carregar();
       }
     };
@@ -91,10 +95,13 @@ export default function App() {
 
     window.addEventListener('storage', handleStorageChange);
     window.addEventListener('registros_atualizados', handleLocalUpdate);
+    window.addEventListener('app_data_changed', handleLocalUpdate);
 
     return () => {
       window.removeEventListener('storage', handleStorageChange);
       window.removeEventListener('registros_atualizados', handleLocalUpdate);
+      window.removeEventListener('app_data_changed', handleLocalUpdate);
+      FirebaseSyncService.pararSincronizacao();
     };
   }, []);
 

@@ -226,7 +226,7 @@ export const RecordDetailModal: React.FC<RecordDetailModalProps> = ({
                 <Clock className="w-3 h-3 text-[#DFBA73]" />
                 Horário de Saída
               </span>
-              <span className="text-sm font-bold font-mono text-[#DFBA73] block">{registro.horarioSaida}</span>
+              <span className="text-sm font-bold font-mono text-[#DFBA73] block">{registro.horarioSaida || '--:--'}</span>
             </div>
 
             <div className="bg-black/40 border border-[#B08D57]/15 p-3 rounded-2xl">
@@ -236,7 +236,11 @@ export const RecordDetailModal: React.FC<RecordDetailModalProps> = ({
               </span>
               <span className="text-sm font-bold font-mono text-white block">
                 {registro.horarioChegada || (
-                  <span className="text-[#DFBA73] italic font-medium text-xs">Em trânsito</span>
+                  registro.status === 'FINALIZADO' ? (
+                    <span className="text-emerald-400 font-medium text-xs">Finalizado</span>
+                  ) : (
+                    <span className="text-[#DFBA73] italic font-medium text-xs">Em trânsito</span>
+                  )
                 )}
               </span>
             </div>

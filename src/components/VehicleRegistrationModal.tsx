@@ -8,8 +8,10 @@ import { ANDARES_DISPONIVEIS, StorageService } from '../services/storageService'
 interface VehicleRegistrationModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSalvar: (registro: Omit<RegistroVeiculo, 'id' | 'criadoEm'> & { id?: string }) => void;
+  onSalvar?: (registro: Omit<RegistroVeiculo, 'id' | 'criadoEm'> & { id?: string }) => void;
+  onSave?: (registro: any) => void;
   registroEdicao?: RegistroVeiculo | null;
+  registroParaEditar?: RegistroVeiculo | null;
   usuarioAtual?: UsuarioAutenticado | null;
 }
 
@@ -17,15 +19,20 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
   isOpen,
   onClose,
   onSalvar,
+  onSave,
   registroEdicao,
+  registroParaEditar,
   usuarioAtual,
 }) => {
+  const registroAtivo = registroEdicao || registroParaEditar;
+
   const [secretaria, setSecretaria] = useState<Secretaria>('Secretaria da Agricultura');
   const [data, setData] = useState('');
   const [motorista, setMotorista] = useState('');
   const [fct, setFct] = useState('');
   const [horarioSaida, setHorarioSaida] = useState('');
   const [horarioChegada, setHorarioChegada] = useState('');
+  const [statusViagem, setStatusViagem] = useState<'EM_TRANSITO' | 'FINALIZADO'>('EM_TRANSITO');
   const [andar, setAndar] = useState<string>('1');
   const [funcionarioResponsavel, setFuncionarioResponsavel] = useState<string>('Diego');
   const [matriculaFuncionario, setMatriculaFuncionario] = useState('OP-002');
@@ -48,21 +55,22 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
   };
 
   useEffect(() => {
-    if (registroEdicao) {
-      setSecretaria(registroEdicao.secretaria);
-      setData(registroEdicao.data);
-      setMotorista(registroEdicao.motorista);
-      setFct(registroEdicao.fct);
-      setHorarioSaida(registroEdicao.horarioSaida);
-      setHorarioChegada(registroEdicao.horarioChegada || '');
-      setAndar(registroEdicao.andar || '1');
-      setFuncionarioResponsavel(registroEdicao.funcionarioResponsavel || 'Diego');
-      setMatriculaFuncionario(registroEdicao.matriculaFuncionario || 'OP-002');
-      setAssinaturaUrl(registroEdicao.assinaturaUrl || '');
-      setPlaca(registroEdicao.placa || '');
-      setModeloVeiculo(registroEdicao.modeloVeiculo || '');
-      setDestino(registroEdicao.destino || '');
-      setOcorrencia(registroEdicao.ocorrencia || '');
+    if (registroAtivo) {
+      setSecretaria(registroAtivo.secretaria);
+      setData(registroAtivo.data);
+      setMotorista(registroAtivo.motorista);
+      setFct(registroAtivo.fct);
+      setHorarioSaida(registroAtivo.horarioSaida || '');
+      setHorarioChegada(registroAtivo.horarioChegada || '');
+      setStatusViagem(registroAtivo.status || (registroAtivo.horarioChegada ? 'FINALIZADO' : 'EM_TRANSITO'));
+      setAndar(registroAtivo.andar || '1');
+      setFuncionarioResponsavel(registroAtivo.funcionarioResponsavel || 'Diego');
+      setMatriculaFuncionario(registroAtivo.matriculaFuncionario || 'OP-002');
+      setAssinaturaUrl(registroAtivo.assinaturaUrl || '');
+      setPlaca(registroAtivo.placa || '');
+      setModeloVeiculo(registroAtivo.modeloVeiculo || '');
+      setDestino(registroAtivo.destino || '');
+      setOcorrencia(registroAtivo.ocorrencia || '');
     } else {
       // Valores padrão para novo cadastro real
       const hoje = getLocalDateString();
@@ -72,6 +80,7 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
       setData(hoje);
       setHorarioSaida(horaMinuto);
       setHorarioChegada('');
+      setStatusViagem('EM_TRANSITO');
       setMotorista('');
       setFct('');
       setPlaca('');
@@ -95,7 +104,7 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
       setAssinaturaUrl('');
     }
     setErro(null);
-  }, [registroEdicao, isOpen, usuarioAtual]);
+  }, [registroAtivo, isOpen, usuarioAtual]);
 
   if (!isOpen) return null;
 
@@ -119,10 +128,6 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
       setErro('Informe o número de registro da FCT autorizado pelo responsável para a Secretaria da Agricultura.');
       return;
     }
-    if (!horarioSaida.trim()) {
-      setErro('O Horário de Saída é obrigatório.');
-      return;
-    }
     if (!andar.trim()) {
       setErro('O campo Andar é obrigatório.');
       return;
@@ -136,10 +141,8 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
       return;
     }
 
-    const statusViagem = horarioChegada.trim() ? 'FINALIZADO' : 'EM_TRANSITO';
-
-    onSalvar({
-      ...(registroEdicao?.id ? { id: registroEdicao.id } : {}),
+    const payload = {
+      ...(registroAtivo?.id ? { id: registroAtivo.id } : {}),
       secretaria,
       data,
       motorista: motorista.trim(),
@@ -155,7 +158,13 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
       destino: destino.trim(),
       ocorrencia: ocorrencia.trim(),
       status: statusViagem,
-    });
+    };
+
+    if (onSalvar) {
+      onSalvar(payload);
+    } else if (onSave) {
+      onSave(payload);
+    }
 
     onClose();
   };
@@ -384,16 +393,20 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
             </div>
           </div>
 
-          {/* Horários: Saída e Chegada */}
+          {/* Horários: Saída e Chegada (Opcionais) */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
             <div>
-              <label className="block text-xs font-semibold text-white/70 mb-1.5 flex items-center gap-1.5">
-                <Clock className="w-3.5 h-3.5 text-[#DFBA73]" />
-                Horário de Saída *
+              <label className="block text-xs font-semibold text-white/70 mb-1.5 flex items-center justify-between">
+                <span className="flex items-center gap-1.5">
+                  <Clock className="w-3.5 h-3.5 text-[#DFBA73]" />
+                  Horário de Saída
+                </span>
+                <span className="text-[10px] text-[#C6A96B]/70">
+                  (Opcional)
+                </span>
               </label>
               <input
                 type="time"
-                required
                 value={horarioSaida}
                 onChange={(e) => setHorarioSaida(e.target.value)}
                 className="w-full bg-black/50 hover:bg-black/70 focus:bg-black/80 border border-[#B08D57]/25 focus:border-[#DFBA73] rounded-2xl px-3.5 py-2.5 text-sm text-[#DFBA73] font-mono font-bold focus:outline-none transition-all shadow-inner"
@@ -406,17 +419,70 @@ export const VehicleRegistrationModal: React.FC<VehicleRegistrationModalProps> =
                   <Clock className="w-3.5 h-3.5 text-[#DFBA73]" />
                   Horário de Chegada
                 </span>
-                <span className="text-[10px] text-white/40">
-                  (Em branco se em trânsito)
+                <span className="text-[10px] text-[#C6A96B]/70">
+                  (Opcional)
                 </span>
               </label>
               <input
                 type="time"
                 value={horarioChegada}
-                onChange={(e) => setHorarioChegada(e.target.value)}
+                onChange={(e) => {
+                  setHorarioChegada(e.target.value);
+                  if (e.target.value) {
+                    setStatusViagem('FINALIZADO');
+                  }
+                }}
                 className="w-full bg-black/50 hover:bg-black/70 focus:bg-black/80 border border-[#B08D57]/25 focus:border-[#DFBA73] rounded-2xl px-3.5 py-2.5 text-sm text-white font-mono font-bold focus:outline-none transition-all shadow-inner"
               />
             </div>
+          </div>
+
+          {/* Status da Viagem / Registro */}
+          <div className="bg-black/40 border border-[#B08D57]/25 rounded-2xl p-4 space-y-2.5">
+            <div className="flex items-center justify-between">
+              <label className="text-xs font-bold text-white flex items-center gap-1.5">
+                <Check className="w-3.5 h-3.5 text-[#DFBA73]" />
+                <span>Status da Viagem / Registro</span>
+              </label>
+              <span className={`text-[11px] font-bold px-2.5 py-0.5 rounded-full border ${
+                statusViagem === 'FINALIZADO'
+                  ? 'bg-emerald-500/20 text-emerald-300 border-emerald-400/40'
+                  : 'bg-[#B08D57]/20 text-[#DFBA73] border-[#B08D57]/40'
+              }`}>
+                {statusViagem === 'FINALIZADO' ? '✅ Finalizado' : '⏳ Em Trânsito'}
+              </span>
+            </div>
+
+            <div className="grid grid-cols-2 gap-2.5">
+              <button
+                type="button"
+                onClick={() => setStatusViagem('EM_TRANSITO')}
+                className={`py-2.5 px-3 rounded-xl border text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-95 ${
+                  statusViagem === 'EM_TRANSITO'
+                    ? 'bg-[#B08D57]/25 border-[#DFBA73] text-[#DFBA73] shadow-md'
+                    : 'bg-black/50 border-white/10 text-white/60 hover:text-white hover:bg-black/70'
+                }`}
+              >
+                <Clock className="w-3.5 h-3.5" />
+                <span>Em Trânsito</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setStatusViagem('FINALIZADO')}
+                className={`py-2.5 px-3 rounded-xl border text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-95 ${
+                  statusViagem === 'FINALIZADO'
+                    ? 'bg-emerald-500/25 border-emerald-400 text-emerald-300 shadow-md'
+                    : 'bg-black/50 border-white/10 text-white/60 hover:text-white hover:bg-black/70'
+                }`}
+              >
+                <Check className="w-3.5 h-3.5" />
+                <span>Finalizado</span>
+              </button>
+            </div>
+            <p className="text-[11px] text-[#C6A96B]/70">
+              Você pode finalizar o registro a qualquer momento, mesmo sem preencher os horários.
+            </p>
           </div>
 
           {/* Destino / Finalidade */}
