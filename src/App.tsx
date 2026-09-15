@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { RegistroVeiculo, UsuarioAutenticado, FiltrosRegistros } from './types';
+import { getLocalDateString } from './utils/dateUtils';
 import { 
   StorageService,
   obterRegistros, 
@@ -40,7 +41,7 @@ export default function App() {
   
   const [filtros, setFiltros] = useState<FiltrosRegistros>({
     secretaria: 'TODAS',
-    data: '',
+    data: getLocalDateString(),
     busca: '',
     status: 'TODOS',
   });
@@ -200,7 +201,7 @@ export default function App() {
       return false;
     }
 
-    // Filtro Data
+    // Filtro Data: Sempre respeita a data selecionada (que começa em Hoje por padrão)
     if (filtros.data && reg.data !== filtros.data) {
       return false;
     }
@@ -284,16 +285,16 @@ export default function App() {
         <PwaInstallPrompt />
 
         {/* Abas de Navegação Principal / Sub-Pastas do App com Efeito Vidro Avançado Ouro Velho */}
-        <div className="bg-[#111317]/80 border border-[#B08D57]/20 p-2.5 rounded-3xl flex items-center justify-between gap-2 shadow-2xl backdrop-blur-2xl relative">
+        <div className="bg-[#111317]/80 border border-[#B08D57]/20 p-2.5 rounded-3xl flex items-center justify-between gap-2 shadow-2xl backdrop-blur-2xl relative glass-surface">
           <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#C6A96B]/30 to-transparent" />
           <div className="flex items-center gap-2 w-full sm:w-auto">
             <button
               type="button"
               onClick={() => setSubPastaAtiva('GESTAO')}
-              className={`flex-1 sm:flex-initial flex items-center justify-center gap-2 px-5 py-3 rounded-2xl text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
+              className={`flex-1 sm:flex-initial flex items-center justify-center gap-2 px-5 py-3 rounded-2xl text-xs sm:text-sm font-semibold transition-all cursor-pointer apple-tactile-feedback ${
                 subPastaAtiva === 'GESTAO'
-                  ? 'bg-gradient-to-r from-[#C6A96B] via-[#B08D57] to-[#80683F] text-slate-950 shadow-xl shadow-[#B08D57]/20 font-bold border border-[#DFBA73]/50'
-                  : 'text-[#C6A96B]/70 hover:text-white bg-black/40 border border-[#B08D57]/15 backdrop-blur-md'
+                  ? 'bg-gradient-to-r from-[#C6A96B] via-[#B08D57] to-[#80683F] text-slate-950 shadow-xl shadow-[#B08D57]/20 font-bold border border-[#DFBA73]/50 btn-premium-primary'
+                  : 'text-[#C6A96B]/70 hover:text-white bg-black/40 border border-[#B08D57]/15 backdrop-blur-md btn-premium-secondary'
               }`}
             >
               <LayoutGrid className="w-4 h-4" />
@@ -303,10 +304,10 @@ export default function App() {
             <button
               type="button"
               onClick={() => setSubPastaAtiva('PAINEL_DIARIO')}
-              className={`flex-1 sm:flex-initial flex items-center justify-center gap-2 px-5 py-3 rounded-2xl text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
+              className={`flex-1 sm:flex-initial flex items-center justify-center gap-2 px-5 py-3 rounded-2xl text-xs sm:text-sm font-semibold transition-all cursor-pointer apple-tactile-feedback ${
                 subPastaAtiva === 'PAINEL_DIARIO'
-                  ? 'bg-gradient-to-r from-[#C6A96B] via-[#B08D57] to-[#80683F] text-slate-950 shadow-xl shadow-[#B08D57]/20 font-bold border border-[#DFBA73]/50'
-                  : 'text-[#C6A96B]/70 hover:text-white bg-black/40 border border-[#B08D57]/15 backdrop-blur-md'
+                  ? 'bg-gradient-to-r from-[#C6A96B] via-[#B08D57] to-[#80683F] text-slate-950 shadow-xl shadow-[#B08D57]/20 font-bold border border-[#DFBA73]/50 btn-premium-primary'
+                  : 'text-[#C6A96B]/70 hover:text-white bg-black/40 border border-[#B08D57]/15 backdrop-blur-md btn-premium-secondary'
               }`}
             >
               <Calendar className="w-4 h-4 text-[#DFBA73]" />

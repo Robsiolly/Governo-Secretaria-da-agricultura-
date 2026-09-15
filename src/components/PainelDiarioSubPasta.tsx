@@ -92,7 +92,7 @@ export const PainelDiarioSubPasta: React.FC<PainelDiarioSubPastaProps> = ({
   return (
     <div className="space-y-6 animate-in fade-in duration-300">
       {/* Sub-pasta Header & Date Selector - Ouro Velho Premium */}
-      <div className="bg-[#111317]/85 border border-[#B08D57]/25 rounded-3xl p-5 sm:p-7 shadow-2xl relative overflow-hidden backdrop-blur-2xl">
+      <div className="bg-[#111317]/85 border border-[#B08D57]/25 rounded-3xl p-5 sm:p-7 shadow-2xl relative overflow-hidden backdrop-blur-2xl glass-surface">
         <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#C6A96B]/35 to-transparent" />
         
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
@@ -114,7 +114,7 @@ export const PainelDiarioSubPasta: React.FC<PainelDiarioSubPastaProps> = ({
           </div>
 
           <div className="flex items-center gap-2.5 flex-wrap w-full lg:w-auto">
-            <div className="flex items-center gap-2.5 bg-black/50 border border-[#B08D57]/25 px-3.5 py-2 rounded-2xl">
+            <div className="flex items-center gap-2.5 bg-black/50 border border-[#B08D57]/25 px-3.5 py-2 rounded-2xl focus-within:border-[#B08D57]/60">
               <Calendar className="w-4 h-4 text-[#DFBA73] shrink-0" />
               <input
                 type="date"
@@ -126,7 +126,7 @@ export const PainelDiarioSubPasta: React.FC<PainelDiarioSubPastaProps> = ({
             <button
               type="button"
               onClick={onNovoRegistro}
-              className="flex items-center gap-2 bg-gradient-to-r from-[#C6A96B] via-[#B08D57] to-[#80683F] hover:brightness-110 text-slate-950 px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold shadow-xl shadow-[#B08D57]/20 transition-all cursor-pointer border border-[#DFBA73]/40"
+              className="flex items-center gap-2 btn-premium-primary px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold shadow-xl shadow-[#B08D57]/20 cursor-pointer border border-[#DFBA73]/40 apple-tactile-feedback"
             >
               <Plus className="w-4 h-4" />
               <span>Novo Registro Hoje</span>
@@ -136,9 +136,9 @@ export const PainelDiarioSubPasta: React.FC<PainelDiarioSubPastaProps> = ({
 
         {/* Mini Cards Estatísticos do Dia Selecionado */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6 pt-5 border-t border-[#B08D57]/15">
-          <div className="bg-black/50 border border-[#B08D57]/20 rounded-2xl p-4 flex items-center justify-between shadow-inner">
+          <div className="bg-black/50 border border-[#B08D57]/20 rounded-2xl p-4 flex items-center justify-between shadow-inner card-premium-tilt glass-card">
             <div>
-              <span className="text-[11px] text-[#C6A96B]/70 block font-semibold uppercase tracking-wider">Em Trânsito Hoje</span>
+              <span className="text-[11px] text-[#C6A96B]/70 block font-semibold uppercase tracking-wider">Em Trânsito</span>
               <span className="text-xl sm:text-2xl font-bold text-[#DFBA73] font-mono mt-1 block">{emTransitoCount}</span>
             </div>
             <div className="p-2.5 rounded-xl bg-[#B08D57]/15 border border-[#B08D57]/40 text-[#DFBA73]">
@@ -146,9 +146,9 @@ export const PainelDiarioSubPasta: React.FC<PainelDiarioSubPastaProps> = ({
             </div>
           </div>
 
-          <div className="bg-black/50 border border-[#B08D57]/20 rounded-2xl p-4 flex items-center justify-between shadow-inner">
+          <div className="bg-black/50 border border-[#B08D57]/20 rounded-2xl p-4 flex items-center justify-between shadow-inner card-premium-tilt glass-card">
             <div>
-              <span className="text-[11px] text-[#C6A96B]/70 block font-semibold uppercase tracking-wider">Retornos Concluídos</span>
+              <span className="text-[11px] text-[#C6A96B]/70 block font-semibold uppercase tracking-wider">Retornos</span>
               <span className="text-xl sm:text-2xl font-bold text-emerald-400 font-mono mt-1 block">{finalizadosCount}</span>
             </div>
             <div className="p-2.5 rounded-xl bg-emerald-500/15 border border-emerald-400/30 text-emerald-400">
@@ -156,9 +156,9 @@ export const PainelDiarioSubPasta: React.FC<PainelDiarioSubPastaProps> = ({
             </div>
           </div>
 
-          <div className="bg-black/50 border border-[#B08D57]/20 rounded-2xl p-4 flex items-center justify-between shadow-inner">
+          <div className="bg-black/50 border border-[#B08D57]/20 rounded-2xl p-4 flex items-center justify-between shadow-inner card-premium-tilt glass-card">
             <div>
-              <span className="text-[11px] text-[#C6A96B]/70 block font-semibold uppercase tracking-wider">Sec. Agricultura</span>
+              <span className="text-[11px] text-[#C6A96B]/70 block font-semibold uppercase tracking-wider">Agricultura</span>
               <span className="text-xl sm:text-2xl font-bold text-[#DFBA73] font-mono mt-1 block">{agriculturaCount}</span>
             </div>
             <div className="p-2.5 rounded-xl bg-[#B08D57]/15 border border-[#B08D57]/40 text-[#DFBA73]">
@@ -166,9 +166,9 @@ export const PainelDiarioSubPasta: React.FC<PainelDiarioSubPastaProps> = ({
             </div>
           </div>
 
-          <div className="bg-black/50 border border-[#B08D57]/20 rounded-2xl p-4 flex items-center justify-between shadow-inner">
+          <div className="bg-black/50 border border-[#B08D57]/20 rounded-2xl p-4 flex items-center justify-between shadow-inner card-premium-tilt glass-card">
             <div>
-              <span className="text-[11px] text-[#C6A96B]/70 block font-semibold uppercase tracking-wider">Sec. Turismo</span>
+              <span className="text-[11px] text-[#C6A96B]/70 block font-semibold uppercase tracking-wider">Turismo</span>
               <span className="text-xl sm:text-2xl font-bold text-emerald-400 font-mono mt-1 block">{turismoCount}</span>
             </div>
             <div className="p-2.5 rounded-xl bg-emerald-500/15 border border-emerald-400/30 text-emerald-400">
@@ -179,14 +179,14 @@ export const PainelDiarioSubPasta: React.FC<PainelDiarioSubPastaProps> = ({
       </div>
 
       {/* Filtros e Busca Específica da Sub-pasta */}
-      <div className="bg-[#111317]/80 border border-[#B08D57]/20 rounded-3xl p-4 shadow-xl flex flex-col md:flex-row items-center justify-between gap-3">
+      <div className="bg-[#111317]/80 border border-[#B08D57]/20 rounded-3xl p-4 shadow-xl flex flex-col md:flex-row items-center justify-between gap-3 glass-surface">
         <div className="relative w-full md:w-80">
           <input
             type="text"
             value={buscaTermo}
             onChange={(e) => setBuscaTermo(e.target.value)}
             placeholder="Buscar no painel diário..."
-            className="w-full bg-black/50 border border-[#B08D57]/25 rounded-2xl pl-10 pr-9 py-2.5 text-xs text-white placeholder-white/40 focus:outline-none focus:border-[#C6A96B]/60 transition-all shadow-inner"
+            className="w-full bg-black/50 border border-[#B08D57]/25 rounded-2xl pl-10 pr-9 py-2.5 text-xs text-white placeholder-white/40 focus:outline-none focus:border-[#C6A96B]/60 transition-all shadow-inner focus:ring-1 focus:ring-[#B08D57]/25"
           />
           <Search className="w-4 h-4 text-[#C6A96B]/60 absolute left-3.5 top-3" />
         </div>
@@ -197,8 +197,8 @@ export const PainelDiarioSubPasta: React.FC<PainelDiarioSubPastaProps> = ({
             <button
               type="button"
               onClick={() => setStatusFiltro('TODOS')}
-              className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
-                statusFiltro === 'TODOS' ? 'bg-[#B08D57] text-slate-950 font-bold shadow-sm' : 'text-[#C6A96B]/70 hover:text-white'
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer chip-filter-premium apple-tactile-feedback ${
+                statusFiltro === 'TODOS' ? 'bg-[#B08D57] text-slate-950 font-bold shadow-sm btn-premium-primary' : 'text-[#C6A96B]/70 hover:text-white btn-premium-secondary'
               }`}
             >
               Todos ({registros.filter(r => r.data === dataSelecionada).length})
@@ -206,8 +206,8 @@ export const PainelDiarioSubPasta: React.FC<PainelDiarioSubPastaProps> = ({
             <button
               type="button"
               onClick={() => setStatusFiltro('EM_TRANSITO')}
-              className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
-                statusFiltro === 'EM_TRANSITO' ? 'bg-[#B08D57] text-slate-950 font-bold shadow-sm' : 'text-[#C6A96B]/70 hover:text-white'
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer chip-filter-premium apple-tactile-feedback ${
+                statusFiltro === 'EM_TRANSITO' ? 'bg-[#B08D57] text-slate-950 font-bold shadow-sm btn-premium-primary' : 'text-[#C6A96B]/70 hover:text-white btn-premium-secondary'
               }`}
             >
               Em Trânsito ({emTransitoCount})
@@ -215,8 +215,8 @@ export const PainelDiarioSubPasta: React.FC<PainelDiarioSubPastaProps> = ({
             <button
               type="button"
               onClick={() => setStatusFiltro('FINALIZADO')}
-              className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
-                statusFiltro === 'FINALIZADO' ? 'bg-emerald-600 text-white font-bold shadow-sm' : 'text-[#C6A96B]/70 hover:text-white'
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer chip-filter-premium apple-tactile-feedback ${
+                statusFiltro === 'FINALIZADO' ? 'bg-[#10B981] text-slate-950 font-bold shadow-sm' : 'text-[#C6A96B]/70 hover:text-white btn-premium-secondary'
               }`}
             >
               Concluídos ({finalizadosCount})
@@ -226,7 +226,7 @@ export const PainelDiarioSubPasta: React.FC<PainelDiarioSubPastaProps> = ({
           <button
             type="button"
             onClick={onExportarPdf}
-            className="flex items-center gap-1.5 bg-black/50 hover:bg-[#B08D57]/20 text-[#DFBA73] hover:text-white px-3.5 py-2.5 rounded-2xl text-xs font-semibold border border-[#B08D57]/25 transition-all cursor-pointer"
+            className="flex items-center gap-1.5 bg-black/50 text-[#DFBA73] hover:text-white px-3.5 py-2.5 rounded-2xl text-xs font-semibold border border-[#B08D57]/25 transition-all cursor-pointer btn-premium-secondary apple-tactile-feedback"
           >
             <FileText className="w-4 h-4 text-[#C6A96B]/80" />
             <span>Gerar PDF Diário</span>
@@ -235,7 +235,7 @@ export const PainelDiarioSubPasta: React.FC<PainelDiarioSubPastaProps> = ({
       </div>
 
       {/* Listagem de Registros do Painel Diário */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 cascade-container">
         {registrosFiltrados.length === 0 ? (
           <div className="col-span-full py-16 text-center bg-[#111317]/60 border border-[#B08D57]/20 rounded-3xl p-6 shadow-xl">
             <Car className="w-12 h-12 text-[#C6A96B]/40 mx-auto mb-3" />
@@ -258,7 +258,7 @@ export const PainelDiarioSubPasta: React.FC<PainelDiarioSubPastaProps> = ({
             return (
               <div 
                 key={reg.id}
-                className="bg-[#111317]/80 border border-[#B08D57]/20 hover:border-[#B08D57]/50 rounded-3xl p-5 shadow-xl flex flex-col justify-between transition-all group backdrop-blur-xl"
+                className="bg-[#111317]/80 border border-[#B08D57]/20 hover:border-[#B08D57]/50 rounded-3xl p-5 shadow-xl flex flex-col justify-between transition-all group backdrop-blur-xl card-premium-tilt glass-card"
               >
                 <div>
                   <div className="flex items-start justify-between gap-2 mb-3">
@@ -317,7 +317,7 @@ export const PainelDiarioSubPasta: React.FC<PainelDiarioSubPastaProps> = ({
                   <button
                     type="button"
                     onClick={() => onVerDetalhes(reg)}
-                    className="flex-1 bg-black/50 hover:bg-[#B08D57]/20 text-[#DFBA73] hover:text-white py-2.5 rounded-2xl text-xs font-semibold transition-all cursor-pointer border border-[#B08D57]/25"
+                    className="flex-1 text-[#DFBA73] hover:text-white py-2.5 rounded-2xl text-xs font-semibold cursor-pointer border border-[#B08D57]/25 btn-premium-secondary apple-tactile-feedback"
                   >
                     Ver Detalhes
                   </button>
@@ -325,7 +325,7 @@ export const PainelDiarioSubPasta: React.FC<PainelDiarioSubPastaProps> = ({
                   <button
                     type="button"
                     onClick={() => onAjustarHorarios(reg)}
-                    className="flex-1 bg-gradient-to-r from-[#C6A96B] to-[#B08D57] hover:brightness-110 text-slate-950 py-2.5 rounded-2xl text-xs font-bold transition-all cursor-pointer shadow-md"
+                    className="flex-1 btn-premium-primary py-2.5 rounded-2xl text-xs font-bold cursor-pointer apple-tactile-feedback"
                   >
                     {isEmTransito ? 'Registrar Retorno' : 'Ajustar Horário'}
                   </button>
@@ -334,7 +334,7 @@ export const PainelDiarioSubPasta: React.FC<PainelDiarioSubPastaProps> = ({
                     <button
                       type="button"
                       onClick={() => setRegistroParaExcluir(reg)}
-                      className="p-2.5 bg-black/50 hover:bg-rose-500/10 text-white/40 hover:text-rose-400 border border-transparent hover:border-rose-500/20 rounded-2xl transition-all cursor-pointer active:scale-95"
+                      className="p-2.5 text-white/40 hover:text-rose-400 border border-transparent rounded-2xl cursor-pointer btn-premium-secondary apple-tactile-feedback"
                       title="Excluir Registro"
                     >
                       <Trash2 className="w-4 h-4" />

@@ -35,12 +35,9 @@ export const FiltersBar: React.FC<FiltersBarProps> = ({
   const temFiltroAtivo = filtros.secretaria !== 'TODAS' || filtros.data !== '' || filtros.busca !== '' || filtros.status !== 'TODOS';
 
   return (
-    <div className="bg-[#111317]/80 backdrop-blur-2xl border border-[#B08D57]/20 rounded-3xl p-4 shadow-xl space-y-3.5 relative overflow-hidden">
-      {/* Specular Top Edge Light - Champagne Metálico */}
-      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#C6A96B]/30 to-transparent" />
-
+    <div className="bg-[#121417] border border-[#22252C] rounded-xl p-5 space-y-4 relative overflow-hidden glass-surface">
       {/* Row 1: Search Field + Date Selector + Secretaria Pills */}
-      <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-2.5">
+      <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
         {/* Search input */}
         <div className="relative flex-1">
           <input
@@ -48,9 +45,9 @@ export const FiltersBar: React.FC<FiltersBarProps> = ({
             value={filtros.busca}
             onChange={(e) => onChangeFiltros({ ...filtros, busca: e.target.value })}
             placeholder="Buscar por motorista, FCT, placa, destino..."
-            className="w-full bg-black/40 hover:bg-black/60 focus:bg-[#161820] border border-[#B08D57]/25 focus:border-[#C6A96B]/60 rounded-2xl pl-10 pr-10 py-2.5 text-xs sm:text-sm text-white placeholder-white/40 focus:outline-none transition-all duration-200 shadow-inner"
+            className="w-full bg-[#090A0C] border border-[#22252C] focus:border-[#B08D57] rounded-lg pl-10 pr-10 py-2.5 text-xs sm:text-sm text-white placeholder-white/20 focus:outline-none transition-all duration-350 focus:ring-1 focus:ring-[#B08D57]/30"
           />
-          <Search className="w-4 h-4 text-[#C6A96B]/60 absolute left-3.5 top-3" />
+          <Search className="w-4 h-4 text-[#8E95A1] absolute left-3.5 top-3" />
           {filtros.busca && (
             <button
               type="button"
@@ -64,8 +61,8 @@ export const FiltersBar: React.FC<FiltersBarProps> = ({
         </div>
 
         {/* Apple Date Picker Capsule */}
-        <div className="flex items-center gap-2 bg-black/40 hover:bg-black/60 border border-[#B08D57]/25 px-3.5 py-2 rounded-2xl transition-all duration-200">
-          <Calendar className="w-4 h-4 text-[#DFBA73] shrink-0" />
+        <div className="flex items-center gap-2 bg-[#090A0C] border border-[#22252C] px-3.5 py-2.5 rounded-lg transition-all focus-within:border-[#B08D57]/50 focus-within:ring-1 focus-within:ring-[#B08D57]/25">
+          <Calendar className="w-4 h-4 text-[#8E95A1] shrink-0" />
           <input
             type="date"
             value={filtros.data}
@@ -77,7 +74,7 @@ export const FiltersBar: React.FC<FiltersBarProps> = ({
             <button
               type="button"
               onClick={() => onChangeFiltros({ ...filtros, data: '' })}
-              className="text-[#DFBA73]/80 hover:text-[#DFBA73] text-xs font-medium ml-1 cursor-pointer transition-colors"
+              className="text-[#B08D57] hover:text-[#C6A96B] text-xs font-semibold ml-1 cursor-pointer transition-colors"
               title="Mostrar todos os dias"
             >
               (Todos)
@@ -90,10 +87,10 @@ export const FiltersBar: React.FC<FiltersBarProps> = ({
           <button
             type="button"
             onClick={() => handleSecretariaChange('TODAS')}
-            className={`px-3.5 py-2 rounded-2xl text-xs font-semibold transition-all duration-200 cursor-pointer whitespace-nowrap active:scale-[0.96] ${
+            className={`px-3.5 py-2.5 rounded-lg text-xs font-medium transition-all cursor-pointer whitespace-nowrap chip-filter-premium apple-tactile-feedback ${
               filtros.secretaria === 'TODAS'
-                ? 'bg-gradient-to-r from-[#C6A96B] to-[#B08D57] text-slate-950 shadow-md font-bold'
-                : 'bg-black/40 text-white/70 hover:text-white border border-[#B08D57]/20'
+                ? 'bg-[#B08D57] text-black font-semibold'
+                : 'bg-[#090A0C] text-[#8E95A1] hover:text-white border border-[#22252C]'
             }`}
           >
             Todas
@@ -101,42 +98,42 @@ export const FiltersBar: React.FC<FiltersBarProps> = ({
           <button
             type="button"
             onClick={() => handleSecretariaChange('Secretaria da Agricultura')}
-            className={`px-3.5 py-2 rounded-2xl text-xs font-semibold transition-all duration-200 cursor-pointer whitespace-nowrap flex items-center gap-1.5 active:scale-[0.96] ${
+            className={`px-3.5 py-2.5 rounded-lg text-xs font-medium transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5 chip-filter-premium apple-tactile-feedback ${
               filtros.secretaria === 'Secretaria da Agricultura'
-                ? 'bg-[#B08D57]/25 text-[#DFBA73] border border-[#B08D57]/50 shadow-sm font-bold'
-                : 'bg-black/40 text-white/70 hover:text-[#DFBA73] border border-[#B08D57]/20'
+                ? 'bg-[#B08D57]/20 text-[#B08D57] border border-[#B08D57]/40 font-semibold'
+                : 'bg-[#090A0C] text-[#8E95A1] hover:text-white border border-[#22252C]'
             }`}
           >
-            <Wheat className="w-3.5 h-3.5 text-[#DFBA73]" />
+            <Wheat className="w-3.5 h-3.5 text-[#B08D57]" />
             <span>Agricultura</span>
           </button>
           <button
             type="button"
             onClick={() => handleSecretariaChange('Secretaria do Turismo')}
-            className={`px-3.5 py-2 rounded-2xl text-xs font-semibold transition-all duration-200 cursor-pointer whitespace-nowrap flex items-center gap-1.5 active:scale-[0.96] ${
+            className={`px-3.5 py-2.5 rounded-lg text-xs font-medium transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5 chip-filter-premium apple-tactile-feedback ${
               filtros.secretaria === 'Secretaria do Turismo'
-                ? 'bg-emerald-500/25 text-emerald-300 border border-emerald-400/50 shadow-sm font-bold'
-                : 'bg-black/40 text-white/70 hover:text-emerald-400 border border-white/[0.08]'
+                ? 'bg-[#10B981]/20 text-emerald-400 border border-emerald-500/40 font-semibold'
+                : 'bg-[#090A0C] text-[#8E95A1] hover:text-white border border-[#22252C]'
             }`}
           >
-            <Plane className="w-3.5 h-3.5 text-emerald-400" />
+            <Plane className="w-3.5 h-3.5 text-emerald-500" />
             <span>Turismo</span>
           </button>
         </div>
       </div>
 
       {/* Row 2: Counter Summary & Secondary Actions */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-2.5 pt-3 border-t border-[#B08D57]/15 text-xs text-white/60">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-4 border-t border-[#22252C] text-xs text-[#8E95A1]">
         <div className="flex items-center gap-2 flex-wrap">
           <span>
-            Exibindo <strong className="text-[#DFBA73] font-mono">{totalFiltrados}</strong> de <strong className="text-white font-mono">{totalGeral}</strong> registros
+            Exibindo <strong className="text-[#B08D57] font-mono font-semibold">{totalFiltrados}</strong> de <strong className="text-white font-mono font-semibold">{totalGeral}</strong> registros
           </span>
 
           {temFiltroAtivo && (
             <button
               type="button"
               onClick={limparTodosFiltros}
-              className="text-rose-400 hover:text-rose-300 transition-colors cursor-pointer font-medium ml-2 flex items-center gap-1"
+              className="text-rose-400 hover:text-rose-300 transition-all cursor-pointer font-semibold ml-2 flex items-center gap-1 btn-premium-secondary apple-tactile-feedback px-2.5 py-1 rounded-md"
             >
               <X className="w-3.5 h-3.5" />
               <span>Limpar filtros</span>
@@ -149,9 +146,9 @@ export const FiltersBar: React.FC<FiltersBarProps> = ({
             <button
               type="button"
               onClick={onAbrirEnviarRelatorio}
-              className="flex items-center gap-1.5 bg-[#B08D57]/10 hover:bg-[#B08D57]/20 active:scale-[0.96] text-[#DFBA73] hover:text-white px-3.5 py-1.5 rounded-xl font-medium border border-[#B08D57]/25 transition-all duration-200 cursor-pointer text-xs"
+              className="flex items-center gap-1.5 bg-[#090A0C] text-[#8E95A1] hover:text-white px-3.5 py-2 rounded-lg font-medium border border-[#22252C] transition-all cursor-pointer text-xs btn-premium-secondary apple-tactile-feedback"
             >
-              <Share2 className="w-3.5 h-3.5 text-[#C6A96B]/80" />
+              <Share2 className="w-3.5 h-3.5" />
               <span>Relatório</span>
             </button>
           )}
@@ -159,9 +156,9 @@ export const FiltersBar: React.FC<FiltersBarProps> = ({
           <button
             type="button"
             onClick={onExportarPdfFiltrado}
-            className="flex items-center gap-1.5 bg-[#B08D57]/10 hover:bg-[#B08D57]/20 active:scale-[0.96] text-[#DFBA73] hover:text-white px-3.5 py-1.5 rounded-xl font-medium border border-[#B08D57]/25 transition-all duration-200 cursor-pointer text-xs"
+            className="flex items-center gap-1.5 bg-[#090A0C] text-[#8E95A1] hover:text-white px-3.5 py-2 rounded-lg font-medium border border-[#22252C] transition-all cursor-pointer text-xs btn-premium-secondary apple-tactile-feedback"
           >
-            <FileText className="w-3.5 h-3.5 text-[#C6A96B]/80" />
+            <FileText className="w-3.5 h-3.5" />
             <span>PDF</span>
           </button>
         </div>

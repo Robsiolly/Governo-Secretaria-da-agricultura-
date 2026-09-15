@@ -74,16 +74,16 @@ export const DailyCardsView: React.FC<DailyCardsViewProps> = ({
   return (
     <div className="space-y-3.5">
       {/* Ouro Velho Liquid Glass Status & Filter Bar */}
-      <div className="bg-[#111317]/80 backdrop-blur-2xl border border-[#B08D57]/20 rounded-2xl p-3 sm:p-3.5 shadow-xl flex flex-wrap items-center justify-between gap-2.5">
+      <div className="bg-[#111317]/80 border border-[#B08D57]/20 rounded-2xl p-3 sm:p-3.5 shadow-xl flex flex-wrap items-center justify-between gap-2.5 glass-surface">
         {/* Status Indicators & Fast Filters */}
         <div className="flex items-center gap-2 flex-wrap">
           <button
             type="button"
             onClick={() => setStatusAba('TODOS')}
-            className={`px-3 py-1.5 rounded-xl text-xs font-medium border flex items-center gap-1.5 transition-all duration-200 cursor-pointer active:scale-[0.96] ${
+            className={`px-3 py-1.5 rounded-xl text-xs font-medium border flex items-center gap-1.5 transition-all duration-200 cursor-pointer apple-tactile-feedback chip-filter-premium ${
               statusAtual === 'TODOS'
-                ? 'bg-gradient-to-r from-[#C6A96B] to-[#B08D57] text-slate-950 border-[#DFBA73]/50 shadow-sm font-bold'
-                : 'bg-black/40 border-[#B08D57]/20 text-white/70 hover:text-white hover:bg-black/60'
+                ? 'bg-gradient-to-r from-[#C6A96B] to-[#B08D57] text-slate-950 border-[#DFBA73]/50 shadow-sm font-bold btn-premium-primary'
+                : 'bg-black/40 border-[#B08D57]/20 text-white/70 hover:text-white hover:bg-black/60 btn-premium-secondary'
             }`}
           >
             <Car className="w-3.5 h-3.5 text-white/60" />
@@ -94,10 +94,10 @@ export const DailyCardsView: React.FC<DailyCardsViewProps> = ({
           <button
             type="button"
             onClick={() => setStatusAba(statusAtual === 'EM_TRANSITO' ? 'TODOS' : 'EM_TRANSITO')}
-            className={`px-3 py-1.5 rounded-xl text-xs font-medium border flex items-center gap-1.5 transition-all duration-200 cursor-pointer active:scale-[0.96] ${
+            className={`px-3 py-1.5 rounded-xl text-xs font-medium border flex items-center gap-1.5 transition-all duration-200 cursor-pointer apple-tactile-feedback chip-filter-premium ${
               statusAtual === 'EM_TRANSITO'
                 ? 'bg-[#B08D57]/30 border-[#B08D57]/60 text-[#DFBA73] shadow-sm font-bold'
-                : 'bg-black/40 border-[#B08D57]/20 text-[#DFBA73]/80 hover:text-[#DFBA73] hover:bg-black/60'
+                : 'bg-black/40 border-[#B08D57]/20 text-[#DFBA73]/80 hover:text-[#DFBA73] hover:bg-black/60 btn-premium-secondary'
             }`}
             title="Filtrar veículos em trânsito"
           >
@@ -109,10 +109,10 @@ export const DailyCardsView: React.FC<DailyCardsViewProps> = ({
           <button
             type="button"
             onClick={() => setStatusAba(statusAtual === 'FINALIZADO' ? 'TODOS' : 'FINALIZADO')}
-            className={`px-3 py-1.5 rounded-xl text-xs font-medium border flex items-center gap-1.5 transition-all duration-200 cursor-pointer active:scale-[0.96] ${
+            className={`px-3 py-1.5 rounded-xl text-xs font-medium border flex items-center gap-1.5 transition-all duration-200 cursor-pointer apple-tactile-feedback chip-filter-premium ${
               statusAtual === 'FINALIZADO'
                 ? 'bg-emerald-500/25 border-emerald-400/50 text-emerald-300 shadow-sm font-bold'
-                : 'bg-black/40 border-white/[0.08] text-emerald-400/80 hover:text-emerald-300 hover:bg-black/60'
+                : 'bg-black/40 border-white/[0.08] text-emerald-400/80 hover:text-emerald-300 hover:bg-black/60 btn-premium-secondary'
             }`}
           >
             <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
@@ -126,10 +126,10 @@ export const DailyCardsView: React.FC<DailyCardsViewProps> = ({
           <button
             type="button"
             onClick={() => setSecretariaFiltro(secretariaAtual === 'Secretaria da Agricultura' ? 'TODAS' : 'Secretaria da Agricultura')}
-            className={`px-3 py-1.5 rounded-xl text-xs font-medium border flex items-center gap-1.5 transition-all duration-200 cursor-pointer active:scale-[0.96] ${
+            className={`px-3 py-1.5 rounded-xl text-xs font-medium border flex items-center gap-1.5 transition-all duration-200 cursor-pointer apple-tactile-feedback chip-filter-premium ${
               secretariaAtual === 'Secretaria da Agricultura'
                 ? 'bg-[#B08D57]/30 border-[#B08D57]/60 text-[#DFBA73] shadow-sm font-bold'
-                : 'bg-black/40 border-[#B08D57]/20 text-white/60 hover:text-[#DFBA73]'
+                : 'bg-black/40 border-[#B08D57]/20 text-white/60 hover:text-[#DFBA73] btn-premium-secondary'
             }`}
           >
             <Wheat className="w-3.5 h-3.5 text-[#DFBA73]" />
@@ -139,10 +139,10 @@ export const DailyCardsView: React.FC<DailyCardsViewProps> = ({
           <button
             type="button"
             onClick={() => setSecretariaFiltro(secretariaAtual === 'Secretaria do Turismo' ? 'TODAS' : 'Secretaria do Turismo')}
-            className={`px-3 py-1.5 rounded-xl text-xs font-medium border flex items-center gap-1.5 transition-all duration-200 cursor-pointer active:scale-[0.96] ${
+            className={`px-3 py-1.5 rounded-xl text-xs font-medium border flex items-center gap-1.5 transition-all duration-200 cursor-pointer apple-tactile-feedback chip-filter-premium ${
               secretariaAtual === 'Secretaria do Turismo'
                 ? 'bg-emerald-500/25 border-emerald-400/50 text-emerald-300 shadow-sm font-bold'
-                : 'bg-black/40 border-white/[0.08] text-white/60 hover:text-emerald-400'
+                : 'bg-black/40 border-white/[0.08] text-white/60 hover:text-emerald-400 btn-premium-secondary'
             }`}
           >
             <Plane className="w-3.5 h-3.5 text-emerald-400" />
@@ -155,7 +155,7 @@ export const DailyCardsView: React.FC<DailyCardsViewProps> = ({
           <button
             type="button"
             onClick={onAbrirModalCompleto}
-            className="px-3 py-1.5 bg-[#B08D57]/10 hover:bg-[#B08D57]/20 active:scale-[0.96] text-[#DFBA73] hover:text-white rounded-xl border border-[#B08D57]/25 transition-all duration-200 cursor-pointer text-xs font-medium flex items-center gap-1.5 ml-auto"
+            className="px-3 py-1.5 bg-[#B08D57]/10 text-[#DFBA73] hover:text-white rounded-xl border border-[#B08D57]/25 transition-all duration-200 cursor-pointer text-xs font-medium flex items-center gap-1.5 ml-auto btn-premium-secondary apple-tactile-feedback"
             title="Expandir em Janela Completa"
           >
             <Maximize2 className="w-3.5 h-3.5" />
@@ -186,7 +186,7 @@ export const DailyCardsView: React.FC<DailyCardsViewProps> = ({
           )}
         </div>
       ) : (
-        <div className="space-y-2">
+        <div className="space-y-2 cascade-container">
           {listaParaExibir.map((reg) => {
             const isAgri = reg.secretaria === 'Secretaria da Agricultura';
             const isEmTransito = reg.status === 'EM_TRANSITO';
@@ -199,7 +199,7 @@ export const DailyCardsView: React.FC<DailyCardsViewProps> = ({
             return (
               <div
                 key={reg.id}
-                className={`bg-[#111317]/80 hover:bg-[#161822]/90 backdrop-blur-xl border rounded-2xl p-3 sm:px-4 shadow-sm transition-all duration-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3 overflow-hidden ${
+                className={`card-premium-tilt glass-card rounded-2xl p-3 sm:px-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 overflow-hidden ${
                   isEmTransito
                     ? 'border-l-4 border-l-[#B08D57] border-t-[#B08D57]/20 border-r-[#B08D57]/20 border-b-[#B08D57]/20 bg-[#B08D57]/[0.04]'
                     : 'border-l-4 border-l-emerald-400 border-t-white/[0.08] border-r-white/[0.08] border-b-white/[0.08]'
@@ -304,7 +304,7 @@ export const DailyCardsView: React.FC<DailyCardsViewProps> = ({
                       <button
                         type="button"
                         onClick={() => onAjustarHorarios(reg)}
-                        className="inline-flex items-center gap-1 px-2.5 py-1.5 text-[11px] sm:text-xs text-slate-950 bg-gradient-to-r from-[#C6A96B] to-[#B08D57] hover:brightness-110 rounded-lg font-bold transition-all duration-200 cursor-pointer shadow-sm active:scale-[0.96]"
+                        className="inline-flex items-center gap-1 px-2.5 py-1.5 text-[11px] sm:text-xs btn-premium-primary rounded-lg font-bold cursor-pointer apple-tactile-feedback"
                         title="Registrar Retorno do Veículo"
                       >
                         <Check className="w-3 h-3 stroke-[3]" />
@@ -315,7 +315,7 @@ export const DailyCardsView: React.FC<DailyCardsViewProps> = ({
                     <button
                       type="button"
                       onClick={() => onVerDetalhes(reg)}
-                      className="inline-flex items-center gap-1 px-2.5 py-1.5 text-[11px] sm:text-xs text-[#DFBA73] hover:text-white bg-[#B08D57]/10 hover:bg-[#B08D57]/20 border border-[#B08D57]/25 rounded-lg transition-all duration-200 cursor-pointer active:scale-[0.96]"
+                      className="inline-flex items-center gap-1 px-2.5 py-1.5 text-[11px] sm:text-xs text-[#DFBA73] hover:text-white bg-[#B08D57]/10 border border-[#B08D57]/25 rounded-lg cursor-pointer btn-premium-secondary apple-tactile-feedback"
                       title="Ver Ficha Completa e Assinatura"
                     >
                       <Eye className="w-3.5 h-3.5" />
@@ -326,7 +326,7 @@ export const DailyCardsView: React.FC<DailyCardsViewProps> = ({
                       <button
                         type="button"
                         onClick={() => setRegistroParaExcluir(reg)}
-                        className="p-1.5 sm:p-2 text-white/40 hover:text-rose-400 hover:bg-rose-500/10 border border-transparent hover:border-rose-500/20 rounded-lg transition-all duration-200 cursor-pointer active:scale-[0.96]"
+                        className="p-1.5 sm:p-2 text-white/40 hover:text-rose-400 hover:bg-rose-500/10 border border-transparent hover:border-rose-500/20 rounded-lg cursor-pointer btn-premium-secondary apple-tactile-feedback"
                         title="Excluir Registro"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
